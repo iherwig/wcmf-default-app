@@ -17,10 +17,6 @@
             }
         },
         {
-            "type": "vcs",
-            "url": "http://git.code.sf.net/p/wcmf/code"
-        },
-        {
             "type": "artifact",
             "url": "composer/"
         },
