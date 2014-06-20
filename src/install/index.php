@@ -48,8 +48,8 @@
           </div>
           <p class="lead">You can either update the database scheme or load initial data</p>
           <div class="btn-toolbar">
-            <a class="btn btn-large btn-primary" href="#" onclick="runScript('../wcmf/tools/database/dbupdate.php', this);">Update database</a>
-            <a class="btn btn-large" href="#" style="margin-left: 5px;" onclick="runScript('../wcmf/tools/database/install.php', this);">Initialize database</a>
+            <a class="btn btn-large btn-primary" href="#" onclick="runScript('../tools/database/dbupdate.php', this);">Update database</a>
+            <a class="btn btn-large" href="#" style="margin-left: 5px;" onclick="runScript('../tools/database/install.php', this);">Initialize database</a>
           </div>
         </section>
         <section id="result">
