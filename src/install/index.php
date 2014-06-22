@@ -41,7 +41,7 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="span9">
+      <div class="span12">
         <section id="what-next">
           <div class="page-header">
             <h1>wCMF Installation</h1>

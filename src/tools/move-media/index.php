@@ -1,23 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>wCMF - move media</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="../../app/public/vendor/twitter-bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="../../app/public/css/app.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <section id="what-next">
+          <div class="page-header">
+            <h1>wCMF move media</h1>
+          </div>
+        </section>
+        <section id="result">
+          <pre>
 <?php
 /**
  * This script moves a given file to another location and updates all references
  * in the database
  */
-error_reporting(E_ERROR | E_PARSE);
-define("WCMF_BASE", realpath ("../../../")."/");
+error_reporting(E_ALL);
+define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
+require_once(WCMF_BASE."/vendor/autoload.php");
 
-require_once(WCMF_BASE."wcmf/lib/core/ClassLoader.php");
-
+use wcmf\lib\config\impl\InifileConfiguration;
+use wcmf\lib\core\ClassLoader;
 use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
-use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\io\FileUtil;
 
-// read config file
-$config = new InifileConfiguration('./');
-$config->addConfiguration('config.ini');
-ObjectFactory::configure($config);
+new ClassLoader();
+
 Log::configure('../log4php.php');
+
+// get configuration from file
+$configPath = realpath(WCMF_BASE.'app/config/').'/';
+$config = new InifileConfiguration($configPath);
+$config->addConfiguration('config.ini');
+$config->addConfiguration('../../tools/move-media/config.ini');
+ObjectFactory::configure($config);
 
 // get config values
 $dbParams = $config->getSection("database", true);
@@ -36,7 +62,18 @@ foreach ($locations as $source => $target) {
           $deleteEmptyFolders
   );
 }
-exit;
+?>
+          </pre>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<?php
+/**
+ * Functions
+ */
 
 /**
  * Check if the given string denotes a directory (trailing /)

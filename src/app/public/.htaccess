@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /wcmf/src/app/public
+RewriteBase /ingo/wcmf-default-app/src/app/public
 
 # remove index.php
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.php($|\ |\?)

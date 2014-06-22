@@ -8,8 +8,7 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-error_reporting(E_ERROR | E_PARSE);
-
+error_reporting(E_ALL);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
@@ -41,7 +40,8 @@ if (is_dir($installScriptsDir)) {
   sort($sqlScripts);
   foreach ($sqlScripts as $script) {
     // extract the initSection from the filename
-    $initSection = array_shift(preg_split('/_/', basename($script)));
+    $parts = preg_split('/_/', basename($script));
+    $initSection = array_shift($parts);
     DBUtil::executeScript($script, $initSection);
   }
 }

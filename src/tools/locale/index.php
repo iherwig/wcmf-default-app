@@ -1,28 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>wCMF - Localization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="../../app/public/vendor/twitter-bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="../../app/public/css/app.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <section id="what-next">
+          <div class="page-header">
+            <h1>wCMF Localization</h1>
+          </div>
+        </section>
+        <section id="result">
+          <pre>
 <?php
 /**
  * This script extracts application messages from calls to Message::get
  */
-error_reporting(E_ERROR | E_PARSE);
-define("WCMF_BASE", realpath ("../../../")."/");
+error_reporting(E_ALL);
+define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
+require_once(WCMF_BASE."/vendor/autoload.php");
 
-require_once(WCMF_BASE."wcmf/lib/core/ClassLoader.php");
-
+use wcmf\lib\config\impl\InifileConfiguration;
+use wcmf\lib\core\ClassLoader;
 use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
-use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\util\I18nUtil;
 
-// read config file
+new ClassLoader();
+
+Log::configure('../log4php.php');
+
+// get configuration from file
 $config = new InifileConfiguration('./');
 $config->addConfiguration('config.ini');
 ObjectFactory::configure($config);
-Log::configure('../log4php.php');
 
 // get config values
-$localeDir = getConfigValue("localeDir", "application", true);
-$searchDirs = getConfigValue("searchDirs", "i18n", true);
-$exclude = getConfigValue("exclude", "i18n");
-$languages = getConfigValue("languages", "i18n");
+$localeDir = $config->getDirectoryValue("localeDir", "application");
+$searchDirs = $config->getDirectoryValue("searchDirs", "i18n");
+$exclude = $config->getValue("exclude", "i18n");
+$languages = $config->getValue("languages", "i18n");
 Log::info($searchDirs, "locale");
 
 // get messages from search directories
@@ -59,8 +83,18 @@ foreach ($languages as $language) {
 
   I18nUtil::createPHPLanguageFile($language, $messages);
 }
-exit;
-
+?>
+          </pre>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<?php
+/**
+ * Functions
+ */
 function natcaseksort($array) {
   // Like ksort but uses natural sort instead
   $keys = array_keys($array);
@@ -70,16 +104,5 @@ function natcaseksort($array) {
     $new_array[$k] = $array[$k];
   }
   return $new_array;
-}
-
-function getConfigValue($key, $section, $isDirectory=false) {
-  $config = ObjectFactory::getConfigurationInstance();
-  if ($isDirectory) {
-    $value = $config->getDirectoryValue($key, $section);
-  }
-  else {
-    $value = $config->getValue($key, $section);
-  }
-  return $value;
 }
 ?>
