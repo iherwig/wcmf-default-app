@@ -50,7 +50,9 @@ $hashedPassword = $requestPassword ? ObjectFactory::getInstance('User')->hashPas
           </fieldset>
         </form>
         <section>
-          <pre>Password hash for '<?php echo $requestPassword; ?>': <?php echo $hashedPassword; ?></pre>
+          <?php if (strlen($requestPassword) > 0) : ?>
+          <pre>Password hash for <em><?php echo $requestPassword; ?></em>: <strong><?php echo $hashedPassword; ?></strong></pre>
+          <?php endif; ?>
         </section>
       </div>
     </div>
