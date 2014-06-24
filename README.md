@@ -1,3 +1,4 @@
-Default application for the wCMF web application framework
-----------------------------------------------------------
-Dojo based default application for [wCMF](https://github.com/iherwig/wcmf)
+wcmf-default-app
+================
+
+Dojo based default application for the [wCMF](https://github.com/iherwig/wcmf) web application framework
