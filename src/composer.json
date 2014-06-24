@@ -3,6 +3,10 @@
     "description": "Default application for the wCMF web application framework",
     "repositories": [
         {
+            "url": "https://github.com/iherwig/wcmf-asset-installer.git",
+            "type": "git"
+        },
+        {
             "type": "package",
             "package": {
                 "name": "nusphere/nusoap",
@@ -15,10 +19,6 @@
                     "classmap": ["lib/"]
                 }
             }
-        },
-        {
-            "type": "artifact",
-            "url": "composer/"
         },
         {
             "type": "package",
@@ -252,8 +252,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
+        "wcmf/asset-installer": "dev-master",
         "wcmf/wcmf": "dev-master",
-        "wcmf/asset-installer": "0.1.0",
         "dojo/dojo": "~1.9",
         "dojo/dijit": "~1.9",
         "dojo/dojox": "~1.9",
