@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.wcmf.Language",
         description: "A language for which a translation of the model can be created. The code is arbitrary but it is recommended to use the ISO language codes (en, de, it, ...).",
         isSortable: false,
-        displayValues: [
-            "name"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["name"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

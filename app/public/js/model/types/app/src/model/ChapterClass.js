@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.Chapter",
         description: "A book is divided into chapters. A chapter may contain subchapters.",
         isSortable: true,
-        displayValues: [
-            "name"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["name"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

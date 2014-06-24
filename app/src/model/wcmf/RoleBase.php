@@ -61,9 +61,10 @@ class RoleBase extends AbstractRole {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'name') { $displayName = Message::get("name"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'name') { $displayName = Message::get("name"); }
+      return $displayName;
     }
 
     /**
@@ -71,9 +72,10 @@ class RoleBase extends AbstractRole {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'name') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'name') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

@@ -61,16 +61,17 @@ class BookBase extends EntityBase {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'fk_publisher_id') { $displayName = Message::get("fk_publisher_id"); }
-      if ($name == 'title') { $displayName = Message::get("title"); }
-      if ($name == 'description') { $displayName = Message::get("description"); }
-      if ($name == 'year') { $displayName = Message::get("year"); }
-      if ($name == 'created') { $displayName = Message::get("created"); }
-      if ($name == 'creator') { $displayName = Message::get("creator"); }
-      if ($name == 'modified') { $displayName = Message::get("modified"); }
-      if ($name == 'last_editor') { $displayName = Message::get("last_editor"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'fk_publisher_id') { $displayName = Message::get("fk_publisher_id"); }
+      elseif ($name == 'title') { $displayName = Message::get("title"); }
+      elseif ($name == 'description') { $displayName = Message::get("description"); }
+      elseif ($name == 'year') { $displayName = Message::get("year"); }
+      elseif ($name == 'created') { $displayName = Message::get("created"); }
+      elseif ($name == 'creator') { $displayName = Message::get("creator"); }
+      elseif ($name == 'modified') { $displayName = Message::get("modified"); }
+      elseif ($name == 'last_editor') { $displayName = Message::get("last_editor"); }
+      return $displayName;
     }
 
     /**
@@ -78,16 +79,17 @@ class BookBase extends EntityBase {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'fk_publisher_id') { $description = Message::get(""); }
-      if ($name == 'title') { $description = Message::get(""); }
-      if ($name == 'description') { $description = Message::get(""); }
-      if ($name == 'year') { $description = Message::get(""); }
-      if ($name == 'created') { $description = Message::get(""); }
-      if ($name == 'creator') { $description = Message::get(""); }
-      if ($name == 'modified') { $description = Message::get(""); }
-      if ($name == 'last_editor') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'fk_publisher_id') { $description = Message::get(""); }
+      elseif ($name == 'title') { $description = Message::get(""); }
+      elseif ($name == 'description') { $description = Message::get(""); }
+      elseif ($name == 'year') { $description = Message::get(""); }
+      elseif ($name == 'created') { $description = Message::get(""); }
+      elseif ($name == 'creator') { $description = Message::get(""); }
+      elseif ($name == 'modified') { $description = Message::get(""); }
+      elseif ($name == 'last_editor') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

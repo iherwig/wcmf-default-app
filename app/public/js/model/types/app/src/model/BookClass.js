@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.Book",
         description: "A book is published by a publisher and consists of chapters.",
         isSortable: false,
-        displayValues: [
-            "title"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["title"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

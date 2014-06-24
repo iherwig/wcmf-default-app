@@ -32,11 +32,8 @@ define([
         typeName: "app.src.model.wcmf.DBSequence",
         description: "",
         isSortable: false,
-        displayValues: [
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: [],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

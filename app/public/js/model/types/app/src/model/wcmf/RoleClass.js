@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.wcmf.Role",
         description: "",
         isSortable: false,
-        displayValues: [
-            "name"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["name"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

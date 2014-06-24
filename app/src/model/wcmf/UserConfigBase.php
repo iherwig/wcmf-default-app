@@ -61,11 +61,12 @@ class UserConfigBase extends Node {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
-      if ($name == 'key') { $displayName = Message::get("key"); }
-      if ($name == 'val') { $displayName = Message::get("val"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
+      elseif ($name == 'key') { $displayName = Message::get("key"); }
+      elseif ($name == 'val') { $displayName = Message::get("val"); }
+      return $displayName;
     }
 
     /**
@@ -73,11 +74,12 @@ class UserConfigBase extends Node {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'fk_user_id') { $description = Message::get(""); }
-      if ($name == 'key') { $description = Message::get(""); }
-      if ($name == 'val') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'fk_user_id') { $description = Message::get(""); }
+      elseif ($name == 'key') { $description = Message::get(""); }
+      elseif ($name == 'val') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

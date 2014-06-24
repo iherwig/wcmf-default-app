@@ -61,10 +61,11 @@ class NMPublisherAuthorBase extends Node {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'fk_author_id') { $displayName = Message::get("fk_author_id"); }
-      if ($name == 'fk_publisher_id') { $displayName = Message::get("fk_publisher_id"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'fk_author_id') { $displayName = Message::get("fk_author_id"); }
+      elseif ($name == 'fk_publisher_id') { $displayName = Message::get("fk_publisher_id"); }
+      return $displayName;
     }
 
     /**
@@ -72,10 +73,11 @@ class NMPublisherAuthorBase extends Node {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'fk_author_id') { $description = Message::get(""); }
-      if ($name == 'fk_publisher_id') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'fk_author_id') { $description = Message::get(""); }
+      elseif ($name == 'fk_publisher_id') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

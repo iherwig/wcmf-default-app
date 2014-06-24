@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.wcmf.UserConfig",
         description: "",
         isSortable: false,
-        displayValues: [
-            "key"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["key"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

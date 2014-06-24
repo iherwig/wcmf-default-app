@@ -7,5 +7,6 @@ app/release
 app/public/media
 dist
 vendor/*
+app/public/vendor/*
 !app/public/vendor/ckeditor-plugins
 composer.lock

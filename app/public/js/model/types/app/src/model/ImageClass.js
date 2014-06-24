@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.Image",
         description: "",
         isSortable: true,
-        displayValues: [
-            "filename"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["filename"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

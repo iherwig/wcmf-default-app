@@ -32,14 +32,8 @@ define([
         typeName: "app.src.model.wcmf.Translation",
         description: "Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.",
         isSortable: false,
-        displayValues: [
-            "objectid"
-,             "attribute"
-,             "language"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["objectid", "attribute", "language"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

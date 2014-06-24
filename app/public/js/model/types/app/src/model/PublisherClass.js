@@ -32,12 +32,8 @@ define([
         typeName: "app.src.model.Publisher",
         description: "A publisher publishes books.",
         isSortable: false,
-        displayValues: [
-            "name"
-        ],
-        pkNames: [
-            "id"
-        ],
+        displayValues: ["name"],
+        pkNames: ["id"],
 
         attributes: [{
             name: "id",

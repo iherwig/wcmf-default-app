@@ -110,6 +110,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_o-jskLQ-EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_o-k6sLQ-EeOQ5oJFa1i8cg" value="+*"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="__tzpcPvAEeOmMdys2glKCA" name="??cms" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__tzpcfvAEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__tzpcvvAEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="__tzpc_vAEeOmMdys2glKCA" value="+*"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_jiY-0LQ-EeOQ5oJFa1i8cg" name="??login" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_svckQLQ-EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_svckQbQ-EeOQ5oJFa1i8cg" value="1"/>
@@ -682,6 +687,43 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_t8680rRmEeOfbtYsPp7Oyg" value="wcmf\lib\model\impl\SoapNodeSerializer"/>
                 </ownedAttribute>
               </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_6zE_YPvBEeOmMdys2glKCA" name="Routes">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_6zE_YfvBEeOmMdys2glKCA" name="/" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6zE_YvvBEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6zE_Y_vBEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_6zE_ZPvBEeOmMdys2glKCA" value="action=cms"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EKpywPvCEeOmMdys2glKCA" name="/rest/{language}/{className}" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EKpywfvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EKpywvvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_EKpyw_vCEeOmMdys2glKCA" value="action=restAction&amp;collection=1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_ENnnMPvCEeOmMdys2glKCA" name="/rest/{language}/{className}/{id|[0-9]+}" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ENnnMfvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ENnnMvvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ENnnM_vCEeOmMdys2glKCA" value="action=restAction&amp;collection=0"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EQR5oPvCEeOmMdys2glKCA" name="/rest/{language}/{className}/{sourceId|[0-9]+}/{relation}" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EQR5ofvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EQR5ovvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_EQR5o_vCEeOmMdys2glKCA" value="action=restAction&amp;collection=1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_ESuwsPvCEeOmMdys2glKCA" name="/rest/{language}/{className}/{sourceId|[0-9]+}/{relation}/{targetId|[0-9]+}" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ESuwsfvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ESuwsvvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ESuws_vCEeOmMdys2glKCA" value="action=restAction&amp;collection=1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EVZqMPvCEeOmMdys2glKCA" name="/soap" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EVZqMfvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EVZqMvvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_EVZqM_vCEeOmMdys2glKCA" value="action=soapAction"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_EYTNMPvCEeOmMdys2glKCA" name="/list/{language}/{listDef}" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EYTNMfvCEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EYTNMvvCEeOmMdys2glKCA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_EYTNM_vCEeOmMdys2glKCA" value="action=listValues"/>
+                </ownedAttribute>
+              </packagedElement>
             </packagedElement>
           </packagedElement>
         </packagedElement>
@@ -917,6 +959,10 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wcTaQbRvEeOfbtYsPp7Oyg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wcTaQrRvEeOfbtYsPp7Oyg" value="1"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_ouKBYPvBEeOmMdys2glKCA" name="rootController" type="_I5JXoPvBEeOmMdys2glKCA" association="_ouKocPvBEeOmMdys2glKCA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ouKBYfvBEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ouKBYvvBEeOmMdys2glKCA" value="1"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_cb6SQ7RoEeOfbtYsPp7Oyg" name="associate" memberEnd="_cb6SRLRoEeOfbtYsPp7Oyg _cb6SQLRoEeOfbtYsPp7Oyg">
                 <ownedEnd xmi:type="uml:Property" xmi:id="_cb6SRLRoEeOfbtYsPp7Oyg" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_cb6SQ7RoEeOfbtYsPp7Oyg">
@@ -1072,6 +1118,12 @@
                 <ownedEnd xmi:type="uml:Property" xmi:id="_wcZg4bRvEeOfbtYsPp7Oyg" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_wcZg4LRvEeOfbtYsPp7Oyg">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wcZg4rRvEeOfbtYsPp7Oyg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wcZg47RvEeOfbtYsPp7Oyg" value="1"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_ouKocPvBEeOmMdys2glKCA" name="cms" memberEnd="_ouKocfvBEeOmMdys2glKCA _ouKBYPvBEeOmMdys2glKCA">
+                <ownedEnd xmi:type="uml:Property" xmi:id="_ouKocfvBEeOmMdys2glKCA" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_ouKocPvBEeOmMdys2glKCA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ouKocvvBEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ouKoc_vBEeOmMdys2glKCA" value="1"/>
                 </ownedEnd>
               </packagedElement>
             </packagedElement>
@@ -1319,6 +1371,23 @@
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_HL06MPvBEeOmMdys2glKCA" name="controller">
+              <packagedElement xmi:type="uml:Class" xmi:id="_I5JXoPvBEeOmMdys2glKCA" name="RootController">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_c-494PvBEeOmMdys2glKCA" name="cms" type="_JF4zIPvBEeOmMdys2glKCA" association="_c-5k8PvBEeOmMdys2glKCA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_c-494fvBEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_c-494vvBEeOmMdys2glKCA" value="1"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_c-5k8PvBEeOmMdys2glKCA" name="" memberEnd="_c-5k8fvBEeOmMdys2glKCA _c-494PvBEeOmMdys2glKCA">
+                <ownedEnd xmi:type="uml:Property" xmi:id="_c-5k8fvBEeOmMdys2glKCA" name="rootController" type="_I5JXoPvBEeOmMdys2glKCA" association="_c-5k8PvBEeOmMdys2glKCA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_c-5k8vvBEeOmMdys2glKCA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_c-5k8_vBEeOmMdys2glKCA" value="1"/>
+                </ownedEnd>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_HNaOkPvBEeOmMdys2glKCA" name="views">
+              <packagedElement xmi:type="uml:Class" xmi:id="_JF4zIPvBEeOmMdys2glKCA" name="cms"/>
+            </packagedElement>
           </packagedElement>
         </packagedElement>
       </packagedElement>
@@ -1467,4 +1536,9 @@
   <Chronos:ChiValue xmi:id="_HSyg0LTTEeOYkOsR5IzpsA" db_data_type="DATETIME" input_type="date" base_Property="_EZrlsLTTEeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_eH_2oLTWEeOYkOsR5IzpsA" is_editable="true" base_Property="_blxxgLTWEeOYkOsR5IzpsA"/>
   <Chronos:ChiSystem xmi:id="_lJ240NuDEeOY091wVmwqBA" plattform="wcmf" config="persistence.ini" base_Class="_lJ2RwNuDEeOY091wVmwqBA"/>
+  <Chronos:ChiController xmi:id="_PpV5EPvBEeOmMdys2glKCA" base_Class="_I5JXoPvBEeOmMdys2glKCA"/>
+  <Chronos:ChiView xmi:id="_Q7L7cPvBEeOmMdys2glKCA" base_Class="_JF4zIPvBEeOmMdys2glKCA"/>
+  <Chronos:ChiActionKey xmi:id="_c_I1gPvBEeOmMdys2glKCA" base_Association="_c-5k8PvBEeOmMdys2glKCA"/>
+  <Chronos:ChiActionKey xmi:id="_oubHIPvBEeOmMdys2glKCA" action="cms" base_Association="_ouKocPvBEeOmMdys2glKCA"/>
+  <Chronos:ChiSystem xmi:id="_6zFmcPvBEeOmMdys2glKCA" plattform="wcmf" config="presentation.ini" base_Class="_6zE_YPvBEeOmMdys2glKCA"/>
 </xmi:XMI>

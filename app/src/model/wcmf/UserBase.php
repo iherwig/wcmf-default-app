@@ -61,13 +61,14 @@ class UserBase extends AbstractUser {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'login') { $displayName = Message::get("login"); }
-      if ($name == 'password') { $displayName = Message::get("password"); }
-      if ($name == 'name') { $displayName = Message::get("name"); }
-      if ($name == 'firstname') { $displayName = Message::get("firstname"); }
-      if ($name == 'config') { $displayName = Message::get("config"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'login') { $displayName = Message::get("login"); }
+      elseif ($name == 'password') { $displayName = Message::get("password"); }
+      elseif ($name == 'name') { $displayName = Message::get("name"); }
+      elseif ($name == 'firstname') { $displayName = Message::get("firstname"); }
+      elseif ($name == 'config') { $displayName = Message::get("config"); }
+      return $displayName;
     }
 
     /**
@@ -75,13 +76,14 @@ class UserBase extends AbstractUser {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'login') { $description = Message::get(""); }
-      if ($name == 'password') { $description = Message::get(""); }
-      if ($name == 'name') { $description = Message::get(""); }
-      if ($name == 'firstname') { $description = Message::get(""); }
-      if ($name == 'config') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'login') { $description = Message::get(""); }
+      elseif ($name == 'password') { $description = Message::get(""); }
+      elseif ($name == 'name') { $description = Message::get(""); }
+      elseif ($name == 'firstname') { $description = Message::get(""); }
+      elseif ($name == 'config') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

@@ -61,12 +61,13 @@ class LocktableBase extends Node {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
-      if ($name == 'objectid') { $displayName = Message::get("objectid"); }
-      if ($name == 'sessionid') { $displayName = Message::get("sessionid"); }
-      if ($name == 'since') { $displayName = Message::get("since"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
+      elseif ($name == 'objectid') { $displayName = Message::get("objectid"); }
+      elseif ($name == 'sessionid') { $displayName = Message::get("sessionid"); }
+      elseif ($name == 'since') { $displayName = Message::get("since"); }
+      return $displayName;
     }
 
     /**
@@ -74,12 +75,13 @@ class LocktableBase extends Node {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'fk_user_id') { $description = Message::get(""); }
-      if ($name == 'objectid') { $description = Message::get(""); }
-      if ($name == 'sessionid') { $description = Message::get(""); }
-      if ($name == 'since') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'fk_user_id') { $description = Message::get(""); }
+      elseif ($name == 'objectid') { $description = Message::get(""); }
+      elseif ($name == 'sessionid') { $description = Message::get(""); }
+      elseif ($name == 'since') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

@@ -61,9 +61,10 @@ class NMUserRoleBase extends Node {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'fk_role_id') { $displayName = Message::get("fk_role_id"); }
-      if ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'fk_role_id') { $displayName = Message::get("fk_role_id"); }
+      elseif ($name == 'fk_user_id') { $displayName = Message::get("fk_user_id"); }
+      return $displayName;
     }
 
     /**
@@ -71,9 +72,10 @@ class NMUserRoleBase extends Node {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'fk_role_id') { $description = Message::get(""); }
-      if ($name == 'fk_user_id') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'fk_role_id') { $description = Message::get(""); }
+      elseif ($name == 'fk_user_id') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

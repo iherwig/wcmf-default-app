@@ -19,6 +19,7 @@ namespace app\src\model\wcmf;
 
 use app\src\model\wcmf\Translation;
 
+use wcmf\lib\i18n\Message;
 use wcmf\lib\model\mapper\NodeUnifiedRDBMapper;
 use wcmf\lib\model\mapper\RDBAttributeDescription;
 use wcmf\lib\model\mapper\RDBManyToManyRelationDescription;

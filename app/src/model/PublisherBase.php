@@ -61,13 +61,14 @@ class PublisherBase extends EntityBase {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'name') { $displayName = Message::get("name"); }
-      if ($name == 'created') { $displayName = Message::get("created"); }
-      if ($name == 'creator') { $displayName = Message::get("creator"); }
-      if ($name == 'modified') { $displayName = Message::get("modified"); }
-      if ($name == 'last_editor') { $displayName = Message::get("last_editor"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'name') { $displayName = Message::get("name"); }
+      elseif ($name == 'created') { $displayName = Message::get("created"); }
+      elseif ($name == 'creator') { $displayName = Message::get("creator"); }
+      elseif ($name == 'modified') { $displayName = Message::get("modified"); }
+      elseif ($name == 'last_editor') { $displayName = Message::get("last_editor"); }
+      return $displayName;
     }
 
     /**
@@ -75,13 +76,14 @@ class PublisherBase extends EntityBase {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'name') { $description = Message::get(""); }
-      if ($name == 'created') { $description = Message::get(""); }
-      if ($name == 'creator') { $description = Message::get(""); }
-      if ($name == 'modified') { $description = Message::get(""); }
-      if ($name == 'last_editor') { $description = Message::get(""); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'name') { $description = Message::get(""); }
+      elseif ($name == 'created') { $description = Message::get(""); }
+      elseif ($name == 'creator') { $description = Message::get(""); }
+      elseif ($name == 'modified') { $description = Message::get(""); }
+      elseif ($name == 'last_editor') { $description = Message::get(""); }
+      return $description;
     }
 
     /**

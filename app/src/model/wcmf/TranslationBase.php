@@ -61,12 +61,13 @@ class TranslationBase extends Node {
      */
     public function getValueDisplayName($name) {
       $displayName = $name;
-      if ($name == 'id') { $displayName = Message::get("id"); }
-      if ($name == 'objectid') { $displayName = Message::get("objectid"); }
-      if ($name == 'attribute') { $displayName = Message::get("attribute"); }
-      if ($name == 'translation') { $displayName = Message::get("translation"); }
-      if ($name == 'language') { $displayName = Message::get("language"); }
-      return Message::get($displayName);
+      if (false) {}
+      elseif ($name == 'id') { $displayName = Message::get("id"); }
+      elseif ($name == 'objectid') { $displayName = Message::get("objectid"); }
+      elseif ($name == 'attribute') { $displayName = Message::get("attribute"); }
+      elseif ($name == 'translation') { $displayName = Message::get("translation"); }
+      elseif ($name == 'language') { $displayName = Message::get("language"); }
+      return $displayName;
     }
 
     /**
@@ -74,12 +75,13 @@ class TranslationBase extends Node {
      */
     public function getValueDescription($name) {
       $description = $name;
-      if ($name == 'id') { $description = Message::get(""); }
-      if ($name == 'objectid') { $description = Message::get("The object id of the object to which the translation belongs"); }
-      if ($name == 'attribute') { $description = Message::get("The attribute of the object that is translated"); }
-      if ($name == 'translation') { $description = Message::get("The translation"); }
-      if ($name == 'language') { $description = Message::get("The language of the translation"); }
-      return Message::get($description);
+      if (false) {}
+      elseif ($name == 'id') { $description = Message::get(""); }
+      elseif ($name == 'objectid') { $description = Message::get("The object id of the object to which the translation belongs"); }
+      elseif ($name == 'attribute') { $description = Message::get("The attribute of the object that is translated"); }
+      elseif ($name == 'translation') { $description = Message::get("The translation"); }
+      elseif ($name == 'language') { $description = Message::get("The language of the translation"); }
+      return $description;
     }
 
 }
