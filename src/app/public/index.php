@@ -9,14 +9,12 @@
  * additional information.
  */
 error_reporting(E_ALL | E_PARSE);
-$startTime = microtime(true);
 
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use \Exception;
 use wcmf\lib\config\ConfigurationException;
-use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\presentation\Application;
@@ -98,11 +96,6 @@ catch (Exception $ex) {
   } catch (Exception $unhandledEx) {
     $error = "An unhandled exception occured. Please see log file for details.";
   }
-}
-if (Log::isDebugEnabled('main')) {
-  Log::debug(number_format(memory_get_peak_usage()/(1024*1024), 2)." MB used [".
-        $request->getSender()."?".$request->getContext()."?".$request->getAction()."]", 'main');
-  Log::debug((microtime(true) - $startTime).' seconds', 'main');
 }
 ?>
 <!DOCTYPE html>
