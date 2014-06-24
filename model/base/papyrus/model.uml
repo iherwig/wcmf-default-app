@@ -130,6 +130,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zkXNoLQ-EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_zkYbwLQ-EeOQ5oJFa1i8cg" value="+*"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_6ynTQPvrEeO7oqnkSuo0Ew" name="??soapAction" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6ynTQfvrEeO7oqnkSuo0Ew" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6ynTQvvrEeO7oqnkSuo0Ew" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_6ynTQ_vrEeO7oqnkSuo0Ew" value="+*"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_jqej0LQ-EeOQ5oJFa1i8cg" name="??actionSet" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2a25oLQ-EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2a25obQ-EeOQ5oJFa1i8cg" value="1"/>
@@ -804,6 +809,9 @@
               <packagedElement xmi:type="uml:Class" xmi:id="_giVKgLRnEeOfbtYsPp7Oyg" name="RESTController">
                 <generalization xmi:type="uml:Generalization" xmi:id="_5-NjcLRxEeOfbtYsPp7Oyg" general="_3TWiULQGEeOIMOFxCilDfw"/>
               </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_FpsxkPvsEeO7oqnkSuo0Ew" name="SOAPController">
+                <generalization xmi:type="uml:Generalization" xmi:id="_FpsxkfvsEeO7oqnkSuo0Ew" general="_3TWiULQGEeOIMOFxCilDfw"/>
+              </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_glqyYLRnEeOfbtYsPp7Oyg" name="SaveController">
                 <generalization xmi:type="uml:Generalization" xmi:id="_L99tkLRyEeOfbtYsPp7Oyg" general="_3TWiULQGEeOIMOFxCilDfw"/>
               </packagedElement>
@@ -963,6 +971,10 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ouKBYfvBEeOmMdys2glKCA" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ouKBYvvBEeOmMdys2glKCA" value="1"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_MAG6APvsEeO7oqnkSuo0Ew" name="sOAPController" type="_FpsxkPvsEeO7oqnkSuo0Ew" association="_MAHhEPvsEeO7oqnkSuo0Ew">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MAG6AfvsEeO7oqnkSuo0Ew" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MAG6AvvsEeO7oqnkSuo0Ew" value="1"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_cb6SQ7RoEeOfbtYsPp7Oyg" name="associate" memberEnd="_cb6SRLRoEeOfbtYsPp7Oyg _cb6SQLRoEeOfbtYsPp7Oyg">
                 <ownedEnd xmi:type="uml:Property" xmi:id="_cb6SRLRoEeOfbtYsPp7Oyg" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_cb6SQ7RoEeOfbtYsPp7Oyg">
@@ -1058,6 +1070,12 @@
                 <ownedEnd xmi:type="uml:Property" xmi:id="_IALmNLRuEeOfbtYsPp7Oyg" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_IALmM7RuEeOfbtYsPp7Oyg">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IALmNbRuEeOfbtYsPp7Oyg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IALmNrRuEeOfbtYsPp7Oyg" value="1"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_MAHhEPvsEeO7oqnkSuo0Ew" name="soapAction" memberEnd="_MAHhEfvsEeO7oqnkSuo0Ew _MAG6APvsEeO7oqnkSuo0Ew">
+                <ownedEnd xmi:type="uml:Property" xmi:id="_MAHhEfvsEeO7oqnkSuo0Ew" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_MAHhEPvsEeO7oqnkSuo0Ew">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MAHhEvvsEeO7oqnkSuo0Ew" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MAHhE_vsEeO7oqnkSuo0Ew" value="1"/>
                 </ownedEnd>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_QodDk7RuEeOfbtYsPp7Oyg" name="create" memberEnd="_QodDlLRuEeOfbtYsPp7Oyg _QodDkLRuEeOfbtYsPp7Oyg">
@@ -1541,4 +1559,6 @@
   <Chronos:ChiActionKey xmi:id="_c_I1gPvBEeOmMdys2glKCA" base_Association="_c-5k8PvBEeOmMdys2glKCA"/>
   <Chronos:ChiActionKey xmi:id="_oubHIPvBEeOmMdys2glKCA" action="cms" base_Association="_ouKocPvBEeOmMdys2glKCA"/>
   <Chronos:ChiSystem xmi:id="_6zFmcPvBEeOmMdys2glKCA" plattform="wcmf" config="presentation.ini" base_Class="_6zE_YPvBEeOmMdys2glKCA"/>
+  <Chronos:ChiController xmi:id="_FptYoPvsEeO7oqnkSuo0Ew" base_Class="_FpsxkPvsEeO7oqnkSuo0Ew"/>
+  <Chronos:ChiActionKey xmi:id="_QuIIUPvsEeO7oqnkSuo0Ew" action="soapAction" base_Association="_MAHhEPvsEeO7oqnkSuo0Ew"/>
 </xmi:XMI>
