@@ -1,10 +1,11 @@
 *.log
 log.txt
-src/app/cache
-src/app/log
-src/app/searchIndex
-src/app/release
-src/app/public/media
+app/cache
+app/log
+app/searchIndex
+app/release
+app/public/media
 dist
-vendor
+vendor/*
+!app/public/vendor/ckeditor-plugins
 composer.lock
