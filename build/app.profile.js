@@ -160,13 +160,13 @@ var profile = {
       { name: 'dojo', location: 'vendor/dojo/dojo', destLocation: 'vendor/dojo/dojo' },
       { name: 'dijit', location: 'vendor/dojo/dijit', destLocation: 'vendor/dojo/dijit' },
       { name: 'dojox', location: 'vendor/dojo/dojox', destLocation: 'vendor/dojo/dojox' },
-      { name: 'routed', location: 'vendor/routed', destLocation: 'vendor/routed' },
-      { name: 'dojomat', location: 'vendor/dojomat', destLocation: 'vendor/dojomat' },
-      { name: 'dgrid', location: 'vendor/dgrid', destLocation: 'vendor/dgrid' },
-      { name: 'xstyle', location: 'vendor/xstyle', destLocation: 'vendor/xstyle' },
-      { name: 'put-selector', location: 'vendor/put-selector', destLocation: 'vendor/put-selector' },
-      { name: 'ckeditor', location: 'vendor/ckeditor', destLocation: 'vendor/ckeditor' },
-      { name: 'elfinder', location: 'vendor/elfinder', destLocation: 'vendor/elfinder' },
+      { name: 'routed', location: 'vendor/sirprize/routed', destLocation: 'vendor/sirprize/routed' },
+      { name: 'dojomat', location: 'vendor/sirprize/dojomat', destLocation: 'vendor/sirprize/dojomat' },
+      { name: 'dgrid', location: 'vendor/sitepen/dgrid', destLocation: 'vendor/sitepen/dgrid' },
+      { name: 'xstyle', location: 'vendor/kriszyp/xstyle', destLocation: 'vendor/kriszyp/xstyle' },
+      { name: 'put-selector', location: 'vendor/kriszyp/put-selector', destLocation: 'vendor/kriszyp/put-selector' },
+      { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor', destLocation: 'vendor/ckeditor/ckeditor' },
+      { name: 'elfinder', location: 'vendor/studio-42/elfinder', destLocation: 'vendor/studio-42/elfinder' },
 
       { name: 'app', location: '.', destLocation: '.' }
     ],
@@ -177,13 +177,7 @@ var profile = {
             boot: true
         },
         'app/js/App': {
-            include: appSrc,
-            exclude: [
-                "elfinder/jquery/jquery.min",
-                "elfinder/jquery/jquery-ui.min",
-                "elfinder/js/elfinder.min",
-                "ckeditor/ckeditor"
-            ]
+            include: appSrc
         }
     }
 };

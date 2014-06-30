@@ -68,9 +68,17 @@
   <target name="dist-fe" depends="buildinfo,properties"
     description="build the distribution without compile target" >
     <mkdir dir="${dist.dir}"/>
-    <copy todir="${dist.dir}/wcmf">
-      <fileset dir="${build.base}wcmf/">
-        <exclude name="tools/"/>
+    <copy todir="${dist.dir}/vendor">
+      <fileset dir="${build.base}vendor/">
+        <exclude name="**/demo*/**"/>
+        <exclude name="**/sample*/**"/>
+        <exclude name="**/example*/**"/>
+        <exclude name="**/test*/**"/>
+        <exclude name="**/doc*/**"/>
+        <exclude name="**/develop*/**"/>
+        <exclude name="**/.git*"/>
+        <exclude name="**/.svn*"/>
+        <exclude name="**/zf1/zend-locale/library/Zend/Locale/Data/*"/>
         <include name="**"/>
       </fileset>
     </copy>
@@ -146,14 +154,21 @@
       <fileset dir="${build.base}${app.name}/public">
         <!-- dojo resources -->
         <include name="vendor/dojo/dojo/resources/**/*.*"/>
-        <include name="vendor/dgrid/css/images/*.*"/>
+        <include name="vendor/sitepen/dgrid/css/images/*.*"/>
         <!-- fonts -->
-        <include name="vendor/dbootstrap/theme/dbootstrap/font/*.*"/>
-        <include name="vendor/font-awesome/fonts/*.*"/>
+        <include name="vendor/thesociable/dbootstrap/theme/dbootstrap/font/*.*"/>
+        <include name="vendor/fortawesome/font-awesome/fonts/*.*"/>
         <!-- elfinder -->
-        <include name="vendor/elfinder/**/*.*"/>
+        <include name="vendor/studio-42/elfinder/css/*.*"/>
+        <include name="vendor/studio-42/elfinder/img/*.*"/>
+        <include name="vendor/studio-42/elfinder/jquery/jquery-1.9.1.min.js"/>
+        <include name="vendor/studio-42/elfinder/jquery/jquery-ui-1.10.1.custom.min.js"/>
+        <include name="vendor/studio-42/elfinder/jquery/ui-themes/smoothness/jquery-ui-1.10.1.custom.css"/>
         <!-- ckeditor -->
-        <include name="vendor/ckeditor/**/*.*"/>
+        <include name="vendor/ckeditor/ckeditor/skins/moono/**/*.*"/>
+        <include name="vendor/ckeditor/ckeditor/plugins/**/*.*"/>
+        <include name="vendor/ckeditor/ckeditor/lang/de.js"/>
+        <include name="vendor/ckeditor/ckeditor/lang/en.js"/>
         <include name="vendor/ckeditor-plugins/**/*.*"/>
         <!-- config -->
         <include name="js/config/*.*"/>
