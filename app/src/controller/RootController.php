@@ -39,7 +39,7 @@ use wcmf\lib\security\principal\impl\AnonymousUser;
  * ??cms = app\src\controller\RootController
  *
  * [views]
- * app\src\controller\RootController?? = app/src/views * /cms.tpl
+ * app\src\controller\RootController?? = app/src/views/cms.tpl
  *
  * @author
  * @version 1.0
