@@ -25,9 +25,9 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.9.3",
+                "version": "1.10.0",
                 "dist": {
-                    "url": "https://github.com/dojo/dojo/archive/1.9.3.zip",
+                    "url": "https://github.com/dojo/dojo/archive/1.10.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -40,9 +40,9 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.9.3",
+                "version": "1.10.0",
                 "dist": {
-                    "url": "https://github.com/dojo/dijit/archive/1.9.3.zip",
+                    "url": "https://github.com/dojo/dijit/archive/1.10.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -55,9 +55,9 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.9.3",
+                "version": "1.10.0",
                 "dist": {
-                    "url": "https://github.com/dojo/dojox/archive/1.9.3.zip",
+                    "url": "https://github.com/dojo/dojox/archive/1.10.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -70,9 +70,9 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.9.3",
+                "version": "1.10.0",
                 "dist": {
-                    "url": "https://github.com/dojo/util/archive/1.9.3.zip",
+                    "url": "https://github.com/dojo/util/archive/1.10.0.zip",
                     "type": "zip"
                 },
                 "require": {
