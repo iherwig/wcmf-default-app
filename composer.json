@@ -267,6 +267,7 @@
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
         "kriszyp/put-selector": "0.3.5",
-        "kriszyp/xstyle": "0.2.1"
+        "kriszyp/xstyle": "0.2.1",
+        "phpunit/phpunit-selenium": ">=1.2"
     }
 }
