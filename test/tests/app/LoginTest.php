@@ -11,18 +11,21 @@
 namespace tests\app;
 
 class LoginTest extends \PHPUnit_Extensions_SeleniumTestCase {
-  
-  protected $captureScreenshotOnFailure = FALSE;
-  protected $screenshotPath = '/home/ingo/public_html/wcmf-default-app/test';
-  protected $screenshotUrl = 'http://localhost/~ingo/wcmf-default-app/test';
+
+  const APP_URL = 'http://localhost/wcmf-default-app/app/public/';
+
+  protected $captureScreenshotOnFailure = true;
+  protected $screenshotPath = __DIR__;
+  protected $screenshotUrl = 'http://localhost/wcmf-default-app/test';
 
   protected function setUp() {
     $this->setBrowser('*firefox');
-    $this->setBrowserUrl('http://localhost/~ingo/wcmf-default-app/app/public/');
+    $this->setBrowserUrl(self::APP_URL);
   }
 
   public function testTitle() {
-    $this->open('http://localhost/~ingo/wcmf-default-app/app/public/');
+    $this->open(self::APP_URL);
+    $this-
     $this->assertTitle('WCMF TEST MODEL');
   }
 }
