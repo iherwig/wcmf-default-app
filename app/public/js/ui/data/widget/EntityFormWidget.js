@@ -16,6 +16,7 @@ define( [
     "../../_include/FormLayout",
     "../../_include/_NotificationMixin",
     "../../_include/widget/Button",
+    "../../../action/CheckPermissions",
     "../../../action/Lock",
     "../../../model/meta/Model",
     "../../../persistence/BackendError",
@@ -46,6 +47,7 @@ function(
     FormLayout,
     _Notification,
     Button,
+    CheckPermissions,
     Lock,
     Model,
     BackendError,
@@ -113,6 +115,14 @@ function(
 
             // load input widgets referenced in attributes' input type
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
+                // check instance permissions
+                new CheckPermissions({
+                    page: this.page
+                }).execute({}, ['app.src.model.wcmf.User??read', 'app.src.model.wcmf.User??delete']).then(lang.hitch(this, function(result) {
+                    // success
+                    console.log(result);
+                }));
+
                 this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
 
                 // add attribute widgets

@@ -12,25 +12,23 @@ define([
     return declare([ActionBase], {
 
         name: 'lock',
-        iconClass: 'fa fa-lock',
+        iconClass: 'fa fa-check',
 
-        action: "lock", // "lock|unlock"
-        lockType: "optimistic", // "optimistic|pessimistic"
+        action: "checkPermissions",
 
         /**
-         * Create a pessimistic lock on the object
+         * Check permissions for the given object
          * @param e The event that triggered execution, might be null
-         * @param data Object to lock
+         * @param operations Array of operations to check
          */
-        execute: function(e, data) {
+        execute: function(e, operations) {
             if (this.init instanceof Function) {
-                this.init(data);
+                this.init(operations);
             }
             return request.post(appConfig.backendUrl, {
                 data: {
                     action: this.action,
-                    oid: data.oid,
-                    type: this.lockType
+                    "operations[]": operations
                 },
                 headers: {
                     Accept: "application/json"
@@ -40,13 +38,15 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(data, response);
+                    this.callback(operations, response);
                 }
+                return response;
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {
-                    this.errback(data, error);
+                    this.errback(operations, error);
                 }
+                return error;
             }));
         }
     });
