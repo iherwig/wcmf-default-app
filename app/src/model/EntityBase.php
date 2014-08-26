@@ -23,7 +23,6 @@ use wcmf\lib\core\ObjectFactory;
 // PROTECTED REGION END
 
 /**
- * @class EntityBase
  * EntityBase description:
  *
  * @author

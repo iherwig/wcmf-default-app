@@ -19,19 +19,15 @@ namespace app\src\controller;
 
 use wcmf\lib\presentation\Controller;
 // PROTECTED REGION ID(app/src/controller/RootController.php/Import) ENABLED START
-use \Exception;
 use wcmf\lib\config\ConfigurationException;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
-use wcmf\lib\presentation\Application;
 use wcmf\lib\util\URIUtil;
 use wcmf\lib\security\principal\impl\AnonymousUser;
 // PROTECTED REGION END
 
 /**
- * @class RootController
- * @ingroup Controller
- * @brief
+ * RootController description:
  *
  * The following configuration settings are defined for this controller:
  *
@@ -47,9 +43,9 @@ use wcmf\lib\security\principal\impl\AnonymousUser;
 class RootController extends Controller {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Body) ENABLED START
   /**
-   * @see Controller::executeKernel()
+   * @see Controller::doExecute()
    */
-  protected function executeKernel() {
+  protected function doExecute() {
     $response = $this->getResponse();
 
     // check for authenticated user
@@ -112,7 +108,6 @@ class RootController extends Controller {
     $response->setValue('appTitle', $appTitle);
     $response->setValue('baseHref', $baseHref);
     $response->setValue('clientConfig', json_encode($clientConfig));
-    return false;
   }
 // PROTECTED REGION END
 

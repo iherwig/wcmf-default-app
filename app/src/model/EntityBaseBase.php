@@ -23,7 +23,6 @@ use wcmf\lib\i18n\Message;
 use wcmf\lib\persistence\ObjectId;
 
 /**
- * @class EntityBase
  * EntityBase description:
  *
  * @author
