@@ -54,12 +54,11 @@ define([
         startProcess: function(action, btn, message) {
             btn.setProcessing();
             this.hideNotification();
-            var process = new Process({
-                callback: lang.hitch(this, lang.partial(this.finishProcess, btn, message)),
-                errback: lang.hitch(this, lang.partial(this.errorHandler, btn)),
-                progback: lang.hitch(this, this.progressHandler)
-            });
-            process.run(action);
+            new Process().run(action).then(
+                lang.hitch(this, lang.partial(this.finishProcess, btn, message)),
+                lang.hitch(this, lang.partial(this.errorHandler, btn)),
+                lang.hitch(this, this.progressHandler)
+            );
         },
 
         finishProcess: function(btn, message) {
@@ -79,8 +78,8 @@ define([
             this.showBackendError(error);
         },
 
-        progressHandler: function(stepName, stepNumber, numberOfSteps, response) {
-            var text = domConstruct.toDom("<p>"+stepName+"</p>");
+        progressHandler: function(data) {
+            var text = domConstruct.toDom("<p>"+data.stepName+"</p>");
             domConstruct.place(text, this.statusNode, "only");
         }
     });

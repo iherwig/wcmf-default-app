@@ -83,6 +83,7 @@ class RootController extends Controller {
       if ($requestPath != 'logout') {
         $redirectUrl = URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$basePath.'?route='.$requestedResource;
         header("Location: ".$redirectUrl);
+        exit;
       }
     }
     $baseHref = dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';

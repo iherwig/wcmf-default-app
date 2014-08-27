@@ -1,7 +1,6 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/request",
     "dojo/topic",
     "dojo/Deferred",
     "./Process",
@@ -9,7 +8,6 @@ define([
 ], function (
     declare,
     lang,
-    request,
     topic,
     Deferred,
     Process,
@@ -35,15 +33,14 @@ define([
             }
             this.data = data;
             this.deferred = new Deferred();
-            var process = new Process({
-                callback: lang.hitch(this, this.successHandler),
-                errback: lang.hitch(this, this.errorHandler),
-                progback: lang.hitch(this, this.progressHandler)
-            });
-            process.run("copy", {
+            new Process().run("copy", {
                 oid: data.oid,
                 targetoid: this.targetOid
-            });
+            }).then(
+                lang.hitch(this, this.successHandler),
+                lang.hitch(this, this.errorHandler),
+                lang.hitch(this, this.progressHandler)
+            );
             return this.deferred;
         },
 
@@ -53,22 +50,24 @@ define([
                 oid: this.data.oid,
                 action: "add"
             });
-            this.deferred.resolve();
             if (this.callback instanceof Function) {
-                this.callback(this.data, response);
+                this.callback(this.data);
             }
+            this.deferred.resolve(this.data);
         },
 
         errorHandler: function(error) {
             if (this.errback instanceof Function) {
-                this.errback(this.data, error);
+                this.errback(error);
             }
+            this.deferred.reject(error);
         },
 
-        progressHandler: function(stepName, stepNumber, numberOfSteps, response) {
+        progressHandler: function(data) {
             if (this.progback instanceof Function) {
-                this.progback(this.data, response);
+                this.progback(data);
             }
+            this.deferred.progress(data);
         }
     });
 });

@@ -26,7 +26,9 @@ define([
         page: null,
 
         /**
-         * Constructor
+         * Constructor. Clients may either use the callback/errback/progback
+         * parameters or the deferred instances returned by execute to handle
+         * the action response.
          * @param page Instance of _PageMixin
          * @param init Function to be before action is executed (optional)
          * @param callback Function to be called on success (optional)
@@ -72,10 +74,11 @@ define([
         /**
          * Execute the action.
          * @param e The event that triggered execution, might be null
+         * @return Deferred if the action is async
          *
+         * Note: Concrete Action classes may require additional parameters
          * Implementation hints: Before start, call this.init. When done, call
          * this.callback, this.errback, this.progback depending on the execution result.
-         * Longer running actions should return a Deferred instance.
          */
         execute: function(e) {
             throw("Method execute() must be implemented by concrete action.");

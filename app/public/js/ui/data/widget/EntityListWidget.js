@@ -101,18 +101,18 @@ function(
                         message: Dict.translate("Copying '%0%'", [this.typeClass.getDisplayValue(data)])
                     });
                 }),
-                callback: lang.hitch(this, function(data, result) {
+                callback: lang.hitch(this, function(result) {
                     // success
                     this.showNotification({
                         type: "ok",
-                        message: Dict.translate("'%0%' was successfully copied", [this.typeClass.getDisplayValue(data)]),
+                        message: Dict.translate("'%0%' was successfully copied", [this.typeClass.getDisplayValue(result)]),
                         fadeOut: true
                     });
                     this.gridWidget.refresh();
                 }),
-                errback: lang.hitch(this, function(data, result) {
+                errback: lang.hitch(this, function(error) {
                     // error
-                    this.showBackendError(result);
+                    this.showBackendError(error);
                 })
             });
 
@@ -121,17 +121,17 @@ function(
                 init: lang.hitch(this, function(data) {
                     this.hideNotification();
                 }),
-                callback: lang.hitch(this, function(data, result) {
+                callback: lang.hitch(this, function(result) {
                     // success
                     this.showNotification({
                         type: "ok",
-                        message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(data)]),
+                        message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(result)]),
                         fadeOut: true
                     });
                 }),
-                errback: lang.hitch(this, function(data, result) {
+                errback: lang.hitch(this, function(error) {
                     // error
-                    this.showBackendError(result);
+                    this.showBackendError(error);
                 })
             });
 

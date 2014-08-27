@@ -2,12 +2,14 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/request",
-    "dojo/request/iframe"
+    "dojo/request/iframe",
+    "dojo/Deferred"
 ], function (
     declare,
     lang,
     request,
-    iframe
+    iframe,
+    Deferred
 ) {
     /**
      * Process wrapper class. A process is typically executed
@@ -19,23 +21,16 @@ define([
         errback: null,
         progback: null,
 
-        /**
-         * Constructor
-         * @param callback Function to be called on success (optional)
-         * @param errback Function to be called on error (optional)
-         * @param progback Function to be called to signal a progress (optional)
-         */
-        constructor: function(args) {
-            declare.safeMixin(this, args);
-        },
+        deferred: null,
 
         /**
          * Initiate the process with the initial action.
          * @param action The action to be called on the backend
          * @param params Additional parameters to be passed with the first call
+         * @return Deferred
          */
         run: function(action, params) {
-            this.doCall(action, "", params);
+            return this.doCall(action, "", params);
         },
 
         /**
@@ -43,12 +38,18 @@ define([
          * @param action The action to be called on the backend
          * @param controller The controller that initiates the action
          * @param params Additional parameters to be passed with the call
+         * @return Deferred
          */
         doCall: function(action, controller, params) {
             var data = lang.mixin({
                 controller: controller,
                 action: action
             }, params);
+
+            // create deferred on first call
+            if (this.deferred === null) {
+                this.deferred = new Deferred();
+            }
             request.post(appConfig.backendUrl, {
                 data: data,
                 headers: {
@@ -61,10 +62,9 @@ define([
                 this.handleResponse(response);
             }), lang.hitch(this, function(error) {
                 // error
-                if (this.errback instanceof Function) {
-                    this.errback(error);
-                }
+                this.deferred.reject(error);
             }));
+            return this.deferred;
         },
 
         /**
@@ -79,9 +79,13 @@ define([
             var numberOfSteps = parseInt(response['numberOfSteps']);
             var stepName = response['displayText'];
             var controller = response['controller'];
-            if (this.progback instanceof Function) {
-                this.progback(stepName, stepNumber, numberOfSteps, response);
-            }
+            // send progress information
+            this.deferred.progress({
+                stepName: stepName,
+                stepNumber: stepNumber,
+                numberOfSteps: numberOfSteps,
+                response: response
+            });
 
             if (response.action === "download") {
                 iframe.post(appConfig.backendUrl, {
@@ -90,15 +94,11 @@ define([
                         action: "continue"
                     }
                 });
-                if (this.callback instanceof Function) {
-                    this.callback(response);
-                }
+                this.deferred.resolve(response);
             }
             else if (response.action === "done") {
-                // call the success handler if the task is finished
-                if (this.callback instanceof Function) {
-                    this.callback(response);
-                }
+                // the task is finished
+                this.deferred.resolve(response);
             }
             else {
                 // do the proceeding calls

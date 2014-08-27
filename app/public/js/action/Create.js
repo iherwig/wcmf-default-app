@@ -11,7 +11,7 @@ define([
 
         name: 'create',
         iconClass: 'fa fa-star',
-        
+
         route: '',
 
         /**

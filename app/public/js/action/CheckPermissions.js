@@ -2,11 +2,13 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/request",
+    "dojo/Deferred",
     "./ActionBase"
 ], function (
     declare,
     lang,
     request,
+    Deferred,
     ActionBase
 ) {
     return declare([ActionBase], {
@@ -20,12 +22,14 @@ define([
          * Check permissions for the given object
          * @param e The event that triggered execution, might be null
          * @param operations Array of operations to check
+         * @return Deferred
          */
         execute: function(e, operations) {
             if (this.init instanceof Function) {
                 this.init(operations);
             }
-            return request.post(appConfig.backendUrl, {
+            var deferred = new Deferred();
+            request.post(appConfig.backendUrl, {
                 data: {
                     action: this.action,
                     "operations[]": operations
@@ -38,16 +42,17 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(operations, response);
+                    this.callback(response.result);
                 }
-                return response;
+                deferred.resolve(response.result);
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {
-                    this.errback(operations, error);
+                    this.errback(error);
                 }
-                return error;
+                deferred.reject(error);
             }));
+            return deferred;
         }
     });
 });

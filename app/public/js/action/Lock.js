@@ -2,11 +2,13 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/request",
+    "dojo/Deferred",
     "./ActionBase"
 ], function (
     declare,
     lang,
     request,
+    Deferred,
     ActionBase
 ) {
     return declare([ActionBase], {
@@ -21,12 +23,14 @@ define([
          * Create a pessimistic lock on the object
          * @param e The event that triggered execution, might be null
          * @param data Object to lock
+         * @return Deferred
          */
         execute: function(e, data) {
             if (this.init instanceof Function) {
                 this.init(data);
             }
-            return request.post(appConfig.backendUrl, {
+            var deferred = new Deferred();
+            request.post(appConfig.backendUrl, {
                 data: {
                     action: this.action,
                     oid: data.oid,
@@ -40,14 +44,17 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(data, response);
+                    this.callback(response);
                 }
+                deferred.resolve(response);
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {
-                    this.errback(data, error);
+                    this.errback(error);
                 }
+                deferred.reject(error);
             }));
+            return deferred;
         }
     });
 });

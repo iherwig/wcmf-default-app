@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/promise/all",
     "dojo/topic",
     "dojo/dom-class",
     "dojo/dom-construct",
@@ -33,6 +34,7 @@ function(
     require,
     declare,
     lang,
+    all,
     topic,
     domClass,
     domConstruct,
@@ -113,15 +115,28 @@ function(
         postCreate: function() {
             this.inherited(arguments);
 
+            var deferredList = [];
             // load input widgets referenced in attributes' input type
-            ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
-                // check instance permissions
-                new CheckPermissions({
-                    page: this.page
-                }).execute({}, ['app.src.model.wcmf.User??read', 'app.src.model.wcmf.User??delete']).then(lang.hitch(this, function(result) {
-                    // success
-                    console.log(result);
-                }));
+            deferredList.push(ControlFactory.loadControlClasses(this.type));
+            // check instance permissions
+            var requiredPermissions = [
+                this.entity.oid+'??modify',
+                this.entity.oid+'??delete'
+            ];
+            var attributes = this.getAttributes();
+            for (var i=0, count=attributes.length; i<count; i++) {
+                var attribute = attributes[i];
+                requiredPermissions.push(this.entity.oid+'.'+attribute.name+'??read');
+                requiredPermissions.push(this.entity.oid+'.'+attribute.name+'??modify');
+            }
+            deferredList.push(new CheckPermissions({
+                page: this.page
+            }).execute({}, requiredPermissions));
+
+            all(deferredList).then(lang.hitch(this, function(results) {
+                var controls = results[0];
+                var permissions = results[1];
+                console.log(permissions);
 
                 this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
 
@@ -314,8 +329,9 @@ function(
                 page: this.page,
                 action: "lock",
                 lockType: "optimistic",
-                init: lang.hitch(this, function(data) {}),
-                callback: lang.hitch(this, function(data, result) {
+                init: lang.hitch(this, function(data) {})
+            }).execute({}, this.entity).then(
+                lang.hitch(this, function(result) {
                     // success
                     // not locked by other user
                     this.setLockState(false, true);
@@ -324,9 +340,9 @@ function(
                         this.setLockState(true, true);
                     }
                 }),
-                errback: lang.hitch(this, function(data, result) {
+                lang.hitch(this, function(error) {
                     // check for existing lock
-                    var error = BackendError.parseResponse(result);
+                    var error = BackendError.parseResponse(error);
                     if (error.code === "OBJECT_IS_LOCKED") {
                         this.setLockState(true, false);
                         this.showNotification({
@@ -339,7 +355,7 @@ function(
                         this.showBackendError(error);
                     }
                 })
-            }).execute({}, this.entity);
+            );
         },
 
         _save: function(e) {
@@ -501,8 +517,9 @@ function(
                 page: this.page,
                 action: this.isLocked ? "unlock" : "lock",
                 lockType: "pessimistic",
-                init: lang.hitch(this, function(data) {}),
-                callback: lang.hitch(this, function(data, result) {
+                init: lang.hitch(this, function(data) {})
+            }).execute(e, this.entity).then(
+                lang.hitch(this, function(result) {
                     // success
                     this.showNotification({
                         type: "ok",
@@ -514,15 +531,15 @@ function(
                     // update optimistic lock
                     this.acquireLock();
                 }),
-                errback: lang.hitch(this, function(data, result) {
+                lang.hitch(this, function(error) {
                     // check for existing lock
-                    var error = BackendError.parseResponse(result);
+                    var error = BackendError.parseResponse(error);
                     if (error.code === "OBJECT_IS_LOCKED") {
                         this.setLockState(true, false);
                     }
                     this.showBackendError(error);
                 })
-            }).execute(e, this.entity);
+            );
         }
     });
 });
