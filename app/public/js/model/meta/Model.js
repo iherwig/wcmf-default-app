@@ -135,6 +135,15 @@ define([
     };
 
     /**
+     * Strip the id from a dummy oid (returns type), return oid else
+     * @param oid The object id
+     * @return String
+     */
+    exports.removeDummyOid = function(oid) {
+        return oid.replace(/:~$/, '');
+    };
+
+    /**
      * Get a type from it's name
      * @param typeName The name of the type
      * @return Node instance

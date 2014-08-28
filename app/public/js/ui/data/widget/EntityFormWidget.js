@@ -120,23 +120,26 @@ function(
             deferredList.push(ControlFactory.loadControlClasses(this.type));
             // check instance permissions
             var requiredPermissions = [
-                this.entity.oid+'??modify',
-                this.entity.oid+'??delete'
+                Model.removeDummyOid(this.entity.oid)+'??modify',
+                Model.removeDummyOid(this.entity.oid)+'??delete'
             ];
             var attributes = this.getAttributes();
             for (var i=0, count=attributes.length; i<count; i++) {
                 var attribute = attributes[i];
-                requiredPermissions.push(this.entity.oid+'.'+attribute.name+'??read');
-                requiredPermissions.push(this.entity.oid+'.'+attribute.name+'??modify');
+                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read');
+                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??modify');
             }
-            deferredList.push(new CheckPermissions({
-                page: this.page
-            }).execute({}, requiredPermissions));
+            // check relation permissions
+            var relations = this.getRelations();
+            for (var i=0, count=relations.length; i<count; i++) {
+                var relation = relations[i];
+                requiredPermissions.push(Model.getFullyQualifiedTypeName(relation.type)+'??read');
+            }
+            deferredList.push(new CheckPermissions().execute({}, requiredPermissions));
 
             all(deferredList).then(lang.hitch(this, function(results) {
                 var controls = results[0];
                 var permissions = results[1];
-                console.log(permissions);
 
                 this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
 
@@ -145,23 +148,70 @@ function(
                 var attributes = this.getAttributes();
                 for (var i=0, count=attributes.length; i<count; i++) {
                     var attribute = attributes[i];
-                    var controlClass = controls[attribute.inputType];
-                    var attributeWidget = new controlClass({
-                        entity: this.entity,
-                        attribute: attribute,
-                        original: this.original
-                    });
-                    this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
-                        var widgetValue = widget.get("value");
-                        var entityValue = this.entity.get(widget.attribute.name) || "";
-                        if (widgetValue !== entityValue) {
-                            this.setModified(true);
+                    // only show attributes with read permission
+                    if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read'] === true) {
+                        var controlClass = controls[attribute.inputType];
+                        var attributeWidget = new controlClass({
+                            entity: this.entity,
+                            attribute: attribute,
+                            original: this.original
+                        });
+                        if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??modify'] === true) {
+                            this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
+                                var widgetValue = widget.get("value");
+                                var entityValue = this.entity.get(widget.attribute.name) || "";
+                                if (widgetValue !== entityValue) {
+                                    this.setModified(true);
+                                }
+                            }, attributeWidget)));
                         }
-                    }, attributeWidget)));
-                    this.layoutWidget.addChild(attributeWidget);
+                        else {
+                            // disable widget, if no modify permission
+                            attributeWidget.set('disabled', true);
+                        }
+                        this.layoutWidget.addChild(attributeWidget);
 
-                    this.attributeWidgets.push(attributeWidget);
+                        this.attributeWidgets.push(attributeWidget);
+                    }
                 }
+
+                // add relation widgets
+                if (!this.isNew) {
+                    var relations = this.getRelations();
+                    for (var i=0, count=relations.length; i<count; i++) {
+                        var relation = relations[i];
+                        // only show relations with read permission
+                        if (permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true) {
+                            var relationWidget = new EntityRelationWidget({
+                                route: this.baseRoute,
+                                entity: this.entity,
+                                relation: relation,
+                                page: this.page
+                            });
+                            this.relationsNode.appendChild(relationWidget.domNode);
+                        }
+                    }
+                }
+
+                // set button states
+                this.setBtnState("save", false); // no modifications yet
+                var canDelete = !this.isNew && permissions[Model.removeDummyOid(this.entity.oid)+'??delete'] === true;
+                this.setBtnState("delete", canDelete);
+
+                // handle locking
+                if (!this.isNew) {
+                    // assume the object is locked
+                    this.setLockState(true, false);
+                    this.acquireLock();
+                }
+                else {
+                    query(this.lockNode).style("display", "none");
+                }
+
+                if (!this.isNew) {
+                    this.buildLanguageMenu();
+                }
+
                 if (this.onCreated instanceof Function) {
                     this.onCreated(this);
                 }
@@ -169,41 +219,6 @@ function(
                 // error
                 this.showBackendError(error);
             }));
-
-            // handle locking
-            if (!this.isNew) {
-                // assume the object is locked
-                this.setLockState(true, false);
-                this.acquireLock();
-            }
-            else {
-                query(this.lockNode).style("display", "none");
-            }
-
-            // add relation widgets
-            if (!this.isNew) {
-                var relations = this.getRelations();
-                for (var i=0, count=relations.length; i<count; i++) {
-                    var relation = relations[i];
-                    var relationWidget = new EntityRelationWidget({
-                        route: this.baseRoute,
-                        entity: this.entity,
-                        relation: relation,
-                        page: this.page
-                    });
-                    this.relationsNode.appendChild(relationWidget.domNode);
-                }
-            }
-
-            // set button states
-            this.setBtnState("save", false);
-            if (this.isNew) {
-                this.setBtnState("delete", false);
-            }
-
-            if (!this.isNew) {
-                this.buildLanguageMenu();
-            }
 
             this.own(
                 topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
@@ -326,7 +341,6 @@ function(
 
         acquireLock: function() {
             new Lock({
-                page: this.page,
                 action: "lock",
                 lockType: "optimistic",
                 init: lang.hitch(this, function(data) {})
@@ -480,7 +494,6 @@ function(
             }
 
             new Delete({
-                page: this.page,
                 init: lang.hitch(this, function(data) {
                     this.hideNotification();
                 }),
@@ -514,7 +527,6 @@ function(
                         Dict.translate("Locking '%0%'", [displayValue])
             });
             new Lock({
-                page: this.page,
                 action: this.isLocked ? "unlock" : "lock",
                 lockType: "pessimistic",
                 init: lang.hitch(this, function(data) {})

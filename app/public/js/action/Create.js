@@ -13,6 +13,15 @@ define([
         iconClass: 'fa fa-star',
 
         route: '',
+        page: null,
+
+        /**
+         * Constructor. For additional parameters see ActionBase.
+         * @param page Instance of _PageMixin used for navigation
+         */
+        constructor: function(args) {
+            declare.safeMixin(this, args);
+        },
 
         /**
          * Navigate to create page

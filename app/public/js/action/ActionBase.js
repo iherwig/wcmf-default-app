@@ -23,13 +23,10 @@ define([
         _iconNode: null,
         _hasSpinner: false,
 
-        page: null,
-
         /**
          * Constructor. Clients may either use the callback/errback/progback
          * parameters or the deferred instances returned by execute to handle
          * the action response.
-         * @param page Instance of _PageMixin
          * @param init Function to be before action is executed (optional)
          * @param callback Function to be called on success (optional)
          * @param errback Function to be called on error (optional)

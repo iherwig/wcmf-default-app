@@ -94,7 +94,6 @@ function(
             });
 
             var copyAction = new Copy({
-                page: this.page,
                 init: lang.hitch(this, function(data) {
                     this.showNotification({
                         type: "process",
@@ -117,7 +116,6 @@ function(
             });
 
             var deleteAction = new Delete({
-                page: this.page,
                 init: lang.hitch(this, function(data) {
                     this.hideNotification();
                 }),

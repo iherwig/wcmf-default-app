@@ -11,8 +11,17 @@ define([
 
         name: 'edit',
         iconClass: 'fa fa-pencil',
-        
+
         route: '',
+        page: null,
+
+        /**
+         * Constructor. For additional parameters see ActionBase.
+         * @param page Instance of _PageMixin used for navigation
+         */
+        constructor: function(args) {
+            declare.safeMixin(this, args);
+        },
 
         /**
          * Navigate to edit page

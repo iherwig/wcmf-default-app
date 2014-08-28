@@ -43,5 +43,14 @@ define([
         return false;
     };
 
+    /**
+     * Get the user's login
+     * @return String
+     */
+    User.isLoggedIn = function() {
+        var user = Cookie.get("user");
+        return user !== undefined;
+    };
+
     return User;
 });

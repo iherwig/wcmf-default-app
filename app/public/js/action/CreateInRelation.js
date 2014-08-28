@@ -11,10 +11,19 @@ define([
 
         name: 'create',
         iconClass: 'fa fa-star',
-        
+
         route: '',
         source: null,
         relation: null,
+        page: null,
+
+        /**
+         * Constructor. For additional parameters see ActionBase.
+         * @param page Instance of _PageMixin used for navigation
+         */
+        constructor: function(args) {
+            declare.safeMixin(this, args);
+        },
 
         /**
          * Navigate to create page for an object that is in relation to source

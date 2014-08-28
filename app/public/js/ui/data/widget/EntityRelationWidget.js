@@ -90,7 +90,6 @@ function(
             });
 
             var copyAction = new Copy({
-                page: this.page,
                 targetoid: this.entity.oid,
                 init: lang.hitch(this, function(data) {
                     this.showNotification({
@@ -114,7 +113,6 @@ function(
             });
 
             var unlinkAction = new Unlink({
-                page: this.page,
                 source: this.entity,
                 relation: this.relation,
                 callback: lang.hitch(this, function(result) {
@@ -133,7 +131,6 @@ function(
             });
 
             var deleteAction = new Delete({
-                page: this.page,
                 callback: lang.hitch(this, function(data, result) {
                     // success
                     this.showNotification({
@@ -184,7 +181,6 @@ function(
             e.preventDefault();
 
             new Link({
-                page: this.page,
                 source: this.entity,
                 relation: this.relation,
                 init: lang.hitch(this, function(data) {

@@ -6,6 +6,7 @@ define([
     "dojomat/Application",
     "dojomat/populateRouter",
     "./routing-map",
+    "./Startup",
     "require",
     "dojo/query",
     "dojo/dom-construct",
@@ -18,6 +19,7 @@ define([
     Application,
     populateRouter,
     routingMap,
+    Startup,
     require,
     query,
     domConstruct
@@ -28,7 +30,11 @@ define([
 
         constructor: function () {
             populateRouter(this, routingMap);
-            this.run();
+            Startup.run().then(lang.hitch(this, function(result) {
+                this.run();
+            }), lang.hitch(this, function(error) {
+                // error
+            }));
         },
 
         setPageNode: function () {

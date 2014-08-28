@@ -11,6 +11,7 @@ define([
     "../_include/widget/NavigationWidget",
     "../_include/widget/Button",
     "../../User",
+    "../../Startup",
     "../../locale/Dictionary",
     "dojo/text!./template/LoginPage.html"
 ], function (
@@ -26,6 +27,7 @@ define([
     NavigationWidget,
     Button,
     User,
+    Startup,
     Dict,
     template
 ) {
@@ -66,17 +68,23 @@ define([
                 this.loginBtn.reset();
                 User.create(data.user, response.roles);
 
-                // redirect to initially requested route if given
-                var redirectRoute = this.request.getQueryParam("route");
-                if (redirectRoute) {
-                    window.location.href = this.request.getPathname()+redirectRoute;
-                }
-                else {
-                    // redirect to default route
-                    var route = this.router.getRoute("home");
-                    var url = route.assemble();
-                    this.pushState(url);
-                }
+                // run startup code
+                Startup.run().then(lang.hitch(this, function(result) {
+                      // redirect to initially requested route if given
+                      var redirectRoute = this.request.getQueryParam("route");
+                      if (redirectRoute) {
+                          window.location.href = this.request.getPathname()+redirectRoute;
+                      }
+                      else {
+                          // redirect to default route
+                          var route = this.router.getRoute("home");
+                          var url = route.assemble();
+                          this.pushState(url);
+                      }
+                }), lang.hitch(this, function(error) {
+                      // error
+                      this.showBackendError(error);
+                }));
             }), lang.hitch(this, function(error) {
                 // error
                 this.loginBtn.reset();
