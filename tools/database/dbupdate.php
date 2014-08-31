@@ -49,7 +49,7 @@ if (is_dir($migrationScriptsDir)) {
   }
 }
 
-// parse tables.sql
+// parse tables definition file
 $tables = array();
 $readingTable = false;
 $tableDef = '';
