@@ -110,13 +110,6 @@ define([
         }],
 
         relations: [{
-            name: "Locktable",
-            type: "Locktable",
-            aggregationKind: "composite",
-            maxMultiplicity: "unbounded",
-            thisEndName: "User",
-            relationType: "child"
-        }, {
             name: "UserConfig",
             type: "UserConfig",
             aggregationKind: "composite",
