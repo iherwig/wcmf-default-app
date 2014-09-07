@@ -19,6 +19,7 @@ use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\BuildDepth;
+use wcmf\lib\security\impl\NullPermissionManager;
 use wcmf\lib\util\DBUtil;
 
 new ClassLoader();
@@ -46,8 +47,7 @@ if (is_dir($installScriptsDir)) {
   }
 }
 
-$permissionManager = ObjectFactory::getInstance('permissionManager');
-$permissionManager->deactivate();
+ObjectFactory::registerInstance('permissionManager', new NullPermissionManager());
 
 $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 $transaction = $persistenceFacade->getTransaction();
@@ -60,28 +60,31 @@ try {
     $seq->setValue("id", 1);
   }
 
-  $roleTypeInst = ObjectFactory::getInstance('Role');
-  $userTypeInst = ObjectFactory::getInstance('User');
+  $principalFactory = ObjectFactory::getInstance('principalFactory');
+  if ($principalFactory instanceof wcmf\lib\security\principal\impl\DefaultPrincipalFactory) {
+    $roleType = $config->getValue('roleType', 'principalFactory');
+    $userType = $config->getValue('userType', 'principalFactory');
 
-  $adminRole = $roleTypeInst::getByName("administrators");
-  if (!$adminRole) {
-    Log::info("creating role with name 'administrators'...", "install");
-    $adminRole = $persistenceFacade->create($roleTypeInst->getType());
-    $adminRole->setName("administrators");
-  }
-  $adminUser = $userTypeInst::getByLogin("admin");
-  if (!$adminUser) {
-    Log::info("creating user with login 'admin' password 'admin'...", "install");
-    $adminUser = $persistenceFacade->create($userTypeInst->getType());
-    $adminUser->setLogin("admin");
-    $adminUser->setPassword("admin");
-    if (in_array("admin.ini", $config->getConfigurations())) {
-      $adminUser->setConfig("admin.ini");
+    $adminRole = $principalFactory->getRole("administrators");
+    if (!$adminRole) {
+      Log::info("creating role with name 'administrators'...", "install");
+      $adminRole = $persistenceFacade->create($roleType);
+      $adminRole->setName("administrators");
     }
-  }
-  if (!$adminUser->hasRole("administrators")) {
-    Log::info("adding user 'admin' to role 'administrators'...", "install");
-    $adminUser->addNode($adminRole);
+    $adminUser = $principalFactory->getUser("admin");
+    if (!$adminUser) {
+      Log::info("creating user with login 'admin' password 'admin'...", "install");
+      $adminUser = $persistenceFacade->create($userType);
+      $adminUser->setLogin("admin");
+      $adminUser->setPassword("admin");
+      if (in_array("admin.ini", $config->getConfigurations())) {
+        $adminUser->setConfig("admin.ini");
+      }
+    }
+    if (!$adminUser->hasRole("administrators")) {
+      Log::info("adding user 'admin' to role 'administrators'...", "install");
+      $adminUser->addNode($adminRole);
+    }
   }
 
   $transaction->commit();

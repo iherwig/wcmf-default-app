@@ -24,6 +24,7 @@ use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\util\URIUtil;
 use wcmf\lib\security\principal\impl\AnonymousUser;
+use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 // PROTECTED REGION END
 
 /**
@@ -62,8 +63,16 @@ class RootController extends Controller {
     $mediaAbsPath = $config->getDirectoryValue('uploadDir', 'media');
     $inputTypes = $config->getSection('inputTypes');
     $displayTypes = $config->getSection('displayTypes');
-    $userType = str_replace('\\', '.', $config->getValue('__class', 'user'));
-    $roleType = str_replace('\\', '.', $config->getValue('__class', 'role'));
+
+    $principalFactory = ObjectFactory::getInstance('principalFactory');
+    if ($principalFactory instanceof DefaultPrincipalFactory) {
+      $roleType = $config->getValue('roleType', 'principalFactory');
+      $userType = $config->getValue('userType', 'principalFactory');
+    }
+    else {
+      $userType = '';
+      $roleType = '';
+    }
 
     // validate config
     if (!is_array($rootTypes) || sizeof($rootTypes) == 0) {
