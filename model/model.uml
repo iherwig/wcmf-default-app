@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://www.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf test">
       <packagedElement xmi:type="uml:Package" xmi:id="_1jaukLQuEeOLlbB2YLI0iw" name="PrimitiveTypes">
@@ -609,7 +609,10 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_uiSeELRCEeOQ5oJFa1i8cg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zs9zMLRCEeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zs9zMbRCEeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ztA2gLRCEeOQ5oJFa1i8cg" value="wcmf\lib\security\impl\DefaultPermissionManager"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ztA2gLRCEeOQ5oJFa1i8cg" value="wcmf\lib\security\impl\ChainedPermissionManager"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_gMo7YDkOEeSuCfpXnqk73Q" name="managers" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_yOL1QDkOEeSuCfpXnqk73Q" value="{$defaultPermissionManager, $staticPermissionManager}"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_VV5D4LQ-EeOQ5oJFa1i8cg" name="RoleConfig">
@@ -724,6 +727,23 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_s0SLgLQ_EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_s0SykLQ_EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_s0VO0LQ_EeOQ5oJFa1i8cg" value="+administrators"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_1fa8gDkOEeSuCfpXnqk73Q" name="DefaultPermissionManager">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_1fa8gTkOEeSuCfpXnqk73Q" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1fa8gjkOEeSuCfpXnqk73Q" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1fa8gzkOEeSuCfpXnqk73Q" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_1fa8hDkOEeSuCfpXnqk73Q" value="wcmf\lib\security\impl\DefaultPermissionManager"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_cV3PYDkUEeSGKuH2mWBLGA" name="permissionType" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_kFM5oDkUEeSGKuH2mWBLGA" value="app.src.model.wcmf.Permission"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_1mktYDkOEeSuCfpXnqk73Q" name="StaticPermissionManager">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_1mktYTkOEeSuCfpXnqk73Q" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1mktYjkOEeSuCfpXnqk73Q" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1mktYzkOEeSuCfpXnqk73Q" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_1mktZDkOEeSuCfpXnqk73Q" value="wcmf\lib\security\impl\StaticPermissionManager"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -1343,6 +1363,30 @@
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_l0_XgrTWEeOYkOsR5IzpsA" value="1"/>
                   </ownedAttribute>
                 </packagedElement>
+                <packagedElement xmi:type="uml:Class" xmi:id="_VEQuMDkNEeSAepGYcnIyuw" name="Permission">
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_VEQuMTkNEeSAepGYcnIyuw" name="resource" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VEQuMjkNEeSAepGYcnIyuw" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VEQuMzkNEeSAepGYcnIyuw" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralString" xmi:id="_VEQuNDkNEeSAepGYcnIyuw">
+                      <value xsi:nil="true"/>
+                    </defaultValue>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_VEQuNTkNEeSAepGYcnIyuw" name="context" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VEQuNjkNEeSAepGYcnIyuw" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VEQuNzkNEeSAepGYcnIyuw" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralString" xmi:id="_VEQuODkNEeSAepGYcnIyuw">
+                      <value xsi:nil="true"/>
+                    </defaultValue>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_VEQuOTkNEeSAepGYcnIyuw" name="action" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VEQuOjkNEeSAepGYcnIyuw" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VEQuOzkNEeSAepGYcnIyuw" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralString" xmi:id="_VEQuPDkNEeSAepGYcnIyuw">
+                      <value xsi:nil="true"/>
+                    </defaultValue>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_dNmz4DkNEeSAepGYcnIyuw" name="roles" type="_agg3ALQwEeOLlbB2YLI0iw"/>
+                </packagedElement>
                 <packagedElement xmi:type="uml:Association" xmi:id="_ZPt147TSEeOYkOsR5IzpsA" name="" memberEnd="_ZPt15LTSEeOYkOsR5IzpsA _ZPt14LTSEeOYkOsR5IzpsA"/>
                 <packagedElement xmi:type="uml:Association" xmi:id="_OJOs07TWEeOYkOsR5IzpsA" name="" memberEnd="_OJOs1LTWEeOYkOsR5IzpsA _OJOs0LTWEeOYkOsR5IzpsA"/>
                 <packagedElement xmi:type="uml:Association" xmi:id="_l0_Xg7TWEeOYkOsR5IzpsA" name="" memberEnd="_l0_XhLTWEeOYkOsR5IzpsA _l0_XgLTWEeOYkOsR5IzpsA"/>
@@ -1680,4 +1724,11 @@
   <Chronos:ChiValue xmi:id="_hAlnMDQ0EeSRmq5T8ey5JQ" base_Property="_hAkZEDQ0EeSRmq5T8ey5JQ"/>
   <Chronos:ChiSystem xmi:id="_FeKyBTRKEeSRmq5T8ey5JQ" plattform="wcmf" config="security.ini" base_Class="_FeKyADRKEeSRmq5T8ey5JQ"/>
   <Chronos:ChiSystem xmi:id="_PXgOpTRKEeSRmq5T8ey5JQ" plattform="wcmf" config="security.ini" base_Class="_PXgOoDRKEeSRmq5T8ey5JQ"/>
+  <Chronos:ChiNode xmi:id="_VG9c4DkNEeSAepGYcnIyuw" base_Class="_VEQuMDkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG-D8DkNEeSAepGYcnIyuw" base_Property="_VEQuMTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG-rADkNEeSAepGYcnIyuw" base_Property="_VEQuNTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG_SEDkNEeSAepGYcnIyuw" base_Property="_VEQuOTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_gJEfcDkNEeSAepGYcnIyuw" base_Property="_dNmz4DkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiSystem xmi:id="_1fa8hzkOEeSuCfpXnqk73Q" plattform="wcmf" config="security.ini" base_Class="_1fa8gDkOEeSuCfpXnqk73Q"/>
+  <Chronos:ChiSystem xmi:id="_1mktZzkOEeSuCfpXnqk73Q" plattform="wcmf" config="security.ini" base_Class="_1mktYDkOEeSuCfpXnqk73Q"/>
 </xmi:XMI>
