@@ -57,7 +57,11 @@ define([
         original: null, // untranslated entity
 
         constructor: function(params) {
-            this.type = this.request.getPathParam("type");
+            // allow to override type parameter by request
+            var requestType = this.request.getPathParam("type");
+            if (requestType) {
+                this.type = this.request.getPathParam("type");
+            }
             this.typeClass = Model.getType(this.type);
 
             var idParam = this.request.getPathParam("id");

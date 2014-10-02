@@ -74,6 +74,13 @@ class RootController extends Controller {
       $roleType = '';
     }
 
+    if ($config->hasValue('permissionType', 'defaultPermissionManager')) {
+      $permissionType = $config->getValue('permissionType', 'defaultPermissionManager');
+    }
+    else {
+      $permissionType = '';
+    }
+
     // validate config
     if (!is_array($rootTypes) || sizeof($rootTypes) == 0) {
       throw new ConfigurationException("No root types defined.");
@@ -112,7 +119,8 @@ class RootController extends Controller {
       'inputTypes' => $inputTypes,
       'displayTypes' => $displayTypes,
       'userType' => $userType,
-      'roleType' => $roleType
+      'roleType' => $roleType,
+      'permissionType' => $permissionType
     );
 
     $response->setValue('appTitle', $appTitle);

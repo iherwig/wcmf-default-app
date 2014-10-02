@@ -56,6 +56,16 @@ define(["dojo/_base/config", "require"], function (config, require) {
             widget: mid('./ui/admin/AdminPage'),
             layers: l.admin || []
         },
+        permissionList: {
+            schema: p + '/admin/Permission',
+            widget: mid('./ui/admin/PermissionListPage'),
+            layers: l.admin || []
+        },
+        permission: {
+            schema: p + '/admin/Permission/:id',
+            widget: mid('./ui/admin/PermissionPage'),
+            layers: l.admin || []
+        },
         principalList: {
             schema: p + '/admin/:type',
             widget: mid('./ui/admin/PrincipalListPage'),
@@ -64,7 +74,7 @@ define(["dojo/_base/config", "require"], function (config, require) {
         principal: {
             schema: p + '/admin/:type/:id',
             widget: mid('./ui/admin/PrincipalPage'),
-            layers: l.data || []
+            layers: l.admin || []
         }
     };
 });

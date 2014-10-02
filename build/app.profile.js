@@ -41,6 +41,8 @@ var appSrc = [
     "app/js/persistence/Store",
     "app/js/persistence/TreeStore",
     "app/js/ui/admin/AdminPage",
+    "app/js/ui/admin/PermissionListPage",
+    "app/js/ui/admin/PermissionPage",
     "app/js/ui/admin/PrincipalListPage",
     "app/js/ui/admin/PrincipalPage",
     "app/js/ui/admin/widget/RoleFormWidget",

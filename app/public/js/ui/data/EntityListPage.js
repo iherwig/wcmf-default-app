@@ -32,7 +32,11 @@ define([
         type: null,
 
         constructor: function(params) {
-            this.type = this.request.getPathParam("type");
+            // allow to override type parameter by request
+            var requestType = this.request.getPathParam("type");
+            if (requestType) {
+                this.type = requestType;
+            }
         },
 
         postCreate: function() {
