@@ -65,7 +65,6 @@ function(
                     }, this.domNode.parentNode, "last");
                 }
                 this.showSpinner();
-                return text;
             });
         },
 
