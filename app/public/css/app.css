@@ -73,33 +73,18 @@ body {
   background: #ffffff;
 }
 
-.dgrid .dgrid-row:hover, .dgrid .dgrid-row:hover .dgrid-cell {
-  background-color: #08c;
-}
-
-.dgrid-selected, .dgrid-selected .dgrid-cell {
-  background-color: #08c;
-}
-
-.dgrid .dgrid-row:hover, .dgrid .dgrid-row:hover .dgrid-cell a,
-.dgrid-selected .dgrid-cell a {
-  color: #fff;
-}
-
-.dgrid .dgrid-cell {
-  text-shadow: none;
-}
-
-.dgrid .dgrid-cell .dijitInputField {
-  margin-top: -8px;
-}
-
-.dgrid-cell-padding {
-  padding: 6px;
-}
-
 .login-page {
   margin-top: -50px;
+}
+
+.login-page #notification {
+  position: relative;
+  top: 0;
+  width: auto;
+}
+
+.login-page #notification .alert {
+  width: auto;
 }
 
 .form-login {
@@ -192,16 +177,6 @@ input[type="color"]:disabled,
   margin: 5px;
 }
 
-.login-page #notification {
-  position: relative;
-  top: 0;
-  width: auto;
-}
-
-.login-page #notification .alert {
-  width: auto;
-}
-
 .entity-page .dijitTextBox, .principal-page .dijitTextBox,
 .entity-page .dijitSliderH {
   width: 350px;
@@ -209,6 +184,22 @@ input[type="color"]:disabled,
 }
 
 /* dgrid */
+.dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
+  background-color: #08c;
+}
+
+.dgrid-selected, .dgrid-selected .dgrid-cell {
+  background-color: #08c;
+}
+
+.dgrid-row:hover, .dgrid-row:hover .dgrid-cell a, .dgrid-selected .dgrid-cell a {
+  color: #fff;
+}
+
+.dgrid-cell-padding {
+  padding: 6px;
+}
+
 .dgrid-column-selector {
   width: 25px;
 }
@@ -238,8 +229,13 @@ th.field-actions-4, td.field-actions-4 {
 }
 
 .dgrid-cell {
+  text-shadow: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dgrid-cell .dijitInputField {
+  margin-top: -8px;
 }
 
 .dbootstrap .dijitCheckBox, .dbootstrap .dijitRadio {
