@@ -5,3 +5,7 @@
 .dj_ie .dojoxCheckedMultiSelectCheckBoxInput {
   filter: alpha(opacity=1) !important;
 }
+
+.dojoxCheckedMultiSelect .dijitInputInner {
+  cursor: pointer;
+}

@@ -1,6 +1,8 @@
 <?php
 $messages_en = array();
 $messages_en[''] = '';
+// file(s): public/js/ui/data/input/widget/MultiSelectBox.js
+$messages_en['%0% selected'] = '';
 // file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js
 $messages_en['\'%0%\' has unsaved changes. Leaving the page will discard these. Do you want to proceed?'] = '';
 // file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
@@ -21,6 +23,8 @@ $messages_en['\'%0%\' was successfully updated'] = '';
 $messages_en['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/BookBase.php
 $messages_en['A book is published by a publisher and consists of chapters.'] = '';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_en['action'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Administration'] = '';
 // file(s): src/model/wcmf/LanguageBase.php
@@ -41,6 +45,8 @@ $messages_en['Authentication failed.'] = '';
 $messages_en['Author'] = '';
 // file(s): application/controller/DisplayController.php, application/controller/ListController.php, lib/persistence/AbstractMapper.php
 $messages_en['Authorization failed for action \'%0%\' on \'%1%\'.'] = '';
+// file(s): src/model/ChapterBase.php
+$messages_en['author_name'] = '';
 // file(s): public/js/persistence/BackendError.js
 $messages_en['Backend error'] = '';
 // file(s): src/model/BookBase.php
@@ -55,7 +61,7 @@ $messages_en['Chapter'] = '';
 $messages_en['Choose Objects'] = '';
 // file(s): src/model/wcmf/LanguageBase.php
 $messages_en['code'] = '';
-// file(s): application/controller/admintool/SearchIndexController.php
+// file(s): application/controller/SearchIndexController.php
 $messages_en['Collect objects'] = '';
 // file(s): src/model/wcmf/UserBase.php
 $messages_en['config'] = '';
@@ -65,6 +71,8 @@ $messages_en['Confirm Leave Page'] = '';
 $messages_en['Confirm Object Deletion'] = '';
 // file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Content'] = '';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Copying'] = '';
 // file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
@@ -73,7 +81,7 @@ $messages_en['Copying \'%0%\''] = '';
 $messages_en['Copying tree: continue with %0%'] = '';
 // file(s): public/js/ui/data/widget/template/EntityListWidget.html
 $messages_en['Create %0%'] = '';
-// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php
+// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php, src/model/wcmf/LockBase.php
 $messages_en['created'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html
 $messages_en['Create Search Index'] = '';
@@ -129,11 +137,11 @@ $messages_en['fk_titlechapter_id'] = '';
 $messages_en['fk_user_id'] = '';
 // file(s): public/js/ui/home/HomePage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Home'] = '';
-// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php, src/model/wcmf/DBSequenceBase.php, src/model/wcmf/LanguageBase.php, src/model/wcmf/LocktableBase.php, src/model/wcmf/RoleBase.php, src/model/wcmf/TranslationBase.php, src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
+// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php, src/model/wcmf/DBSequenceBase.php, src/model/wcmf/LanguageBase.php, src/model/wcmf/LockBase.php, src/model/wcmf/LocktableBase.php, src/model/wcmf/PermissionBase.php, src/model/wcmf/RoleBase.php, src/model/wcmf/TranslationBase.php, src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
 $messages_en['id'] = '';
 // file(s): src/model/ImageBase.php
 $messages_en['Image'] = '';
-// file(s): application/controller/admintool/SearchIndexController.php
+// file(s): application/controller/SearchIndexController.php
 $messages_en['Indexing %0%'] = '';
 // file(s): application/controller/XMLExportController.php
 $messages_en['Initialization'] = '';
@@ -153,14 +161,16 @@ $messages_en['List view class for type \'%0%\' not found.'] = '';
 $messages_en['Loading'] = '';
 // file(s): application/controller/BatchDisplayController.php
 $messages_en['Loading tree: continue with %0%'] = '';
+// file(s): src/model/wcmf/LockBase.php
+$messages_en['Lock'] = '';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
 $messages_en['Locking \'%0%\''] = '';
 // file(s): src/model/wcmf/LocktableBase.php
 $messages_en['Locktable'] = '';
+// file(s): src/model/wcmf/LockBase.php, src/model/wcmf/UserBase.php
+$messages_en['login'] = '';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_en['Login'] = '';
-// file(s): src/model/wcmf/UserBase.php
-$messages_en['login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -189,7 +199,9 @@ $messages_en['NMUserRole'] = '';
 $messages_en['No current association matching the input parameters can be found.'] = '';
 // file(s): public/js/ui/_include/widget/GridWidget.js
 $messages_en['No data'] = '';
-// file(s): src/model/wcmf/LocktableBase.php, src/model/wcmf/TranslationBase.php
+// file(s): public/js/ui/data/input/widget/MultiSelectBox.js
+$messages_en['None selected'] = '';
+// file(s): src/model/wcmf/LockBase.php, src/model/wcmf/LocktableBase.php, src/model/wcmf/TranslationBase.php
 $messages_en['objectid'] = '';
 // file(s): public/js/ui/_include/widget/template/PopupDlgWidget.html
 $messages_en['OK'] = '';
@@ -205,14 +217,20 @@ $messages_en['One or more parameters are invalid.'] = '';
 $messages_en['One or more parameters are missing.'] = '';
 // file(s): lib/model/AbstractQuery.php
 $messages_en['Only PersistenceMappers of type RDBMapper are supported.'] = '';
-// file(s): application/controller/admintool/SearchIndexController.php
+// file(s): application/controller/SearchIndexController.php
 $messages_en['Optimizing index'] = '';
 // file(s): public/js/ui/error/NotFoundPage.js
 $messages_en['Page not found'] = '';
-// file(s): src/model/wcmf/UserBase.php
-$messages_en['password'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Password'] = '';
+// file(s): src/model/wcmf/UserBase.php
+$messages_en['password'] = '';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_en['Permission'] = '';
+// file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
+$messages_en['Permission Management'] = '';
+// file(s): public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Permissions'] = '';
 // file(s): application/controller/SaveController.php, lib/io/FileUtil.php
 $messages_en['Possible file upload attack: filename %0%.'] = '';
 // file(s): application/controller/BatchController.php
@@ -221,8 +239,12 @@ $messages_en['Processing'] = '';
 $messages_en['Publisher'] = '';
 // file(s): application/controller/DisplayController.php, application/controller/ListController.php
 $messages_en['read'] = '';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_en['resource'] = '';
 // file(s): src/model/wcmf/RoleBase.php
 $messages_en['Role'] = '';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_en['roles'] = '';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_en['Save'] = '';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
@@ -269,6 +291,8 @@ $messages_en['The login \'%0%\' already exists'] = '';
 $messages_en['The object id of the object to which the translation belongs'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The object is currently locked by another user.'] = '';
+// file(s): application/controller/DisplayController.php
+$messages_en['The object with oid \'%0%\' does not exist.'] = '';
 // file(s): application/controller/UserController.php
 $messages_en['The old password is incorrect'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -335,12 +359,12 @@ $messages_en['Upload failed for %0%.'] = '';
 $messages_en['User'] = '';
 // file(s): src/model/wcmf/UserConfigBase.php
 $messages_en['UserConfig'] = '';
-// file(s): public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Usermanagement'] = '';
 // file(s): public/js/ui/admin/PrincipalListPage.js, public/js/ui/admin/PrincipalPage.js
 $messages_en['User Management'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Username'] = '';
+// file(s): public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Users'] = '';
 // file(s): src/model/wcmf/UserConfigBase.php
 $messages_en['val'] = '';
 // file(s): public/js/ui/home/template/HomePage.html

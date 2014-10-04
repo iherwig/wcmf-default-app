@@ -25,7 +25,7 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.10.0",
+                "version": "1.10.1",
                 "dist": {
                     "url": "https://github.com/dojo/dojo/archive/1.10.0.zip",
                     "type": "zip"
@@ -40,7 +40,7 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.10.0",
+                "version": "1.10.1",
                 "dist": {
                     "url": "https://github.com/dojo/dijit/archive/1.10.0.zip",
                     "type": "zip"
@@ -55,7 +55,7 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.10.0",
+                "version": "1.10.1",
                 "dist": {
                     "url": "https://github.com/dojo/dojox/archive/1.10.0.zip",
                     "type": "zip"
@@ -70,7 +70,7 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.10.0",
+                "version": "1.10.1",
                 "dist": {
                     "url": "https://github.com/dojo/util/archive/1.10.0.zip",
                     "type": "zip"
@@ -85,11 +85,11 @@
             "package": {
                 "name": "sitepen/dgrid",
                 "type": "wcmf-asset",
-                "version": "0.3.15",
+                "version": "0.3.16",
                 "source": {
                     "url": "https://github.com/SitePen/dgrid.git",
                     "type": "git",
-                    "reference": "v0.3.15"
+                    "reference": "v0.3.16"
                 },
                 "require": {
                     "wcmf/asset-installer": "*"
@@ -131,7 +131,7 @@
             "package": {
                 "name": "fortawesome/font-awesome",
                 "type": "wcmf-asset",
-                "version": "4.1.0",
+                "version": "4.2.0",
                 "dist": {
                     "url": "https://github.com/FortAwesome/Font-Awesome/archive/v4.1.0.zip",
                     "type": "zip"
@@ -146,7 +146,7 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.4.1",
+                "version": "4.4.5",
                 "dist": {
                     "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.1.zip",
                     "type": "zip"

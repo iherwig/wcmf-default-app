@@ -100,7 +100,7 @@ define([
             type: "String",
             description: "",
             isEditable: true,
-            inputType: 'select#file:../config/|/\..ini$/',
+            inputType: 'select#file:../config/|/\.ini$/',
             displayType: 'text',
             validateType: '',
             validateDesc: '',

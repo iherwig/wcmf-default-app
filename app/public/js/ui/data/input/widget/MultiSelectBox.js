@@ -5,6 +5,7 @@ define( [
     "dojo/topic",
     "dojo/dom-geometry",
     "dojo/dom-style",
+    "dojo/html",
     "dojox/form/CheckedMultiSelect",
     "../Factory",
     "../../../_include/_HelpMixin",
@@ -22,6 +23,7 @@ function(
     topic,
     domGeom,
     domStyle,
+    html,
     CheckedMultiSelect,
     ControlFactory,
     _HelpMixin,
@@ -44,6 +46,8 @@ function(
         searchAttr: "displayText",
         dropDown: true,
         multiple: true,
+
+        emptyText: Dict.translate("None selected"),
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -68,19 +72,25 @@ function(
                     if (data.name === this.attribute.name) {
                         this.set("value", data.newValue);
                     }
+                })),
+                on(this.textbox, "click", lang.hitch(this, function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.dropDownButton.toggleDropDown();
                 }))
             );
+
+            this.setText(this.value);
         },
 
         startup: function(){
             this.inherited(arguments);
             this.own(
                 on(this.dropDownMenu, "open", lang.hitch(this, function() {
-                    var textPos = domGeom.position(this.textbox);
-                    var menuPos = domGeom.position(this.dropDownMenu.domNode.parentNode);
+                    var pos = domGeom.position(this.domNode);
                     domStyle.set(this.dropDownMenu.domNode.parentNode, {
-                        left: textPos.x + "px",
-                        top: menuPos.y + "px"
+                        left: pos.x + "px",
+                        top: pos.y + pos.h + "px"
                     });
                 }))
             );
@@ -88,7 +98,14 @@ function(
 
         onChange: function(newValue) {
             this.inherited(arguments);
-            this.textbox.value = newValue.join(", ");
+            this.setText(newValue);
+        },
+
+        setText: function(values) {
+            var numValues = values.length;
+            var text = (numValues === 0) ? this.emptyText :
+                  ((numValues <= 3) ? values.join(", ") : Dict.translate("%0% selected", [numValues]));
+            html.set(this.textbox, text+' <b class="caret"></b>');
         }
     });
 });

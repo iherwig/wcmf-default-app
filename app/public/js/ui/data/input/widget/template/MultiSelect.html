@@ -1,12 +1,7 @@
 <div class="dijit dijitReset dijitInline dijitLeft" id="widget_${id}"
-	><div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitTextBoxDisabled dijitDisabled" role="presentation"
-        ><div class="dijitReset dijitInputField dijitInputContainer"
-		><input class="dijitReset dijitInputInner" data-dojo-attach-point='textbox,focusNode' autocomplete="off"
-			${!nameAttrSetting} disabled type='text'
-	/></div></div
-        ><div data-dojo-attach-point="comboButtonNode"
-	></div
-	><div data-dojo-attach-point="selectNode" class="dijit dijitReset dijitInline ${baseClass}Wrapper dropdown-menu" data-dojo-attach-event="onmousedown:_onMouseDown,onclick:focus"
+	><button class="dropdown-toggle btn btn-default" data-dojo-attach-point='textbox,focusNode'
+			${!nameAttrSetting} type='button'
+	/><div data-dojo-attach-point="selectNode" data-dojo-attach-event="onmousedown:_onMouseDown,onclick:focus"
 		><select class="${baseClass}Select dojoxCheckedMultiSelectHidden" multiple="true" data-dojo-attach-point="containerNode,focusNode"></select
 		><div data-dojo-attach-point="wrapperDiv"></div
 	></div
