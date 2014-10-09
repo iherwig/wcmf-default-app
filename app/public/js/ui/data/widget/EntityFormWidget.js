@@ -4,6 +4,7 @@ define( [
     "dojo/_base/lang",
     "dojo/promise/all",
     "dojo/topic",
+    "dojo/dom-attr",
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/query",
@@ -28,6 +29,7 @@ define( [
     "../../../locale/Dictionary",
     "../input/Factory",
     "./EntityRelationWidget",
+    "./PermissionDlgWidget",
     "dojo/text!./template/EntityFormWidget.html"
 ],
 function(
@@ -36,6 +38,7 @@ function(
     lang,
     all,
     topic,
+    domAttr,
     domClass,
     domConstruct,
     query,
@@ -60,6 +63,7 @@ function(
     Dict,
     ControlFactory,
     EntityRelationWidget,
+    PermissionDlg,
     template
 ) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Notification], {
@@ -286,7 +290,7 @@ function(
             }
             else {
                 // show menu
-                query(this.languageMenuNode).style("display", "block");
+                query(this.languageMenuNode).style("display", "inline");
             }
         },
 
@@ -552,6 +556,14 @@ function(
                     this.showBackendError(error);
                 })
             );
+        },
+
+        _permissions: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+
+            new PermissionDlg({
+            }).show();
         }
     });
 });

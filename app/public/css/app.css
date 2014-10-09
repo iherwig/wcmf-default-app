@@ -348,16 +348,12 @@ td {
 }
 
 /* combobox button */
-.dijitComboBox {
-  height: 40px;
+.dijitTextBox .dijitArrowButton {
+  height: 24px;
 }
 
-.dijitArrowButton {
-  height: 28px;
-}
-
-.dbootstrap .dijitArrowButtonInner {
-  line-height: 28px;
+.dijitTextBox .dijitArrowButtonInner {
+  line-height: 24px;
 }
 
 @media only screen and (min-width: 980px) {
