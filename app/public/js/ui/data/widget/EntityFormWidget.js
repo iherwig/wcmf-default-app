@@ -4,7 +4,6 @@ define( [
     "dojo/_base/lang",
     "dojo/promise/all",
     "dojo/topic",
-    "dojo/dom-attr",
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/query",
@@ -38,7 +37,6 @@ function(
     lang,
     all,
     topic,
-    domAttr,
     domClass,
     domConstruct,
     query,
@@ -156,14 +154,17 @@ function(
                     if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read'] === true) {
                         var controlClass = controls[attribute.inputType];
                         var attributeWidget = new controlClass({
-                            entity: this.entity,
-                            attribute: attribute,
+                            name: attribute.name,
+                            value: this.entity[attribute.name],
+                            disabled: this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false,
+                            helpText: Dict.translate(attribute.description),
+                            inputType: attribute.inputType,
                             original: this.original
                         });
                         if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??modify'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
-                                var entityValue = this.entity.get(widget.attribute.name) || "";
+                                var entityValue = this.entity.get(widget.name) || "";
                                 if (widgetValue !== entityValue) {
                                     this.setModified(true);
                                 }

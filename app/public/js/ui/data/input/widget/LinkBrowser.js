@@ -34,8 +34,7 @@ function(
                         if (this.isDirty()) {
                             new ConfirmDlg({
                                 title: Dict.translate("Confirm Leave Page"),
-                                message: Dict.translate("'%0%' has unsaved changes. Leaving the page will discard these. Do you want to proceed?",
-                                    [Model.getTypeFromOid(this.entity.oid).getDisplayValue(this.entity)]),
+                                message: Dict.translate("There are unsaved changes. Leaving the page will discard these. Do you want to proceed?"),
                                 okCallback: lang.hitch(this, function(dlg) {
                                     topic.publish('navigate', route.name, route.pathParams);
                                 })

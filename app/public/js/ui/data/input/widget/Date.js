@@ -6,7 +6,6 @@ define( [
     "dojo/date/locale",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
-    "../../../../model/meta/Model",
     "../../../../locale/Dictionary"
 ],
 function(
@@ -17,15 +16,13 @@ function(
     locale,
     _HelpMixin,
     _AttributeWidgetMixin,
-    Model,
     Dict
 ) {
     return declare([DateTextBox, _HelpMixin, _AttributeWidgetMixin], {
 
         intermediateChanges: true,
         hasDownArrow: false,
-        entity: {},
-        attribute: {},
+        inputType: null, // control description as string as used in Factory.getControlClass()
         original: {},
 
         dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd HH:mm:ss', locale: appConfig.uiLanguage},
@@ -33,18 +30,12 @@ function(
         constructor: function(args) {
             declare.safeMixin(this, args);
 
-            var typeClass = Model.getTypeFromOid(this.entity.oid);
-
-            this.label = Dict.translate(this.attribute.name);
-            this.disabled = typeClass ? !typeClass.isEditable(this.attribute, this.entity) : false;
-            this.name = this.attribute.name;
+            this.label = Dict.translate(this.name);
             // add time, if missing
-            var value = this.entity[this.attribute.name];
-            if (value && value.length === 10) {
-              value = value+" 00:00:00";
+            if (this.value && this.value.length === 10) {
+              this.value = this.value+" 00:00:00";
             }
-            this.value = locale.parse(value, this.dateFormat);
-            this.helpText = Dict.translate(this.attribute.description);
+            this.value = locale.parse(this.value, this.dateFormat);
         },
 
         postCreate: function() {
@@ -53,7 +44,7 @@ function(
             // subscribe to entity change events to change tab links
             this.own(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    if (data.name === this.attribute.name) {
+                    if (data.name === this.name) {
                         this.set("value", locale.parse(data.newValue, this.dateFormat));
                     }
                 }))

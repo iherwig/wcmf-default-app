@@ -10,7 +10,6 @@ define( [
     "../Factory",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
-    "../../../../model/meta/Model",
     "../../../../locale/Dictionary",
     "dojo/text!./template/MultiSelect.html",
     "xstyle/css!dojox/form/resources/CheckedMultiSelect.css",
@@ -28,7 +27,6 @@ function(
     ControlFactory,
     _HelpMixin,
     _AttributeWidgetMixin,
-    Model,
     Dict,
     template
 ) {
@@ -36,8 +34,7 @@ function(
 
         templateString: template,
         intermediateChanges: true,
-        entity: {},
-        attribute: {},
+        inputType: null, // control description as string as used in Factory.getControlClass()
         original: {},
 
         spinnerNode: null,
@@ -52,15 +49,8 @@ function(
         constructor: function(args) {
             declare.safeMixin(this, args);
 
-            var typeClass = Model.getTypeFromOid(this.entity.oid);
-
-            this.label = Dict.translate(this.attribute.name);
-            this.disabled = typeClass ? !typeClass.isEditable(this.attribute, this.entity) : false;
-            this.name = this.attribute.name;
-            this.value = this.entity[this.attribute.name];
-            this.helpText = Dict.translate(this.attribute.description);
-
-            this.store = ControlFactory.getListStore(this.attribute.inputType);
+            this.label = Dict.translate(this.name);
+            this.store = ControlFactory.getListStore(this.inputType);
         },
 
         postCreate: function() {
@@ -69,7 +59,7 @@ function(
             // subscribe to entity change events to change tab links
             this.own(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    if (data.name === this.attribute.name) {
+                    if (data.name === this.name) {
                         this.set("value", data.newValue);
                     }
                 })),

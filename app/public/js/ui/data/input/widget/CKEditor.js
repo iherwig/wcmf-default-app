@@ -8,7 +8,6 @@ define( [
     "dijit/form/TextBox",
     "ckeditor/ckeditor",
     "../Factory",
-    "../../../../model/meta/Model",
     "../../../../locale/Dictionary",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
@@ -22,7 +21,6 @@ function(
     TextBox,
     CKEditor,
     ControlFactory,
-    Model,
     Dict,
     _HelpMixin,
     _AttributeWidgetMixin,
@@ -32,21 +30,14 @@ function(
 
         templateString: template,
         intermediateChanges: true,
-        entity: {},
-        attribute: {},
+        inputType: null, // control description as string as used in Factory.getControlClass()
         original: {},
         editorInstance: null,
 
         constructor: function(args) {
             declare.safeMixin(this, args);
 
-            var typeClass = Model.getTypeFromOid(this.entity.oid);
-
-            this.label = Dict.translate(this.attribute.name);
-            this.disabled = typeClass ? !typeClass.isEditable(this.attribute, this.entity) : false;
-            this.name = this.attribute.name;
-            this.value = this.entity[this.attribute.name];
-            this.helpText = Dict.translate(this.attribute.description);
+            this.label = Dict.translate(this.name);
         },
 
         postCreate: function() {
@@ -69,7 +60,7 @@ function(
             // subscribe to entity change events to change tab links
             this.own(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    if (data.name === this.attribute.name) {
+                    if (data.name === this.name) {
                         this.set("value", data.newValue);
                         this.editorInstance.setData(data.newValue);
                     }
@@ -89,7 +80,7 @@ function(
         },
 
         getToolbarName: function() {
-            var options = ControlFactory.getOptions(this.attribute.inputType);
+            var options = ControlFactory.getOptions(this.inputType);
             return (options.toolbarSet) ? options.toolbarSet : "wcmf";
         },
 
