@@ -4,7 +4,7 @@ define([
     "dojo/_base/lang",
     "dojo/request",
     "dojo/dom-form",
-    "dojo/dom-construct",
+    "dojo/dom-style",
     "dijit/form/TextBox",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -13,14 +13,16 @@ define([
     "../../User",
     "../../Startup",
     "../../locale/Dictionary",
-    "dojo/text!./template/LoginPage.html"
+    "dojo/text!./template/LoginPage.html",
+    "http://d3js.org/d3.v3.min.js",
+    "http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2/trianglify.min.js"
 ], function (
     require,
     declare,
     lang,
     request,
     domForm,
-    domConstruct,
+    domStyle,
     TextBox,
     _Page,
     _Notification,
@@ -40,6 +42,16 @@ define([
         constructor: function (params) {
             // template variables
             this.title = appConfig.title;
+        },
+
+        postCreate: function() {
+          var t = new Trianglify({
+              cellsize: 90,
+              noiseIntensity: 0,
+              x_gradient: ["#66B64A", "#2F2F2F"]
+          });
+          var pattern = t.generate(window.screen.width, window.screen.height);
+          domStyle.set(this.header, "background-image", pattern.dataUrl);
         },
 
         createNotificationNode: function() {

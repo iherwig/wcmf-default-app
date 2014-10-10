@@ -58,7 +58,7 @@ body {
 .jumbotron {
   color: #FFFFFF;
   background: #2f2f2f;
-  padding: 50px 20px;
+  padding: 100px 20px;
   text-align: center;
 }
 
@@ -88,7 +88,7 @@ body {
 }
 
 .form-login {
-  max-width: 940px;
+  max-width: 480px;
   padding: 9px 29px 29px;
   margin: 60px auto 20px;
   background-color: #fff;
