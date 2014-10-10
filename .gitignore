@@ -8,6 +8,7 @@ app/public/media
 app/config/*.ini
 app/public/soap-interface.php
 app/public/js/model/types
+!app/public/js/model/types/app/src/model/wcmf/PermissionClass.js
 !app/public/js/model/types/app/src/model/wcmf/RoleClass.js
 !app/public/js/model/types/app/src/model/wcmf/UserClass.js
 app/src/controller
