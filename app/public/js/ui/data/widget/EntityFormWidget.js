@@ -564,6 +564,7 @@ function(
             e.preventDefault();
 
             new PermissionDlg({
+                oid: this.entity.oid
             }).show();
         }
     });

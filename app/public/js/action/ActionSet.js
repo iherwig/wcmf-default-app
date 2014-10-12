@@ -2,38 +2,42 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/request",
+    "dojo/json",
     "dojo/Deferred",
     "./ActionBase"
 ], function (
     declare,
     lang,
     request,
+    JSON,
     Deferred,
     ActionBase
 ) {
     return declare([ActionBase], {
 
-        name: 'checkPermissions',
-        iconClass: 'fa fa-check',
+        name: 'actionSet',
+        iconClass: 'fa fa-tasks',
 
-        action: "checkPermissions",
+        action: "actionSet",
 
         /**
-         * Check permissions for the given object
+         * Execure multiple actions in one request
          * @param e The event that triggered execution, might be null
-         * @param operations Array of operations to check
+         * @param data Array of action objects with at least the attribute action
+         *             and additional action dependent attributes
          * @return Deferred
          */
-        execute: function(e, operations) {
+        execute: function(e, data) {
             if (this.init instanceof Function) {
-                this.init(operations);
+                this.init(data);
             }
             var deferred = new Deferred();
+            var requestData = JSON.stringify({
+                action: this.action,
+                data: data
+            });
             request.post(appConfig.backendUrl, {
-                data: {
-                    action: this.action,
-                    "operations[]": operations
-                },
+                data: requestData,
                 headers: {
                     Accept: "application/json"
                 },
@@ -42,9 +46,9 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(response.result);
+                    this.callback(response.data);
                 }
-                deferred.resolve(response.result);
+                deferred.resolve(response.data);
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {

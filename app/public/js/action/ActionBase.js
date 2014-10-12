@@ -46,7 +46,7 @@ define([
                         this._hasSpinner = false;
                         if (arguments.length > 0) {
                             var e = arguments[0];
-                            if (e.target) {
+                            if (e && e.target) {
                                 // icon is either target or a child
                                 var iconNodes = query("."+this.iconClass, e.target.parentNode);
                                 if (iconNodes.length > 0) {
