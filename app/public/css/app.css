@@ -173,10 +173,6 @@ input[type="color"]:disabled,
   outline: 0 none;
 }
 
-.login-page .dijitTextBox, #loginForm .dijitTextBox  {
-  margin: 5px;
-}
-
 .entity-page .dijitTextBox, .principal-page .dijitTextBox,
 .entity-page .dijitSliderH {
   width: 350px;
@@ -332,6 +328,10 @@ td {
 
 .pull-left {
   float: left;
+}
+
+.spacer {
+  margin: 0.2em;
 }
 
 .dbootstrap .dijitContentPane {

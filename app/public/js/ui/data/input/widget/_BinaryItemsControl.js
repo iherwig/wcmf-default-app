@@ -43,7 +43,10 @@ function(
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
-            this.store = ControlFactory.getListStore(this.inputType);
+            // get store from input type, if not set yet
+            if (!this.store) {
+                this.store = ControlFactory.getListStore(this.inputType);
+            }
         },
 
         postCreate: function() {

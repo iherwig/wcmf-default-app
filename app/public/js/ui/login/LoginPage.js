@@ -48,6 +48,7 @@ define([
           var t = new Trianglify({
               cellsize: 90,
               noiseIntensity: 0,
+              // TODO: https://github.com/nogoodatcoding/ColorClock/blob/gh-pages/colorclock.js
               x_gradient: ["#66B64A", "#2F2F2F"]
           });
           var pattern = t.generate(window.screen.width, window.screen.height);
