@@ -122,14 +122,14 @@ function(
             deferredList.push(ControlFactory.loadControlClasses(this.type));
             // check instance permissions
             var requiredPermissions = [
-                Model.removeDummyOid(this.entity.oid)+'??modify',
+                Model.removeDummyOid(this.entity.oid)+'??update',
                 Model.removeDummyOid(this.entity.oid)+'??delete'
             ];
             var attributes = this.getAttributes();
             for (var i=0, count=attributes.length; i<count; i++) {
                 var attribute = attributes[i];
                 requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read');
-                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??modify');
+                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update');
             }
             // check relation permissions
             var relations = this.getRelations();
@@ -161,7 +161,7 @@ function(
                             inputType: attribute.inputType,
                             original: this.original
                         });
-                        if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??modify'] === true) {
+                        if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name) || "";
@@ -171,7 +171,7 @@ function(
                             }, attributeWidget)));
                         }
                         else {
-                            // disable widget, if no modify permission
+                            // disable widget, if no update permission
                             attributeWidget.set('disabled', true);
                         }
                         this.layoutWidget.addChild(attributeWidget);
@@ -563,8 +563,10 @@ function(
             // prevent the page from navigating after submit
             e.preventDefault();
 
+            var displayValue = this.typeClass.getDisplayValue(this.entity);
             new PermissionDlg({
-                oid: this.entity.oid
+                oid: this.entity.oid,
+                message: Dict.translate("Permissions for '%0%'", [displayValue])
             }).show();
         }
     });

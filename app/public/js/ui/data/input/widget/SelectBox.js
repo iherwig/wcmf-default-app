@@ -48,7 +48,9 @@ function(
                 this.store = ControlFactory.getListStore(this.inputType);
             }
             // add empty value for select boxes
-            this.store.setAddEmpty(true);
+            if (this.store.setAddEmpty) {
+              this.store.setAddEmpty(true);
+            }
 
             aspect.before(this, "_startSearch", function(text) {
                 // create spinner

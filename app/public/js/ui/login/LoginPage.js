@@ -4,7 +4,6 @@ define([
     "dojo/_base/lang",
     "dojo/request",
     "dojo/dom-form",
-    "dojo/dom-style",
     "dijit/form/TextBox",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -22,7 +21,6 @@ define([
     lang,
     request,
     domForm,
-    domStyle,
     TextBox,
     _Page,
     _Notification,
@@ -45,14 +43,25 @@ define([
         },
 
         postCreate: function() {
+            this.setHeaderBackground();
+        },
+
+        setHeaderBackground: function() {
+          // get time dependent color
+          var now = new Date();
+          var hexHours = parseInt(Math.round(255*now.getHours()/24));
+          var hexMinutes = parseInt(Math.round(255*now.getMinutes()/60));
+          var hexSeconds = parseInt(Math.round(255*now.getSeconds()/60));
+          var colour = hexHours.toString(16) + hexMinutes.toString(16) + hexSeconds.toString(16);
+
+          // generate pattern
           var t = new Trianglify({
               cellsize: 90,
               noiseIntensity: 0,
-              // TODO: https://github.com/nogoodatcoding/ColorClock/blob/gh-pages/colorclock.js
-              x_gradient: ["#66B64A", "#2F2F2F"]
+              x_gradient: ["#"+colour, "#2F2F2F"]
           });
           var pattern = t.generate(window.screen.width, window.screen.height);
-          domStyle.set(this.header, "background-image", pattern.dataUrl);
+          this.header.setAttribute('style', 'background-image: '+pattern.dataUrl);
         },
 
         createNotificationNode: function() {

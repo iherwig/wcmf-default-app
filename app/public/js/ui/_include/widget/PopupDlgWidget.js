@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dojo/on",
     "dojo/dom-construct",
     "dojo/Deferred",
+    "dijit/registry",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -15,9 +17,11 @@ define([
 ], function (
     declare,
     lang,
+    array,
     on,
     domConstruct,
     Deferred,
+    registry,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
@@ -61,7 +65,7 @@ define([
                 templateString: lang.replace(this.getTemplate(), Dict.tplTranslate)
             }));
             if (contentWidget.contentNode) {
-              contentWidget.contentNode.innerHTML = message;
+              contentWidget.contentNode.innerHTML = '<p>'+message+'</p>';
             }
             if (this.contentWidget) {
               domConstruct.place(this.contentWidget.domNode, contentWidget.contentNode, "after");
@@ -94,6 +98,19 @@ define([
                     }
                 }))
             );
+        },
+
+        /**
+         * Get a child widget of the content node
+         * @param name The widget's name
+         * @returns Widget
+         */
+        getContentWidget: function(name) {
+            var widgets = registry.findWidgets(this.content.domNode);
+            var matches = array.filter(widgets, function(item) {
+                return item.name === name;
+            });
+            return matches.length > 0 ? matches[0] : null;
         },
 
         /**
