@@ -146,6 +146,15 @@ function(
             }
         },
 
+        _setDisabledAttr: function(value) {
+            this.inherited(arguments);
+            var itemWidgets = registry.findWidgets(this.domNode);
+            for (var i=0, count=itemWidgets.length; i<count; i++) {
+                var widget = itemWidgets[i];
+                widget.set("disabled", value);
+            }
+        },
+
         focus: function() {
             // focus first widget, because otherwise focus loss
             // is not reported to grid editor resulting in empty grid value

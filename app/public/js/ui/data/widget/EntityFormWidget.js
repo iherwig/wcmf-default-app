@@ -123,7 +123,8 @@ function(
             // check instance permissions
             var requiredPermissions = [
                 Model.removeDummyOid(this.entity.oid)+'??update',
-                Model.removeDummyOid(this.entity.oid)+'??delete'
+                Model.removeDummyOid(this.entity.oid)+'??delete',
+                '??setPermissions'
             ];
             var attributes = this.getAttributes();
             for (var i=0, count=attributes.length; i<count; i++) {
@@ -202,6 +203,8 @@ function(
                 this.setBtnState("save", false); // no modifications yet
                 var canDelete = !this.isNew && permissions[Model.removeDummyOid(this.entity.oid)+'??delete'] === true;
                 this.setBtnState("delete", canDelete);
+                var canSetPermissions = permissions['??setPermissions'] === true;
+                this.setBtnState("permissions", canSetPermissions);
 
                 // handle locking
                 if (!this.isNew) {

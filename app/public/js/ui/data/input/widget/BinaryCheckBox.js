@@ -21,7 +21,7 @@ function(
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
-            this.checked = this.value === 1; // value may be string or number
+            this.checked = this.value == 1; // value may be string or number
         },
 
         _getValueAttr: function() {

@@ -5,8 +5,10 @@ define([
     "dojo/data/ObjectStore",
     "dojo/store/Memory",
     "../../_include/widget/PopupDlgWidget",
+    "../../data/input/widget/BinaryCheckBox",
     "../../data/input/widget/RadioButton",
     "../../data/input/widget/MultiSelectBox",
+    "../../data/input/widget/SelectBox",
     "../../../action/ActionSet",
     "../../../model/meta/Model",
     "../../../persistence/Store",
@@ -19,8 +21,10 @@ define([
     ObjectStore,
     Memory,
     PopupDlg,
+    BinaryCheckBox,
     Radio,
     MultiSelect,
+    Select,
     ActionSet,
     Model,
     Store,
@@ -41,7 +45,7 @@ define([
         oid: null,
 
         actions: ['read', 'update', 'delete'],
-        existingPermissions: {},
+        userSelectCtrl: null,
 
         style: "width: 500px",
         title: '<i class="fa fa-shield"></i> '+Dict.translate("Permissions"),
@@ -74,12 +78,22 @@ define([
                 var roles = results[0];
                 var permissions = results[1];
 
-                // create controls
+                // create permission controls
                 for (var i=0, count=this.actions.length; i<count; i++) {
                     var action = this.actions[i];
                     this.createControls(action, permissions[action].result, roles);
                 }
             }));
+
+            this.userSelectCtrl = new Select({
+                name: 'userSelectCtrl',
+                inputType: 'select#node:'+appConfig.userType
+            }, this.content['userSelectCtrl']);
+            this.userSelectCtrl.on('change', lang.hitch(this, function(id) {
+                var login = this.userSelectCtrl.get('displayedValue');
+                this.checkUserPermissions(login);
+            }));
+            this.userSelectCtrl.startup();
 
             // save on ok clicked
             this.okCallback = lang.hitch(this, this.save);
@@ -113,7 +127,7 @@ define([
                         resource: this.oid,
                         context: '',
                         action: action,
-                        permissions: permissions[action]
+                        permissions: this.isDisabled(action) ? null : permissions[action]
                     }
                 };
             }
@@ -121,6 +135,18 @@ define([
         },
 
         createControls: function(action, permissions, roles) {
+            var active = (permissions !== null);
+
+            // activate control
+            var activateCtrl = new BinaryCheckBox({
+                name: action+'ActivateCtrl',
+                value: active ? "1" : "0"
+            }, this.content[action+'ActivateCtrl']);
+            activateCtrl.on('change', lang.hitch(this, function(isSelected) {
+                this.setDisabled(action, !isSelected);
+            }));
+            activateCtrl.startup();
+
             // default permission control
             var defaultStore = new Memory({
                 data: [
@@ -149,6 +175,17 @@ define([
                 store: new ObjectStore({ objectStore: roleStore }),
                 value: this.permissionsToInput(permissions)
             }, this.content[action+'PermCtrl']).startup();
+
+            this.setDisabled(action, !active);
+        },
+
+        isDisabled: function(action) {
+            return this.getContentWidget(action+'ActivateCtrl').get('value') === "0";
+        },
+
+        setDisabled: function(action, value) {
+            this.getContentWidget(action+'DefaultCtrl').set('disabled', value);
+            this.getContentWidget(action+'PermCtrl').set('disabled', value);
         },
 
         /**
@@ -168,6 +205,37 @@ define([
                 }
             }
             return value;
+        },
+
+        checkUserPermissions: function(login) {
+            if (login && login.length > 0) {
+                var operations = [];
+                for (var i=0, count=this.actions.length; i<count; i++) {
+                    operations.push(this.oid+'??'+this.actions[i]);
+                }
+                var checkPermissionsAction = [{
+                    action: 'checkPermissionsOfUser',
+                    params: {
+                        operations: operations,
+                        user: login
+                    }
+                }];
+                new ActionSet().execute(null, checkPermissionsAction).then(lang.hitch(this, function(result) {
+                    var permissions = result[0].result;
+                    var display = [];
+                    for (var i=0, count=this.actions.length; i<count; i++) {
+                        var action = this.actions[i];
+                        var allowed = permissions[this.oid+'??'+action];
+                        var str = allowed ? '<i class="fa fa-check-circle"></i>' : '<i class="fa fa-minus-circle"></i>';
+                        str += ' '+action;
+                        display.push(str);
+                    }
+                    this.content.userPermissions.innerHTML = display.join(' ');
+                }));
+            }
+            else {
+                this.content.userPermissions.innerHTML = '';
+            }
         },
 
         /**
