@@ -14,15 +14,12 @@ function(
 
         multiValued: true,
 
-        buildItemWidget: function(item) {
-            var itemId = this.store.getIdentity(item);
-            var itemLabel = item.displayText;
-
+        buildItemWidget: function(value, label) {
             // create checkbox
             var widget = new CheckBox({
                 name: this.name,
-                value: ""+itemId,
-                checked: (this.value === itemId), // value may be string or number
+                value: ""+value,
+                checked: (this.value === value), // value may be string or number
                 disabled: this.disabled
             });
             widget.startup();
@@ -30,7 +27,7 @@ function(
 
             // create label
             domConstruct.create("span", {
-                innerHTML: itemLabel,
+                innerHTML: label,
                 "class": "checkBoxLabel"
             }, widget.domNode, "after");
 

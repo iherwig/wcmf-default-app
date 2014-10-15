@@ -68,7 +68,7 @@ function(
             );
             this.editorInstance.on("instanceReady", lang.hitch(this, function() {
                 this.editorInstance.on("change", lang.hitch(this, this.editorValueChanged));
-            }))
+            }));
         },
 
         editorValueChanged: function() {

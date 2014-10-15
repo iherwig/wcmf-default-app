@@ -7,6 +7,7 @@ define( [
     "dojo/topic",
     "dojo/when",
     "dojo/on",
+    "dijit/registry",
     "dijit/layout/ContentPane",
     "../Factory",
     "../../../_include/_HelpMixin",
@@ -22,6 +23,7 @@ function(
     topic,
     when,
     on,
+    registry,
     ContentPane,
     ControlFactory,
     _HelpMixin,
@@ -35,7 +37,6 @@ function(
 
         multiValued: true,
 
-        itemWidgets: {},
         spinnerNode: null,
         listenToWidgetChanges: true,
 
@@ -56,21 +57,20 @@ function(
             }, this.domNode, "first");
             this.showSpinner();
 
-            var _control = this;
             when(this.store.query(), lang.hitch(this, function(list) {
                 this.hideSpinner();
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];
-                    var itemId = this.store.getIdentity(item);
-                    var itemWidget = this.buildItemWidget(item);
+                    var itemValue = this.store.getIdentity(item);
+                    var itemLabel = item.displayText;
+                    var itemWidget = this.buildItemWidget(itemValue, itemLabel);
                     this.own(
                         on(itemWidget, "change", function(isSelected) {
-                            if (_control.listenToWidgetChanges) {
-                                _control.updateValue(this.value, isSelected);
-                            }
-                        })
-                    );
-                    this.itemWidgets[itemId] = itemWidget;
+                            var control = registry.getEnclosingWidget(this.domNode.parentNode);
+                            if (control.listenToWidgetChanges) {
+                                control.updateValue(this.value, isSelected);
+                        }
+                    }));
                 }
             }));
 
@@ -88,9 +88,10 @@ function(
                     var value = e.detail.newValue;
                     if (value) {
                         var values = (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
-                        for (var itemId in this.itemWidgets) {
-                            var widget = this.itemWidgets[itemId];
-                            var isChecked = array.indexOf(values, itemId) !== -1;
+                        var itemWidgets = registry.findWidgets(this.domNode);
+                        for (var i=0, count=itemWidgets.length; i<count; i++) {
+                            var widget = itemWidgets[i];
+                            var isChecked = array.indexOf(values, widget.get("value")) !== -1;
                             widget.set("checked", isChecked);
                         }
                     }
@@ -99,7 +100,13 @@ function(
             );
         },
 
-        buildItemWidget: function(item) {
+        /**
+         * Build a checkbox/radio button item with the given value and label
+         * @param value
+         * @param label
+         * @returns Widget
+         */
+        buildItemWidget: function(value, label) {
             throw "must be implemented by subclass";
         },
 
@@ -142,8 +149,9 @@ function(
         focus: function() {
             // focus first widget, because otherwise focus loss
             // is not reported to grid editor resulting in empty grid value
-            for (var itemId in this.itemWidgets) {
-                var widget = this.itemWidgets[itemId];
+            var itemWidgets = registry.findWidgets(this.domNode);
+            for (var i=0, count=itemWidgets.length; i<count; i++) {
+                var widget = itemWidgets[i];
                 if (widget.focus) {
                     widget.focus();
                     break;
