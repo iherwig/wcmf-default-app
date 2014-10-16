@@ -163,7 +163,8 @@ function(
                             inputType: attribute.inputType,
                             original: this.original
                         });
-                        if (this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
+                        if (this.permissions[Model.removeDummyOid(this.entity.oid)+'??update'] === true &&
+                                this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name) || "";
