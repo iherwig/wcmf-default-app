@@ -86,6 +86,7 @@ function(
         isModified: false,
         isLocked: false,
         isLockOwner: true,
+        permissions: {},
 
         language: appConfig.defaultLanguage,
         isTranslation: false,
@@ -142,7 +143,7 @@ function(
 
             all(deferredList).then(lang.hitch(this, function(results) {
                 var controls = results[0];
-                var permissions = results[1];
+                this.permissions = results[1];
 
                 this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
 
@@ -152,7 +153,7 @@ function(
                 for (var i=0, count=attributes.length; i<count; i++) {
                     var attribute = attributes[i];
                     // only show attributes with read permission
-                    if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read'] === true) {
+                    if (this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read'] === true) {
                         var controlClass = controls[attribute.inputType];
                         var attributeWidget = new controlClass({
                             name: attribute.name,
@@ -162,7 +163,7 @@ function(
                             inputType: attribute.inputType,
                             original: this.original
                         });
-                        if (permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
+                        if (this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name) || "";
@@ -187,7 +188,7 @@ function(
                     for (var i=0, count=relations.length; i<count; i++) {
                         var relation = relations[i];
                         // only show relations with read permission
-                        if (permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true) {
+                        if (this.permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true) {
                             var relationWidget = new EntityRelationWidget({
                                 route: this.baseRoute,
                                 entity: this.entity,
@@ -201,10 +202,10 @@ function(
 
                 // set button states
                 this.setBtnState("save", false); // no modifications yet
-                var canDelete = !this.isNew && permissions[Model.removeDummyOid(this.entity.oid)+'??delete'] === true;
-                this.setBtnState("delete", canDelete);
-                var canSetPermissions = permissions['??setPermissions'] === true;
-                this.setBtnState("permissions", canSetPermissions);
+                this.setBtnState("delete", this.canDelete());
+                if (this.permissions['??setPermissions'] !== true) {
+                    domClass.add(this.permissionsBtn.domNode, "hidden");
+                }
 
                 // handle locking
                 if (!this.isNew) {
@@ -331,7 +332,9 @@ function(
             }
             else {
                 this.setCtrlState(true);
-                this.setBtnState("delete", true);
+                // not locked by others
+                // only reset delete button, because there's no modification yet
+                this.setBtnState("delete", this.canDelete());
             }
         },
 
@@ -378,6 +381,10 @@ function(
                     }
                 })
             );
+        },
+
+        canDelete: function() {
+            return !this.isNew && this.permissions[Model.removeDummyOid(this.entity.oid)+'??delete'] === true;
         },
 
         _save: function(e) {
