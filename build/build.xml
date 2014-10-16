@@ -104,8 +104,8 @@
       project.setProperty("rewritebase.search", getPathFromBase(path1, path2, 1));
       project.setProperty("rewritebase.replace", getPathFromBase(path1, path2, 2));
       function getPathFromBase(path1, path2, index) {
-        var path1Parts = path1.replace("\\", "/").split("/");
-        var path2Parts = path2.replace("\\", "/").split("/");
+        var path1Parts = path1.replace(/\\/g, "/").split("/");
+        var path2Parts = path2.replace(/\\/g, "/").split("/");
         for(var i=0, count=Math.min(path1Parts.length, path2Parts.length); i<count; i++) {
           if (path1Parts[i] == path2Parts[i]) {
             path1Parts[i] = path2Parts[i] = "";
@@ -114,8 +114,8 @@
             break;
           }
         }
-        path1 = path1Parts.join("/").replace(/\/\/+/, "/");
-        path2 = path2Parts.join("/").replace(/\/\/+/, "/");
+        path1 = path1Parts.join("/").replace(/\/\/+/g, "/");
+        path2 = path2Parts.join("/").replace(/\/\/+/g, "/");
         return index == 1 ? path1 : path2;
       }
     ]]></script>

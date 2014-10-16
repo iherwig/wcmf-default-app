@@ -17,6 +17,6 @@ function(
     return declare([EntityListWidget], {
 
         templateString: lang.replace(template, Dict.tplTranslate),
-        contextRequire: require,
+        contextRequire: require
     });
 });

@@ -157,7 +157,7 @@ define([
             new Radio({
                 name: action+'DefaultCtrl',
                 store: defaultStore,
-                value: (permissions && permissions.default === true) ? '+' : '-'
+                value: (permissions && permissions['default'] === true) ? '+' : '-'
             }, this.content[action+'DefaultCtrl']).startup();
 
             // roles control

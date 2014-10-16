@@ -12,9 +12,9 @@ define([
     "../../User",
     "../../Startup",
     "../../locale/Dictionary",
-    "dojo/text!./template/LoginPage.html",
-    "http://d3js.org/d3.v3.min.js",
-    "http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2/trianglify.min.js"
+    "d3/d3.v3.min",
+    "trianglify/trianglify.min",
+    "dojo/text!./template/LoginPage.html"
 ], function (
     require,
     declare,
@@ -29,6 +29,8 @@ define([
     User,
     Startup,
     Dict,
+    d3,
+    trianglify,
     template
 ) {
     return declare([_Page, _Notification], {
