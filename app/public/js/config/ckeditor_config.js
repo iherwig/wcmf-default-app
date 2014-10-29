@@ -4,6 +4,7 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
 
 // load external plugins
 (function() {
+   CKEDITOR.plugins.addExternal('find', basePath+'ckeditor-plugins/find/', 'plugin.js');
    CKEDITOR.plugins.addExternal('mediaembed', basePath+'ckeditor-plugins/mediaembed/', 'plugin.js');
 })();
 
@@ -17,7 +18,7 @@ CKEDITOR.editorConfig = function( config ) {
           { name: 'Emphasis', element: 'em' }
       ];
       config.theme = 'default';
-      config.extraPlugins = 'mediaembed';
+      config.extraPlugins = 'find,mediaembed';
       config.toolbarStartupExpanded = false;
       config.toolbarCanCollapse = true;
       config.uiColor = "#E0E0D6";
