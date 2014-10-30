@@ -162,7 +162,10 @@ define([
                     field: curValue,
                     editor: controlClass,
                     editorArgs: {
-                        attribute: curAttributeDef,
+                        name: curAttributeDef.name,
+                        helpText: Dict.translate(curAttributeDef.description),
+                        inputType: curAttributeDef.inputType,
+                        original: this.original,
                         style: 'height:20px; padding:0;',
                         isInlineEditor: true
                     },

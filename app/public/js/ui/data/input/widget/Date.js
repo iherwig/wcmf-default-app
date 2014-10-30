@@ -33,9 +33,14 @@ function(
             this.label = Dict.translate(this.name);
             // add time, if missing
             if (this.value && this.value.length === 10) {
-              this.value = this.value+" 00:00:00";
+                this.value = this.value+" 00:00:00";
             }
-            this.value = locale.parse(this.value, this.dateFormat);
+            try {
+                this.value = locale.parse(this.value, this.dateFormat);
+            }
+            catch (e) {
+                console.log("Illegal date instance: "+this.value);
+            }
         },
 
         postCreate: function() {
