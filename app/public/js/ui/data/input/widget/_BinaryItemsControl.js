@@ -9,10 +9,12 @@ define( [
     "dojo/on",
     "dijit/registry",
     "dijit/layout/ContentPane",
+    "dijit/form/_FormValueWidget",
     "../Factory",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
-    "../../../../locale/Dictionary"
+    "../../../../locale/Dictionary",
+  	"dojo/text!./template/_BinaryItemsControl.html"
 ],
 function(
     declare,
@@ -25,12 +27,17 @@ function(
     on,
     registry,
     ContentPane,
+    _FormValueWidget,
     ControlFactory,
     _HelpMixin,
     _AttributeWidgetMixin,
-    Dict
+    Dict,
+    template
 ) {
-    return declare([ContentPane, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([ContentPane, _FormValueWidget, _HelpMixin, _AttributeWidgetMixin], {
+
+    		templateString: template,
+        intermediateChanges: true,
 
         inputType: null, // control description as string as used in Factory.getControlClass()
         original: {},
@@ -72,6 +79,7 @@ function(
                         }
                     }));
                 }
+                this.updateDisplay(this.value);
             }));
 
             // subscribe to entity change events to change tab links
@@ -82,20 +90,10 @@ function(
                     }
                 })),
                 on(this, "attrmodified-value", lang.hitch(this, function(e) {
-                    // update item widgets
-                    var oldListenValue = this.listenToWidgetChanges;
-                    this.listenToWidgetChanges = false;
                     var value = e.detail.newValue;
                     if (value) {
-                        var values = (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
-                        var itemWidgets = registry.findWidgets(this.domNode);
-                        for (var i=0, count=itemWidgets.length; i<count; i++) {
-                            var widget = itemWidgets[i];
-                            var isChecked = array.indexOf(values, widget.get("value")) !== -1;
-                            widget.set("checked", isChecked);
-                        }
+                      this.updateDisplay(value);
                     }
-                    this.listenToWidgetChanges = oldListenValue;
                 }))
             );
         },
@@ -119,6 +117,8 @@ function(
         },
 
         updateValue: function(value, isSelected) {
+            var oldListenValue = this.listenToWidgetChanges;
+            this.listenToWidgetChanges = false;
             if (this.multiValued) {
                 var values = this.get("value").split(",");
                 if (isSelected) {
@@ -134,16 +134,30 @@ function(
                     });
                 }
                 this.set("value", values.join(","));
-                // send change event
-                this.emit("change", this);
             }
             else {
                 if (isSelected) {
                     this.set("value", value);
-                    // send change event
-                    this.emit("change", this);
                 }
             }
+            this.listenToWidgetChanges = oldListenValue;
+        },
+
+        updateDisplay: function(value) {
+            // update item widgets
+            var oldListenValue = this.listenToWidgetChanges;
+            this.listenToWidgetChanges = false;
+            var values = (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
+            var itemWidgets = registry.findWidgets(this.domNode);
+            for (var i=0, count=itemWidgets.length; i<count; i++) {
+                var widget = itemWidgets[i];
+                // we don't use the public get method for the value, because it
+                // will return false instead of the text value, if the widget is
+                // not checked
+                var isChecked = array.indexOf(values, widget._get("value")) !== -1;
+                widget.set("checked", isChecked);
+            }
+            this.listenToWidgetChanges = oldListenValue;
         },
 
         _setDisabledAttr: function(value) {
@@ -157,7 +171,7 @@ function(
 
         focus: function() {
             // focus first widget, because otherwise focus loss
-            // is not reported to grid editor resulting in empty grid value
+            // is not reported to grid editor
             var itemWidgets = registry.findWidgets(this.domNode);
             for (var i=0, count=itemWidgets.length; i<count; i++) {
                 var widget = itemWidgets[i];
