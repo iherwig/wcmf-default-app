@@ -68,7 +68,7 @@ foreach ($languages as $language) {
     foreach ($fileMessages as $message) {
       if (!isset($messages[$message])) {
         $messages[$message] = array();
-        $messages[$message]['translation'] = ${"messages_$language"}[$message];
+        $messages[$message]['translation'] = (isset(${"messages_$language"}[$message])) ? ${"messages_$language"}[$message] : '';
         $messages[$message]['files'] = $file;
       }
       else {
