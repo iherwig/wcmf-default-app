@@ -314,31 +314,34 @@ function updateColumns($connection, $tableDef, $oldColumnDefs) {
     Log::debug("> process column '".$columnDef['name'], "dbupdate");
     $oldValue = getOldValue($connection, $tableDef['id'], $columnDef['id'], 'column');
     if ($oldValue) {
-      $oldColumnDef = $oldColumnDefs[$oldValue['column']];
+      $oldColumnDef = isset($oldColumnDefs[$oldValue['column']]) ? $oldColumnDefs[$oldValue['column']] : null;
     }
     else {
-      $oldColumnDef = $oldColumnDefs[$columnDef['name']];
+      $oldColumnDef = isset($oldColumnDefs[$columnDef['name']]) ? $oldColumnDefs[$columnDef['name']] : null;
     }
-    // translate oldColumnDef type
-    $oldColumnType = strtoupper($oldColumnDef['Type']);
-    if ($oldColumnDef['Null'] == 'NO') {
-      $oldColumnType .= ' NOT NULL';
-    }
-    $oldColumnDefTransl = array('name' => $oldColumnDef['Field'], 'type' => $oldColumnType);
 
     if ($oldValue === null && $oldColumnDef === null) {
       // the column has no update entry and does not exist
       createColumn($connection, $tableDef['name'], $columnDef);
     }
-    else if (($oldValue != null && $oldValue['column'] != $columnDef['name']) ||
-            strtolower($oldColumnDefTransl['type']) != strtolower($columnDef['type'])) {
-      // ignore changes in 'not null' for primary keys ('not null' is set anyway)
-      $typeDiffersInNotNull = strtolower(trim(str_replace($columnDef['type'], "", $oldColumnDefTransl['type']))) == 'not null';
-      if ($typeDiffersInNotNull && in_array($columnDef['name'], $tableDef['pks'])) {
-        continue;
+    else {
+      // translate oldColumnDef type
+      $oldColumnType = strtoupper($oldColumnDef['Type']);
+      if ($oldColumnDef['Null'] == 'NO') {
+        $oldColumnType .= ' NOT NULL';
       }
-      // the column has an update entry and does exist
-      alterColumn($connection, $tableDef['name'], $oldColumnDefTransl, $columnDef);
+      $oldColumnDefTransl = array('name' => $oldColumnDef['Field'], 'type' => $oldColumnType);
+
+      if (($oldValue != null && $oldValue['column'] != $columnDef['name']) ||
+            strtolower($oldColumnDefTransl['type']) != strtolower($columnDef['type'])) {
+        // ignore changes in 'not null' for primary keys ('not null' is set anyway)
+        $typeDiffersInNotNull = strtolower(trim(str_replace($columnDef['type'], "", $oldColumnDefTransl['type']))) == 'not null';
+        if ($typeDiffersInNotNull && in_array($columnDef['name'], $tableDef['pks'])) {
+          continue;
+        }
+        // the column has an update entry and does exist
+        alterColumn($connection, $tableDef['name'], $oldColumnDefTransl, $columnDef);
+      }
     }
   }
 }
