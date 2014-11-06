@@ -10,6 +10,7 @@ use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
 use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
+use wcmf\lib\security\principal\PasswordService;
 
 new ClassLoader();
 
@@ -22,7 +23,7 @@ $config->addConfiguration('config.ini');
 ObjectFactory::configure($config);
 
 $requestPassword = filter_input(INPUT_POST, 'password');
-$hashedPassword = $requestPassword ? ObjectFactory::getInstance('User')->hashPassword($requestPassword) : '';
+$hashedPassword = $requestPassword ? PasswordService::hash($requestPassword) : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
