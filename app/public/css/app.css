@@ -386,18 +386,19 @@ td {
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
   /* Force table to not be like tables anymore */
-  table, thead, tbody, th, td, tr {
+  .entity-form-table table, .entity-form-table thead, .entity-form-table tbody, 
+  .entity-form-table th, .entity-form-table td, .entity-form-table tr {
     display: block;
   }
 
   /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
+  .entity-form-table thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
 
-  td {
+  .entity-form-table td {
     /* Behave like a "row" */
     position: relative;
   }
