@@ -103,7 +103,8 @@ class RootController extends Controller {
       }
     }
     $baseHref = dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
-    $mediaPath = FileUtil::getRelativePath(dirname($_SERVER['SCRIPT_FILENAME']), $mediaAbsPath);
+    $mediaPathRelScript = FileUtil::getRelativePath(dirname($_SERVER['SCRIPT_FILENAME']), $mediaAbsPath);
+    $mediaPathRelBase = FileUtil::getRelativePath(WCMF_BASE, $mediaAbsPath);
 
     // define client configuration
     $clientConfig = array(
@@ -111,8 +112,9 @@ class RootController extends Controller {
       'backendUrl' => $pathPrefix.'/main.php',
       'rootTypes' => $rootTypes,
       'pathPrefix' => $pathPrefix,
-      'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPath, $baseHref),
-      'mediaBasePath' => $mediaPath,
+      'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPathRelScript, $baseHref),
+      'mediaBasePath' => $mediaPathRelScript,
+      'mediaSavePath' => $mediaPathRelBase,
       'uiLanguage' => $uiLanguage,
       'defaultLanguage' => $defaultLanguage,
       'languages' => $languages,

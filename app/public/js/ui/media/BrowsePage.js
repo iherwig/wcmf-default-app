@@ -208,8 +208,8 @@ define([
         },
 
         getItemUrl: function(item) {
-            item = decodeURIComponent(item);
-            return appConfig.mediaBasePath+item.replace(appConfig.mediaBaseUrl, '');
+            item = decodeURIComponent(item.url);
+            return appConfig.mediaSavePath+item.replace(appConfig.mediaBaseUrl, '');
         }
     });
 });
