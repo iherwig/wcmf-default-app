@@ -204,6 +204,10 @@ input[type="color"]:disabled,
   padding: 10px;
 }
 
+th.field-oid, td.field-oid {
+  width: 30px;
+}
+
 th.field-actions-1, td.field-actions-1 {
   width: 30px;
 }
@@ -386,7 +390,7 @@ td {
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
   /* Force table to not be like tables anymore */
-  .entity-form-table table, .entity-form-table thead, .entity-form-table tbody, 
+  .entity-form-table table, .entity-form-table thead, .entity-form-table tbody,
   .entity-form-table th, .entity-form-table td, .entity-form-table tr {
     display: block;
   }

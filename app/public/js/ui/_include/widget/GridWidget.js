@@ -11,6 +11,7 @@ define([
     "dgrid/extensions/ColumnResizer",
     "dgrid/extensions/DijitRegistry",
     "dgrid/editor",
+    "dgrid/tree",
     "dojo/dom",
     "dojo/dom-attr",
     "dojo/dom-construct",
@@ -41,6 +42,7 @@ define([
     ColumnResizer,
     DijitRegistry,
     editor,
+    tree,
     dom,
     domAttr,
     domConstruct,
@@ -94,8 +96,7 @@ define([
 
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
 
-                this.gridWidget = this.buildGrid(controls);
-                this.gridWidget.set("store", this.store);
+                this.gridWidget = this.buildGrid(controls, this.store);
                 this.own(
                     on(window, "resize", lang.hitch(this, this.onResize)),
                     on(this.gridWidget, "click", lang.hitch(this, function(e) {
@@ -142,14 +143,17 @@ define([
             }));
         },
 
-        buildGrid: function (controls) {
-            var columns = [{
-                label: 'oid',
+        buildGrid: function (controls, store) {
+            var columns = [tree({
+                label: '',
                 field: 'oid',
-                hidden: true,
                 unhidable: true,
-                sortable: true
-            }];
+                sortable: false,
+                resizable: false,
+                formatter: lang.hitch(this, function(data, obj) {
+                    return '';
+                })
+            })];
 
             var typeClass = Model.getType(this.type);
             var displayValues = typeClass.displayValues;
@@ -157,7 +161,7 @@ define([
                 var curValue = displayValues[i];
                 var curAttributeDef = typeClass.getAttribute(curValue);
                 var controlClass = controls[curAttributeDef.inputType];
-                columns.push(editor({
+                var column = editor({
                     label: Dict.translate(curValue),
                     field: curValue,
                     editor: controlClass,
@@ -180,7 +184,8 @@ define([
                             td.innerHTML = value;
                         });
                     })
-                }));
+                });
+                columns.push(column);
             }
 
             // add actions column
@@ -216,6 +221,7 @@ define([
             var gridWidget = new (declare([OnDemandGrid].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
+                store: store,
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
