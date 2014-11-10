@@ -109,7 +109,7 @@ class RootController extends Controller {
     // define client configuration
     $clientConfig = array(
       'title' => $appTitle,
-      'backendUrl' => $pathPrefix.'/main.php',
+      'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
       'pathPrefix' => $pathPrefix,
       'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPathRelScript, $baseHref),
