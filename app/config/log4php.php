@@ -1,19 +1,20 @@
 <?php
 return array(
   'rootLogger' => array(
-    'level' => 'ERROR',
-    'appenders' => array('dailyFile', 'echo'),
+    'level' => 'INFO',
+    'appenders' => array('dailyFile'),
   ),
 
   'loggers' => array(
     'wcmf\lib\config\impl\InifileConfiguration' => array('level' => 'INFO'),
-    'wcmf\lib\model\mapper\RDBMapper' => array('level' => 'ERROR', 'appenders' => array('dailyFile')),
-    'wcmf\lib\presentation\Controller' => array('level' => 'ERROR', 'appenders' => array('dailyFile')),
-    'wcmf\lib\presentation\Request' => array('level' => 'ERROR', 'appenders' => array('dailyFile')),
-    'wcmf\lib\presentation\impl\DefaultActionMapper' => array('level' => 'ERROR', 'appenders' => array('dailyFile')),
-    'wcmf\lib\presentation\Application' => array('level' => 'INFO', 'appenders' => array('dailyFile')),
-    'wcmf\lib\service\SoapServer' => array('level' => 'DEBUG', 'appenders' => array('dailyFile')),
-    'wcmf\application\controller\LoggingController' => array('level' => 'INFO', 'appenders' => array('dailyFile')),
+    'wcmf\lib\model\mapper\RDBMapper' => array('level' => 'ERROR'),
+    'wcmf\lib\presentation\Controller' => array('level' => 'ERROR'),
+    'wcmf\lib\presentation\Request' => array('level' => 'DEBUG'),
+    'wcmf\lib\presentation\impl\DefaultActionMapper' => array('level' => 'ERROR'),
+    'wcmf\lib\presentation\Application' => array('level' => 'INFO'),
+    'wcmf\lib\security\impl\AbstractPermissionManager' => array('level' => 'ERROR'),
+    'wcmf\lib\service\SoapServer' => array('level' => 'DEBUG'),
+    'wcmf\application\controller\LoggingController' => array('level' => 'INFO'),
   ),
 
   'appenders' => array(
