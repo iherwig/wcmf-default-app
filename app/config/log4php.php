@@ -1,7 +1,7 @@
 <?php
 return array(
   'rootLogger' => array(
-    'level' => 'ERROR',
+    'level' => 'INFO',
     'appenders' => array('dailyFile'),
   ),
 
@@ -9,8 +9,10 @@ return array(
     'wcmf\lib\config\impl\InifileConfiguration' => array('level' => 'INFO'),
     'wcmf\lib\model\mapper\RDBMapper' => array('level' => 'ERROR'),
     'wcmf\lib\presentation\Controller' => array('level' => 'ERROR'),
+    'wcmf\lib\presentation\Request' => array('level' => 'DEBUG'),
     'wcmf\lib\presentation\impl\DefaultActionMapper' => array('level' => 'ERROR'),
     'wcmf\lib\presentation\Application' => array('level' => 'INFO'),
+    'wcmf\lib\security\impl\AbstractPermissionManager' => array('level' => 'ERROR'),
     'wcmf\lib\service\SoapServer' => array('level' => 'DEBUG'),
     'wcmf\application\controller\LoggingController' => array('level' => 'INFO'),
   ),
