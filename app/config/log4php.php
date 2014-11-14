@@ -2,7 +2,7 @@
 return array(
   'rootLogger' => array(
     'level' => 'ERROR',
-    'appenders' => array('dailyFile', 'echo'),
+    'appenders' => array('dailyFile'),
   ),
 
   'loggers' => array(

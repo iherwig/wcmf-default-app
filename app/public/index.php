@@ -20,7 +20,7 @@ $application = new Application();
 try {
   // initialize the application
   $request = $application->initialize(WCMF_BASE.'app/config/', 'config.ini', '', '', 'cms');
-  
+
   // run the application
   $application->run($request);
 }
@@ -28,7 +28,7 @@ catch (Exception $ex) {
   try {
     $application->handleException($ex, isset($request) ? $request : null);
   } catch (Exception $unhandledEx) {
-    $error = "An unhandled exception occured. Please see log file for details.";
+    echo("An unhandled exception occured. Please see log file for details.");
   }
 }
 ?>
