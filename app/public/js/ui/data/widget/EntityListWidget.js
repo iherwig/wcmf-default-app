@@ -86,6 +86,10 @@ function(
             );
         },
 
+        startup: function() {
+            this.gridWidget.startup();
+        },
+
         getGridActions: function() {
 
             var editAction = new Edit({

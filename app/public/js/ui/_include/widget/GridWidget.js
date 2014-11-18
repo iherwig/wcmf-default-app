@@ -140,6 +140,7 @@ define([
                     }))
                 );
                 this.onResize();
+                this.gridWidget.startup();
             }));
         },
 
