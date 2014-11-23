@@ -5,6 +5,8 @@
 @import url('../vendor/dojo/dojo/resources/dnd.css');
 @import url('../vendor/sitepen/dgrid/css/extensions/ColumnHider.css');
 @import url('../vendor/sitepen/dgrid/css/extensions/ColumnResizer.css');
+@import url('../vendor/dojo/dojox/widget/ColorPicker/ColorPicker.css');
+@import url('../vendor/dojo/dojox/form/resources/CheckedMultiSelect.css');
 
 .clearfix:before,
 .clearfix:after {
@@ -357,6 +359,18 @@ td {
 
 .dijitTextBox .dijitArrowButtonInner {
   line-height: 24px;
+}
+
+.dojoxCheckedMultiSelectCheckBoxInput {
+  opacity: 1 !important;
+}
+
+.dj_ie .dojoxCheckedMultiSelectCheckBoxInput {
+  filter: alpha(opacity=1) !important;
+}
+
+.dojoxCheckedMultiSelect .dijitInputInner {
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 980px) {
