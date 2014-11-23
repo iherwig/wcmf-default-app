@@ -99,26 +99,11 @@
         {
             "type": "package",
             "package": {
-                "name": "thesociable/dbootstrap",
-                "type": "wcmf-asset",
-                "version": "0.1.1",
-                "dist": {
-                    "url": "https://github.com/thesociable/dbootstrap/releases/download/0.1.1/dbootstrap-0.1.1-dojo-1.9.1.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "twbs/bootstrap",
                 "type": "wcmf-asset",
-                "version": "2.3.2",
+                "version": "3.3.1",
                 "dist": {
-                    "url": "http://getbootstrap.com/2.3.2/assets/bootstrap.zip",
+                    "url": "https://github.com/twbs/bootstrap/releases/download/v3.3.1/bootstrap-3.3.1-dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -259,8 +244,7 @@
         "dojo/dojox": "~1.10",
         "dojo/util": "~1.10",
         "sitepen/dgrid": "~0.3",
-        "thesociable/dbootstrap": "0.1.1",
-        "twbs/bootstrap": "2.3.2",
+        "twbs/bootstrap": "3.3.1",
         "fortawesome/font-awesome": "4.2.0",
         "ckeditor/ckeditor": "4.4.5",
         "studio-42/elfinder": "2.1",

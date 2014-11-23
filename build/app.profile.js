@@ -14,6 +14,7 @@
 var appSrc = [
     "app/js/App",
     "app/js/Cookie",
+    "app/js/Startup",
     "app/js/User",
     "app/js/routing-map",
     "app/js/action/ActionBase",

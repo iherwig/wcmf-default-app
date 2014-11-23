@@ -166,6 +166,7 @@ define([
                             }, this.tabNode);
                         })
                     });
+                    panel.startup();
                 }
                 else {
                     // error

@@ -178,6 +178,7 @@ function(
                             attributeWidget.set('disabled', true);
                         }
                         this.layoutWidget.addChild(attributeWidget);
+                        attributeWidget.startup();
 
                         this.attributeWidgets.push(attributeWidget);
                     }
@@ -197,9 +198,13 @@ function(
                                 page: this.page
                             });
                             this.relationsNode.appendChild(relationWidget.domNode);
+                            relationWidget.startup();
                         }
                     }
                 }
+
+                // startup widgets
+                this.layoutWidget.startup();
 
                 // set button states
                 this.setBtnState("save", false); // no modifications yet
@@ -235,14 +240,6 @@ function(
                     this.showBackendError(error);
                 }))
             );
-        },
-
-        startup: function() {
-            this.inherited(arguments);
-            for (var i=0, count=this.attributeWidgets.length; i<count; i++) {
-                this.attributeWidgets[i].startup();
-            }
-            this.layoutWidget.startup();
         },
 
         /**

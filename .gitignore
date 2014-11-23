@@ -22,4 +22,5 @@ dist
 vendor/*
 app/public/vendor/*
 !app/public/vendor/ckeditor-plugins
+!app/public/vendor/simmerdesign
 composer.lock
