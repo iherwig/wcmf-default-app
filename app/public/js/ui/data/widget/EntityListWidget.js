@@ -11,7 +11,6 @@ define( [
     "../../_include/widget/Button",
     "../../../model/meta/Model",
     "../../../persistence/Store",
-    "../../../persistence/Entity",
     "../../../action/Create",
     "../../../action/Edit",
     "../../../action/Copy",
@@ -32,7 +31,6 @@ function(
     Button,
     Model,
     Store,
-    Entity,
     Create,
     Edit,
     Copy,
@@ -74,6 +72,7 @@ function(
                 actions: this.getGridActions(),
                 enabledFeatures: enabledFeatures
             }, this.gridNode);
+            this.gridWidget.startup();
 
             if (this.onCreated instanceof Function) {
                 this.onCreated(this);
@@ -84,10 +83,6 @@ function(
                     this.showBackendError(error);
                 }))
             );
-        },
-
-        startup: function() {
-            this.gridWidget.startup();
         },
 
         getGridActions: function() {
