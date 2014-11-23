@@ -12,9 +12,7 @@ define( [
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary",
-    "dojo/text!./template/MultiSelect.html",
-    "xstyle/css!dojox/form/resources/CheckedMultiSelect.css",
-    "xstyle/css!./template/MultiSelect.css"
+    "dojo/text!./template/MultiSelect.html"
 ],
 function(
     declare,

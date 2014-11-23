@@ -5,8 +5,7 @@ define( [
     "dojox/widget/ColorPicker",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
-    "../../../../locale/Dictionary",
-    "xstyle/css!dojox/widget/ColorPicker/ColorPicker.css"
+    "../../../../locale/Dictionary"
 ],
 function(
     declare,
