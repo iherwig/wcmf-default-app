@@ -71,8 +71,12 @@ define([
                     topic.publish('navigate', 'search', null, {q: domAttr.get(this.searchField, "value")});
                 })),
                 on(this.collapseToggleBtn, "click", lang.hitch(this, function(e) {
-                    var height = domStyle.get(this.menuCollapse, "height");
-                    domStyle.set(this.menuCollapse, "height", height == 0 ? "auto" : 0);
+                    if (domClass.contains(this.menuCollapse, "in")) {
+                        domClass.remove(this.menuCollapse, "in");
+                    }
+                    else {
+                        domClass.add(this.menuCollapse, "in");
+                    }
                 }))
             );
 
