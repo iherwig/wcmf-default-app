@@ -55,7 +55,8 @@ class RootController extends Controller {
 
     // get configuration values
     $config = ObjectFactory::getConfigurationInstance();
-    $appTitle = $config->getValue('applicationTitle', 'application');
+    $appTitle = $config->getValue('title', 'application');
+    $appColor = $config->getValue('color', 'application');
     $rootTypes = $config->getValue('rootTypes', 'application');
     $uiLanguage = $config->getValue('language', 'application');
     $defaultLanguage = $config->getValue('defaultLanguage', 'localization');
@@ -109,6 +110,7 @@ class RootController extends Controller {
     // define client configuration
     $clientConfig = array(
       'title' => $appTitle,
+      'color' => $appColor,
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
       'pathPrefix' => $pathPrefix,

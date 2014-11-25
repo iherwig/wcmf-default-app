@@ -50,20 +50,41 @@ define([
 
         setHeaderBackground: function() {
           // get time dependent color
+          var baseColor = appConfig.color;
           var now = new Date();
-          var hexHours = parseInt(Math.round(255*now.getHours()/24));
-          var hexMinutes = parseInt(Math.round(255*now.getMinutes()/60));
-          var hexSeconds = parseInt(Math.round(255*now.getSeconds()/60));
-          var colour = hexHours.toString(16) + hexMinutes.toString(16) + hexSeconds.toString(16);
+          var lum = parseInt(Math.round(2*now.getHours()/24))-1; // -1..1
+          var colour = this.colorLuminance(baseColor, lum);
 
           // generate pattern
           var t = new Trianglify({
               cellsize: 90,
               noiseIntensity: 0,
-              x_gradient: ["#"+colour, "#2F2F2F"]
+              x_gradient: [colour, "#2F2F2F"]
           });
           var pattern = t.generate(window.screen.width, window.screen.height);
           this.header.setAttribute('style', 'background-image: '+pattern.dataUrl);
+        },
+
+        /**
+         * http://www.sitepoint.com/javascript-generate-lighter-darker-color/
+         */
+        colorLuminance: function(hex, lum) {
+            // validate hex string
+            hex = String(hex).replace(/[^0-9a-f]/gi, '');
+            if (hex.length < 6) {
+                hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+            }
+            lum = lum || 0;
+
+            // convert to decimal and change luminosity
+            var rgb = "#", c, i;
+            for (i = 0; i < 3; i++) {
+                c = parseInt(hex.substr(i*2,2), 16);
+                c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                rgb += ("00"+c).substr(c.length);
+            }
+
+            return rgb;
         },
 
         createNotificationNode: function() {
