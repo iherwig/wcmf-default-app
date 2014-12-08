@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:css="http://www.eclipse.org/papyrus/infra/gmfdiag/css" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <notation:Diagram xmi:id="_kUir8LQnEeOULris00pHLg" type="PapyrusUMLClassDiagram" name="server.ini" measurementUnit="Pixel">
     <children xmi:type="notation:Shape" xmi:id="_tQECMLQ3EeOQ5oJFa1i8cg" type="2008" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_tQFQULQ3EeOQ5oJFa1i8cg" source="ShadowFigure">
@@ -4262,11 +4262,11 @@
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_MAJWQPvsEeO7oqnkSuo0Ew" type="4001" source="_S3-6YLRnEeOfbtYsPp7Oyg" target="_IBDqgPvsEeO7oqnkSuo0Ew">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_QuLysPvsEeO7oqnkSuo0Ew" source="Stereotype_Annotation">
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QuLysfvsEeO7oqnkSuo0Ew" key="StereotypeWithQualifiedNameList" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QuLysvvsEeO7oqnkSuo0Ew" key="StereotypeList" value="Chronos::ChiActionKey"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QuLys_vsEeO7oqnkSuo0Ew" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QuLytPvsEeO7oqnkSuo0Ew" key="PropStereoDisplay" value=""/>
-        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_QuLytfvsEeO7oqnkSuo0Ew" key="StereotypePropertyLocation" value="Compartment"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F67lAH7REeSlXZH3IdhD4A" key="StereotypeWithQualifiedNameList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F67lAX7REeSlXZH3IdhD4A" key="StereotypeList" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F67lAn7REeSlXZH3IdhD4A" key="Stereotype_Presentation_Kind" value="HorizontalStereo"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F67lA37REeSlXZH3IdhD4A" key="PropStereoDisplay" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F68MEH7REeSlXZH3IdhD4A" key="StereotypePropertyLocation" value="Compartment"/>
       </eAnnotations>
       <children xmi:type="notation:DecorationNode" xmi:id="_MAJWQ_vsEeO7oqnkSuo0Ew" visible="false" type="6001">
         <layoutConstraint xmi:type="notation:Location" xmi:id="_MAJWRPvsEeO7oqnkSuo0Ew" y="-20"/>
@@ -4997,4 +4997,5 @@
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ouYq4fvBEeOmMdys2glKCA" id="(0.013333333333333334,0.45871559633027525)"/>
     </edges>
   </notation:Diagram>
+  <css:ModelStyleSheets xmi:id="_N5AO0H7REeSlXZH3IdhD4A"/>
 </xmi:XMI>
