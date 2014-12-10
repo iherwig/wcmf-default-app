@@ -78,7 +78,9 @@
         <exclude name="**/develop*/**"/>
         <exclude name="**/.git*"/>
         <exclude name="**/.svn*"/>
-        <exclude name="**/zf1/zend-locale/library/Zend/Locale/Data/*"/>
+        <exclude name="zf1/zend-locale/library/Zend/Locale/Data/*"/>
+        <exclude name="olympos//**"/>
+        <exclude name="wcmf/asset-installer/**"/>
         <include name="**"/>
       </fileset>
     </copy>
