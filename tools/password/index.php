@@ -22,7 +22,7 @@ $config = new InifileConfiguration($configPath);
 $config->addConfiguration('config.ini');
 ObjectFactory::configure($config);
 
-$requestPassword = filter_input(INPUT_POST, 'password');
+$requestPassword = filter_input(INPUT_GET, 'password');
 $hashedPassword = $requestPassword ? PasswordService::hash($requestPassword) : '';
 ?>
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ $hashedPassword = $requestPassword ? PasswordService::hash($requestPassword) : '
             <h1>wCMF Password</h1>
           </div>
         </section>
-        <form action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="post">
+        <form action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="get">
           <fieldset>
             <input type="text" name="password" placeholder="Password">
             <button type="submit" class="btn">Hash</button>
