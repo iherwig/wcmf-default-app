@@ -25,16 +25,12 @@ function(
         inputType: null, // control description as string as used in Factory.getControlClass()
         original: {},
 
-        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd HH:mm:ss', locale: appConfig.uiLanguage},
+        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd', locale: appConfig.uiLanguage},
 
         constructor: function(args) {
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
-            // add time, if missing
-            if (this.value && this.value.length === 10) {
-                this.value = this.value+" 00:00:00";
-            }
             try {
                 this.value = locale.parse(this.value, this.dateFormat);
             }
