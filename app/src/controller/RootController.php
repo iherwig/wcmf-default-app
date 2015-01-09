@@ -93,7 +93,7 @@ class RootController extends Controller {
       }
     }
     $baseHref = dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
-    $mediaPathRelScript = FileUtil::getRelativePath(realpath(dirname($_SERVER['SCRIPT_FILENAME'])).'/', $mediaAbsPath);
+    $mediaPathRelScript = FileUtil::getRelativePath(dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/', $mediaAbsPath);
     $mediaPathRelBase = FileUtil::getRelativePath(WCMF_BASE, $mediaAbsPath);
 
     // define client configuration
