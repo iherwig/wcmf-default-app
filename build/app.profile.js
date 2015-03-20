@@ -171,6 +171,7 @@ var profile = {
       { name: 'dojox', location: 'vendor/dojo/dojox', destLocation: 'vendor/dojo/dojox' },
       { name: 'routed', location: 'vendor/sirprize/routed', destLocation: 'vendor/sirprize/routed' },
       { name: 'dojomat', location: 'vendor/sirprize/dojomat', destLocation: 'vendor/sirprize/dojomat' },
+      { name: 'dstore', location: 'vendor/sitepen/dstore', destLocation: 'vendor/sitepen/dstore' },
       { name: 'dgrid', location: 'vendor/sitepen/dgrid', destLocation: 'vendor/sitepen/dgrid' },
       { name: 'xstyle', location: 'vendor/kriszyp/xstyle', destLocation: 'vendor/kriszyp/xstyle' },
       { name: 'put-selector', location: 'vendor/kriszyp/put-selector', destLocation: 'vendor/kriszyp/put-selector' },

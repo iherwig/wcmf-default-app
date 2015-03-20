@@ -163,10 +163,6 @@ th.field-actions-4, td.field-actions-4 {
   width: 120px;
 }
 
-.dgrid-row {
-  height: 35px;
-}
-
 .dgrid-cell {
   text-shadow: none;
   text-overflow: ellipsis;

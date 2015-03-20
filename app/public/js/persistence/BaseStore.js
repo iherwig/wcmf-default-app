@@ -50,10 +50,10 @@ define([
 
                     // reorder request
                     // use position header according to http://www.ietf.org/rfc/rfc3648.txt
-                    if ("before" in options) {
-                        var position = "last"; // default if before is undefined
-                        if (options.before) {
-                            position = "before "+options.before.oid;
+                    if ("beforeId" in options) {
+                        var position = "last"; // default if beforeId is undefined
+                        if (options.beforeId) {
+                            position = "before "+options.beforeId;
                         }
                         else {
                             position = "last";

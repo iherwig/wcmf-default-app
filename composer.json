@@ -37,9 +37,9 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.10.1",
+                "version": "1.10.4",
                 "dist": {
-                    "url": "https://github.com/dojo/dojo/archive/1.10.0.zip",
+                    "url": "https://github.com/dojo/dojo/archive/1.10.4.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.10.1",
+                "version": "1.10.4",
                 "dist": {
-                    "url": "https://github.com/dojo/dijit/archive/1.10.0.zip",
+                    "url": "https://github.com/dojo/dijit/archive/1.10.4.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -67,9 +67,9 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.10.1",
+                "version": "1.10.4",
                 "dist": {
-                    "url": "https://github.com/dojo/dojox/archive/1.10.0.zip",
+                    "url": "https://github.com/dojo/dojox/archive/1.10.4.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -82,10 +82,26 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.10.1",
+                "version": "1.10.4",
                 "dist": {
-                    "url": "https://github.com/dojo/util/archive/1.10.0.zip",
+                    "url": "https://github.com/dojo/util/archive/1.10.4.zip",
                     "type": "zip"
+                },
+                "require": {
+                    "wcmf/asset-installer": "*"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "sitepen/dstore",
+                "type": "wcmf-asset",
+                "version": "1.0.1",
+                "source": {
+                    "url": "https://github.com/SitePen/dstore.git",
+                    "type": "git",
+                    "reference": "v1.0.1"
                 },
                 "require": {
                     "wcmf/asset-installer": "*"
@@ -97,11 +113,11 @@
             "package": {
                 "name": "sitepen/dgrid",
                 "type": "wcmf-asset",
-                "version": "0.3.16",
+                "version": "0.4.0",
                 "source": {
                     "url": "https://github.com/SitePen/dgrid.git",
                     "type": "git",
-                    "reference": "v0.3.16"
+                    "reference": "v0.4.0"
                 },
                 "require": {
                     "wcmf/asset-installer": "*"
@@ -113,9 +129,9 @@
             "package": {
                 "name": "twbs/bootstrap",
                 "type": "wcmf-asset",
-                "version": "3.3.1",
+                "version": "3.3.4",
                 "dist": {
-                    "url": "https://github.com/twbs/bootstrap/releases/download/v3.3.1/bootstrap-3.3.1-dist.zip",
+                    "url": "https://github.com/twbs/bootstrap/releases/download/v3.3.4/bootstrap-3.3.4-dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -128,9 +144,9 @@
             "package": {
                 "name": "fortawesome/font-awesome",
                 "type": "wcmf-asset",
-                "version": "4.2.0",
+                "version": "4.3.0",
                 "dist": {
-                    "url": "https://github.com/FortAwesome/Font-Awesome/archive/v4.1.0.zip",
+                    "url": "https://github.com/FortAwesome/Font-Awesome/archive/v4.3.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -143,26 +159,10 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.4.5",
+                "version": "4.4.7",
                 "dist": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.1.zip",
+                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.7.zip",
                     "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "studio-42/elfinder",
-                "type": "wcmf-asset",
-                "version": "2.1",
-                "source": {
-                    "url": "https://github.com/Studio-42/elFinder.git",
-                    "type": "git",
-                    "reference": "2.1"
                 },
                 "require": {
                     "wcmf/asset-installer": "*"
@@ -206,24 +206,9 @@
             "package": {
                 "name": "kriszyp/put-selector",
                 "type": "wcmf-asset",
-                "version": "0.3.5",
+                "version": "0.3.6",
                 "dist": {
-                    "url": "https://github.com/kriszyp/put-selector/archive/v0.3.5.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "kriszyp/put-selector",
-                "type": "wcmf-asset",
-                "version": "0.3.5",
-                "dist": {
-                    "url": "https://github.com/kriszyp/put-selector/archive/v0.3.5.zip",
+                    "url": "https://github.com/kriszyp/put-selector/archive/v0.3.6.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -236,9 +221,9 @@
             "package": {
                 "name": "kriszyp/xstyle",
                 "type": "wcmf-asset",
-                "version": "0.2.1",
+                "version": "0.3.1",
                 "dist": {
-                    "url": "https://github.com/kriszyp/xstyle/archive/v0.2.1.zip",
+                    "url": "https://github.com/kriszyp/xstyle/archive/v0.3.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -255,14 +240,15 @@
         "dojo/dijit": "~1.10",
         "dojo/dojox": "~1.10",
         "dojo/util": "~1.10",
+        "sitepen/dstore": "~1.0",
         "sitepen/dgrid": "~0.3",
-        "twbs/bootstrap": "3.3.1",
-        "fortawesome/font-awesome": "4.2.0",
-        "ckeditor/ckeditor": "4.4.5",
-        "studio-42/elfinder": "2.1",
+        "twbs/bootstrap": "~3.3",
+        "fortawesome/font-awesome": "~4.3",
+        "ckeditor/ckeditor": "~4.4",
+        "nao-pon/elfinder-nightly": "2.1.*@dev",
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
-        "kriszyp/put-selector": "0.3.5",
-        "kriszyp/xstyle": "0.2.1"
+        "kriszyp/put-selector": "~0.3",
+        "kriszyp/xstyle": "~0.3"
     }
 }

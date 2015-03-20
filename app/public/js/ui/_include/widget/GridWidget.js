@@ -3,6 +3,7 @@ define([
     "dojo/_base/lang",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
+    "dstore/legacy/StoreAdapter",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -10,8 +11,8 @@ define([
     "dgrid/extensions/ColumnHider",
     "dgrid/extensions/ColumnResizer",
     "dgrid/extensions/DijitRegistry",
-    "dgrid/editor",
-    "dgrid/tree",
+    "dgrid/Editor",
+    "dgrid/Tree",
     "dojo/dom",
     "dojo/dom-attr",
     "dojo/dom-construct",
@@ -34,6 +35,7 @@ define([
     lang,
     _WidgetBase,
     _TemplatedMixin,
+    StoreAdapter,
     OnDemandGrid,
     Selection,
     Keyboard,
@@ -41,8 +43,8 @@ define([
     ColumnHider,
     ColumnResizer,
     DijitRegistry,
-    editor,
-    tree,
+    Editor,
+    Tree,
     dom,
     domAttr,
     domConstruct,
@@ -123,20 +125,20 @@ define([
                         this.dndBefore = source.before;
                     })),
                     topic.subscribe("/dnd/drop", lang.hitch(this, function(source, nodes, copy, target) {
-//                        var targetRow = target._targetAnchor;
-//                        if (targetRow) {
-//                            // drop on row
-//                            var before = this.dndBefore;
-//                            nodes.forEach(function(node) {
-//                                domConstruct.place(node, targetRow, before ? "before" : "after");
-//                            });
-//                        }
-//                        else {
-//                            // drop on empty space after rows
-//                            nodes.forEach(function(node) {
-//                                domConstruct.place(node, node.parentNode, "last");
-//                            });
-//                        }
+                        var targetRow = target._targetAnchor;
+                        if (targetRow) {
+                            // drop on row
+                            var before = this.dndBefore;
+                            nodes.forEach(function(node) {
+                                domConstruct.place(node, targetRow, before ? "before" : "after");
+                            });
+                        }
+                        else {
+                            // drop on empty space after rows
+                            nodes.forEach(function(node) {
+                                domConstruct.place(node, node.parentNode, "last");
+                            });
+                        }
                     }))
                 );
                 this.onResize();
@@ -145,16 +147,17 @@ define([
         },
 
         buildGrid: function (controls, store) {
-            var columns = [tree({
+            var columns = [{
                 label: '',
                 field: 'oid',
                 unhidable: true,
                 sortable: false,
                 resizable: false,
+                renderExpando: true,
                 formatter: lang.hitch(this, function(data, obj) {
                     return '';
                 })
-            })];
+            }];
 
             var typeClass = Model.getType(this.type);
             var displayValues = typeClass.displayValues;
@@ -162,7 +165,7 @@ define([
                 var curValue = displayValues[i];
                 var curAttributeDef = typeClass.getAttribute(curValue);
                 var controlClass = controls[curAttributeDef.inputType];
-                var column = editor({
+                var column = {
                     label: Dict.translate(curValue),
                     field: curValue,
                     editor: controlClass,
@@ -185,7 +188,7 @@ define([
                             td.innerHTML = value;
                         });
                     })
-                });
+                };
                 columns.push(column);
             }
 
@@ -219,10 +222,10 @@ define([
             }
 
             // create widget
-            var gridWidget = new (declare([OnDemandGrid].concat(features)))({
+            var gridWidget = new (declare([OnDemandGrid, Editor, Tree].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
-                store: store,
+                collection: new StoreAdapter({objectStore: store}),
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
