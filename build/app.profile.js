@@ -176,7 +176,9 @@ var profile = {
       { name: 'xstyle', location: 'vendor/kriszyp/xstyle', destLocation: 'vendor/kriszyp/xstyle' },
       { name: 'put-selector', location: 'vendor/kriszyp/put-selector', destLocation: 'vendor/kriszyp/put-selector' },
       { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor', destLocation: 'vendor/ckeditor/ckeditor' },
-      { name: 'elfinder', location: 'vendor/studio-42/elfinder', destLocation: 'vendor/studio-42/elfinder' },
+      { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery' },
+      { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui' },
+      { name: 'elfinder', location: 'vendor/nao-pon/elfinder', destLocation: 'vendor/nao-pon/elfinder' },
       { name: 'd3', location: 'http://d3js.org' },
       { name: 'trianglify', location: 'http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2' },
 
