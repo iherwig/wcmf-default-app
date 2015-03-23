@@ -172,6 +172,21 @@
         {
             "type": "package",
             "package": {
+                "name": "nao-pon/elfinder-nightly",
+                "type": "wcmf-asset",
+                "version": "2.1",
+                "dist": {
+                    "url": "http://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "wcmf/asset-installer": "*"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "sirprize/dojomat",
                 "type": "wcmf-asset",
                 "version": "dev-master",
@@ -245,7 +260,7 @@
         "twbs/bootstrap": "~3.3",
         "fortawesome/font-awesome": "~4.3",
         "ckeditor/ckeditor": "~4.4",
-        "nao-pon/elfinder-nightly": "2.1.*@dev",
+        "nao-pon/elfinder-nightly": "2.1",
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
         "kriszyp/put-selector": "~0.3",
