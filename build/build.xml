@@ -101,13 +101,14 @@
     <property name="path.app" location="${build.base}/${app.name}/public"/>
     <property name="path.dist" location="${dist.dir}/${app.name}/public"/>
     <script language="javascript"><![CDATA[
-      var path1 = project.getProperty("path.app");
-      var path2 = project.getProperty("path.dist");
+      var path1 = new String(project.getProperty("path.app"));
+      var path2 = new String(project.getProperty("path.dist"));
+      var sep = new String("/");
       project.setProperty("rewritebase.search", getPathFromBase(path1, path2, 1));
       project.setProperty("rewritebase.replace", getPathFromBase(path1, path2, 2));
       function getPathFromBase(path1, path2, index) {
-        var path1Parts = path1.replace(/\\/g, "/").split("/");
-        var path2Parts = path2.replace(/\\/g, "/").split("/");
+        var path1Parts = path1.replace(/\\/g, sep).split(sep);
+        var path2Parts = path2.replace(/\\/g, sep).split(sep);
         for(var i=0, count=Math.min(path1Parts.length, path2Parts.length); i<count; i++) {
           if (path1Parts[i] == path2Parts[i]) {
             path1Parts[i] = path2Parts[i] = "";
@@ -116,8 +117,8 @@
             break;
           }
         }
-        path1 = path1Parts.join("/").replace(/\/\/+/g, "/");
-        path2 = path2Parts.join("/").replace(/\/\/+/g, "/");
+        path1 = path1Parts.join(sep).replace(/\/\/+/g, sep);
+        path2 = path2Parts.join(sep).replace(/\/\/+/g, sep);
         return index == 1 ? path1 : path2;
       }
     ]]></script>
