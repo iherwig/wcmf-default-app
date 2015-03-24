@@ -159,13 +159,14 @@
         <include name="vendor/sitepen/dgrid/css/images/*.*"/>
         <!-- fonts -->
         <include name="vendor/thesociable/dbootstrap/theme/dbootstrap/font/*.*"/>
-        <include name="vendor/fortawesome/font-awesome/fonts/*.*"/>
+        <include name="vendor/font-awesome/fonts/*.*"/>
         <!-- elfinder -->
-        <include name="vendor/studio-42/elfinder/css/*.*"/>
-        <include name="vendor/studio-42/elfinder/img/*.*"/>
-        <include name="vendor/studio-42/elfinder/jquery/jquery-1.9.1.min.js"/>
-        <include name="vendor/studio-42/elfinder/jquery/jquery-ui-1.10.1.custom.min.js"/>
-        <include name="vendor/studio-42/elfinder/jquery/ui-themes/smoothness/jquery-ui-1.10.1.custom.css"/>
+        <include name="vendor/nao-pon/elfinder/css/*.*"/>
+        <include name="vendor/nao-pon/elfinder/img/*.*"/>
+        <include name="vendor/nao-pon/elfinder/js/i18n/elfinder.de.js"/>
+        <include name="vendor/jquery/jquery.min.js"/>
+        <include name="vendor/jquery-ui/jquery-ui.min.js"/>
+        <include name="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
         <!-- ckeditor -->
         <include name="vendor/ckeditor/ckeditor/skins/moono/**/*.*"/>
         <include name="vendor/ckeditor/ckeditor/plugins/**/*.*"/>
