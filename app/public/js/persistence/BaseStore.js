@@ -3,7 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/aspect",
     "dojo/topic",
-    "dojo/store/JsonRest",
+    "dstore/Rest",
     "dojox/uuid/generateRandomUuid",
     "../model/meta/Model"
 ], function (
@@ -11,18 +11,15 @@ define([
     declare,
     aspect,
     topic,
-    JsonRest,
+    Rest,
     uuid,
     Model
 ) {
-    return declare([JsonRest], {
+    return declare([Rest], {
 
         idProperty: 'oid',
 
         constructor: function(options) {
-            lang.mixin(this.headers, {
-                Accept: "application/json"
-            });
 
             // set id property in order to have url like /{type}/{id}
             // instead of /{type}/{oid}

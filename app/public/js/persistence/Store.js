@@ -1,15 +1,11 @@
 define([
     "dojo/_base/declare",
-    "dojo/store/Cache",
-    "dojo/store/Memory",
-    "./Observable",
+    "dstore/Cache",
     "./BaseStore",
     "../model/meta/Model"
 ], function (
     declare,
     Cache,
-    Memory,
-    Observable,
     BaseStore,
     Model
 ) {
@@ -42,22 +38,15 @@ define([
             Store.storeInstances[fqTypeName] = {};
         }
         if (!Store.storeInstances[fqTypeName][language]) {
-            var memory = new Memory({
-                idProperty: 'oid'
-            });
             var jsonRest = new Store({
                 typeName: fqTypeName,
                 language: language,
                 target: appConfig.pathPrefix+"/rest/"+language+"/"+fqTypeName+"/"
             });
-            var cache = new Observable(new Cache(
-                jsonRest,
-                memory
-            ));
+            var cache = Cache.create(jsonRest);
             Store.storeInstances[fqTypeName][language] = {
                 cache: cache,
-                jsonRest: jsonRest,
-                memory: memory
+                jsonRest: jsonRest
             };
         }
         return Store.storeInstances[fqTypeName][language].cache;
