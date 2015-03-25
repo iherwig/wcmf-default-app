@@ -3,7 +3,6 @@ define([
     "dojo/_base/lang",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
-    "dstore/legacy/StoreAdapter",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -35,7 +34,6 @@ define([
     lang,
     _WidgetBase,
     _TemplatedMixin,
-    StoreAdapter,
     OnDemandGrid,
     Selection,
     Keyboard,
@@ -225,7 +223,7 @@ define([
             var gridWidget = new (declare([OnDemandGrid, Editor, Tree].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
-                collection: new StoreAdapter({objectStore: store}),
+                collection: store,
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
