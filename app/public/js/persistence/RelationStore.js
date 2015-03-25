@@ -1,15 +1,11 @@
 define([
     "dojo/_base/declare",
-    "dojo/store/Cache",
-    "dojo/store/Memory",
-    "./Observable",
+    "dstore/Cache",
     "./BaseStore",
     "../model/meta/Model"
 ], function (
     declare,
     Cache,
-    Memory,
-    Observable,
     BaseStore,
     Model
 ) {
@@ -31,19 +27,13 @@ define([
         var relation = Model.getType(fqTypeName).getRelation(relationName);
         var relationTypeName = Model.getFullyQualifiedTypeName(relation.type);
 
-        var memory = new Memory({
-            idProperty: 'oid'
-        });
         var jsonRest = new RelationStore({
             oid: oid,
             relationName: relationName,
             typeName: relationTypeName,
             target: appConfig.pathPrefix+"/rest/"+appConfig.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
         });
-        var cache = new Observable(new Cache(
-            jsonRest,
-            memory
-        ));
+        var cache = Cache.create(jsonRest);
         return cache;
     };
 

@@ -64,7 +64,7 @@ function(
             }, this.domNode, "first");
             this.showSpinner();
 
-            when(this.store.query(), lang.hitch(this, function(list) {
+            when(this.store.fetch(), lang.hitch(this, function(list) {
                 this.hideSpinner();
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];

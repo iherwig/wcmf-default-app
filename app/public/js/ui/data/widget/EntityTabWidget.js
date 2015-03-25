@@ -9,6 +9,7 @@ define([
     "../../../Cookie",
     "../../../model/meta/Model",
     "../../../persistence/Store",
+    "../../../persistence/Entity",
     "../../../locale/Dictionary"
 ], function (
     declare,
@@ -21,6 +22,7 @@ define([
     Cookie,
     Model,
     Store,
+    Entity,
     Dict
 ) {
     /**
@@ -208,12 +210,13 @@ define([
             else {
                 // instance tab
                 var isNew = Model.isDummyOid(oid);
+                var entity = new Entity({ oid:oid });
                 if (isNew) {
-                    this.setInstanceTabName({ oid:oid }, tabItem);
+                    this.setInstanceTabName(entity, tabItem);
                 }
                 else {
                     var store = Store.getStore(typeName, appConfig.defaultLanguage);
-                    when(store.get(oid), lang.hitch(this, function(entity) {
+                    when(store.get(store.getIdentity(entity)), lang.hitch(this, function(entity) {
                             this.setInstanceTabName(entity, tabItem);
                         }), lang.hitch(this, function(error) {
                             this.closeTab(tabItem);

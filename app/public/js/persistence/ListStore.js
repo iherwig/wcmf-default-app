@@ -22,7 +22,7 @@ define([
         language: '',
         target: '',
 
-        idProperty: "oid",
+        idProperty: 'oid',
         data: null,
         index: null,
 

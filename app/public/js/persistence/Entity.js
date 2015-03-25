@@ -17,7 +17,10 @@ define([
      */
     var Entity = declare([Stateful], {
 
-        _state: "clean", /* clean, dirty, new, deleted */
+        /**
+         * Entity state (clean, dirty, new, deleted)
+         */
+        _state: "clean",
 
         constructor: function(args) {
             this.inherited(arguments);

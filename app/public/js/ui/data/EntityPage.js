@@ -67,6 +67,9 @@ define([
             var idParam = this.request.getPathParam("id");
             this.oid = Model.getOid(this.type, idParam);
             this.isNew = Model.isDummyOid(this.oid);
+            this.entity = new Entity({
+                oid: this.oid
+            });
 
             this.sourceOid = this.request.getQueryParam("oid");
             this.relation = this.request.getQueryParam("relation");
@@ -78,24 +81,21 @@ define([
         postCreate: function() {
             this.inherited(arguments);
 
-            var id = Model.getIdFromOid(this.oid);
-
             if (!this.isNew) {
                 this.setTitle(this.title+" - "+this.oid);
 
                 // create widget when entity is loaded
                 var loadPromises = [];
-                var oid = Model.getOid(this.type, id);
                 var store = Store.getStore(this.type, this.language);
-                loadPromises.push(store.get(oid));
+                loadPromises.push(store.get(store.getIdentity(this.entity)));
                 if (this.isTranslation) {
                   // provide original entity for reference
                   var storeOrig = Store.getStore(this.type, appConfig.defaultLanguage);
-                  loadPromises.push(storeOrig.get(oid));
+                  loadPromises.push(storeOrig.get(store.getIdentity(this.entity)));
                 }
                 all(loadPromises).then(lang.hitch(this, function(loadResults) {
                     // allow to watch for changes of the object data
-                    this.entity = new Entity(loadResults[0]);
+                    this.entity = loadResults[0];
                     this.original = this.isTranslation ? loadResults[1] : {};
                     this.buildForm();
                     this.setTitle(this.title+" - "+this.typeClass.getDisplayValue(this.entity));
@@ -105,10 +105,7 @@ define([
                 }));
             }
             else {
-                // create a new entity instance
-                this.entity = new Entity({
-                    oid: this.oid
-                });
+                // initialize entity instance
                 this.entity.setDefaults();
                 this.entity.setState("new");
                 this.buildForm();

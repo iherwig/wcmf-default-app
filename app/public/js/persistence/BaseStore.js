@@ -5,6 +5,7 @@ define([
     "dojo/topic",
     "dstore/Rest",
     "dojox/uuid/generateRandomUuid",
+    "../persistence/Entity",
     "../model/meta/Model"
 ], function (
     lang,
@@ -13,11 +14,13 @@ define([
     topic,
     Rest,
     uuid,
+    Entity,
     Model
 ) {
     return declare([Rest], {
 
         idProperty: 'oid',
+        Model: Entity,
 
         constructor: function(options) {
 

@@ -4,6 +4,7 @@ define([
     "dojo/promise/all",
     "./ActionBase",
     "../ui/_include/widget/ObjectSelectDlgWidget",
+    "../persistence/Entity",
     "../persistence/RelationStore",
     "../model/meta/Model",
     "../locale/Dictionary"
@@ -13,6 +14,7 @@ define([
     all,
     ActionBase,
     ObjectSelectDlg,
+    Entity,
     RelationStore,
     Model,
     Dict
@@ -46,7 +48,7 @@ define([
                     var oids = dlg.getSelectedOids();
                     var deferredList = [];
                     for (var i=0, count=oids.length; i<count; i++) {
-                        var entity = { oid:oids[i] };
+                        var entity = new Entity({ oid:oids[i] });
                         deferredList.push(store.put(entity, {overwrite: true}));
                     }
                     all(deferredList).then(lang.hitch(this, function(results) {

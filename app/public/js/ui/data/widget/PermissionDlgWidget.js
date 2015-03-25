@@ -2,8 +2,9 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/promise/all",
-    "dojo/data/ObjectStore",
     "dojo/store/Memory",
+    "dojo/data/ObjectStore",
+    "dstore/Memory",
     "../../_include/widget/PopupDlgWidget",
     "../../data/input/widget/BinaryCheckBox",
     "../../data/input/widget/RadioButton",
@@ -18,7 +19,8 @@ define([
     declare,
     lang,
     all,
-    ObjectStore,
+    LegacyMemory,
+    LegacyObjectStore,
     Memory,
     PopupDlg,
     BinaryCheckBox,
@@ -56,7 +58,7 @@ define([
             // query roles
             var store = Store.getStore(Model.getSimpleTypeName(appConfig.roleType),
                 appConfig.defaultLanguage);
-            var loadRoles = store.query({});
+            var loadRoles = store.fetch();
 
             // get permissions
             var getPermissionActions = {};
@@ -167,12 +169,14 @@ define([
                 data.push({ id: '-'+roleName, label: '-'+roleName });
                 data.push({ id: '+'+roleName, label: '+'+roleName });
             }
-            var roleStore = new Memory({
-                data: data
+            var roleStore = new LegacyObjectStore({
+                objectStore: new LegacyMemory({
+                    data: data
+                })
             });
             new MultiSelect({
                 name: action+'PermCtrl',
-                store: new ObjectStore({ objectStore: roleStore }),
+                store: roleStore,
                 value: this.permissionsToInput(permissions)
             }, this.content[action+'PermCtrl']).startup();
 

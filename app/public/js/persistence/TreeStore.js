@@ -3,7 +3,6 @@ define([
     "dojo/aspect",
     "dojo/when",
     "dojo/topic",
-    "./Observable",
     "dojo/store/JsonRest",
     "dojo/store/util/QueryResults"
 ], function (
@@ -11,7 +10,6 @@ define([
     aspect,
     when,
     topic,
-    Observable,
     JsonRest,
     QueryResults
 ) {
@@ -85,13 +83,11 @@ define([
             var jsonRest = new TreeStore({
                 target: appConfig.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
             });
-            var observable = new Observable(jsonRest);
             TreeStore.storeInstances[rootTypes] = {
-                observable: observable,
                 jsonRest: jsonRest
             };
         }
-        return TreeStore.storeInstances[rootTypes].observable;
+        return TreeStore.storeInstances[rootTypes].jsonRest;
     };
 
     return TreeStore;

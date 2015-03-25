@@ -3,7 +3,7 @@ define([
     "dojo/_base/lang",
     "dojo/_base/xhr",
     "dojo/Deferred",
-    "dojo/store/util/QueryResults",
+    "dstore/QueryResults",
     "./BaseStore"
 ], function (
     declare,
@@ -15,16 +15,21 @@ define([
 ) {
     var Store = declare([BaseStore], {
 
-        idProperty: "oid",
+        idProperty: 'oid',
 
-        query: function(query, options) {
-           return QueryResults(this.retrieve());
+        fetch: function () {
+            return new QueryResults(this.retrieve());
         },
 
-        retrieve: function() {
+        fetchRange: function (args) {
+            var requestArgs = "&offset="+args.start+"&limit="+(args.end-args.start);
+            return new QueryResults(this.retrieve(requestArgs));
+        },
+
+        retrieve: function(requestArgs) {
             var deferred = new Deferred();
             xhr("GET", {
-                url: this.target,
+                url: this.target+requestArgs,
                 handleAs: "json",
                 headers: {
                     Accept: "application/json"

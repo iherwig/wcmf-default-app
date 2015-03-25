@@ -1,11 +1,9 @@
 define([
     "dojo/_base/declare",
-    "dstore/Cache",
     "./BaseStore",
     "../model/meta/Model"
 ], function (
     declare,
-    Cache,
     BaseStore,
     Model
 ) {
@@ -43,13 +41,11 @@ define([
                 language: language,
                 target: appConfig.pathPrefix+"/rest/"+language+"/"+fqTypeName+"/"
             });
-            var cache = Cache.create(jsonRest);
             Store.storeInstances[fqTypeName][language] = {
-                cache: cache,
                 jsonRest: jsonRest
             };
         }
-        return Store.storeInstances[fqTypeName][language].cache;
+        return Store.storeInstances[fqTypeName][language].jsonRest;
     };
 
     return Store;
