@@ -81,6 +81,12 @@ function(
             this.own(
                 topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
                     this.showBackendError(error);
+                })),
+                topic.subscribe('ui/_include/widget/GridWidget/dnd-start', lang.hitch(this, function(error) {
+                    console.log('dnd-start');
+                })),
+                topic.subscribe('ui/_include/widget/GridWidget/dnd-end', lang.hitch(this, function(error) {
+                    console.log('dnd-end');
                 }))
             );
         },

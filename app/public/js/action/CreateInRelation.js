@@ -13,7 +13,7 @@ define([
         iconClass: 'fa fa-star',
 
         route: '',
-        source: null,
+        source: null, /* Entity */
         relation: null,
         page: null,
 
@@ -38,7 +38,7 @@ define([
             var oid = Model.createDummyOid(type);
             var pathParams = { type:type, id:Model.getIdFromOid(oid) };
             var url = route.assemble(pathParams);
-            url += "?oid="+this.source.oid+"&relation="+this.relation.name;
+            url += "?oid="+this.source.get('oid')+"&relation="+this.relation.name;
             this.page.pushConfirmed(url);
         }
     });

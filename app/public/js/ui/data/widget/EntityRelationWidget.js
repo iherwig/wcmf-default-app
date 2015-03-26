@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/topic",
     "dojo/Deferred",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -24,6 +25,7 @@ function(
     require,
     declare,
     lang,
+    topic,
     Deferred,
     _WidgetBase,
     _TemplatedMixin,
@@ -72,7 +74,7 @@ function(
 
             this.gridWidget = new GridWidget({
                 type: this.relation.type,
-                store: RelationStore.getStore(this.entity.oid, this.relation.name),
+                store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
                 actions: this.getGridActions(),
                 enabledFeatures: enabledFeatures,
                 height: 211
@@ -80,6 +82,15 @@ function(
 
             this.createBtn.set("disabled", this.relation.aggregationKind === "none");
             this.linkBtn.set("disabled", this.relation.aggregationKind === "composite");
+
+            this.own(
+                topic.subscribe('ui/_include/widget/GridWidget/dnd-start', lang.hitch(this, function(error) {
+                    console.log('dnd-start');
+                })),
+                topic.subscribe('ui/_include/widget/GridWidget/dnd-end', lang.hitch(this, function(error) {
+                    console.log('dnd-end');
+                }))
+            );
         },
 
         getGridActions: function() {
@@ -90,7 +101,7 @@ function(
             });
 
             var copyAction = new Copy({
-                targetoid: this.entity.oid,
+                targetoid: this.entity.get('oid'),
                 init: lang.hitch(this, function(data) {
                     this.showNotification({
                         type: "process",

@@ -4,6 +4,7 @@ define([
     "dojo/aspect",
     "dojo/topic",
     "dstore/Rest",
+    "dstore/Trackable",
     "dojox/uuid/generateRandomUuid",
     "../persistence/Entity",
     "../model/meta/Model"
@@ -13,24 +14,26 @@ define([
     aspect,
     topic,
     Rest,
+    Trackable,
     uuid,
     Entity,
     Model
 ) {
-    return declare([Rest], {
+    return declare([Rest, Trackable], {
 
-        idProperty: 'oid',
+        idProperty: '_storeId', // see Entity class
+        typeName: '',
         Model: Entity,
+
+        headers: {
+            Accept: "application/json"
+        },
 
         constructor: function(options) {
 
-            // set id property in order to have url like /{type}/{id}
-            // instead of /{type}/{oid}
-            // NOTE: this has to be set on cloned options!
+            // Add error/change notifications
             aspect.around(this, "get", function(original) {
-                return function(oid, options) {
-                    var id = Model.getIdFromOid(oid);
-
+                return function(id, options) {
                     // do call
                     var results = original.call(this, id, options);
                     results.then(function(value) {
@@ -41,12 +44,11 @@ define([
                 };
             });
             aspect.around(this, "put", function(original) {
-                return function(object, options) {
+                return function(entity, options) {
                     options = options === undefined ? {} : options;
 
-                    var isUpdate = (options.overwrite) || (object.oid && !Model.isDummyOid(object.oid));
-                    var objectTmp = object.getCleanCopy ? object.getCleanCopy() : object;
-                    var optionsTmp = lang.clone(options);
+                    var oid = entity.get('oid');
+                    var isUpdate = (options.overwrite) || (oid && !Model.isDummyOid(oid));
 
                     // reorder request
                     // use position header according to http://www.ietf.org/rfc/rfc3648.txt
@@ -58,25 +60,26 @@ define([
                         else {
                             position = "last";
                         }
-                        optionsTmp.headers = {
+                        options.headers = {
                             Position: position
                         };
                         isUpdate = true;
                     }
 
-                    // set real id only if an existing object is updated
+                    // set real id only if an existing entity is updated
                     // otherwise set to undefined
-                    optionsTmp.id = isUpdate ? Model.getIdFromOid(object.oid) : undefined;
+                    options.id = isUpdate ? this.getIdentity(entity) : undefined;
                     if (!isUpdate) {
-                        objectTmp.oid = Model.getOid(Model.getTypeNameFromOid(objectTmp.oid), this.createBackEndDummyId());
+                        oid = Model.getOid(Model.getTypeNameFromOid(oid), this.createBackEndDummyId());
+                        entity.set('oid', oid);
                     }
 
                     // do call
-                    var results = original.call(this, objectTmp, optionsTmp);
+                    var results = original.call(this, entity, options);
                     results.then(lang.hitch(this, function() {
                         topic.publish("store-datachange", {
                             store: this,
-                            oid: object.oid,
+                            oid: oid,
                             action: options.overwrite ? "put" : "add"
                         });
                     }), function(error) {
@@ -86,15 +89,13 @@ define([
                 };
             });
             aspect.around(this, "remove", function(original) {
-                return function(oid, options) {
-                    var id = Model.getIdFromOid(oid);
-
+                return function(id, options) {
                     // do call
                     var results = original.call(this, id, options);
                     results.then(lang.hitch(this, function() {
                         topic.publish("store-datachange", {
                             store: this,
-                            oid: oid,
+                            oid: Model.getOid(this.typeName, id),
                             action: "remove"
                         });
                     }), function(error) {

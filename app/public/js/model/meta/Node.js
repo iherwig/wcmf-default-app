@@ -86,15 +86,16 @@ define([
         },
 
         /**
-         * Get the display value for the given object.
-         * @param object The object
+         * Get the display value for the given entity.
+         * @param entity Entity to get the value for
          * @return String
          */
-        getDisplayValue: function(object) {
+        getDisplayValue: function(entity) {
             var result = '';
-            var type = Model.getTypeFromOid(object.oid);
+            var oid = entity.get('oid');
+            var type = Model.getTypeFromOid(oid);
             if (type) {
-                if (Model.isDummyOid(object.oid)) {
+                if (Model.isDummyOid(oid)) {
                     result = Dict.translate("New %0%",
                         [Dict.translate(Model.getSimpleTypeName(type.typeName))]);
                 }
@@ -102,24 +103,24 @@ define([
                     for (var i=0; i<type.displayValues.length; i++) {
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
-                        result += Renderer.render(object[curValue], curAttribute, true)+" | ";
+                        result += Renderer.render(entity[curValue], curAttribute, true)+" | ";
                     }
                     result = result.substring(0, result.length-3);
                 }
             }
             else {
-                result = object.oid || "unknown";
+                result = oid || "unknown";
             }
             return result;
         },
 
         /**
-         * Check if the given attribute is editable in the given object.
+         * Check if the given attribute is editable in the given entity.
          * The default implementation returns the isEditable property of the attribute.
-         * @param object The object
+         * @param entity The entity
          * @return Boolean
          */
-        isEditable: function(attribute, object) {
+        isEditable: function(attribute, entity) {
             return attribute.isEditable;
         }
     });

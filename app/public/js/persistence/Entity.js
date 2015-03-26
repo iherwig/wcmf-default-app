@@ -18,16 +18,25 @@ define([
     var Entity = declare([Stateful], {
 
         /**
+         * Computed property composed from pk values.
+         * Used to identify the object in the store,
+         * where only skalar values are allowed for ids
+         */
+        _storeId: "id",
+
+        /**
          * Entity state (clean, dirty, new, deleted)
          */
         _state: "clean",
 
         constructor: function(args) {
-            this.inherited(arguments);
-
             this._state = "clean";
         },
 
+        /**
+         * Gets called automatically after constructors for
+         * all classes declared with dojo/_base/declare
+         */
         postscript: function(params) {
             this.inherited(arguments);
 
@@ -51,6 +60,32 @@ define([
             });
         },
 
+        /**
+         * This method gets called, if this class is defined as Model
+         * property in dstore store instances.
+         */
+        _restore: function(Model, mutateAllowed) {
+            return new Model(this);
+        },
+
+        refreshStoreId: function() {
+            this._storeId = Model.getIdFromOid(this.get('oid'));
+        },
+
+        __storeIdSetter: function(val) {
+            var typeClass = Model.getTypeFromOid(this.get('oid'));
+            var pkNames = typeClass.pkNames;
+            var storeIds = val.split(':');
+            for (var i=0, count=pkNames.length; i<count; i++) {
+              this.set(pkNames[i], storeIds[i]);
+            }
+        },
+
+        __storeIdGetter: function() {
+            this.refreshStoreId();
+            return this._storeId;
+        },
+
         setState: function(state) {
             if (state !== this._state) {
                 this.set("_state", state);
@@ -62,24 +97,12 @@ define([
         },
 
         setDefaults: function() {
-            var typeClass = Model.getTypeFromOid(this.oid);
+            var typeClass = Model.getTypeFromOid(this.get('oid'));
             var attributes = typeClass.getAttributes();
             for (var i=0, count=attributes.length; i<count; i++) {
                 var attribute = attributes[i];
                 this.set(attribute.name, attribute.defaultValue);
             }
-        },
-
-        getCleanCopy: function() {
-            var typeClass = Model.getTypeFromOid(this.oid);
-            var attributes = typeClass.getAttributes();
-            var copy = {};
-            for (var i=0, count=attributes.length; i<count; i++) {
-                var attributeName = attributes[i].name;
-                copy[attributeName] = this[attributeName] !== undefined ? this[attributeName] : null;
-            }
-            copy.oid = this.oid;
-            return copy;
         }
     });
 

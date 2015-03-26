@@ -98,12 +98,14 @@ function(
         constructor: function(args) {
             declare.safeMixin(this, args);
 
-            this.type = Model.getTypeNameFromOid(this.entity.oid);
+            var oid = this.entity.get('oid');
+
+            this.type = Model.getTypeNameFromOid(oid);
             this.typeClass = Model.getType(this.type);
-            this.formId = "entityForm_"+this.entity.oid;
-            this.fieldContainerId = "fieldContainer_"+this.entity.oid;
+            this.formId = "entityForm_"+oid;
+            this.fieldContainerId = "fieldContainer_"+oid;
             this.headline = this.typeClass.getDisplayValue(this.entity);
-            this.isNew = Model.isDummyOid(this.entity.oid);
+            this.isNew = Model.isDummyOid(oid);
             this.isTranslation = this.language !== appConfig.defaultLanguage;
 
             this.languageName = appConfig.languages[this.language];
@@ -116,20 +118,23 @@ function(
         postCreate: function() {
             this.inherited(arguments);
 
+            var oid = this.entity.get('oid');
+            var cleanOid = Model.removeDummyOid(oid);
+
             var deferredList = [];
             // load input widgets referenced in attributes' input type
             deferredList.push(ControlFactory.loadControlClasses(this.type));
             // check instance permissions
             var requiredPermissions = [
-                Model.removeDummyOid(this.entity.oid)+'??update',
-                Model.removeDummyOid(this.entity.oid)+'??delete',
+                cleanOid+'??update',
+                cleanOid+'??delete',
                 '??setPermissions'
             ];
             var attributes = this.getAttributes();
             for (var i=0, count=attributes.length; i<count; i++) {
                 var attribute = attributes[i];
-                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read');
-                requiredPermissions.push(Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update');
+                requiredPermissions.push(cleanOid+'.'+attribute.name+'??read');
+                requiredPermissions.push(cleanOid+'.'+attribute.name+'??update');
             }
             // check relation permissions
             var relations = this.getRelations();
@@ -151,7 +156,7 @@ function(
                 for (var i=0, count=attributes.length; i<count; i++) {
                     var attribute = attributes[i];
                     // only show attributes with read permission
-                    if (this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??read'] === true) {
+                    if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
                         var controlClass = controls[attribute.inputType];
                         var attributeWidget = new controlClass({
                             name: attribute.name,
@@ -161,8 +166,8 @@ function(
                             inputType: attribute.inputType,
                             original: this.original
                         });
-                        if (this.permissions[Model.removeDummyOid(this.entity.oid)+'??update'] === true &&
-                                this.permissions[Model.removeDummyOid(this.entity.oid)+'.'+attribute.name+'??update'] === true) {
+                        if (this.permissions[cleanOid+'??update'] === true &&
+                                this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name) || "";
@@ -269,7 +274,7 @@ function(
                         var queryParams = this.langKey !== appConfig.defaultLanguage ? {lang: this.langKey} : undefined;
                         var url = route.assemble({
                             type: Model.getSimpleTypeName(form.type),
-                            id: Model.getIdFromOid(form.entity.oid)
+                            id: Model.getIdFromOid(this.entity.get('oid'))
                         }, queryParams);
                         form.page.pushConfirmed(url);
                     }
@@ -375,7 +380,7 @@ function(
         },
 
         canDelete: function() {
-            return !this.isNew && this.permissions[Model.removeDummyOid(this.entity.oid)+'??delete'] === true;
+            return !this.isNew && this.permissions[Model.removeDummyOid(this.entity.get('oid'))+'??delete'] === true;
         },
 
         _save: function(e) {
@@ -421,7 +426,7 @@ function(
                             // notify listeners
                             this.entity.set(attributeName, response[attributeName]);
                         }
-                        this.entity.set('oid', response.oid);
+                        this.entity.set('oid', response.get('oid'));
 
                         // reset attribute widgets
                         for (var i=0, c=this.attributeWidgets.length; i<c; i++) {
@@ -450,7 +455,7 @@ function(
                                         // update current tab
                                         topic.publish("tab-closed", {
                                             oid: Model.createDummyOid(this.type),
-                                            nextOid: this.entity.oid
+                                            nextOid: this.entity.get('oid')
                                         });
 //                                    }
                                 }
@@ -507,7 +512,7 @@ function(
                     // success
                     // notify tab panel to close tab
                     topic.publish("tab-closed", {
-                        oid: this.entity.oid
+                        oid: this.entity.get('oid')
                     });
                     this.destroyRecursive();
                 }),
@@ -566,7 +571,7 @@ function(
 
             var displayValue = this.typeClass.getDisplayValue(this.entity);
             new PermissionDlg({
-                oid: this.entity.oid,
+                oid: this.entity.get('oid'),
                 message: Dict.translate("Permissions for '%0%'", [displayValue])
             }).show();
         }

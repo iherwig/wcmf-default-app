@@ -22,18 +22,18 @@ define([
         /**
          * Create a pessimistic lock on the object
          * @param e The event that triggered execution, might be null
-         * @param data Object to lock
+         * @param entity Entity to lock
          * @return Deferred
          */
-        execute: function(e, data) {
+        execute: function(e, entity) {
             if (this.init instanceof Function) {
-                this.init(data);
+                this.init(entity);
             }
             var deferred = new Deferred();
             request.post(appConfig.backendUrl, {
                 data: {
                     action: this.action,
-                    oid: data.oid,
+                    oid: entity.get('oid'),
                     type: this.lockType
                 },
                 headers: {

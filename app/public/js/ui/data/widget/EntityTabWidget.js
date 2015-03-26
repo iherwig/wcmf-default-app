@@ -85,7 +85,13 @@ define([
             this.own(
                 // subscribe to entity change events to change tab links
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    var tab = this.getTabByOid(data.entity.oid);
+                    var tab = this.getTabByOid(data.entity.get('oid'));
+                    if (tab !== null) {
+                        this.setInstanceTabName(data.entity, tab);
+                    }
+                })),
+                topic.subscribe("entity-statechange", lang.hitch(this, function(data) {
+                    var tab = this.getTabByOid(data.entity.get('oid'));
                     if (tab !== null) {
                         this.setInstanceTabName(data.entity, tab);
                     }
@@ -232,7 +238,8 @@ define([
         },
 
         setInstanceTabName: function(entity, tabItem) {
-            tabItem.set("title", '<i class="fa fa-file"></i> '+Model.getTypeFromOid(entity.oid).getDisplayValue(entity)+' ');
+            var dirtyMark = entity && entity.getState() === "dirty" ? "*" : "";
+            tabItem.set("title", '<i class="fa fa-file"></i> '+dirtyMark+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+' ');
         },
 
         createTab: function(oid, content) {

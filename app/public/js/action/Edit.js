@@ -26,15 +26,16 @@ define([
         /**
          * Navigate to edit page
          * @param e The event that triggered execution, might be null
-         * @param data Object to edit
+         * @param entity Entity to edit
          */
-        execute: function(e, data) {
+        execute: function(e, entity) {
             if (this.init instanceof Function) {
-                this.init(data);
+                this.init(entity);
             }
+            var oid = entity.get('oid');
             var route = this.page.getRoute(this.route);
-            var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(data.oid));
-            var id = Model.getIdFromOid(data.oid);
+            var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(oid));
+            var id = Model.getIdFromOid(oid);
             var pathParams = { type:type, id:id };
             var url = route.assemble(pathParams);
             this.page.pushConfirmed(url);

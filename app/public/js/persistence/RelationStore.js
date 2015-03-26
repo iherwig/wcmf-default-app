@@ -1,18 +1,15 @@
 define([
     "dojo/_base/declare",
-    "dstore/Cache",
     "./BaseStore",
     "../model/meta/Model"
 ], function (
     declare,
-    Cache,
     BaseStore,
     Model
 ) {
     var RelationStore = declare([BaseStore], {
         oid: '',
-        relationName: '',
-        typeName: ''
+        relationName: ''
     });
 
     /**
@@ -33,8 +30,7 @@ define([
             typeName: relationTypeName,
             target: appConfig.pathPrefix+"/rest/"+appConfig.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
         });
-        var cache = Cache.create(jsonRest);
-        return cache;
+        return jsonRest;
     };
 
     return RelationStore;

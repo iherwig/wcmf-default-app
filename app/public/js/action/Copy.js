@@ -19,22 +19,22 @@ define([
         iconClass: 'fa fa-copy',
 
         targetOid: null,
-        data: null,
+        entity: null,
         deferred: null,
 
         /**
          * Copy the given object
          * @param e The event that triggered execution, might be null
-         * @param data Object to lock
+         * @param entity Entity to copy
          */
-        execute: function(e, data) {
+        execute: function(e, entity) {
             if (this.init instanceof Function) {
-                this.init(data);
+                this.init(entity);
             }
-            this.data = data;
+            this.entity = entity;
             this.deferred = new Deferred();
             new Process().run("copy", {
-                oid: data.oid,
+                oid: entity.get('oid'),
                 targetoid: this.targetOid
             }).then(
                 lang.hitch(this, this.successHandler),
@@ -47,13 +47,13 @@ define([
         successHandler: function(response) {
             topic.publish("store-datachange", {
                 store: this,
-                oid: this.data.oid,
+                oid: this.entity.get('oid'),
                 action: "add"
             });
             if (this.callback instanceof Function) {
-                this.callback(this.data);
+                this.callback(this.entity);
             }
-            this.deferred.resolve(this.data);
+            this.deferred.resolve(this.entity);
         },
 
         errorHandler: function(error) {

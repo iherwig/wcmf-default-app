@@ -10,7 +10,7 @@ define([
      * @code
      * new ConfirmDlg({
      *      title: "Confirm Object Deletion",
-     *      message: "Do you really want to delete '"+Model.getTypeFromOid(data.oid).getDisplayValue(data)+"'?",
+     *      message: "Do you really want to delete '"+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+"'?",
      *      okCallback: function() {
      *          // will be called when OK button is clicked
      *          var deferred = new Deferred();

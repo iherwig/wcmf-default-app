@@ -37,7 +37,7 @@ define([
      * Modal permission dialog. Usage:
      * @code
      * new PermissionDlg({
-     *     oid: this.entity.oid,
+     *     oid: this.entity.get('oid'),
      *     displayValue: this.typeClass.getDisplayValue(this.entity)
      * }).show();
      * @endcode

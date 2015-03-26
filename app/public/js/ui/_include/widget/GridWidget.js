@@ -78,7 +78,7 @@ define([
           'DnD': DnD
         },
 
-        dndBefore: true,
+        dndInProgress: false,
 
         constructor: function (params) {
             if (params && params.actions) {
@@ -118,25 +118,15 @@ define([
                     topic.subscribe("store-error", lang.hitch(this, function(error) {
                         topic.publish('ui/_include/widget/GridWidget/error', error);
                     })),
-                    topic.subscribe("/dnd/drop/before", lang.hitch(this, function(source, nodes, copy) {
-                        // capture correct value of "before" flag to be used in /dnd/drop handler
-                        this.dndBefore = source.before;
+                    topic.subscribe("store-datachange", lang.hitch(this, function(error) {
+                        if (this.dndInProgress) {
+                          topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
+                          this.dndInProgress = false;
+                        }
                     })),
                     topic.subscribe("/dnd/drop", lang.hitch(this, function(source, nodes, copy, target) {
-                        var targetRow = target._targetAnchor;
-                        if (targetRow) {
-                            // drop on row
-                            var before = this.dndBefore;
-                            nodes.forEach(function(node) {
-                                domConstruct.place(node, targetRow, before ? "before" : "after");
-                            });
-                        }
-                        else {
-                            // drop on empty space after rows
-                            nodes.forEach(function(node) {
-                                domConstruct.place(node, node.parentNode, "last");
-                            });
-                        }
+                        this.dndInProgress = true;
+                        topic.publish('ui/_include/widget/GridWidget/dnd-start', null);
                     }))
                 );
                 this.onResize();
@@ -245,30 +235,6 @@ define([
                 topic.publish('ui/_include/widget/GridWidget/error', evt.error);
             });
 
-            // click on title column header
-            gridWidget.on(".dgrid-header .dgrid-column-title:click", lang.hitch(this, function (evt) {
-                //console.dir(gridWidget.cell(evt))
-            }));
-
-            // click on title data cell
-            gridWidget.on(".dgrid-row .dgrid-column-title:click", lang.hitch(this, function (evt) {
-                //console.dir(gridWidget.row(evt));
-            }));
-
-            // row selected
-            gridWidget.on("dgrid-select", lang.hitch(this, function (evt) {
-                //console.dir(evt.gridWidget.selection);
-            }));
-
-            // row deselected
-            gridWidget.on("dgrid-deselect", lang.hitch(this, function (evt) {
-                //console.dir(evt.gridWidget.selection);
-            }));
-
-            gridWidget.on("dgrid-datachange", lang.hitch(this, function (evt) {
-                //console.dir(evt);
-            }));
-
             gridWidget.on("dgrid-refresh-complete", lang.hitch(this, function (evt) {
                 gridWidget.resize();
             }));
@@ -276,17 +242,18 @@ define([
             return gridWidget;
         },
 
-        isSameType: function(data) {
-            var oid = data.oid;
+        isSameType: function(entity) {
+            var oid = entity.get('oid');
             var typeName = Model.getFullyQualifiedTypeName(Model.getTypeNameFromOid(oid));
             return this.store.typeName === typeName;
         },
 
         getSelectedOids: function() {
             var oids = [];
-            for (var oid in this.gridWidget.selection) {
-                if (this.gridWidget.selection[oid]) {
-                    oids.push(oid);
+            for (var id in this.gridWidget.selection) {
+                if (this.gridWidget.selection[id]) {
+                    var row = this.gridWidget.row(id);
+                    oids.push(row.data.get('oid'));
                 }
             }
             return oids;
