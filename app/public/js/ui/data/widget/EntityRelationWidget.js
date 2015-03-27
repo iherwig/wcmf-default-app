@@ -85,10 +85,17 @@ function(
 
             this.own(
                 topic.subscribe('ui/_include/widget/GridWidget/dnd-start', lang.hitch(this, function(error) {
-                    console.log('dnd-start');
+                    this.showNotification({
+                        type: "process",
+                        message: Dict.translate("Saving positions")
+                    });
                 })),
                 topic.subscribe('ui/_include/widget/GridWidget/dnd-end', lang.hitch(this, function(error) {
-                    console.log('dnd-end');
+                    this.showNotification({
+                        type: "ok",
+                        message: Dict.translate("Finished"),
+                        fadeOut: true
+                    });
                 }))
             );
         },

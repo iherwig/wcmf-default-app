@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dgrid/OnDemandGrid",
@@ -32,6 +33,7 @@ define([
 ], function (
     declare,
     lang,
+    array,
     _WidgetBase,
     _TemplatedMixin,
     OnDemandGrid,
@@ -73,9 +75,16 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         gridWidget: null,
 
-        defaultFeatures: [Selection, Keyboard, ColumnHider, ColumnResizer, DijitRegistry],
+        defaultFeatures: {
+            'Selection': Selection,
+            'Keyboard': Keyboard,
+            'ColumnHider': ColumnHider,
+            'ColumnResizer': ColumnResizer,
+            'DijitRegistry': DijitRegistry
+        },
         optionalFeatures: {
-          'DnD': DnD
+            'DnD': DnD,
+            'Tree': Tree
         },
 
         dndInProgress: false,
@@ -135,17 +144,36 @@ define([
         },
 
         buildGrid: function (controls, store) {
-            var columns = [{
-                label: '',
-                field: 'oid',
-                unhidable: true,
-                sortable: false,
-                resizable: false,
-                renderExpando: true,
-                formatter: lang.hitch(this, function(data, obj) {
-                    return '';
-                })
-            }];
+            // select features
+            var features = [];
+            var featureNames = [];
+            for (var idx in this.defaultFeatures) {
+                featureNames.push(idx);
+                features.push(this.defaultFeatures[idx]);
+            }
+            for (var idx in this.enabledFeatures) {
+                var featureName = this.enabledFeatures[idx];
+                if (this.optionalFeatures[featureName]) {
+                    featureNames.push(featureName);
+                    features.push(this.optionalFeatures[featureName]);
+                }
+            }
+
+            // create columns
+            var columns = [];
+            if (array.indexOf(featureNames, 'Tree') !== -1) {
+                columns.push({
+                    label: '',
+                    field: 'oid',
+                    unhidable: true,
+                    sortable: false,
+                    resizable: false,
+                    renderExpando: true,
+                    formatter: lang.hitch(this, function(data, obj) {
+                        return '';
+                    })
+                });
+            }
 
             var typeClass = Model.getType(this.type);
             var displayValues = typeClass.displayValues;
@@ -200,17 +228,8 @@ define([
                 });
             }
 
-            // select features
-            var features = this.defaultFeatures;
-            for (var idx in this.enabledFeatures) {
-                var featureName = this.enabledFeatures[idx];
-                if (this.optionalFeatures[featureName]) {
-                    features.push(this.optionalFeatures[featureName]);
-                }
-            }
-
             // create widget
-            var gridWidget = new (declare([OnDemandGrid, Editor, Tree].concat(features)))({
+            var gridWidget = new (declare([OnDemandGrid, Editor].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
                 collection: store,
