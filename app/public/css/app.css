@@ -140,7 +140,9 @@ label {
 }
 
 .dgrid-loading, .dgrid-no-data {
-  padding: 10px;
+  color: #aaa;
+  padding: 3em;
+  text-align: center;
 }
 
 th.field-oid, td.field-oid {

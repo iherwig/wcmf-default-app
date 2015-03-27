@@ -243,9 +243,6 @@ define([
                         return this.isSameType(row.data);
                     })
                 },
-                //query: { find: 'xx' },
-                //queryOptions: { sort: [{ attribute: 'title', descending: false }] },
-                //sort: [{ attribute: 'title', descending: false }],
                 loadingMessage: Dict.translate("Loading"),
                 noDataMessage: Dict.translate("No data")
             }, this.gridNode);
