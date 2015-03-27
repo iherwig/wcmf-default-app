@@ -284,7 +284,7 @@ function(
                         var queryParams = this.langKey !== appConfig.defaultLanguage ? {lang: this.langKey} : undefined;
                         var url = route.assemble({
                             type: Model.getSimpleTypeName(form.type),
-                            id: Model.getIdFromOid(this.entity.get('oid'))
+                            id: Model.getIdFromOid(form.entity.get('oid'))
                         }, queryParams);
                         form.page.pushConfirmed(url);
                     }
