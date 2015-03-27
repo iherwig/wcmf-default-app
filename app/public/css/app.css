@@ -280,29 +280,12 @@ td {
   height: 46px;
 }
 
+.dijitTooltipContainer {
+  border: 0;
+}
+
 .tabLabel img.thumb, .dgrid-content img.thumb {
   height: 20px !important;
-}
-
-/* combobox button */
-.dijitTextBox .dijitArrowButton {
-  height: 24px;
-}
-
-.dijitTextBox .dijitArrowButtonInner {
-  line-height: 24px;
-}
-
-.dojoxCheckedMultiSelectCheckBoxInput {
-  opacity: 1 !important;
-}
-
-.dj_ie .dojoxCheckedMultiSelectCheckBoxInput {
-  filter: alpha(opacity=1) !important;
-}
-
-.dojoxCheckedMultiSelect .dijitInputInner {
-  cursor: pointer;
 }
 
 /* collapse navbar */

@@ -100,6 +100,11 @@ function(
             );
         },
 
+        startup: function() {
+            this.inherited(arguments);
+            this.gridWidget.startup();
+        },
+
         getGridActions: function() {
 
             var editAction = new Edit({

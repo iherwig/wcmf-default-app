@@ -1,7 +1,6 @@
 define([
     "dojo/_base/lang",
     "dojo/_base/declare",
-    "dojo/aspect",
     "dojo/topic",
     "dstore/Rest",
     "dstore/Trackable",
@@ -11,7 +10,6 @@ define([
 ], function (
     lang,
     declare,
-    aspect,
     topic,
     Rest,
     Trackable,
@@ -29,81 +27,73 @@ define([
             Accept: "application/json"
         },
 
-        constructor: function(options) {
-
-            // Add error/change notifications
-            aspect.around(this, "get", function(original) {
-                return function(id, options) {
-                    // do call
-                    var results = original.call(this, id, options);
-                    results.then(function(value) {
-                    }, function(error) {
-                        topic.publish("store-error", error);
-                    });
-                    return results;
-                };
+        get: function(id, options) {
+            // do call
+            var results = this.inherited(arguments, [id, options]);
+            results.then(function(value) {
+            }, function(error) {
+                topic.publish("store-error", error);
             });
-            aspect.around(this, "put", function(original) {
-                return function(entity, options) {
-                    options = options === undefined ? {} : options;
+            return results;
+        },
 
-                    var oid = entity.get('oid');
-                    var isUpdate = (options.overwrite) || (oid && !Model.isDummyOid(oid));
+        put: function(entity, options) {
+            options = options === undefined ? {} : options;
 
-                    // reorder request
-                    // use position header according to http://www.ietf.org/rfc/rfc3648.txt
-                    if ("beforeId" in options) {
-                        var position = "last"; // default if beforeId is undefined
-                        if (options.beforeId) {
-                            position = "before "+options.beforeId;
-                        }
-                        else {
-                            position = "last";
-                        }
-                        options.headers = {
-                            Position: position
-                        };
-                        isUpdate = true;
-                    }
+            var oid = entity.get('oid');
+            var isUpdate = (options.overwrite) || (oid && !Model.isDummyOid(oid));
 
-                    // set real id only if an existing entity is updated
-                    // otherwise set to undefined
-                    options.id = isUpdate ? this.getIdentity(entity) : undefined;
-                    if (!isUpdate) {
-                        oid = Model.getOid(Model.getTypeNameFromOid(oid), this.createBackEndDummyId());
-                        entity.set('oid', oid);
-                    }
-
-                    // do call
-                    var results = original.call(this, entity, options);
-                    results.then(lang.hitch(this, function() {
-                        topic.publish("store-datachange", {
-                            store: this,
-                            oid: oid,
-                            action: options.overwrite ? "put" : "add"
-                        });
-                    }), function(error) {
-                        topic.publish("store-error", error);
-                    });
-                    return results;
+            // reorder request
+            // use position header according to http://www.ietf.org/rfc/rfc3648.txt
+            if ("beforeId" in options) {
+                var position = "last"; // default if beforeId is undefined
+                if (options.beforeId) {
+                    position = "before "+options.beforeId;
+                }
+                else {
+                    position = "last";
+                }
+                options.headers = {
+                    Position: position
                 };
+                isUpdate = true;
+            }
+
+            // set real id only if an existing entity is updated
+            // otherwise set to undefined
+            options.id = isUpdate ? this.getIdentity(entity) : undefined;
+            if (!isUpdate) {
+                oid = Model.getOid(Model.getTypeNameFromOid(oid), this.createBackEndDummyId());
+                entity.set('oid', oid);
+            }
+
+            // do call
+            var results = this.inherited(arguments, [entity, options]);
+            results.then(lang.hitch(this, function() {
+                topic.publish("store-datachange", {
+                    store: this,
+                    oid: oid,
+                    action: options.overwrite ? "put" : "add"
+                });
+            }), function(error) {
+                topic.publish("store-error", error);
             });
-            aspect.around(this, "remove", function(original) {
-                return function(id, options) {
-                    // do call
-                    var results = original.call(this, id, options);
-                    results.then(lang.hitch(this, function() {
-                        topic.publish("store-datachange", {
-                            store: this,
-                            oid: Model.getOid(this.typeName, id),
-                            action: "remove"
-                        });
-                    }), function(error) {
-                        topic.publish("store-error", error);
-                    });
-                    return results;
-                };
+            return results;
+        },
+
+        remove: function(id, options) {
+            // do call
+            var results = this.inherited(arguments, [id, options]);
+            results.then(lang.hitch(this, function() {
+                topic.publish("store-datachange", {
+                    store: this,
+                    oid: Model.getOid(this.typeName, id),
+                    action: "remove"
+                });
+            }), function(error) {
+                topic.publish("store-error", error);
             });
+            return results;
         },
 
         createBackEndDummyId: function() {

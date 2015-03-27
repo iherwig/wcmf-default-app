@@ -23,7 +23,10 @@ define([
 
         // make sure that response data is converted to json
         if (response && typeof(response.data) === "string") {
-            response.data = json.fromJson(response.data || null);
+            try {
+              response.data = json.fromJson(response.data || null);
+            }
+            catch(ex) {};
         }
 
         // check for most specific attributes

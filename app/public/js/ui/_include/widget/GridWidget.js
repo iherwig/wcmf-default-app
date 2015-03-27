@@ -139,8 +139,12 @@ define([
                     }))
                 );
                 this.onResize();
-                this.gridWidget.startup();
             }));
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+            this.gridWidget.startup();
         },
 
         buildGrid: function (controls, store) {

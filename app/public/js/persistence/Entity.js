@@ -22,7 +22,7 @@ define([
          * Used to identify the object in the store,
          * where only skalar values are allowed for ids
          */
-        _storeId: "id",
+        _storeId: null,
 
         /**
          * Entity state (clean, dirty, new, deleted)
@@ -72,18 +72,9 @@ define([
             this._storeId = Model.getIdFromOid(this.get('oid'));
         },
 
-        __storeIdSetter: function(val) {
-            var typeClass = Model.getTypeFromOid(this.get('oid'));
-            var pkNames = typeClass.pkNames;
-            var storeIds = val.split(':');
-            for (var i=0, count=pkNames.length; i<count; i++) {
-              this.set(pkNames[i], storeIds[i]);
-            }
-        },
-
-        __storeIdGetter: function() {
+        _oidSetter: function(oid) {
+            this.oid = oid;
             this.refreshStoreId();
-            return this._storeId;
         },
 
         setState: function(state) {

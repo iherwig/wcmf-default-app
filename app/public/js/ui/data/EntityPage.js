@@ -4,6 +4,7 @@ define([
     "dojo/_base/lang",
     "dojo/promise/all",
     "dojo/topic",
+    "dojo/ready",
     "dojo/Deferred",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -21,6 +22,7 @@ define([
     lang,
     all,
     topic,
+    ready,
     Deferred,
     _Page,
     _Notification,
@@ -161,6 +163,9 @@ define([
                                 },
                                 selectedPanel: panel
                             }, this.tabNode);
+                            ready(function() {
+                                tabs.startup();
+                            });
                         })
                     });
                 }

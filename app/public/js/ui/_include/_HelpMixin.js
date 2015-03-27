@@ -5,14 +5,15 @@ define([
     "dijit/TooltipDialog",
     "dijit/popup",
     "dojo/on",
-    "dojo/domReady!"
+    "dojo/ready"
 ], function (
     declare,
     lang,
     query,
     TooltipDialog,
     popup,
-    on
+    on,
+    ready
 ) {
     return declare([], {
 
@@ -30,7 +31,10 @@ define([
                         popup.close(this.dialog);
                     })
                 });
-                this.attachTooltip();
+                var _this = this;
+                ready(function() {
+                    _this.attachTooltip();
+                });
             }
         },
 

@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/ready",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
@@ -13,6 +14,7 @@ define([
     require,
     declare,
     lang,
+    ready,
     _Page,
     _Notification,
     NavigationWidget,
@@ -67,6 +69,9 @@ define([
                                 },
                                 selectedPanel: panel
                             }, this.tabNode);
+                            ready(function() {
+                                tabs.startup();
+                            });
                         })
                     });
                 }

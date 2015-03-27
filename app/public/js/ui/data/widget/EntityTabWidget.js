@@ -111,8 +111,6 @@ define([
                     this.selectTab(data.nextOid);
                 }))
             );
-
-            this.startup();
         },
 
         buildTabs: function() {
@@ -238,8 +236,9 @@ define([
         },
 
         setInstanceTabName: function(entity, tabItem) {
-            var dirtyMark = entity && entity.getState() === "dirty" ? "*" : "";
-            tabItem.set("title", '<i class="fa fa-file"></i> '+dirtyMark+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+' ');
+            var text = Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity);
+            var dirtyMark = entity && entity.getState() === "dirty" && text.indexOf("*") !== 0 ? "*" : "";
+            tabItem.set("title", '<i class="fa fa-file"></i> '+dirtyMark+text+' ');
         },
 
         createTab: function(oid, content) {

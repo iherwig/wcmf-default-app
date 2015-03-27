@@ -72,7 +72,6 @@ function(
                 actions: this.getGridActions(),
                 enabledFeatures: enabledFeatures
             }, this.gridNode);
-            this.gridWidget.startup();
 
             if (this.onCreated instanceof Function) {
                 this.onCreated(this);
@@ -96,6 +95,11 @@ function(
                     });
                 }))
             );
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+            this.gridWidget.startup();
         },
 
         getGridActions: function() {

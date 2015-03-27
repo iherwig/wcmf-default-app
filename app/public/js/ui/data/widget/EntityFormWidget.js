@@ -93,6 +93,7 @@ function(
         onCreated: null, // function to be called after the widget is created
 
         attributeWidgets: [],
+        relationWidgets: [],
         layoutWidget: null,
 
         constructor: function(args) {
@@ -199,6 +200,7 @@ function(
                                 relation: relation,
                                 page: this.page
                             });
+                            this.relationWidgets.push(relationWidget);
                             this.relationsNode.appendChild(relationWidget.domNode);
                         }
                     }
@@ -238,6 +240,14 @@ function(
                     this.showBackendError(error);
                 }))
             );
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+            this.layoutWidget.startup(); // starts up attribute widgets
+            for (var i=0, c=this.relationWidgets.length; i<c; i++) {
+                this.relationWidgets[i].startup();
+            }
         },
 
         /**
