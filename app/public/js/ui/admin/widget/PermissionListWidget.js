@@ -16,6 +16,7 @@ function(
 ) {
     return declare([EntityListWidget], {
 
+        hasTree: false,
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require
     });

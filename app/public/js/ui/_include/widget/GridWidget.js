@@ -73,7 +73,7 @@ define([
 
         actionsByName: {},
         templateString: lang.replace(template, Dict.tplTranslate),
-        gridWidget: null,
+        grid: null,
 
         defaultFeatures: {
             'Selection': Selection,
@@ -105,10 +105,10 @@ define([
 
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
 
-                this.gridWidget = this.buildGrid(controls, this.store);
+                this.grid = this.buildGrid(controls, this.store);
                 this.own(
                     on(window, "resize", lang.hitch(this, this.onResize)),
-                    on(this.gridWidget, "click", lang.hitch(this, function(e) {
+                    on(this.grid, "click", lang.hitch(this, function(e) {
                         // process grid clicks
                         var links = query(e.target).closest("a");
                         if (links.length > 0) {
@@ -119,7 +119,7 @@ define([
                               e.preventDefault();
 
                               var columnNode = e.target.parentNode;
-                              var row = this.gridWidget.row(columnNode);
+                              var row = this.grid.row(columnNode);
                               action.execute(e, row.data);
                           }
                         }
@@ -144,10 +144,12 @@ define([
 
         startup: function() {
             this.inherited(arguments);
-            this.gridWidget.startup();
+            this.grid.startup();
         },
 
         buildGrid: function (controls, store) {
+            var _this = this;
+
             // select features
             var features = [];
             var featureNames = [];
@@ -185,8 +187,12 @@ define([
                     },
                     editOn: "dblclick",
                     canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
-                        return typeClass.isEditable(curAttributeDef, obj);
-                    }) : function(obj, value) {return false; },
+                        // only allow to edit editable objects of grid's own type
+                        var sameType = _this.isSameType(obj);
+                        return sameType && typeClass.isEditable(curAttributeDef, obj);
+                    }) : function(obj, value) {
+                        return false;
+                    },
                     autoSave: true,
                     sortable: true,
                     renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
@@ -222,14 +228,14 @@ define([
             }
 
             // create widget
-            var gridWidget = new (declare([OnDemandGrid, Editor].concat(features)))({
+            var grid = new (declare([OnDemandGrid, Editor].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
                 collection: store,
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
-                        var row = this.gridWidget.row(nodes[0]);
+                        var row = this.grid.row(nodes[0]);
                         if (!row) {
                             return false;
                         }
@@ -240,15 +246,15 @@ define([
                 noDataMessage: Dict.translate("No data")
             }, this.gridNode);
 
-            gridWidget.on("dgrid-error", function (evt) {
+            grid.on("dgrid-error", function (evt) {
                 topic.publish('ui/_include/widget/GridWidget/error', evt.error);
             });
 
-            gridWidget.on("dgrid-refresh-complete", lang.hitch(this, function (evt) {
-                gridWidget.resize();
+            grid.on("dgrid-refresh-complete", lang.hitch(this, function (evt) {
+                grid.resize();
             }));
 
-            return gridWidget;
+            return grid;
         },
 
         isSameType: function(entity) {
@@ -259,9 +265,9 @@ define([
 
         getSelectedOids: function() {
             var oids = [];
-            for (var id in this.gridWidget.selection) {
-                if (this.gridWidget.selection[id]) {
-                    var row = this.gridWidget.row(id);
+            for (var id in this.grid.selection) {
+                if (this.grid.selection[id]) {
+                    var row = this.grid.row(id);
                     oids.push(row.data.get('oid'));
                 }
             }
@@ -269,7 +275,7 @@ define([
         },
 
         refresh: function() {
-            this.gridWidget.refresh({
+            this.grid.refresh({
                 keepScrollPosition: true
             });
         },
@@ -292,7 +298,7 @@ define([
             }
             var h = this.height ? this.height : vs.h-navbarHeight-footerHeight-210;
             if (h >= 0) {
-                domAttr.set(this.gridWidget.domNode, "style", {height: h+"px"});
+                domAttr.set(this.grid.domNode, "style", {height: h+"px"});
             }
         }
     });

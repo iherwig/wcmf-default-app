@@ -25,6 +25,7 @@ define([
         baseRoute: "permission",
         types: [
           Model.getSimpleTypeName(appConfig.permissionType)
-        ]
+        ],
+        hasTree: false
     });
 });

@@ -15,7 +15,7 @@ define([
         language: '',
 
         getChildren: function(object) {
-            return new ChildrenStore(object);
+            return new ChildrenStore(object, this.typeName);
         },
 
         mayHaveChildren: function(object) {

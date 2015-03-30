@@ -25,6 +25,7 @@ define([
         types: [
           Model.getSimpleTypeName(appConfig.userType),
           Model.getSimpleTypeName(appConfig.roleType)
-        ]
+        ],
+        hasTree: false
     });
 });

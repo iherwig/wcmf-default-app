@@ -45,6 +45,7 @@ function(
 
         type: null,
         typeClass: null,
+        hasTree: true,
         page: null,
         route: '',
         onCreated: null, // function to be called after the widget is created
@@ -62,6 +63,9 @@ function(
             this.inherited(arguments);
 
             var enabledFeatures = [];
+            if (this.hasTree) {
+                enabledFeatures.push('Tree');
+            }
             if (this.typeClass.isSortable) {
                 enabledFeatures.push('DnD');
             }

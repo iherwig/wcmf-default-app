@@ -145,6 +145,14 @@ label {
   text-align: center;
 }
 
+.dgrid-tree-container .dgrid-loading {
+  padding: 0;
+}
+
+.dgrid-tree-container .dgrid-no-data {
+  display: none;
+}
+
 th.field-oid, td.field-oid {
   width: 30px;
 }

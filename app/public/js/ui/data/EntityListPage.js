@@ -32,6 +32,7 @@ define([
         baseRoute: "entity",
         types: appConfig.rootTypes,
         type: null,
+        hasTree: true,
 
         constructor: function(params) {
             // allow to override type parameter by request
@@ -56,6 +57,7 @@ define([
                     // create the tab panel
                     var panel = new View({
                         type: this.type,
+                        hasTree: this.hasTree,
                         page: this,
                         route: this.baseRoute,
                         onCreated: lang.hitch(this, function(panel) {

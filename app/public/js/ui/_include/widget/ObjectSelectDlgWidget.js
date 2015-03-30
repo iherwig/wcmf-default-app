@@ -48,6 +48,7 @@ define([
                 canEdit: false,
                 height: 198
             }, gridNode);
+            this.grid.startup();
         },
 
         getSelectedOids: function () {
