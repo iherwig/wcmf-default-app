@@ -2,15 +2,25 @@ define([
     "dojo/_base/declare",
     "dstore/Cache",
     "./BaseStore",
+    "./ChildrenStore",
     "../model/meta/Model"
 ], function (
     declare,
     Cache,
     BaseStore,
+    ChildrenStore,
     Model
 ) {
     var Store = declare([BaseStore], {
-        language: ''
+        language: '',
+
+        getChildren: function(object) {
+            return new ChildrenStore(object);
+        },
+
+        mayHaveChildren: function(object) {
+            return true;
+        }
     });
 
     /**

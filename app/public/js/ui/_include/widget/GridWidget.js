@@ -165,20 +165,6 @@ define([
 
             // create columns
             var columns = [];
-            if (array.indexOf(featureNames, 'Tree') !== -1) {
-                columns.push({
-                    label: '',
-                    field: 'oid',
-                    unhidable: true,
-                    sortable: false,
-                    resizable: false,
-                    renderExpando: true,
-                    formatter: lang.hitch(this, function(data, obj) {
-                        return '';
-                    })
-                });
-            }
-
             var typeClass = Model.getType(this.type);
             var displayValues = typeClass.displayValues;
             for (var i=0, count=displayValues.length; i<count; i++) {
@@ -197,7 +183,7 @@ define([
                         style: 'height:20px; padding:0;',
                         isInlineEditor: true
                     },
-                    editOn: "click",
+                    editOn: "dblclick",
                     canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
                         return typeClass.isEditable(curAttributeDef, obj);
                     }) : function(obj, value) {return false; },
@@ -209,6 +195,9 @@ define([
                         });
                     })
                 };
+                if (array.indexOf(featureNames, 'Tree') !== -1) {
+                    column.renderExpando = true;
+                }
                 columns.push(column);
             }
 
