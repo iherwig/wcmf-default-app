@@ -46,11 +46,13 @@ define([
                 }
                 // set display values
                 var type = Model.getType(this.rootTypeName);
-                var displayValueName = type.displayValues[0];
+                var displayValues = type.displayValues;
                 for (var i=0, count=result.length; i<count; i++) {
                     var child = result[i];
                     var childType = Model.getTypeFromOid(child.get('oid'));
-                    child.set(displayValueName, childType.getDisplayValue(child));
+                    for (var j=0, countJ=displayValues.length; j<countJ; j++) {
+                      child.set(displayValues[j], j=== 0 ? childType.getDisplayValue(child) : '');
+                    }
                 }
                 return result;
             })));
