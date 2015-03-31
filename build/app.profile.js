@@ -36,6 +36,7 @@ var appSrc = [
     "app/js/model/types/_TypeList",
     "app/js/persistence/BackendError",
     "app/js/persistence/BaseStore",
+    "app/js/persistence/ChildrenStore",
     "app/js/persistence/Entity",
     "app/js/persistence/ListStore",
     "app/js/persistence/Observable",
