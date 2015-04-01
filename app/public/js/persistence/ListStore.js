@@ -1,32 +1,25 @@
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/_base/xhr",
-    "dojo/Deferred",
-    "dojo/when",
-    "dojo/store/util/QueryResults",
-    "dojo/store/util/SimpleQueryEngine",
+  	"dojo/json",
+    "dstore/Rest",
+    "dstore/Cache",
     "dojox/encoding/base64"
 ], function (
     declare,
-    lang,
-    xhr,
-    Deferred,
-    when,
-    QueryResults,
-    SimpleQueryEngine,
+    JSON,
+    Rest,
+    Cache,
     base64
 ) {
-    var ListStore = declare([], {
+    var ListStore = declare([Rest], {
+
         listDef: '',
         language: '',
         target: '',
 
         idProperty: 'oid',
-        data: null,
-        index: null,
-
         addEmpty: false,
+        isStatic: false,
 
         constructor: function(options) {
             declare.safeMixin(this, options);
@@ -45,80 +38,27 @@ define([
             this.addEmpty = addEmpty;
         },
 
-        get: function(id) {
-            var deferred = new Deferred();
-            when(this.retrieve(), lang.hitch(this, function(result) {
-                var value = result.data[result.index[id]];
-                deferred.resolve(value);
-            }), lang.hitch(this, function(error) {
-                deferred.reject(error);
-            }));
-            return deferred;
-        },
-
-        getIdentity: function(object) {
-            return object[this.idProperty];
-        },
-
-        query: function(query, options) {
-            var deferred = new Deferred();
-            when(this.retrieve(), lang.hitch(this, function(result) {
-                deferred.resolve(QueryResults(SimpleQueryEngine(query, options)(result.data)));
-            }), lang.hitch(this, function(error) {
-                deferred.reject(error);
-            }));
-            return deferred;
-        },
-
-        retrieve: function() {
-            if (!this.index) {
-                var deferred = new Deferred();
-                xhr("GET", {
-                    url: this.target,
-                    handleAs: "json",
-                    headers: {
-                        Accept: "application/json"
-                    }
-                }).then(lang.hitch(this, function(data) {
-                    this.data = data ? data.list : {};
-                    if (this.addEmpty) {
-                        this.data.unshift({
-                            displayText: "",
-                            oid: ""
-                        });
-                    }
-                    this.index = {};
-                    for (var i=0, l=this.data.length; i<l; i++) {
-                        this.index[this.data[i][this.idProperty]] = i;
-                    }
-                    // persist store, if static
-                    if (this.data["static"]) {
-                        this.persist();
-                    }
-                    deferred.resolve({
-                        data: this.data,
-                        index: this.index
-                    });
-                }), function(error) {
-                    deferred.reject(error);
-                });
-                return deferred;
+        parse: function(response) {
+            var data = JSON.parse(response);
+            var result = data.list ? data.list : [];
+            if (data["static"]) {
+                this.isStatic = true;
+                this.persist();
             }
-            return {
-                data: this.data,
-                index: this.index
-            };
+            if (this.addEmpty) {
+                result.unshift({
+                    displayText: "",
+                    oid: ""
+                });
+            }
+            return result;
         },
 
         persist: function() {
-            var listDef = this.listDef;
-            var language = this.language;
-
-            // register store under the list definition
-            if (!ListStore.storeInstances[listDef]) {
-                ListStore.storeInstances[listDef] = {};
+            var store = ListStore.storeInstances[this.listDef][this.language];
+            if (store.cache) {
+                store.cache.isValidFetchCache = true;
             }
-            ListStore.storeInstances[listDef][language] = this;
         }
     });
 
@@ -139,13 +79,17 @@ define([
             ListStore.storeInstances[listDef] = {};
         }
         if (!ListStore.storeInstances[listDef][language]) {
-            var store = new ListStore({
+            var jsonRest = new ListStore({
                 listDef: listDef,
                 language: language
             });
-            ListStore.storeInstances[listDef][language] = store;
+            var cache = Cache.create(jsonRest);
+            ListStore.storeInstances[listDef][language] = {
+                jsonRest: jsonRest,
+                cache: cache
+            };
         }
-        return ListStore.storeInstances[listDef][language];
+        return ListStore.storeInstances[listDef][language].cache;
     };
 
     return ListStore;

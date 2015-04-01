@@ -2,8 +2,6 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/promise/all",
-    "dojo/store/Memory",
-    "dojo/data/ObjectStore",
     "dstore/Memory",
     "../../_include/widget/PopupDlgWidget",
     "../../data/input/widget/BinaryCheckBox",
@@ -19,8 +17,6 @@ define([
     declare,
     lang,
     all,
-    LegacyMemory,
-    LegacyObjectStore,
     Memory,
     PopupDlg,
     BinaryCheckBox,
@@ -169,10 +165,8 @@ define([
                 data.push({ id: '-'+roleName, label: '-'+roleName });
                 data.push({ id: '+'+roleName, label: '+'+roleName });
             }
-            var roleStore = new LegacyObjectStore({
-                objectStore: new LegacyMemory({
-                    data: data
-                })
+            var roleStore = new Memory({
+                data: data
             });
             new MultiSelect({
                 name: action+'PermCtrl',

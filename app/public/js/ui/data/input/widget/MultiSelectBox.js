@@ -9,6 +9,7 @@ define( [
     "dijit/registry",
     "dojox/form/CheckedMultiSelect",
     "../Factory",
+    "dstore/legacy/DstoreAdapter",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary",
@@ -25,6 +26,7 @@ function(
     registry,
     CheckedMultiSelect,
     ControlFactory,
+    DstoreAdapter,
     _HelpMixin,
     _AttributeWidgetMixin,
     Dict,
@@ -47,13 +49,21 @@ function(
         emptyText: Dict.translate("None selected"),
 
         constructor: function(args) {
-            declare.safeMixin(this, args);
-
-            this.label = Dict.translate(this.name);
-            // get store from input type, if not set yet
-            if (!this.store) {
-                this.store = ControlFactory.getListStore(this.inputType);
+            // TODO remove store adapter if not required by select any more
+            if (!args.store) {
+              // get store from input type, if not set yet
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
             }
+            else if (!args.store.query) {
+                args.store = DstoreAdapter(args.store);
+            }
+            // TODO remove this, after control is migrated to dstore api
+            args.store.getLabel = function(object) {
+                return object.label;
+            };
+
+            declare.safeMixin(this, args);
+            this.label = Dict.translate(this.name);
         },
 
         postCreate: function() {

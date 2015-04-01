@@ -8,6 +8,7 @@ define( [
     "dojo/topic",
     "dijit/form/FilteringSelect",
     "../Factory",
+    "dstore/legacy/DstoreAdapter",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary",
@@ -23,6 +24,7 @@ function(
     topic,
     FilteringSelect,
     ControlFactory,
+    DstoreAdapter,
     _HelpMixin,
     _AttributeWidgetMixin,
     Dict,
@@ -40,18 +42,21 @@ function(
         searchAttr: "displayText",
 
         constructor: function(args) {
-            declare.safeMixin(this, args);
-
-            this.label = Dict.translate(this.name);
-            // get store from input type, if not set yet
-            if (!this.store) {
-                this.store = ControlFactory.getListStore(this.inputType);
+            // TODO remove store adapter if not required by select any more
+            if (!args.store) {
+                // get store from input type, if not set yet
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
+            }
+            else if (!args.store.query) {
+                args.store = DstoreAdapter(this.store);
             }
             // add empty value for select boxes
-            if (this.store.setAddEmpty) {
-              this.store.setAddEmpty(true);
+            if (args.store.setAddEmpty) {
+                args.store.setAddEmpty(true);
             }
 
+            declare.safeMixin(this, args);
+            this.label = Dict.translate(this.name);
             aspect.before(this, "_startSearch", function(text) {
                 // create spinner
                 if (!this.spinnerNode) {

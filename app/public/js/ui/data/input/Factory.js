@@ -113,7 +113,7 @@ function(
         var listDef = Factory.getListDefinition(inputType);
         if (listDef) {
             var store = ListStore.getStore(listDef, appConfig.defaultLanguage);
-            when(store.query(), lang.hitch(value, function(list) {
+            when(store.fetch(), lang.hitch(value, function(list) {
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];
                     // intentionally ==
