@@ -42,6 +42,27 @@ define([
         },
 
         /**
+         * Check if the given role name belongs to a many to many relation
+         * @param roleName The name of the role
+         * @return Boolean
+         */
+        isManyToManyRelation: function(roleName) {
+            var relation = this.getRelation(roleName);
+            var otherRelation = Model.getType(relation.type).getRelation(relation.thisEndName);
+            return this.isMany(relation.maxMultiplicity) &&
+                    this.isMany(otherRelation.maxMultiplicity);
+        },
+
+        /**
+         * Check if the multiplicity belongs to a many end
+         * @param multiplicity
+         * @return Boolean
+         */
+        isMany: function(multiplicity) {
+            return multiplicity > 1 || multiplicity === "unbounded";
+        },
+
+        /**
          * Get the Node for a given role name
          * @param roleName The name of the role
          * @return Node

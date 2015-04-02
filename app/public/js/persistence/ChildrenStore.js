@@ -28,12 +28,17 @@ define([
             var deferredList = [];
             var oid = this.entity.get('oid');
             var type = Model.getTypeFromOid(oid);
+            var simpleRootType = Model.getSimpleTypeName(this.rootTypeName);
             var relations = type.getRelations();
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
-                // only follow child relations of different type
-                if (relation.relationType === 'child') {
-                    var store = RelationStore.getStore(oid, relation.name);
+                var relationName = relation.name;
+                // only follow child relations that are no many to many relations
+                // to the root type in order to prevent recursion which leads
+                // to problems in a treegrid, where each node is only allowed once
+                if (relation.relationType === 'child' &&
+                        !(type.isManyToManyRelation(relationName) && relationName === simpleRootType)) {
+                    var store = RelationStore.getStore(oid, relationName);
                     deferredList.push(store.fetch());
                 }
             }

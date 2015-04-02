@@ -8,6 +8,7 @@ return array(
   'loggers' => array(
     'wcmf\lib\config\impl\InifileConfiguration' => array('level' => 'INFO'),
     'wcmf\lib\model\mapper\RDBMapper' => array('level' => 'ERROR'),
+    'wcmf\lib\persistence\impl\DefaultTransaction' => array('level' => 'ERROR'),
     'wcmf\lib\presentation\Controller' => array('level' => 'ERROR'),
     'wcmf\lib\presentation\Request' => array('level' => 'DEBUG'),
     'wcmf\lib\presentation\impl\DefaultActionMapper' => array('level' => 'ERROR'),
