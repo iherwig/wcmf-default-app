@@ -1,6 +1,6 @@
 define([
     "dojo/_base/declare",
-  	"dojo/json",
+    "dojo/json",
     "dstore/Rest",
     "dstore/Cache",
     "dojox/encoding/base64"
