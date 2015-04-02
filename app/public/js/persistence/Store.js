@@ -13,13 +13,26 @@ define([
 ) {
     var Store = declare([BaseStore], {
         language: '',
+        canHaveChildren: null,
 
         getChildren: function(object) {
             return new ChildrenStore(object, this.typeName);
         },
 
         mayHaveChildren: function(object) {
-            return true;
+            if (this.canHaveChildren === null) {
+                // check if the type has child relations
+                var type = Model.getType(this.typeName);
+                var relations = type.getRelations();
+                for (var i=0, count=relations.length; i<count; i++) {
+                    var relation = relations[i];
+                    if (relation.relationType === 'child') {
+                        this.canHaveChildren = true;
+                        break;
+                    }
+                }
+            }
+            return this.canHaveChildren;
         }
     });
 

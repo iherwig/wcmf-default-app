@@ -70,9 +70,21 @@ function(
                 enabledFeatures.push('DnD');
             }
 
+            // check if the type might have parents of the same type,
+            // and set the filter to retrieve only root nodes, if yes
+            var filter = {};
+            var simpleType = Model.getSimpleTypeName(this.type);
+            var relations = this.typeClass.getRelations();
+            for (var i=0, count=relations.length; i<count; i++) {
+                var relation = relations[i];
+                if (relation.relationType === 'parent' && relation.type === simpleType) {
+                    filter[relation.fkName] = null;
+                }
+            }
+
             this.gridWidget = new GridWidget({
                 type: this.type,
-                store: Store.getStore(this.type, appConfig.defaultLanguage),
+                store: Store.getStore(this.type, appConfig.defaultLanguage).filter(filter),
                 actions: this.getGridActions(),
                 enabledFeatures: enabledFeatures
             }, this.gridNode);

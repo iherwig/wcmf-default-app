@@ -28,12 +28,11 @@ define([
             var deferredList = [];
             var oid = this.entity.get('oid');
             var type = Model.getTypeFromOid(oid);
-            var simpleRootType = Model.getSimpleTypeName(this.rootTypeName);
             var relations = type.getRelations();
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 // only follow child relations of different type
-                if (relation.relationType === 'child' && relation.type !== simpleRootType) {
+                if (relation.relationType === 'child') {
                     var store = RelationStore.getStore(oid, relation.name);
                     deferredList.push(store.fetch());
                 }
