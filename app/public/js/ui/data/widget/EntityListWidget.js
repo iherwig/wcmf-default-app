@@ -76,10 +76,10 @@ function(
             // and set the filter to retrieve only root nodes, if yes
             var filter = {};
             var simpleType = Model.getSimpleTypeName(this.type);
-            var relations = this.typeClass.getRelations();
+            var relations = this.typeClass.getRelations('parent');
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
-                if (relation.relationType === 'parent' && relation.type === simpleType) {
+                if (relation.type === simpleType) {
                     filter[relation.fkName] = null;
                 }
             }

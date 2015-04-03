@@ -23,16 +23,11 @@ define([
             if (this.canHaveChildren === null) {
                 // check if the type has child relations
                 var type = Model.getType(this.typeName);
-                var relations = type.getRelations();
-                for (var i=0, count=relations.length; i<count; i++) {
-                    var relation = relations[i];
-                    if (relation.relationType === 'child') {
-                        this.canHaveChildren = true;
-                        break;
-                    }
-                }
+                var relations = type.getRelations('child');
+                this.canHaveChildren = relations.length > 0;
             }
-            return this.canHaveChildren;
+            var hasChildren = object.hasChildren !== undefined ? object.hasChildren : true;
+            return this.canHaveChildren && hasChildren;
         }
     });
 

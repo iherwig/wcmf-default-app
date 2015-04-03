@@ -18,12 +18,29 @@ define([
         displayValues: [],
         attributes: [],
         relations: [],
+        parentRelations: null,
+        childRelations: null,
 
         /**
          * Get all relation definitions
+         * @param type Optional relation type, 'parent' or 'child'
          * @return Array
          */
-        getRelations: function() {
+        getRelations: function(type) {
+            if (type === 'child' || type === 'parent') {
+              var varname = type+'Relations';
+              if (!this[varname]) {
+                var rel = [];
+                for(var i=0, count=this.relations.length; i<count; i++) {
+                  var relation = this.relations[i];
+                  if (relation.relationType === type) {
+                    rel.push(relation);
+                  }
+                }
+                this[varname] = rel;
+              }
+              return this[varname];
+            }
             return this.relations;
         },
 

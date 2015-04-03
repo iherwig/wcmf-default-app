@@ -29,15 +29,14 @@ define([
             var oid = this.entity.get('oid');
             var type = Model.getTypeFromOid(oid);
             var simpleRootType = Model.getSimpleTypeName(this.rootTypeName);
-            var relations = type.getRelations();
+            var relations = type.getRelations('child');
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 var relationName = relation.name;
                 // only follow child relations that are no many to many relations
                 // to the root type in order to prevent recursion which leads
                 // to problems in a treegrid, where each node is only allowed once
-                if (relation.relationType === 'child' &&
-                        !(type.isManyToManyRelation(relationName) && relationName === simpleRootType)) {
+                if (!(type.isManyToManyRelation(relationName) && relationName === simpleRootType)) {
                     var store = RelationStore.getStore(oid, relationName);
                     deferredList.push(store.fetch());
                 }
@@ -48,14 +47,23 @@ define([
                 for (var i=0, count=deferredList.length; i<count; i++) {
                     result = result.concat(data[i]);
                 }
-                // set display values
+                // set display values, hasChildren property
                 var type = Model.getType(this.rootTypeName);
                 var displayValues = type.displayValues;
                 for (var i=0, count=result.length; i<count; i++) {
                     var child = result[i];
                     var childType = Model.getTypeFromOid(child.get('oid'));
                     for (var j=0, countJ=displayValues.length; j<countJ; j++) {
-                      child.set(displayValues[j], j=== 0 ? childType.getDisplayValue(child) : '');
+                      child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
+                    }
+                    child.hasChildren = false;
+                    var relations = childType.getRelations('child');
+                    for (var j=0, countJ=relations.length; j<countJ; j++) {
+                      var relationProp = child[relations[j].name];
+                      if (relationProp) {
+                        child.hasChildren = true;
+                        break;
+                      }
                     }
                 }
                 return result;
