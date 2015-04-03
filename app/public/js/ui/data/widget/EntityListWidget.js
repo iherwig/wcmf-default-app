@@ -70,6 +70,8 @@ function(
                 enabledFeatures.push('DnD');
             }
 
+            var store = Store.getStore(this.type, appConfig.defaultLanguage);
+
             // check if the type might have parents of the same type,
             // and set the filter to retrieve only root nodes, if yes
             var filter = {};
@@ -84,7 +86,7 @@ function(
 
             this.gridWidget = new GridWidget({
                 type: this.type,
-                store: Store.getStore(this.type, appConfig.defaultLanguage).filter(filter),
+                store: store.filter(filter),
                 actions: this.getGridActions(),
                 enabledFeatures: enabledFeatures
             }, this.gridNode);
