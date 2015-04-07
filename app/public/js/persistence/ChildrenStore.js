@@ -54,7 +54,7 @@ define([
                     var child = result[i];
                     var childType = Model.getTypeFromOid(child.get('oid'));
                     for (var j=0, countJ=displayValues.length; j<countJ; j++) {
-                      child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
+                        child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
                     }
                 }
                 return result;

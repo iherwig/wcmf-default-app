@@ -47,14 +47,17 @@ define([
             this.inherited(arguments);
 
             // set hasChildren property
-            var type = Model.getTypeFromOid(this.get('oid'));
-            var relations = type.getRelations('child');
-            for (var i=0, count=relations.length; i<count; i++) {
-              var relationProp = this[relations[i].name];
-              if (relationProp) {
-                this.hasChildren = true;
-                break;
-              }
+            var oid = this.get('oid');
+            if (oid) {
+                var type = Model.getTypeFromOid(this.get('oid'));
+                var relations = type.getRelations('child');
+                for (var i=0, count=relations.length; i<count; i++) {
+                    var relationProp = this[relations[i].name];
+                    if (relationProp) {
+                        this.hasChildren = true;
+                        break;
+                    }
+                }
             }
 
             // watch after initial set
