@@ -47,7 +47,7 @@ define([
                 for (var i=0, count=deferredList.length; i<count; i++) {
                     result = result.concat(data[i]);
                 }
-                // set display values, hasChildren property
+                // set display values
                 var type = Model.getType(this.rootTypeName);
                 var displayValues = type.displayValues;
                 for (var i=0, count=result.length; i<count; i++) {
