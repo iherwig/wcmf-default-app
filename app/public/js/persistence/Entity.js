@@ -29,6 +29,12 @@ define([
          */
         _state: "clean",
 
+        /**
+         * Indicates if the entity has objects in child relations
+         * (property maybe used in tree views)
+         */
+        hasChildren: false,
+
         constructor: function(args) {
             this._state = "clean";
         },
@@ -39,6 +45,17 @@ define([
          */
         postscript: function(params) {
             this.inherited(arguments);
+
+            // set hasChildren property
+            var type = Model.getTypeFromOid(this.get('oid'));
+            var relations = type.getRelations('child');
+            for (var i=0, count=relations.length; i<count; i++) {
+              var relationProp = this[relations[i].name];
+              if (relationProp) {
+                this.hasChildren = true;
+                break;
+              }
+            }
 
             // watch after initial set
             this.watch(function(name, oldValue, newValue) {

@@ -56,15 +56,6 @@ define([
                     for (var j=0, countJ=displayValues.length; j<countJ; j++) {
                       child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
                     }
-                    child.hasChildren = false;
-                    var relations = childType.getRelations('child');
-                    for (var j=0, countJ=relations.length; j<countJ; j++) {
-                      var relationProp = child[relations[j].name];
-                      if (relationProp) {
-                        child.hasChildren = true;
-                        break;
-                      }
-                    }
                 }
                 return result;
             })));
