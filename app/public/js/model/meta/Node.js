@@ -138,12 +138,16 @@ define([
                         [Dict.translate(Model.getSimpleTypeName(type.typeName))]);
                 }
                 else {
+                    var values = [];
                     for (var i=0; i<type.displayValues.length; i++) {
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
-                        result += Renderer.render(entity[curValue], curAttribute, true)+" | ";
+                        var renderedValue = Renderer.render(entity[curValue], curAttribute, true);
+                        if (renderedValue && renderedValue.length > 0) {
+                            values.push(renderedValue);
                     }
-                    result = result.substring(0, result.length-3);
+                    }
+                    result = values.join(" - ");
                 }
             }
             else {

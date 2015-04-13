@@ -45,14 +45,10 @@ function(
             // TODO remove store adapter if not required by select any more
             if (!args.store) {
                 // get store from input type, if not set yet
-                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, true));
             }
             else if (!args.store.query) {
                 args.store = DstoreAdapter(this.store);
-            }
-            // add empty value for select boxes
-            if (args.store.setAddEmpty) {
-                args.store.setAddEmpty(true);
             }
 
             declare.safeMixin(this, args);

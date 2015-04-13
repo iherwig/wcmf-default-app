@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dojo/promise/all",
     "dojo/topic",
     "dojo/dom-class",
@@ -34,6 +35,7 @@ function(
     require,
     declare,
     lang,
+    array,
     all,
     topic,
     domClass,
@@ -158,11 +160,17 @@ function(
                     var attribute = attributes[i];
                     // only show attributes with read permission
                     if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
+                        // disabled if not editable
+                        var disabled = this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false;
+                        // disabled if not translatable
+                        if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
+                            disabled = true;
+                        }
                         var controlClass = controls[attribute.inputType];
                         var attributeWidget = new controlClass({
                             name: attribute.name,
                             value: this.entity[attribute.name],
-                            disabled: this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false,
+                            disabled: disabled,
                             helpText: Dict.translate(attribute.description),
                             inputType: attribute.inputType,
                             original: this.original
