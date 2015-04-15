@@ -296,6 +296,10 @@ td {
   height: 20px !important;
 }
 
+.confirmDlg img {
+  max-height: 150px;
+}
+
 /* collapse navbar */
 @media (max-width: 992px) {
   .navbar-header {

@@ -3,6 +3,7 @@ define( [
     "dojo/_base/lang",
     "dojo/topic",
     "dojo/on",
+    "dijit/registry",
     "dijit/form/TextBox",
     "../../../_include/widget/Button",
     "dijit/layout/ContentPane",
@@ -15,6 +16,7 @@ function(
     lang,
     topic,
     on,
+    registry,
     TextBox,
     Button,
     ContentPane,
@@ -30,6 +32,7 @@ function(
         callbackName: null,
         browserUrl: null,
         textbox: null,
+        browseBtn: null,
         listenToWidgetChanges: true,
 
         constructor: function(args) {
@@ -45,7 +48,8 @@ function(
             this.textbox = new TextBox({
                 intermediateChanges: true,
                 name: this.name,
-                value: this.value
+                value: this.value,
+                disabled: this.disabled
             });
             this.textbox.startup();
             this.addChild(this.textbox);
@@ -58,14 +62,15 @@ function(
 
             // create button
             if (this.browserUrl) {
-                var browseBtn = new Button({
+                this.browseBtn = new Button({
+                    disabled: this.disabled,
                     innerHTML: '<i class="fa fa-folder-open"></i>',
                     "class": "btn-mini",
                     onClick: lang.hitch(this, function() {
                         window.open(this.browserUrl+'?callback='+this.callbackName+"&directory="+this.getDirectory(), '_blank', 'width=800,height=700');
                     })
                 });
-                this.addChild(browseBtn);
+                this.addChild(this.browseBtn);
             }
 
             // subscribe to entity change events to change tab links
@@ -102,6 +107,15 @@ function(
                 delete window[this.callbackName];
             }
             this.inherited(arguments);
+        },
+
+        _setDisabledAttr: function(value) {
+            this.inherited(arguments);
+            var itemWidgets = registry.findWidgets(this.domNode);
+            for (var i=0, count=itemWidgets.length; i<count; i++) {
+                var widget = itemWidgets[i];
+                widget.set("disabled", value);
+            }
         },
 
         focus: function() {

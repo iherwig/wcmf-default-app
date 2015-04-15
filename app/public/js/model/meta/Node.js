@@ -145,7 +145,7 @@ define([
                         var renderedValue = Renderer.render(entity[curValue], curAttribute, true);
                         if (renderedValue && renderedValue.length > 0) {
                             values.push(renderedValue);
-                    }
+                        }
                     }
                     result = values.join(" - ");
                 }

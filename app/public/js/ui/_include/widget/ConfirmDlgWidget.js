@@ -10,7 +10,7 @@ define([
      * @code
      * new ConfirmDlg({
      *      title: "Confirm Object Deletion",
-     *      message: "Do you really want to delete '"+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+"'?",
+     *      message: "Do you really want to delete <em>"+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+"</em> ?",
      *      okCallback: function() {
      *          // will be called when OK button is clicked
      *          var deferred = new Deferred();
@@ -27,6 +27,7 @@ define([
     return declare([PopupDlg], {
 
         style: "width: 400px",
+        class: "confirmDlg",
 
         constructor: function(args) {
             args['message'] = '<i class="fa fa-question-circle fa-2x pull-left"></i> &nbsp;'+args['message'];

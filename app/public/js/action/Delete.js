@@ -32,7 +32,7 @@ define([
             }
             return new ConfirmDlg({
                 title: Dict.translate("Confirm Object Deletion"),
-                message: Dict.translate("Do you really want to delete '%0%'?", [Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)]),
+                message: Dict.translate("Do you really want to delete <em>%0%</em> ?", [Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)]),
                 okCallback: lang.hitch(this, function(dlg) {
                     var typeName = Model.getTypeNameFromOid(entity.get('oid'));
                     var store = Store.getStore(typeName, appConfig.defaultLanguage);

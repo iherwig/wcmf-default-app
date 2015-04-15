@@ -33,7 +33,7 @@ define([
             // base64 encode listDef
             var b = [];
             for (var i=0, count=this.listDef.length; i<count; ++i) {
-              b.push(this.listDef.charCodeAt(i));
+                b.push(this.listDef.charCodeAt(i));
             }
 
             // set target for xhr requests
