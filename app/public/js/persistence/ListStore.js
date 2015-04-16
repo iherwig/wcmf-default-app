@@ -24,7 +24,7 @@ define([
         target: '',
 
         idProperty: 'oid',
-        hasEmpty: false,
+        emptyItem: null,
         isStatic: false,
 
         constructor: function(options) {
@@ -63,9 +63,9 @@ define([
                 this.isStatic = true;
                 this.persist();
             }
-            if (this.hasEmpty) {
+            if (this.emptyItem !== null) {
                 result.unshift({
-                    displayText: "",
+                    displayText: this.emptyItem,
                     oid: ""
                 });
             }
@@ -73,7 +73,7 @@ define([
         },
 
         persist: function() {
-            var store = ListStore.storeInstances[this.listDef][this.hasEmpty][this.language];
+            var store = ListStore.storeInstances[this.listDef][this.emptyItem][this.language];
             if (store.cache) {
                 store.cache.isValidFetchCache = true;
             }
@@ -88,31 +88,31 @@ define([
     /**
      * Get the store for a given list definition and language
      * @param listDef The list definition
-     * @param hasEmpty Boolean whether an empty value should be added or not
+     * @param emptyItem Name of the empty item, null to add no empty item
      * @param language The language
      * @return Store instance
      */
-    ListStore.getStore = function(listDef, hasEmpty, language) {
+    ListStore.getStore = function(listDef, emptyItem, language) {
         // register store under the list definition
         if (!ListStore.storeInstances[listDef]) {
             ListStore.storeInstances[listDef] = {};
         }
-        if (!ListStore.storeInstances[listDef][hasEmpty]) {
-            ListStore.storeInstances[listDef][hasEmpty] = {};
+        if (!ListStore.storeInstances[listDef][emptyItem]) {
+            ListStore.storeInstances[listDef][emptyItem] = {};
         }
-        if (!ListStore.storeInstances[listDef][hasEmpty][language]) {
+        if (!ListStore.storeInstances[listDef][emptyItem][language]) {
             var jsonRest = new ListStore({
                 listDef: listDef,
-                hasEmpty: hasEmpty,
+                emptyItem: emptyItem,
                 language: language
             });
             var cache = Cache.create(jsonRest);
-            ListStore.storeInstances[listDef][hasEmpty][language] = {
+            ListStore.storeInstances[listDef][emptyItem][language] = {
                 jsonRest: jsonRest,
                 cache: cache
             };
         }
-        return ListStore.storeInstances[listDef][hasEmpty][language].cache;
+        return ListStore.storeInstances[listDef][emptyItem][language].cache;
     };
 
     return ListStore;

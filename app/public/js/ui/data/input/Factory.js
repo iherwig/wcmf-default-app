@@ -91,15 +91,18 @@ function(
     /**
      * Called by list controls to retrive the value store
      * @param inputType The input type (contains the list definition after '#' char)
-     * @param hasEmpty Boolean whether an empty value should be added or not (default: false)
+     * @param emptyItem Name of the empty item, null to add no empty item (default: null)
      * @returns Store
      */
-    Factory.getListStore = function(inputType, hasEmpty) {
+    Factory.getListStore = function(inputType, emptyItem) {
         var listDef = Factory.getListDefinition(inputType);
         if (!listDef) {
             throw "Input type '"+inputType+"' does not contain a list definition";
         }
-        return ListStore.getStore(listDef, hasEmpty, appConfig.defaultLanguage);
+        if (emptyItem === undefined) {
+            emptyItem = null;
+        }
+        return ListStore.getStore(listDef, emptyItem, appConfig.defaultLanguage);
     };
 
     /**
@@ -113,7 +116,7 @@ function(
         var deferred = new Deferred();
         var listDef = Factory.getListDefinition(inputType);
         if (listDef) {
-            var store = ListStore.getStore(listDef, true, appConfig.defaultLanguage);
+            var store = ListStore.getStore(listDef, '', appConfig.defaultLanguage);
             when(store.fetch(), lang.hitch(value, function(list) {
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];

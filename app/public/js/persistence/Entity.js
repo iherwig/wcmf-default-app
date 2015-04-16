@@ -62,6 +62,7 @@ define([
 
             // watch after initial set
             this.watch(function(name, oldValue, newValue) {
+                // also notify, if values are the same
                 if (name !== '_state') {
                     topic.publish("entity-datachange", {
                         entity: this,

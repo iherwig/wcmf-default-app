@@ -179,8 +179,9 @@ function(
                                 this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
-                                var entityValue = this.entity.get(widget.name) || "";
-                                if (widgetValue !== entityValue) {
+                                var entityValue = this.entity.get(widget.name);
+                                // intentionally !=
+                                if (widgetValue != entityValue) {
                                     this.setModified(true);
                                 }
                             }, attributeWidget)));
