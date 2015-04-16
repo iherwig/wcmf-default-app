@@ -39,7 +39,6 @@ var appSrc = [
     "app/js/persistence/ChildrenStore",
     "app/js/persistence/Entity",
     "app/js/persistence/ListStore",
-    "app/js/persistence/Observable",
     "app/js/persistence/RelationStore",
     "app/js/persistence/SearchStore",
     "app/js/persistence/Store",

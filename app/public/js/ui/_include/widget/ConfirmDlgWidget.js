@@ -27,7 +27,6 @@ define([
     return declare([PopupDlg], {
 
         style: "width: 400px",
-        class: "confirmDlg",
 
         constructor: function(args) {
             args['message'] = '<i class="fa fa-question-circle fa-2x pull-left"></i> &nbsp;'+args['message'];

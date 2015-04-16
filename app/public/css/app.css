@@ -283,6 +283,10 @@ td {
   padding: 0;
 }
 
+img.thumb {
+  max-height: 150px;
+}
+
 .dijitContentPane img.thumb {
   width: auto;
   height: 46px;
@@ -294,10 +298,6 @@ td {
 
 .tabLabel img.thumb, .dgrid-content img.thumb {
   height: 20px !important;
-}
-
-.confirmDlg img {
-  max-height: 150px;
 }
 
 /* collapse navbar */
