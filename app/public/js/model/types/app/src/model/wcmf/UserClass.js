@@ -101,6 +101,7 @@ define([
         relations: [{
             name: "UserConfig",
             type: "UserConfig",
+            fkName: "fk_userconfig_id",
             aggregationKind: "composite",
             maxMultiplicity: "unbounded",
             thisEndName: "User",
@@ -108,6 +109,7 @@ define([
         }, {
             name: "Role",
             type: "Role",
+            fkName: "fk_role_id",
             aggregationKind: "none",
             maxMultiplicity: "unbounded",
             thisEndName: "User",

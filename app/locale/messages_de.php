@@ -23,10 +23,10 @@ $messages_de['\'%0%\' was successfully updated'] = '\'%0%\' wurde erfolgreich ak
 $messages_de['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/BookBase.php
 $messages_de['A book is published by a publisher and consists of chapters.'] = '';
-// file(s): src/model/wcmf/PermissionBase.php
-$messages_de['action'] = 'Aktion';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Action'] = 'Aktion';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_de['action'] = 'Aktion';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Active'] = 'Aktiv';
 // file(s): public/js/ui/admin/template/AdminPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
@@ -47,28 +47,34 @@ $messages_de['A publisher publishes books.'] = '';
 $messages_de['attribute'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['Authentication failed.'] = 'Authorisierung fehlgeschlagen';
-// file(s): src/model/AuthorBase.php
+// file(s): src/model/AuthorBase.php, src/model/ChapterBase.php, src/model/NMPublisherAuthorBase.php
 $messages_de['Author'] = 'Autor';
 // file(s): application/controller/DisplayController.php, application/controller/ListController.php, lib/persistence/impl/AbstractMapper.php
 $messages_de['Authorization failed for action \'%0%\' on \'%1%\'.'] = 'Autorisierung für Aktion \'%0%\' auf \'%1%\' fehlgeschlagen.';
+// file(s): src/model/AuthorBase.php, src/model/ChapterBase.php, src/model/NMPublisherAuthorBase.php
+$messages_de['Author [Pl.]'] = 'Autoren';
 // file(s): src/model/ChapterBase.php
 $messages_de['author_name'] = 'Author';
 // file(s): public/js/persistence/BackendError.js
 $messages_de['Backend error'] = 'Backend-Fehler';
-// file(s): src/model/BookBase.php
+// file(s): src/model/BookBase.php, src/model/ChapterBase.php, src/model/PublisherBase.php
 $messages_de['Book'] = 'Buch';
+// file(s): src/model/BookBase.php, src/model/ChapterBase.php, src/model/PublisherBase.php
+$messages_de['Book [Pl.]'] = 'Bücher';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html, public/js/ui/_include/widget/template/LoginDlgWidget.html, public/js/ui/_include/widget/template/PopupDlgWidget.html
 $messages_de['Cancel'] = 'Abbrechen';
 // file(s): lib/io/FileUtil.php
 $messages_de['Cannot copy %0% (it\'s neither a file nor a directory).'] = '%0% kann nicht kopiert werden (keine Datei und kein Verzeichnis).';
-// file(s): src/model/ChapterBase.php
+// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php
 $messages_de['Chapter'] = 'Kapitel';
+// file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php
+$messages_de['Chapter [Pl.]'] = 'Kapitel';
 // file(s): public/js/action/Link.js
 $messages_de['Choose Objects'] = 'Objekte wählen';
 // file(s): src/model/wcmf/LanguageBase.php
-$messages_de['code'] = '';
+$messages_de['code'] = 'Code';
 // file(s): application/controller/SearchIndexController.php
-$messages_de['Collect objects'] = '';
+$messages_de['Collect objects'] = 'Sammle Objekte';
 // file(s): src/model/wcmf/UserBase.php
 $messages_de['config'] = 'Konfiguration';
 // file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js
@@ -80,21 +86,23 @@ $messages_de['Content'] = 'Inhalt';
 // file(s): src/model/wcmf/PermissionBase.php
 $messages_de['context'] = 'Kontext';
 // file(s): application/controller/CopyController.php
-$messages_de['Copying'] = '';
+$messages_de['Copying'] = 'Kopiere';
 // file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
-$messages_de['Copying \'%0%\''] = '';
+$messages_de['Copying \'%0%\''] = 'Kopiere \'%0%\'';
 // file(s): application/controller/CopyController.php
-$messages_de['Copying tree: continue with %0%'] = '';
+$messages_de['Copying tree: continue with %0%'] = 'Kopiere Baum: weiter mit %0%';
 // file(s): public/js/ui/data/widget/template/EntityListWidget.html
 $messages_de['Create %0%'] = 'Erstelle %0%';
 // file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php, src/model/wcmf/LockBase.php
 $messages_de['created'] = 'Erstellt';
 // file(s): public/js/ui/admin/template/AdminPage.html
-$messages_de['Create Search Index'] = '';
+$messages_de['Create Search Index'] = 'Suchindex aktualisieren';
 // file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php
 $messages_de['creator'] = 'Erstellt von';
 // file(s): src/model/wcmf/DBSequenceBase.php
 $messages_de['DBSequence'] = '';
+// file(s): src/model/wcmf/DBSequenceBase.php
+$messages_de['DBSequence [Pl.]'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Default'] = 'Default';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/data/widget/template/PermissionDlgWidget.html
@@ -106,11 +114,13 @@ $messages_de['description'] = 'Beschreibung';
 // file(s): public/js/ui/data/EntityPage.js
 $messages_de['Detail view class for type \'%0%\' not found.'] = '';
 // file(s): public/js/action/Delete.js
-$messages_de['Do you really want to delete \'%0%\'?'] = 'Wollen Sie wirklich \'%0%\' löschen?';
+$messages_de['Do you really want to delete <em>%0%</em> ?'] = 'Wollen Sie <em>%0%</em> wirklich löschen?';
 // file(s): public/js/ui/data/input/widget/Media.js
-$messages_de['Embed Code'] = '';
+$messages_de['Embed Code'] = 'Einbetten-Code';
 // file(s): src/model/EntityBaseBase.php
 $messages_de['EntityBase'] = 'Basisklasse';
+// file(s): src/model/EntityBaseBase.php
+$messages_de['EntityBase [Pl.]'] = 'Basisklassen';
 // file(s): public/js/ui/error/ErrorPage.js
 $messages_de['Error'] = 'Fehler';
 // file(s): lib/util/GraphicsUtil.php
@@ -120,15 +130,17 @@ $messages_de['Exporting tree: continue with %0%'] = 'Exportiere Baum: Fortgesetz
 // file(s): application/controller/XMLExportController.php
 $messages_de['Exporting tree: start with %0%'] = 'Exportiere Baum: Angefangen bei %0%';
 // file(s): public/js/ui/admin/template/AdminPage.html
-$messages_de['Export XML'] = '';
+$messages_de['Export XML'] = 'Export XML';
 // file(s): public/js/ui/data/input/widget/Media.js
-$messages_de['External source'] = '';
+$messages_de['External source'] = 'Externe Quelle';
 // file(s): lib/io/FileUtil.php
 $messages_de['File \'%0%\' has wrong mime type: %1%. Allowed types: %2%.'] = 'Datei \'%0%\' hat den falschen Typ: %1%. Erlaubte Typen: %2%.';
 // file(s): src/model/ImageBase.php
 $messages_de['filename'] = 'Datei';
 // file(s): application/controller/XMLExportController.php
 $messages_de['Finish'] = 'Fertig';
+// file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
+$messages_de['Finished'] = 'Fertig';
 // file(s): src/model/wcmf/UserBase.php
 $messages_de['firstname'] = 'Vorname';
 // file(s): src/model/ChapterBase.php, src/model/NMPublisherAuthorBase.php
@@ -151,6 +163,8 @@ $messages_de['Home'] = 'Home';
 $messages_de['id'] = 'Id';
 // file(s): src/model/ImageBase.php
 $messages_de['Image'] = 'Bild';
+// file(s): src/model/ImageBase.php
+$messages_de['Image [Pl.]'] = 'Bilder';
 // file(s): application/controller/SearchIndexController.php
 $messages_de['Indexing %0%'] = 'Indexiere %0%';
 // file(s): application/controller/XMLExportController.php
@@ -158,11 +172,13 @@ $messages_de['Initialization'] = 'Initialisierung';
 // file(s): src/model/wcmf/TranslationBase.php
 $messages_de['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
 // file(s): src/model/wcmf/UserConfigBase.php
-$messages_de['key'] = '';
+$messages_de['key'] = 'Schlüssel';
 // file(s): src/model/wcmf/LanguageBase.php
 $messages_de['Language'] = 'Sprache';
 // file(s): src/model/wcmf/TranslationBase.php
-$messages_de['language'] = '';
+$messages_de['language'] = 'Sprache';
+// file(s): src/model/wcmf/LanguageBase.php
+$messages_de['Language [Pl.]'] = 'Sprachen';
 // file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php
 $messages_de['last_editor'] = 'Zuletzt geändert von';
 // file(s): public/js/ui/data/EntityListPage.js
@@ -172,25 +188,27 @@ $messages_de['Loading'] = 'Lade...';
 // file(s): application/controller/BatchDisplayController.php
 $messages_de['Loading tree: continue with %0%'] = '';
 // file(s): src/model/wcmf/LockBase.php
-$messages_de['Lock'] = 'Lock';
+$messages_de['Lock'] = 'Sperre';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
-$messages_de['Locking \'%0%\''] = '';
+$messages_de['Locking \'%0%\''] = 'Sperre \'%0%\'';
+// file(s): src/model/wcmf/LockBase.php
+$messages_de['Lock [Pl.]'] = 'Sperren';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_de['Login'] = 'Anmeldename';
 // file(s): src/model/wcmf/LockBase.php, src/model/wcmf/UserBase.php
 $messages_de['login'] = 'Anmeldename';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_de['Login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Logout'] = 'Abmelden';
 // file(s): public/js/ui/home/template/HomePage.html
-$messages_de['Manage Content'] = '';
+$messages_de['Manage Content'] = 'Inhalte bearbeiten';
 // file(s): public/js/ui/media/BrowsePage.js
 $messages_de['Media'] = 'Medien';
 // file(s): public/js/ui/home/template/HomePage.html, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_de['Media Pool'] = '';
+$messages_de['Media Pool'] = 'Medien-Pool';
 // file(s): src/model/AuthorBase.php, src/model/BookBase.php, src/model/ChapterBase.php, src/model/EntityBaseBase.php, src/model/ImageBase.php, src/model/PublisherBase.php
 $messages_de['modified'] = 'Zuletzt geändert';
 // file(s): application/controller/CopyController.php
-$messages_de['Moving'] = '';
+$messages_de['Moving'] = 'Verschiebe';
 // file(s): src/model/AuthorBase.php, src/model/ChapterBase.php, src/model/PublisherBase.php, src/model/wcmf/LanguageBase.php, src/model/wcmf/RoleBase.php, src/model/wcmf/UserBase.php
 $messages_de['name'] = 'Name';
 // file(s): public/js/model/meta/Node.js, public/js/ui/data/EntityPage.js
@@ -199,16 +217,28 @@ $messages_de['New %0%'] = '*%0%';
 $messages_de['New password'] = 'Neues Passwort';
 // file(s): public/js/ui/settings/template/SettingsPage.html
 $messages_de['New password repeated'] = 'Passwortwiederholung';
-// file(s): src/model/NMPublisherAuthorBase.php
+// file(s): src/model/AuthorBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php
 $messages_de['NMPublisherAuthor'] = '';
-// file(s): src/model/wcmf/NMUserRoleBase.php
+// file(s): src/model/AuthorBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php
+$messages_de['NMPublisherAuthor [Pl.]'] = '';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/RoleBase.php, src/model/wcmf/UserBase.php
 $messages_de['NMUserRole'] = '';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/RoleBase.php, src/model/wcmf/UserBase.php
+$messages_de['NMUserRole [Pl.]'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['No current association matching the input parameters can be found.'] = '';
 // file(s): public/js/ui/_include/widget/GridWidget.js
 $messages_de['No data'] = 'Keine Daten';
 // file(s): public/js/ui/data/input/widget/MultiSelectBox.js
 $messages_de['None selected'] = 'Keins ausgewählt';
+// file(s): src/model/ImageBase.php
+$messages_de['NormalChapter'] = 'Kapitel';
+// file(s): src/model/ImageBase.php
+$messages_de['NormalChapter [Pl.]'] = 'Kapitel';
+// file(s): src/model/ChapterBase.php
+$messages_de['NormalImage'] = 'Kapitel';
+// file(s): src/model/ChapterBase.php
+$messages_de['NormalImage [Pl.]'] = 'Kapitel';
 // file(s): src/model/wcmf/LockBase.php, src/model/wcmf/TranslationBase.php
 $messages_de['objectid'] = 'Objekt ID';
 // file(s): public/js/ui/_include/widget/template/PopupDlgWidget.html
@@ -229,6 +259,10 @@ $messages_de['Only PersistenceMappers of type RDBMapper are supported.'] = '';
 $messages_de['Optimizing index'] = 'Optimiere Index';
 // file(s): public/js/ui/error/NotFoundPage.js
 $messages_de['Page not found'] = 'Seite nicht gefunden';
+// file(s): src/model/ChapterBase.php
+$messages_de['ParentChapter'] = 'Überkapitel';
+// file(s): src/model/ChapterBase.php
+$messages_de['ParentChapter [Pl.]'] = 'Überkapitel';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_de['Password'] = 'Passwort';
 // file(s): src/model/wcmf/UserBase.php
@@ -243,30 +277,38 @@ $messages_de['Permissions'] = 'Rechte';
 $messages_de['Permissions for \'%0%\''] = 'Rechte für \'%0%\'';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Permissions for User'] = 'Rechte für Benutzer';
+// file(s): src/model/wcmf/PermissionBase.php
+$messages_de['Permission [Pl.]'] = 'Rechte';
 // file(s): application/controller/SaveController.php, lib/io/FileUtil.php
 $messages_de['Possible file upload attack: filename %0%.'] = 'Möglicher Datei Upload Angriff: filename %0%.';
 // file(s): application/controller/BatchController.php
 $messages_de['Processing'] = 'Bearbeite';
-// file(s): src/model/PublisherBase.php
+// file(s): src/model/BookBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php
 $messages_de['Publisher'] = 'Verlag';
+// file(s): src/model/BookBase.php, src/model/NMPublisherAuthorBase.php, src/model/PublisherBase.php
+$messages_de['Publisher [Pl.]'] = 'Verlage';
 // file(s): application/controller/DisplayController.php, application/controller/ListController.php
-$messages_de['read'] = '';
+$messages_de['read'] = 'lesen';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Read'] = 'Lesen';
 // file(s): src/model/wcmf/PermissionBase.php
 $messages_de['resource'] = 'Resource';
-// file(s): src/model/wcmf/RoleBase.php
-$messages_de['Role'] = '';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/RoleBase.php
+$messages_de['Role'] = 'Rolle';
 // file(s): src/model/wcmf/PermissionBase.php
 $messages_de['roles'] = 'Rollen';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Roles'] = 'Rollen';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/RoleBase.php
+$messages_de['Role [Pl.]'] = 'Rollen';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/data/widget/template/PermissionDlgWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_de['Save'] = 'Speichern';
+// file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
+$messages_de['Saving positions'] = 'Speichere Reihenfolge';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_de['Search'] = '';
+$messages_de['Search'] = 'Suchen';
 // file(s): public/js/ui/search/SearchResultPage.js
-$messages_de['Searchresult'] = '';
+$messages_de['Searchresult'] = 'Suchergebnis';
 // file(s): public/js/action/Link.js
 $messages_de['Select \'%0%\' objects, you want to link to \'%1%\''] = 'Wählen Sie \'%0%\' Objekte, die Sie mit \'%1%\' verknüpfen wollen';
 // file(s): public/js/ui/admin/AdminPage.js, public/js/ui/settings/SettingsPage.js, public/js/ui/settings/template/SettingsPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
@@ -275,6 +317,10 @@ $messages_de['Settings'] = 'Einstellungen';
 $messages_de['Sign in'] = 'Anmelden';
 // file(s): lib/util/GraphicsUtil.php
 $messages_de['smaller than'] = 'kleiner als';
+// file(s): src/model/ChapterBase.php
+$messages_de['SubChapter'] = 'Unterkapitel';
+// file(s): src/model/ChapterBase.php
+$messages_de['SubChapter [Pl.]'] = 'Unterkapitel';
 // file(s): public/js/locale/Dictionary.js
 $messages_de['text_%0%_%1%'] = '';
 // file(s): public/js/locale/Dictionary.js
@@ -290,19 +336,19 @@ $messages_de['The classes of insertOid and referenceOid do not match.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['The container class does not support ordered references.'] = '';
 // file(s): public/js/ui/admin/AdminPage.js
-$messages_de['The content was successfully exported.'] = '';
+$messages_de['The content was successfully exported.'] = 'Die Inhalte wurden erfolgreich exportiert.';
 // file(s): lib/io/FileUtil.php
 $messages_de['The directory \'%0%\' does not exist.'] = 'Das Verzeichnis \'%0%\' existiert nicht.';
 // file(s): application/controller/UserController.php
 $messages_de['The given passwords don\'t match'] = 'Die angegebenen Passwörter stimmen nicht überein';
 // file(s): src/model/wcmf/TranslationBase.php
-$messages_de['The language of the translation'] = '';
+$messages_de['The language of the translation'] = 'Übersetzungssprache';
 // file(s): lib/security/principal/impl/AbstractUser.php
 $messages_de['The login \'%0%\' already exists'] = 'Der Anmeldename \'%0%\' existiert bereits';
 // file(s): src/model/wcmf/TranslationBase.php
 $messages_de['The object id of the object to which the translation belongs'] = '';
 // file(s): lib/presentation/ApplicationError.php
-$messages_de['The object is currently locked by another user.'] = '';
+$messages_de['The object is currently locked by another user.'] = 'Das Objekt ist momentan von einem anderen Benutzer gesperrt.';
 // file(s): application/controller/DisplayController.php
 $messages_de['The object with oid \'%0%\' does not exist.'] = 'Das Objekt mit der Objekt ID \'%0%\' existiert nicht.';
 // file(s): application/controller/UserController.php
@@ -318,9 +364,9 @@ $messages_de['The passed sortDirection has an invalid value.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['The passed sortFieldName is no valid attribute of the passed class.'] = '';
 // file(s): application/controller/UserController.php, lib/security/principal/impl/AbstractUser.php
-$messages_de['The password can\'t be empty'] = '';
+$messages_de['The password can\'t be empty'] = 'Das Passwort darf nicht leer sein';
 // file(s): public/js/ui/settings/SettingsPage.js
-$messages_de['The password was successfully changed'] = '';
+$messages_de['The password was successfully changed'] = 'Das Passwort wurde geändert';
 // file(s): public/js/ui/data/input/widget/LinkBrowser.js
 $messages_de['There are unsaved changes. Leaving the page will discard these. Do you want to proceed?'] = 'Änderungen auf dieser Seite sind nicht gespeichert. Wenn Sie fortfahren und die Seite verlassen, werden die Änderungen verworfen. Möchten Sie fortfahren?';
 // file(s): lib/presentation/ApplicationError.php
@@ -342,11 +388,11 @@ $messages_de['The role passed cannot be found in the selected source class.'] = 
 // file(s): lib/security/principal/impl/AbstractRole.php
 $messages_de['The role requires a name'] = 'Der Gruppenname muss angegeben werden';
 // file(s): public/js/ui/admin/AdminPage.js
-$messages_de['The search index was successfully updated.'] = '';
+$messages_de['The search index was successfully updated.'] = 'Der Suchindex wurde erfolgreich aktualisiert.';
 // file(s): lib/search/impl/LuceneSearch.php
-$messages_de['The search term is too short'] = '';
+$messages_de['The search term is too short'] = 'Der Suchbegriff ist zu kurz';
 // file(s): lib/search/impl/LuceneSearch.php
-$messages_de['The search terms are too common'] = '';
+$messages_de['The search terms are too common'] = 'Der Suchbegriff ist zu allgemein';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['The server detected a concurrent update.'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -354,33 +400,47 @@ $messages_de['The session is invalid.'] = '';
 // file(s): src/model/wcmf/TranslationBase.php
 $messages_de['The translation'] = '';
 // file(s): lib/presentation/ApplicationError.php
-$messages_de['The user does not have the permission to perform this action.'] = '';
+$messages_de['The user does not have the permission to perform this action.'] = 'Sie haben nicht die Berechtigung die Aktion durchzuführen.';
 // file(s): lib/security/principal/impl/AbstractUser.php
 $messages_de['The user requires a login name'] = 'Der Benutzername muss angegeben werden';
 // file(s): lib/persistence/PersistentObject.php
 $messages_de['The value must match %0%.'] = 'Der Wert muss die Form %0% besitzen.';
 // file(s): src/model/BookBase.php
 $messages_de['title'] = 'Titel';
+// file(s): src/model/ImageBase.php
+$messages_de['TitleChapter'] = 'Kapitel';
+// file(s): src/model/ImageBase.php
+$messages_de['TitleChapter [Pl.]'] = 'Kapitel';
+// file(s): src/model/ChapterBase.php
+$messages_de['TitleImage'] = 'Titelbild';
+// file(s): src/model/ChapterBase.php
+$messages_de['TitleImage [Pl.]'] = 'Titelbilder';
 // file(s): src/model/wcmf/TranslationBase.php
-$messages_de['Translation'] = '';
+$messages_de['Translation'] = 'Übersetzung';
 // file(s): src/model/wcmf/TranslationBase.php
-$messages_de['translation'] = '';
+$messages_de['translation'] = 'Übersetzung';
+// file(s): src/model/wcmf/TranslationBase.php
+$messages_de['Translation [Pl.]'] = 'Übersetzungen';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
-$messages_de['Unlocking \'%0%\''] = '';
+$messages_de['Unlocking \'%0%\''] = 'Entsperre \'%0%\'';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Update'] = 'Ändern';
 // file(s): application/controller/SaveController.php
 $messages_de['Upload failed for %0%.'] = 'Upload fehlgeschlagen für %0%.';
-// file(s): src/model/wcmf/UserBase.php
-$messages_de['User'] = '';
-// file(s): src/model/wcmf/UserConfigBase.php
-$messages_de['UserConfig'] = '';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
+$messages_de['User'] = 'Benutzer';
+// file(s): src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
+$messages_de['UserConfig'] = 'Benutzerkonfiguration';
+// file(s): src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
+$messages_de['UserConfig [Pl.]'] = 'Benutzerkonfigurationen';
 // file(s): public/js/ui/admin/PrincipalListPage.js, public/js/ui/admin/PrincipalPage.js
 $messages_de['User Management'] = 'Benutzermanagement';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_de['Username'] = 'Benutzername';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Users'] = 'Benutzer';
+// file(s): src/model/wcmf/NMUserRoleBase.php, src/model/wcmf/UserBase.php, src/model/wcmf/UserConfigBase.php
+$messages_de['User [Pl.]'] = 'Benutzer';
 // file(s): src/model/wcmf/UserConfigBase.php
 $messages_de['val'] = 'Wert';
 // file(s): public/js/ui/home/template/HomePage.html

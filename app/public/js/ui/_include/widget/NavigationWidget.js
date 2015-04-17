@@ -84,7 +84,7 @@ define([
             for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
                 var typeName = appConfig.rootTypes[i];
                 var menuItem = '<li class="push" data-wcmf-route="entityList" data-wcmf-pathparams="type:\''+typeName+'\'">'+
-                    '<a href="#"><i class="fa fa-list"></i> '+Dict.translate(typeName)+'</a></li>';
+                    '<a href="#"><i class="fa fa-list"></i> '+Dict.translate(typeName+" [Pl.]")+'</a></li>';
                 domConstruct.place(menuItem, this.contentDropDown);
             }
         },

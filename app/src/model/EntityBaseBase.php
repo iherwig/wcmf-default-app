@@ -26,7 +26,7 @@ class EntityBaseBase extends Node {
     public function __construct($oid=null) {
       if ($oid == null) {
         $oid = new ObjectId('EntityBase');
-    }
+      }
       parent::__construct($oid);
     }
 
@@ -73,4 +73,9 @@ class EntityBaseBase extends Node {
     }
 
 }
+
+/**
+ * Additional names to be included by l10n tools ([Pl.]: plural forms)
+ * - Message::get("EntityBase [Pl.]")
+ */
 ?>

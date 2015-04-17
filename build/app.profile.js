@@ -60,7 +60,6 @@ var appSrc = [
     "app/js/ui/admin/PermissionPage",
     "app/js/ui/admin/PrincipalListPage",
     "app/js/ui/admin/PrincipalPage",
-    "app/js/ui/admin/widget/PermissionListWidget",
     "app/js/ui/admin/widget/RoleFormWidget",
     "app/js/ui/admin/widget/UserFormWidget",
     "app/js/ui/data/EntityListPage",

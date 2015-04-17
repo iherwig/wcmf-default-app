@@ -55,7 +55,7 @@ function(
             declare.safeMixin(this, args);
 
             this.typeName = Dict.translate(this.type);
-            this.headline = this.typeName;
+            this.headline = Dict.translate(this.type+" [Pl.]");
             this.typeClass = Model.getType(this.type);
         },
 

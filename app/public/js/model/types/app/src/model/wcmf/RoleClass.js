@@ -53,6 +53,7 @@ define([
         relations: [{
             name: "User",
             type: "User",
+            fkName: "fk_user_id",
             aggregationKind: "none",
             maxMultiplicity: "unbounded",
             thisEndName: "Role",

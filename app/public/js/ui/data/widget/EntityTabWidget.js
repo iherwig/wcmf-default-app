@@ -232,13 +232,13 @@ define([
         },
 
         setTypeTabName: function(typeName, tabItem) {
-            tabItem.set("title", '<i class="fa fa-list"></i> '+Dict.translate(typeName));
+            tabItem.set("title", '<i class="fa fa-list"></i> '+Dict.translate(typeName+" [Pl.]"));
         },
 
         setInstanceTabName: function(entity, tabItem) {
-            var text = Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity);
+            var text = Model.getTypeFromOid(entity.get("oid")).getDisplayValue(entity);
             var dirtyMark = entity && entity.getState() === "dirty" && text.indexOf("*") !== 0 ? "*" : "";
-            tabItem.set("title", '<i class="fa fa-file"></i> '+dirtyMark+text+' ');
+            tabItem.set("title", '<i class="fa fa-file"></i> '+dirtyMark+text+" ");
         },
 
         createTab: function(oid, content) {

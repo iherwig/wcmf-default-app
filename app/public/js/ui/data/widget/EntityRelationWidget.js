@@ -59,7 +59,7 @@ function(
         constructor: function(args) {
             declare.safeMixin(this, args);
 
-            this.relationName = Dict.translate(this.relation.name);
+            this.relationName = Dict.translate(this.relation.name+" [Pl.]");
             this.multiplicity = this.relation.maxMultiplicity;
         },
 
