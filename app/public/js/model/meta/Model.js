@@ -1,5 +1,5 @@
 define([
-    "../types/_TypeList",
+    "../_TypeList",
     "exports"
 ], function(
     TypeList,

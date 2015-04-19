@@ -7,10 +7,10 @@ app/release
 app/public/media
 app/config/*.ini
 app/public/soap-interface.php
-app/public/js/model/types
-!app/public/js/model/types/app/src/model/wcmf/PermissionClass.js
-!app/public/js/model/types/app/src/model/wcmf/RoleClass.js
-!app/public/js/model/types/app/src/model/wcmf/UserClass.js
+app/public/js/app/
+!app/public/js/app/src/model/wcmf/RoleClass.js
+!app/public/js/app/src/model/wcmf/UserClass.js
+app/public/js/model/_TypeList.js
 app/src/controller
 !app/src/controller/RootController.php
 app/src/model
