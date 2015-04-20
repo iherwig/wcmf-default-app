@@ -224,6 +224,10 @@ th.field-actions-4, td.field-actions-4 {
   border-top: 1px solid #d5d5d5;
 }
 
+.dijitTabContent {
+  min-height: 40px !important;
+}
+
 /* containers */
 .container {
   margin-right: auto;
@@ -298,6 +302,11 @@ img.thumb {
 
 .tabLabel img.thumb, .dgrid-content img.thumb {
   height: 20px !important;
+}
+
+/* elfinder */
+.elfinder-cwd-view-icons .elfinder-cwd-file .elfinder-cwd-filename.ui-state-hover input {
+  color: #000 !important;
 }
 
 /* collapse navbar */
