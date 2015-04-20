@@ -90,19 +90,15 @@ function(
 
     /**
      * Called by list controls to retrive the value store
-     * @param inputType The input type (contains the list definition after '#' char)
-     * @param emptyItem Name of the empty item, null to add no empty item (default: null)
+     * @param inputType The input type (contains the list definition in options)
      * @returns Store
      */
-    Factory.getListStore = function(inputType, emptyItem) {
-        var listDef = Factory.getListDefinition(inputType);
-        if (!listDef) {
+    Factory.getListStore = function(inputType) {
+        var options = Factory.getOptions(inputType);
+        if (!options['list']) {
             throw "Input type '"+inputType+"' does not contain a list definition";
         }
-        if (emptyItem === undefined) {
-            emptyItem = null;
-        }
-        return ListStore.getStore(listDef, emptyItem, appConfig.defaultLanguage);
+        return ListStore.getStore(options['list'], appConfig.defaultLanguage);
     };
 
     /**
@@ -114,34 +110,24 @@ function(
      */
     Factory.translateValue = function(inputType, value) {
         var deferred = new Deferred();
-        var listDef = Factory.getListDefinition(inputType);
-        if (listDef) {
-            var store = ListStore.getStore(listDef, '', appConfig.defaultLanguage);
-            when(store.fetch(), lang.hitch(value, function(list) {
+        var options = Factory.getOptions(inputType);
+        if (options['list']) {
+            var store = ListStore.getStore(options['list'], appConfig.defaultLanguage);
+            when(store.fetch(), lang.partial(function(value, list) {
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];
                     // intentionally ==
-                    if (store.getIdentity(item) == this) {
+                    if (store.getIdentity(item) == value) {
                         deferred.resolve(item.displayText);
                     }
                 }
                 deferred.resolve(null);
-            }));
+            }, value));
         }
         else {
             deferred.resolve(value);
         }
         return deferred;
-    };
-
-    /**
-     * Get the list definition from the given input type
-     * @param inputType The input type
-     * @returns String or null, if no list input type
-     */
-    Factory.getListDefinition = function(inputType) {
-        var parts = inputType.split("#");
-        return parts.length === 2 ? parts[1] : null;
     };
 
     /**

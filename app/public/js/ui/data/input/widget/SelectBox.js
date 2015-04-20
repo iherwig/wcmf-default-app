@@ -45,7 +45,7 @@ function(
             // TODO remove store adapter if not required by select any more
             if (!args.store) {
                 // get store from input type, if not set yet
-                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, ''));
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
             }
             else if (!args.store.query) {
                 args.store = DstoreAdapter(args.store);
@@ -62,6 +62,12 @@ function(
                 }
                 this.showSpinner();
             });
+
+            // render value
+            ControlFactory.translateValue(args.inputType, this.value).
+                then(lang.hitch(this, function(displayText) {
+                    this.set("value", this.value);
+                }));
         },
 
         postCreate: function() {

@@ -24,16 +24,16 @@ define([
         target: '',
 
         idProperty: 'oid',
-        emptyItem: null,
-        isStatic: false,
 
         constructor: function(options) {
             declare.safeMixin(this, options);
 
+            this.listDefStr = JSON.stringify(this.listDef);
+
             // base64 encode listDef
             var b = [];
-            for (var i=0, count=this.listDef.length; i<count; ++i) {
-                b.push(this.listDef.charCodeAt(i));
+            for (var i=0, count=this.listDefStr.length; i<count; ++i) {
+                b.push(this.listDefStr.charCodeAt(i));
             }
 
             // set target for xhr requests
@@ -60,20 +60,13 @@ define([
             var data = JSON.parse(response);
             var result = data.list ? data.list : [];
             if (data["static"]) {
-                this.isStatic = true;
                 this.persist();
-            }
-            if (this.emptyItem !== null) {
-                result.unshift({
-                    displayText: this.emptyItem,
-                    oid: ""
-                });
             }
             return result;
         },
 
         persist: function() {
-            var store = ListStore.storeInstances[this.listDef][this.emptyItem][this.language];
+            var store = ListStore.storeInstances[this.listDefStr][this.language];
             if (store.cache) {
                 store.cache.isValidFetchCache = true;
             }
@@ -87,32 +80,29 @@ define([
 
     /**
      * Get the store for a given list definition and language
-     * @param listDef The list definition
-     * @param emptyItem Name of the empty item, null to add no empty item
+     * @param listDef The list definition object as defined in the input type
      * @param language The language
      * @return Store instance
      */
-    ListStore.getStore = function(listDef, emptyItem, language) {
+    ListStore.getStore = function(listDef, language) {
+        var listDefStr = JSON.stringify(listDef);
+
         // register store under the list definition
-        if (!ListStore.storeInstances[listDef]) {
-            ListStore.storeInstances[listDef] = {};
+        if (!ListStore.storeInstances[listDefStr]) {
+            ListStore.storeInstances[listDefStr] = {};
         }
-        if (!ListStore.storeInstances[listDef][emptyItem]) {
-            ListStore.storeInstances[listDef][emptyItem] = {};
-        }
-        if (!ListStore.storeInstances[listDef][emptyItem][language]) {
+        if (!ListStore.storeInstances[listDefStr][language]) {
             var jsonRest = new ListStore({
                 listDef: listDef,
-                emptyItem: emptyItem,
                 language: language
             });
             var cache = Cache.create(jsonRest);
-            ListStore.storeInstances[listDef][emptyItem][language] = {
+            ListStore.storeInstances[listDefStr][language] = {
                 jsonRest: jsonRest,
                 cache: cache
             };
         }
-        return ListStore.storeInstances[listDef][emptyItem][language].cache;
+        return ListStore.storeInstances[listDefStr][language].cache;
     };
 
     return ListStore;
