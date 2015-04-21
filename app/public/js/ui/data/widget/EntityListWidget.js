@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/promise/all",
     "dojo/topic",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -9,6 +10,7 @@ define( [
     "../../_include/_NotificationMixin",
     "../../_include/widget/GridWidget",
     "../../_include/widget/Button",
+    "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
     "../../../action/Create",
@@ -23,6 +25,7 @@ function(
     require,
     declare,
     lang,
+    all,
     topic,
     _WidgetBase,
     _TemplatedMixin,
@@ -30,6 +33,7 @@ function(
     _Notification,
     GridWidget,
     Button,
+    CheckPermissions,
     Model,
     Store,
     Create,
@@ -50,6 +54,9 @@ function(
         hasTree: true,
         page: null,
         route: '',
+
+        permissions: {},
+
         onCreated: null, // function to be called after the widget is created
         gridWidget: null,
 
@@ -86,16 +93,28 @@ function(
                 }
             }
 
-            this.gridWidget = new GridWidget({
-                type: this.type,
-                store: store.filter(filter),
-                actions: this.getGridActions(),
-                enabledFeatures: enabledFeatures
-            }, this.gridNode);
+            var deferredList = [];
+            // check permissions
+            var requiredPermissions = [
+                this.type+'??copy',
+                this.type+'??delete',
+                '??setPermissions'
+            ];
+            deferredList.push(new CheckPermissions().execute({}, requiredPermissions));
 
-            if (this.onCreated instanceof Function) {
-                this.onCreated(this);
-            }
+            all(deferredList).then(lang.hitch(this, function(results) {
+                this.permissions = results[0];
+                this.gridWidget = new GridWidget({
+                    type: this.type,
+                    store: store.filter(filter),
+                    actions: this.getGridActions(),
+                    enabledFeatures: enabledFeatures
+                }, this.gridNode);
+
+                if (this.onCreated instanceof Function) {
+                    this.onCreated(this);
+                }
+            }));
 
             this.own(
                 topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
@@ -123,56 +142,66 @@ function(
         },
 
         getGridActions: function() {
+            var actions = [];
 
             var editAction = new Edit({
                 page: this.page,
                 route: this.route
             });
+            actions.push(editAction);
 
-            var copyAction = new Copy({
-                init: lang.hitch(this, function(data) {
-                    this.showNotification({
-                        type: "process",
-                        message: Dict.translate("Copying '%0%'", [this.typeClass.getDisplayValue(data)])
-                    });
-                }),
-                callback: lang.hitch(this, function(result) {
-                    // success
-                    this.showNotification({
-                        type: "ok",
-                        message: Dict.translate("'%0%' was successfully copied", [this.typeClass.getDisplayValue(result)]),
-                        fadeOut: true
-                    });
-                    this.gridWidget.refresh();
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.showBackendError(error);
-                })
-            });
+            if (this.permissions[this.type+'??copy'] === true) {
+                var copyAction = new Copy({
+                    init: lang.hitch(this, function(data) {
+                        this.showNotification({
+                            type: "process",
+                            message: Dict.translate("Copying '%0%'", [this.typeClass.getDisplayValue(data)])
+                        });
+                    }),
+                    callback: lang.hitch(this, function(result) {
+                        // success
+                        this.showNotification({
+                            type: "ok",
+                            message: Dict.translate("'%0%' was successfully copied", [this.typeClass.getDisplayValue(result)]),
+                            fadeOut: true
+                        });
+                        this.gridWidget.refresh();
+                    }),
+                    errback: lang.hitch(this, function(error) {
+                        // error
+                        this.showBackendError(error);
+                    })
+                });
+                actions.push(copyAction);
+            }
 
-            var deleteAction = new Delete({
-                init: lang.hitch(this, function(data) {
-                    this.hideNotification();
-                }),
-                callback: lang.hitch(this, function(result) {
-                    // success
-                    this.showNotification({
-                        type: "ok",
-                        message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(result)]),
-                        fadeOut: true
-                    });
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.showBackendError(error);
-                })
-            });
+            if (this.permissions[this.type+'??delete'] === true) {
+                var deleteAction = new Delete({
+                    init: lang.hitch(this, function(data) {
+                        this.hideNotification();
+                    }),
+                    callback: lang.hitch(this, function(result) {
+                        // success
+                        this.showNotification({
+                            type: "ok",
+                            message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(result)]),
+                            fadeOut: true
+                        });
+                    }),
+                    errback: lang.hitch(this, function(error) {
+                        // error
+                        this.showBackendError(error);
+                    })
+                });
+                actions.push(deleteAction);
+            }
 
-            var permissionsAction = new Permissions({
-            });
+            if (this.permissions['??setPermissions'] === true) {
+                var permissionsAction = new Permissions();
+                actions.push(permissionsAction);
+            }
 
-            return [editAction, copyAction, deleteAction, permissionsAction];
+            return actions;
         },
 
         _create: function(e) {
