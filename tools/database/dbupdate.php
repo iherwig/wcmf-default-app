@@ -399,7 +399,7 @@ function processTableDef($tableDef, &$tables) {
 function getMetaData(&$connection, $table) {
   $result = array();
   try {
-    $columns = $connection->query('SHOW COLUMNS FROM '.$table, PDO::FETCH_ASSOC);
+    $columns = $connection->query('SHOW COLUMNS FROM `'.$table.'`', PDO::FETCH_ASSOC);
     foreach($columns as $key => $col) {
       $result[$col['Field']] = $col;
     }
