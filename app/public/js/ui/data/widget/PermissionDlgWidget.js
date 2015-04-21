@@ -85,7 +85,7 @@ define([
 
             this.userSelectCtrl = new Select({
                 name: 'userSelectCtrl',
-                inputType: 'select#node:'+appConfig.userType
+                inputType: 'select:{"list":{"type":"node","types":["'+appConfig.userType+'"]}}'
             }, this.content['userSelectCtrl']);
             this.userSelectCtrl.on('change', lang.hitch(this, function(id) {
                 var login = this.userSelectCtrl.get('displayedValue');
@@ -95,6 +95,11 @@ define([
 
             // save on ok clicked
             this.okCallback = lang.hitch(this, this.save);
+        },
+
+        hide: function() {
+            this.destroyRecursive();
+            this.inherited(arguments);
         },
 
         save: function() {

@@ -104,6 +104,22 @@ function(
             this.setText(newValue);
         },
 
+        _setDisabledAttr: function(value) {
+            this.inherited(arguments);
+            if (value) {
+                this._close();
+            }
+        },
+
+        _close: function() {
+            this.dropDownButton.closeDropDown();
+        },
+
+        destroy: function() {
+            this._close();
+            this.inherited(arguments);
+        },
+
         setText: function(values) {
             var numValues = values.length;
             var text = (numValues === 0) ? this.emptyText :

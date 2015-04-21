@@ -15,6 +15,7 @@ define( [
     "../../../action/Edit",
     "../../../action/Copy",
     "../../../action/Delete",
+    "../../../action/Permissions",
     "../../../locale/Dictionary",
     "dojo/text!./template/EntityListWidget.html"
 ],
@@ -35,6 +36,7 @@ function(
     Edit,
     Copy,
     Delete,
+    Permissions,
     Dict,
     template
 ) {
@@ -167,7 +169,10 @@ function(
                 })
             });
 
-            return [editAction, copyAction, deleteAction];
+            var permissionsAction = new Permissions({
+            });
+
+            return [editAction, copyAction, deleteAction, permissionsAction];
         },
 
         _create: function(e) {

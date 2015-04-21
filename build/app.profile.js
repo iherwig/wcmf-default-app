@@ -28,6 +28,7 @@ var appSrc = [
     "app/js/action/Link",
     "app/js/action/Lock",
     "app/js/action/Log",
+    "app/js/action/Permissions",
     "app/js/action/Process",
     "app/js/action/Unlink",
     "app/js/locale/Dictionary",
