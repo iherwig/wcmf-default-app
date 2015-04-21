@@ -136,9 +136,12 @@ function(
      * @returns String or null, if no list input type
      */
     Factory.getOptions = function(inputType) {
-        var optionsStr = inputType.match(/:(\{.+\})/);
-        var options = optionsStr ? JSON.parse(optionsStr[1]) : {};
-        return options;
+        if (inputType) {
+            var optionsStr = inputType.match(/:(\{.+\})/);
+            var options = optionsStr ? JSON.parse(optionsStr[1]) : {};
+            return options;
+        }
+        return {};
     };
 
     return Factory;

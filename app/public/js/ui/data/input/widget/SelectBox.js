@@ -64,10 +64,13 @@ function(
             });
 
             // render value
-            ControlFactory.translateValue(args.inputType, this.value).
-                then(lang.hitch(this, function(displayText) {
-                    this.set("value", this.value);
-                }));
+            if (args.inputType) {
+                ControlFactory.translateValue(args.inputType, this.value).
+                    then(lang.hitch(this, function(displayText) {
+                        this.set("value", this.value);
+                    })
+                );
+            }
         },
 
         postCreate: function() {
