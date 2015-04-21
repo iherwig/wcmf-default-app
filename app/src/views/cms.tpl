@@ -4,7 +4,7 @@
 -->
 <!-- PROTECTED REGION ID(app/src/views/cms.tpl/Body) ENABLED START -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{$uiLanguage}">
   <head>
     <meta charset="utf-8">
     <title>{$appTitle}</title>

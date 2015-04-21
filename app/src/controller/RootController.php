@@ -118,6 +118,7 @@ class RootController extends Controller {
 
     $response->setValue('appTitle', $appTitle);
     $response->setValue('baseHref', $baseHref);
+    $response->setValue('uiLanguage', $uiLanguage);
     $response->setValue('clientConfig', json_encode($clientConfig));
   }
 // PROTECTED REGION END
