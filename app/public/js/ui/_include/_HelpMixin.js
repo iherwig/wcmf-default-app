@@ -42,6 +42,7 @@ define([
             var labelNodes = query("label[for="+this.get("id")+"]");
             if (labelNodes.length > 0) {
                 this.labelNode = labelNodes[0];
+                this.labelNode.innerHTML += ' <i class="fa fa-info-circle"></i>';
                 this.own(
                     on(this.labelNode, 'mouseover', lang.hitch(this, function() {
                         this.showTooltip();
