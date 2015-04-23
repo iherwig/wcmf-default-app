@@ -89,7 +89,7 @@ function(
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 if (relation.type === simpleType) {
-                    filter[relation.fkName] = null;
+                    filter[this.type+'.'+relation.fkName] = null;
                 }
             }
 

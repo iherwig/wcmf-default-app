@@ -154,18 +154,18 @@ function(
             });
 
             var deleteAction = new Delete({
-                callback: lang.hitch(this, function(data, result) {
+                callback: lang.hitch(this, function(result) {
                     // success
                     this.showNotification({
                         type: "ok",
-                        message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(data)]),
+                        message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(result)]),
                         fadeOut: true
                     });
                     this.gridWidget.refresh();
                 }),
-                errback: lang.hitch(this, function(data, result) {
+                errback: lang.hitch(this, function(error) {
                     // error
-                    this.showBackendError(result);
+                    this.showBackendError(error);
                 })
             });
 
