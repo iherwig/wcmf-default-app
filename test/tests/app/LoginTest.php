@@ -10,13 +10,9 @@
  */
 namespace tests\app;
 
-class LoginTest extends \PHPUnit_Extensions_Selenium2TestCase {
+use lib\SeleniumTestCase;
 
-  const APP_URL = 'http://localhost/wcmf-default-app/app/public/';
-
-  protected $captureScreenshotOnFailure = true;
-  protected $screenshotPath = __DIR__;
-  protected $screenshotUrl = 'http://localhost/wcmf-default-app/test';
+class LoginTest extends SeleniumTestCase {
 
   protected function setUp() {
     $this->setBrowser('firefox');
@@ -26,6 +22,17 @@ class LoginTest extends \PHPUnit_Extensions_Selenium2TestCase {
   public function testTitle() {
     $this->url(self::APP_URL);
     $this->assertEquals('WCMF TEST MODEL', $this->title());
+  }
+
+  public function testLoginOk() {
+    $this->login('admin', 'admin');
+    $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
+  }
+
+  public function testLoginFailed() {
+    $this->login('admin', '');
+    $this->assertEquals('WCMF TEST MODEL', $this->title());
+    $this->assertRegExp( '/Authentication failed/i', $this->source());
   }
 }
 ?>
