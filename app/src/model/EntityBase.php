@@ -58,6 +58,59 @@ class EntityBase extends EntityBaseBase {
       $this->setValue('last_editor', $authUser->getLogin());
     }
   }
+
+  /**
+   * Set the sortkey initially if existing.
+   */
+  public function afterInsert() {
+    parent::afterInsert();
+
+    // set the sortkey to the id value
+    $mapper = $this->getMapper();
+    if ($mapper->hasAttribute('sortkey')) {
+      $this->setValue('sortkey', $this->getInitialSortkey());
+      $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
+      $persistenceFacade->getTransaction()->commit();
+    }
+    // invalidate cached views
+    $this->invalidateCachedViews();
+  }
+
+  /**
+   * Invalidate cache.
+   */
+  public function afterUpdate() {
+    parent::afterUpdate();
+
+    // invalidate cached views
+    $this->invalidateCachedViews();
+  }
+
+  /**
+   * Invalidate cache.
+   */
+  public function afterDelete() {
+    parent::afterDelete();
+
+    // invalidate cached views
+    $this->invalidateCachedViews();
+  }
+
+  /**
+   * Invalidate cached views on object change.
+   */
+  protected function invalidateCachedViews() {
+    $view = ObjectFactory::getInstance('view');
+    $view->clearCache();
+  }
+
+  /**
+   * Get the initial sortkey. The default implementation returns the db id.
+   * @note Subclasses may override this for special requirements
+   */
+  protected function getInitialSortkey() {
+    return $this->getOID()->getFirstId();
+  }
 // PROTECTED REGION END
 }
 ?>
