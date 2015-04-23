@@ -107,6 +107,7 @@ define([
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
 
                 this.grid = this.buildGrid(controls, this.store);
+                this.grid.startup();
                 this.own(
                     on(window, "resize", lang.hitch(this, this.onResize)),
                     on(this.grid, "click", lang.hitch(this, function(e) {
@@ -143,11 +144,6 @@ define([
                 );
                 this.onResize();
             }));
-        },
-
-        startup: function() {
-            this.inherited(arguments);
-            this.grid.startup();
         },
 
         buildGrid: function (controls, store) {

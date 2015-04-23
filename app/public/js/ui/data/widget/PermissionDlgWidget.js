@@ -98,7 +98,10 @@ define([
         },
 
         hide: function() {
-            this.destroyRecursive();
+            // close any multiselect popup menus
+            for (var i=0, count=this.actions.length; i<count; i++) {
+                this.getContentWidget(this.actions[i]+'PermCtrl').close();
+            }
             this.inherited(arguments);
         },
 
