@@ -43,7 +43,7 @@ define([
         inConfirmLeave: false,
 
         // attributes to be overridden by subclasses
-        title: appConfig.title,
+        title: '',
 
         constructor: function(params) {
             this.request = params.request;
@@ -102,7 +102,9 @@ define([
         },
 
         setTitle: function(title) {
-            this.inherited(arguments, [appConfig.title+' - '+title]);
+            if (title !== appConfig.title) {
+                this.inherited(arguments, [appConfig.title+' - '+title]);
+            }
         },
 
         createNotificationNode: function() {

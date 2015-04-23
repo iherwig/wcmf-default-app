@@ -10,7 +10,7 @@
  */
 namespace tests\app;
 
-class LoginTest extends \PHPUnit_Extensions_SeleniumTestCase {
+class LoginTest extends \PHPUnit_Extensions_Selenium2TestCase {
 
   const APP_URL = 'http://localhost/wcmf-default-app/app/public/';
 
@@ -19,13 +19,13 @@ class LoginTest extends \PHPUnit_Extensions_SeleniumTestCase {
   protected $screenshotUrl = 'http://localhost/wcmf-default-app/test';
 
   protected function setUp() {
-    $this->setBrowser('*firefox');
+    $this->setBrowser('firefox');
     $this->setBrowserUrl(self::APP_URL);
   }
 
   public function testTitle() {
-    $this->open(self::APP_URL);
-    $this->assertTitle('WCMF TEST MODEL');
+    $this->url(self::APP_URL);
+    $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 }
 ?>
