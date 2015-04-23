@@ -107,16 +107,16 @@ function(
         _setDisabledAttr: function(value) {
             this.inherited(arguments);
             if (value) {
-                this._close();
+                this.close();
             }
         },
 
-        _close: function() {
+        close: function() {
             this.dropDownButton.closeDropDown();
         },
 
         destroy: function() {
-            this._close();
+            this.close();
             this.inherited(arguments);
         },
 

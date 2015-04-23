@@ -61,41 +61,26 @@ function(
         gridWidget: null,
 
         constructor: function(args) {
+            // use fully qualified type name from now on
+            args.type = Model.getFullyQualifiedTypeName(args.type);
             declare.safeMixin(this, args);
 
-            this.typeName = Dict.translate(this.type);
-            this.headline = Dict.translate(this.type+" [Pl.]");
+            // labels
+            var simpleType = Model.getSimpleTypeName(this.type);
+            this.typeName = Dict.translate(simpleType);
+            this.headline = Dict.translate(simpleType+" [Pl.]");
+
             this.typeClass = Model.getType(this.type);
         },
 
         postCreate: function() {
             this.inherited(arguments);
 
-            var enabledFeatures = [];
-            if (this.hasTree) {
-                enabledFeatures.push('Tree');
-            }
-            if (this.typeClass.isSortable) {
-                enabledFeatures.push('DnD');
-            }
-
-            var store = Store.getStore(this.type, appConfig.defaultLanguage);
-
-            // check if the type might have parents of the same type,
-            // and set the filter to retrieve only root nodes, if yes
-            var filter = {};
-            var simpleType = Model.getSimpleTypeName(this.type);
-            var relations = this.typeClass.getRelations('parent');
-            for (var i=0, count=relations.length; i<count; i++) {
-                var relation = relations[i];
-                if (relation.type === simpleType) {
-                    filter[this.type+'.'+relation.fkName] = null;
-                }
-            }
-
             var deferredList = [];
+
             // check permissions
             var requiredPermissions = [
+                this.type+'??create',
                 this.type+'??copy',
                 this.type+'??delete',
                 '??setPermissions'
@@ -104,12 +89,38 @@ function(
 
             all(deferredList).then(lang.hitch(this, function(results) {
                 this.permissions = results[0];
+
+                var store = Store.getStore(this.type, appConfig.defaultLanguage);
+
+                // check if the type might have parents of the same type,
+                // and set the filter to retrieve only root nodes, if yes
+                var filter = {};
+                var simpleType = Model.getSimpleTypeName(this.type);
+                var relations = this.typeClass.getRelations('parent');
+                for (var i=0, count=relations.length; i<count; i++) {
+                    var relation = relations[i];
+                    if (relation.type === simpleType) {
+                        filter[this.type+'.'+relation.fkName] = null;
+                    }
+                }
+
+                // setup grid
+                var enabledFeatures = [];
+                if (this.hasTree) {
+                    enabledFeatures.push('Tree');
+                }
+                if (this.typeClass.isSortable) {
+                    enabledFeatures.push('DnD');
+                }
                 this.gridWidget = new GridWidget({
                     type: this.type,
                     store: store.filter(filter),
                     actions: this.getGridActions(),
                     enabledFeatures: enabledFeatures
                 }, this.gridNode);
+                this.gridWidget.startup();
+
+                this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
 
                 if (this.onCreated instanceof Function) {
                     this.onCreated(this);
@@ -134,11 +145,6 @@ function(
                     });
                 }))
             );
-        },
-
-        startup: function() {
-            this.inherited(arguments);
-            this.gridWidget.startup();
         },
 
         getGridActions: function() {
