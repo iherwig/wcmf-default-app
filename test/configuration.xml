@@ -21,7 +21,6 @@ and open the template in the editor.
          stopOnSkipped="false"
          syntaxCheck="false"
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
-         strict="false"
          verbose="true">
   <testsuites>
     <testsuite name="App">

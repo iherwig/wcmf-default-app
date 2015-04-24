@@ -29,7 +29,7 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
    */
   protected function login($user, $password) {
     $this->url(self::getAppUrl());
-    $this->timeouts()->implicitWait(1000);
+    $this->timeouts()->implicitWait(3000);
     $this->byName('user')->value($user);
     $this->byName('password')->value($password);
     $btn = $this->byXPath("//span[contains(text(),'Sign in')]");

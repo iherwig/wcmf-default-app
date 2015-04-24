@@ -21,6 +21,7 @@ class LoginTest extends SeleniumTestCase {
 
   public function testTitle() {
     $this->url(self::getAppUrl());
+    echo $this->source();
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 
