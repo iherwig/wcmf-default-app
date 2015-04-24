@@ -11,12 +11,13 @@ new ClassLoader();
 // start the built-in web server
 define('SERVER_HOST', 'localhost');
 define('SERVER_PORT', 8500);
-$cmd = sprintf('php -S %s:%d -t %s', SERVER_HOST, SERVER_PORT, WCMF_BASE.'app/public');
+$cmd = sprintf('php -S %s:%d -t %s > server.log', SERVER_HOST, SERVER_PORT, WCMF_BASE.'app/public');
 $resource = startProcess($cmd);
 
 // kill the web server when the process ends
 register_shutdown_function(function() use ($resource) {
   endProcess($resource);
+  echo "LOG:\n".file_get_contents('server.log');
 });
 
 function startProcess($cmd) {
