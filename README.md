@@ -3,6 +3,8 @@ wcmf-default-app
 
 Dojo based default application for the [wCMF](https://github.com/iherwig/wcmf) web application framework
 
+[![Build Status](https://travis-ci.org/iherwig/wcmf-default-app.svg?branch=master)](https://travis-ci.org/iherwig/wcmf-default-app)
+
 ### Getting Started
 
 http://wcmf.wemove.com/gettingstarted.html
