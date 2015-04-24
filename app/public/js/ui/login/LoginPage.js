@@ -12,7 +12,7 @@ define([
     "../../User",
     "../../Startup",
     "../../locale/Dictionary",
-    "d3/d3.v3.min",
+    "d3/d3.min",
     "trianglify/trianglify.min",
     "dojo/text!./template/LoginPage.html"
 ], function (

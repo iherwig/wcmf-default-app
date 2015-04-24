@@ -8,7 +8,7 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-namespace lib;
+namespace test\lib;
 
 /**
  * SeleniumTestCase is a PHPUnit test case, that
@@ -18,11 +18,9 @@ namespace lib;
  */
 abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
 
-  const APP_URL = 'http://localhost/wcmf-default-app/app/public/';
-
-  protected $captureScreenshotOnFailure = true;
-  protected $screenshotPath = __DIR__;
-  protected $screenshotUrl = 'http://localhost/wcmf-default-app/test';
+  protected static function getAppUrl() {
+    return "http://".SERVER_HOST.":".SERVER_PORT;
+  }
 
   /**
    * Log into the application
@@ -30,8 +28,8 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
    * @param $password The password
    */
   protected function login($user, $password) {
-    $this->url(self::APP_URL);
-    $this->timeouts()->implicitWait(3000);
+    $this->url(self::getAppUrl());
+    $this->timeouts()->implicitWait(1000);
     $this->byName('user')->value($user);
     $this->byName('password')->value($password);
     $btn = $this->byXPath("//span[contains(text(),'Sign in')]");

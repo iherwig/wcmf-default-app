@@ -215,6 +215,21 @@
                     "wcmf/asset-installer": "*"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "mbostock/d3",
+                "type": "wcmf-asset",
+                "version": "3.5.5",
+                "dist": {
+                    "url": "https://github.com/mbostock/d3/releases/download/v3.5.5/d3.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "wcmf/asset-installer": "*"
+                }
+            }
         }
     ],
     "require": {
@@ -236,7 +251,8 @@
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
         "kriszyp/put-selector": "~0.3",
-        "kriszyp/xstyle": "~0.3"
+        "kriszyp/xstyle": "~0.3",
+        "mbostock/d3": "~3.5"
     },
     "config": {
         "component-dir": "app/public/vendor/"

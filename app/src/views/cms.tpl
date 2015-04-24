@@ -52,7 +52,7 @@
               { name: 'jquery', location: 'vendor/jquery' },
               { name: 'jquery-ui', location: 'vendor/jquery-ui' },
               { name: 'elfinder', location: 'vendor/nao-pon/elfinder' },
-              { name: 'd3', location: 'http://d3js.org' },
+              { name: 'd3', location: 'vendor/mbostock/d3' },
               { name: 'trianglify', location: 'http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2' },
 
               { name: 'app', location: '.' }

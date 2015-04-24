@@ -8,19 +8,19 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-namespace tests\app;
+namespace test\tests\app;
 
-use lib\SeleniumTestCase;
+use test\lib\SeleniumTestCase;
 
 class LoginTest extends SeleniumTestCase {
 
   protected function setUp() {
     $this->setBrowser('firefox');
-    $this->setBrowserUrl(self::APP_URL);
+    $this->setBrowserUrl(self::getAppUrl());
   }
 
   public function testTitle() {
-    $this->url(self::APP_URL);
+    $this->url(self::getAppUrl());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 

@@ -78,9 +78,9 @@ class RootController extends Controller {
 
     // check if the user should be redirected to the login page
     // if yes, we do this and add the requested path as route parameter
-    $pathPrefix = dirname($_SERVER['SCRIPT_NAME']);
-    $basePath = dirname($_SERVER['SCRIPT_NAME']).'/';
-    $script = basename($_SERVER['SCRIPT_NAME']);
+    $pathPrefix = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+    $basePath = !preg_match('/\/$/', $pathPrefix) ? $pathPrefix.'/' : $pathPrefix;
+    $script = str_replace('\\', '/', basename($_SERVER['SCRIPT_NAME']));
     $requestPath = $_SERVER['REQUEST_URI'];
     // remove basepath & script from request path to get the requested resource
     $requestedResource = strpos($requestPath, $basePath) === 0 ?
@@ -92,8 +92,8 @@ class RootController extends Controller {
         exit;
       }
     }
-    $baseHref = dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/';
-    $mediaPathRelScript = FileUtil::getRelativePath(dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/', $mediaAbsPath);
+    $baseHref = str_replace('\\', '/', dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/');
+    $mediaPathRelScript = FileUtil::getRelativePath(str_replace('\\', '/', dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/'), $mediaAbsPath);
     $mediaPathRelBase = FileUtil::getRelativePath(WCMF_BASE, $mediaAbsPath);
 
     // define client configuration
