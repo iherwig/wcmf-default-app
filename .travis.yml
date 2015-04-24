@@ -1,0 +1,24 @@
+language: php
+
+php:
+  - "5.5"
+  - "5.4"
+  - "5.3"
+
+env:
+  - TEST_DIR=$TRAVIS_BUILD_DIR/test WCMF_BASE_DIR=$TRAVIS_BUILD_DIR
+
+before_script:
+  - "sh -e /etc/init.d/xvfb start"
+  - "export DISPLAY=:99.0"
+  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.45.0.jar"
+  - "java -jar selenium-server-standalone-2.45.0.jar > /dev/null &"
+  - sleep 5
+
+  - composer self-update
+  - composer install
+
+  - cd $WCMF_BASE_DIR/build && ant
+
+script:
+  - cd $TEST_DIR && phpunit --bootstrap bootstrap.php -c configuration.xml
