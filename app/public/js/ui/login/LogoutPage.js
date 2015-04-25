@@ -46,9 +46,7 @@ define([
             }).then(lang.hitch(this, function(response){
                 // redirect to login
                 Cookie.destroy();
-                var route = this.router.getRoute("login");
-                var url = route.assemble();
-                window.document.location.href = url;
+                window.document.location.href = appConfig.backendUrl;
             }), lang.hitch(this, function(error){
                 // error
                 this.showBackendError(error);
