@@ -5,6 +5,8 @@ define( [
     "dojo/on",
     "dojo/query",
     "dojo/dom-construct",
+    "dojo/dom-geometry",
+    "dojo/dom-style",
     "dojo/topic",
     "dijit/form/FilteringSelect",
     "../Factory",
@@ -21,6 +23,8 @@ function(
     on,
     query,
     domConstruct,
+    domGeom,
+    domStyle,
     topic,
     FilteringSelect,
     ControlFactory,
@@ -57,8 +61,14 @@ function(
                 // create spinner
                 if (!this.spinnerNode) {
                     this.spinnerNode = domConstruct.create("p", {
+                        style: 'position:absolute',
                         innerHTML: '<i class="fa fa-spinner fa-spin"></i>'
-                    }, this.domNode.parentNode, "last");
+                    }, dojo.body());
+                    var pos = domGeom.position(this.domNode);
+                    domStyle.set(this.spinnerNode, {
+                        left: pos.x + pos.w+15 + "px",
+                        top: pos.y+6 + "px"
+                    });
                 }
                 this.showSpinner();
             });
