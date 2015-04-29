@@ -14,23 +14,45 @@ use test\lib\SeleniumTestCase;
 
 class LoginTest extends SeleniumTestCase {
 
+
   public function testTitle() {
+    $this->setDisplay('large');
+
     $this->url(self::getAppUrl());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 
   public function testLoginOk() {
+    $this->setDisplay('large');
+
     $this->login('admin', 'admin');
     $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
   }
 
   public function testLoginFailed() {
+    $this->setDisplay('large');
+
     $this->login('admin', '');
     $this->assertEquals('WCMF TEST MODEL', $this->title());
     $this->assertRegExp( '/Authentication failed/i', $this->source());
   }
 
   public function testLogout() {
+    $this->setDisplay('large');
+
+    $this->login('admin', 'admin');
+    $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
+    // open navigation
+    $this->byXPath("//*[@id='navSettings']/a")->click();
+    // clock logout
+    $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
+    $btn->click();
+    $this->assertEquals('WCMF TEST MODEL', $this->title());
+  }
+
+  public function testLogoutSmall() {
+    $this->setDisplay('small');
+
     $this->login('admin', 'admin');
     $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
     // open navigation

@@ -21,6 +21,21 @@ use wcmf\test\lib\TestUtil;
  */
 abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
 
+  /**
+   * @see http://getbootstrap.com/css/#grid-media-queries
+   */
+  private $displayWidths = array(
+      /* Extra small devices (phones, less than 768px) */
+      'xsmall'  => 480,
+      /* Small devices (tablets, 768px and up) */
+      'small' => 768,
+      /* Medium devices (desktops, 992px and up) */
+      'medium' => 992,
+      /* Large devices (large desktops, 1200px and up) */
+      'large' => 1200,
+  );
+  private $width = 1024;
+
   private $databaseTester;
 
   protected static function getAppUrl() {
@@ -76,6 +91,26 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
       $this->databaseTester = NULL;
     }
     parent::tearDown();
+  }
+
+  public function setUpPage() {
+    parent::setUpPage();
+
+    // get window object
+    $window = $this->currentWindow();
+
+    // set window size
+    $window->size(array(
+      'width' => $this->width,
+      'height' => 768)
+    );
+  }
+
+  protected function setDisplay($size) {
+    if (isset($this->displayWidths[$size])) {
+      $this->width = $this->displayWidths[$size];
+      $this->setUpPage();
+    }
   }
 
   /**
