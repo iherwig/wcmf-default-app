@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf base">
       <packagedElement xmi:type="uml:Package" xmi:id="_1jaukLQuEeOLlbB2YLI0iw" name="PrimitiveTypes">
@@ -23,7 +23,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_7I8EQLQ8EeOQ5oJFa1i8cg" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-qgGgLQ8EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-qgtkLQ8EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_-qh7sLQ8EeOQ5oJFa1i8cg" value="wcmf base"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_-qh7sLQ8EeOQ5oJFa1i8cg" value="WCMF BASE MODEL"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_FuLx0HSyEeSTpe7Uq_EO2A" name="color" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FuLx0XSyEeSTpe7Uq_EO2A" value="1"/>
@@ -192,7 +192,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_PwCPoLQzEeOQ5oJFa1i8cg" name="dbName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_P9dnoLQzEeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_P9dnobQzEeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_P9eOsLQzEeOQ5oJFa1i8cg" value="wcmf"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_P9eOsLQzEeOQ5oJFa1i8cg" value="wcmf_testapp"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_UOL18LQzEeOQ5oJFa1i8cg" name="dbUserName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_U2i2cLQzEeOQ5oJFa1i8cg" value="1"/>
@@ -421,6 +421,30 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8kWt0LRGEeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8kXU4LRGEeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_8kYjALRGEeOQ5oJFa1i8cg" value="wcmf\lib\presentation\format\impl\NullFormat"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_23RmMO46EeSt-PWkeJaU5w" name="Request">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_23RmMe46EeSt-PWkeJaU5w" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_23RmMu46EeSt-PWkeJaU5w" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_23RmM-46EeSt-PWkeJaU5w" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_23RmNO46EeSt-PWkeJaU5w" value="wcmf\lib\presentation\impl\DefaultRequest"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_8wTHsO49EeSt-PWkeJaU5w" name="__shared" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8wTHse49EeSt-PWkeJaU5w" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8wTHsu49EeSt-PWkeJaU5w" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_8wTHs-49EeSt-PWkeJaU5w" value="false"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_3J3yEO46EeSt-PWkeJaU5w" name="Response">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_3J3yEe46EeSt-PWkeJaU5w" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3J3yEu46EeSt-PWkeJaU5w" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3J3yE-46EeSt-PWkeJaU5w" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_3J3yFO46EeSt-PWkeJaU5w" value="wcmf\lib\presentation\impl\DefaultResponse"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_89--YO49EeSt-PWkeJaU5w" name="__shared" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_89--Ye49EeSt-PWkeJaU5w" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_89--Yu49EeSt-PWkeJaU5w" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_89--Y-49EeSt-PWkeJaU5w" value="false"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_DgsN0LRHEeOQ5oJFa1i8cg" name="ListStrategies">
@@ -1662,7 +1686,7 @@
   <Chronos:ChiValue xmi:id="_RzmfELTREeOYkOsR5IzpsA" is_editable="true" input_type="password" base_Property="_P23FkLTREeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_TRojULTREeOYkOsR5IzpsA" is_editable="true" base_Property="_P5h_ELTREeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_T_H7cLTREeOYkOsR5IzpsA" is_editable="true" base_Property="_P8fMcLTREeOYkOsR5IzpsA"/>
-  <Chronos:ChiValue xmi:id="_UqU0kLTREeOYkOsR5IzpsA" is_editable="true" input_type="select#file:../config/|/\.ini$/" base_Property="_P_cZ0LTREeOYkOsR5IzpsA"/>
+  <Chronos:ChiValue xmi:id="_UqU0kLTREeOYkOsR5IzpsA" is_editable="true" input_type="select:{&quot;list&quot;:{&quot;type&quot;:&quot;file&quot;,&quot;paths&quot;:[&quot;../config&quot;],&quot;pattern&quot;:&quot;\\\\.ini$&quot;,&quot;emptyItem&quot;:&quot;&quot;}}" base_Property="_P_cZ0LTREeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_3JZQ0LTREeOYkOsR5IzpsA" base_Property="_1-0UELTREeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_317msLTREeOYkOsR5IzpsA" is_editable="true" base_Property="_2AoR8LTREeOYkOsR5IzpsA"/>
   <Chronos:ChiValue xmi:id="_FvzEELTTEeOYkOsR5IzpsA" base_Property="_EVGnsLTTEeOYkOsR5IzpsA"/>
@@ -1678,17 +1702,16 @@
   <Chronos:ChiController xmi:id="_Cju5cvvcEeO7oqnkSuo0Ew" base_Class="_Cju5cPvcEeO7oqnkSuo0Ew"/>
   <Chronos:ChiActionKey xmi:id="_eOtWQPvdEeO7oqnkSuo0Ew" action="soapAction" base_Association="_RXx8k_vcEeO7oqnkSuo0Ew"/>
   <Chronos:ChiSystem xmi:id="_S4f9MARHEeSxY9ess8EBIw" plattform="wcmf" base_Class="_S4bEsARHEeSxY9ess8EBIw"/>
-  <ActionLanguage:TextualRepresentation xmi:id="_YyvHAARHEeSxY9ess8EBIw" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
   <Chronos:ChiController xmi:id="_w6fpEC03EeSZcOHv2Y7Ocg" base_Class="_w2-bAC03EeSZcOHv2Y7Ocg"/>
   <Chronos:ChiActionKey xmi:id="_FVXx0C04EeSZcOHv2Y7Ocg" action="checkPermissions" base_Association="_BNunAC04EeSZcOHv2Y7Ocg"/>
   <Chronos:ChiValue xmi:id="_hAlnMDQ0EeSRmq5T8ey5JQ" base_Property="_hAkZEDQ0EeSRmq5T8ey5JQ"/>
   <Chronos:ChiSystem xmi:id="_FeKyBTRKEeSRmq5T8ey5JQ" plattform="wcmf" config="security.ini" base_Class="_FeKyADRKEeSRmq5T8ey5JQ"/>
   <Chronos:ChiSystem xmi:id="_PXgOpTRKEeSRmq5T8ey5JQ" plattform="wcmf" config="security.ini" base_Class="_PXgOoDRKEeSRmq5T8ey5JQ"/>
   <Chronos:ChiNode xmi:id="_VG9c4DkNEeSAepGYcnIyuw" base_Class="_VEQuMDkNEeSAepGYcnIyuw" display_value="resource|context|action|roles"/>
-  <Chronos:ChiValue xmi:id="_VG-D8DkNEeSAepGYcnIyuw" base_Property="_VEQuMTkNEeSAepGYcnIyuw"/>
-  <Chronos:ChiValue xmi:id="_VG-rADkNEeSAepGYcnIyuw" base_Property="_VEQuNTkNEeSAepGYcnIyuw"/>
-  <Chronos:ChiValue xmi:id="_VG_SEDkNEeSAepGYcnIyuw" base_Property="_VEQuOTkNEeSAepGYcnIyuw"/>
-  <Chronos:ChiValue xmi:id="_gJEfcDkNEeSAepGYcnIyuw" base_Property="_dNmz4DkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG-D8DkNEeSAepGYcnIyuw" is_editable="true" base_Property="_VEQuMTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG-rADkNEeSAepGYcnIyuw" is_editable="true" base_Property="_VEQuNTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_VG_SEDkNEeSAepGYcnIyuw" is_editable="true" base_Property="_VEQuOTkNEeSAepGYcnIyuw"/>
+  <Chronos:ChiValue xmi:id="_gJEfcDkNEeSAepGYcnIyuw" is_editable="true" base_Property="_dNmz4DkNEeSAepGYcnIyuw"/>
   <Chronos:ChiSystem xmi:id="_1fa8hzkOEeSuCfpXnqk73Q" plattform="wcmf" config="security.ini" base_Class="_1fa8gDkOEeSuCfpXnqk73Q"/>
   <Chronos:ChiSystem xmi:id="_1mktZzkOEeSuCfpXnqk73Q" plattform="wcmf" config="security.ini" base_Class="_1mktYDkOEeSuCfpXnqk73Q"/>
   <Chronos:ChiActionKey xmi:id="_2JLWUE5mEeSEGaIVag_Y7g" action="checkPermissionsOfUser" base_Association="_0Wnzk05mEeSEGaIVag_Y7g"/>
@@ -1697,5 +1720,6 @@
   <Chronos:ChiActionKey xmi:id="_2pwsAFJlEeS9X-qkDE9hqA" action="getPermissions" base_Association="_ztw08FJlEeS9X-qkDE9hqA"/>
   <Chronos:ChiActionKey xmi:id="_LYFX8FLkEeSiysnzrVykIQ" action="setPermissions" base_Association="_JQqYcFLkEeSiysnzrVykIQ"/>
   <Chronos:ChiSystem xmi:id="_UsmaoFUxEeS4i-N-Z4Tllg" plattform="wcmf" base_Class="_Un6u8FUxEeS4i-N-Z4Tllg"/>
-  <ActionLanguage:TextualRepresentation xmi:id="_Y6ae4FUxEeS4i-N-Z4Tllg" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+  <Chronos:ChiSystem xmi:id="_28CKYO46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_23RmMO46EeSt-PWkeJaU5w"/>
+  <Chronos:ChiSystem xmi:id="_3J3yFe46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_3J3yEO46EeSt-PWkeJaU5w"/>
 </xmi:XMI>
