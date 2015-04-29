@@ -26,6 +26,8 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
+    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
     $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
   }
 
@@ -33,6 +35,7 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', '');
+    $this->assertEquals(self::getAppUrl().'/', $this->url());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
     $this->assertRegExp( '/Authentication failed/i', $this->source());
   }
@@ -41,12 +44,15 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
+    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
     $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
     // open navigation
     $this->byXPath("//*[@id='navSettings']/a")->click();
     // clock logout
     $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
     $btn->click();
+    $this->assertEquals(self::getAppUrl().'/', $this->url());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 
@@ -54,6 +60,8 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('small');
 
     $this->login('admin', 'admin');
+    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
     $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
     // open navigation
     $this->byXPath("//nav/div/div[1]/button")->click();
@@ -61,6 +69,7 @@ class LoginTest extends SeleniumTestCase {
     // clock logout
     $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
     $btn->click();
+    $this->assertEquals(self::getAppUrl().'/', $this->url());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
 }
