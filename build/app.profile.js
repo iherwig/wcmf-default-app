@@ -195,5 +195,3 @@ var profile = {
         }
     }
 };
-
-Packages.com.google.javascript.jscomp.Compiler.setLoggingLevel(Packages.java.util.logging.Level.SEVERE);
