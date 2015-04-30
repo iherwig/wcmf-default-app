@@ -117,6 +117,7 @@ var profile = {
     layerOptimize: "closure",
     optimize: "closure",
     cssOptimize: "comments",
+    maxOptimizationProcesses: 1,
     mini: true,
     stripConsole: "none",
     selectorEngine: "lite",
@@ -179,7 +180,7 @@ var profile = {
       { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery' },
       { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui' },
       { name: 'elfinder', location: 'vendor/nao-pon/elfinder', destLocation: 'vendor/nao-pon/elfinder' },
-      { name: 'd3', location: 'vendor/mbostock/d3' },
+      { name: 'd3', location: 'vendor/mbostock/d3', destLocation: 'vendor/mbostock/d3' },
       { name: 'trianglify', location: 'http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2' },
 
       { name: 'app', location: '.', destLocation: '.' }
