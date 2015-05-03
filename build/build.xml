@@ -86,6 +86,8 @@
     </copy>
     <copy todir="${dist.dir}/${app.name}">
       <fileset dir="${build.base}${app.name}/">
+        <exclude name="cache/"/>
+        <exclude name="log/"/>
         <exclude name="public/"/>
         <exclude name="release/"/>
         <include name="**"/>

@@ -10,5 +10,5 @@ new ClassLoader();
 @unlink('log.txt');
 @unlink('test-db.sq3');
 
-TestUtil::startServer(WCMF_BASE.'app/public', 'router.php');
+TestUtil::startServer(WCMF_BASE.'dist/app/public', 'router.php');
 ?>
