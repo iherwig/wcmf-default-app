@@ -63,6 +63,8 @@
     <exec dir="${dojo.build.base}" executable="${dojo.build.script}" output="${dojo.build.log}">
       <arg line="profile=${dojo.build.profile}"/>
     </exec>
+    <loadfile property="compile.log" srcFile="${dojo.build.log}"/>
+    <echo level="debug">${compile.log}</echo>
   </target>
 
   <target name="dist-fe" depends="buildinfo,properties"
