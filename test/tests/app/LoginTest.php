@@ -14,7 +14,6 @@ use test\lib\SeleniumTestCase;
 
 class LoginTest extends SeleniumTestCase {
 
-
   public function testTitle() {
     $this->setDisplay('large');
 
