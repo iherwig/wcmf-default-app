@@ -1,4 +1,5 @@
 define([
+    "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/topic",
@@ -9,6 +10,7 @@ define([
     "./widget/NotificationWidget",
     "../../persistence/BackendError"
 ], function (
+    require,
     declare,
     lang,
     topic,
@@ -116,7 +118,7 @@ define([
             var error = BackendError.parseResponse(errorData);
             if (error.code === 'SESSION_INVALID') {
                 // prevent circular dependency
-                require(["app/js/ui/_include/widget/LoginDlgWidget"], function(LoginDlg) {
+                require([require.toAbsMid("./widget/LoginDlgWidget")], function(LoginDlg) {
                     new LoginDlg({
                         success: function() {
                             topic.publish('refresh', function(request) {

@@ -10,7 +10,9 @@
  */
 error_reporting(E_ALL | E_PARSE);
 
-define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
+if (!defined('WCMF_BASE')) {
+  define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
+}
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use \Exception;

@@ -53,7 +53,7 @@ function(
             }
         }
         // default
-        return "app/js/ui/data/display/renderer/Text";
+        return Renderer.renderers["text"];
     };
 
     // initialize renderers

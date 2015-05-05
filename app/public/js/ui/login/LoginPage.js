@@ -115,16 +115,14 @@ define([
 
                 // run startup code
                 Startup.run().then(lang.hitch(this, function(result) {
-                      // redirect to initially requested route if given
                       var redirectRoute = this.request.getQueryParam("route");
                       if (redirectRoute) {
+                          // redirect to initially requested route if given
                           window.location.href = this.request.getPathname()+redirectRoute;
                       }
                       else {
                           // redirect to default route
-                          var route = this.router.getRoute("home");
-                          var url = route.assemble();
-                          this.pushState(url);
+                          window.location.href = this.request.getPathname()+"home";
                       }
                 }), lang.hitch(this, function(error) {
                       // error

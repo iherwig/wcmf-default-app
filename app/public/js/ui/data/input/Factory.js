@@ -1,4 +1,5 @@
 define( [
+    "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
@@ -9,6 +10,7 @@ define( [
     "../../../persistence/ListStore"
 ],
 function(
+    require,
     declare,
     lang,
     array,
@@ -85,7 +87,7 @@ function(
             }
         }
         // default
-        return "app/js/ui/data/input/widget/TextBox";
+        return require.toAbsMid("./widget/TextBox");
     };
 
     /**
