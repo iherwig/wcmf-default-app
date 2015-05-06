@@ -11,7 +11,7 @@
 namespace test\lib;
 
 use wcmf\lib\core\ObjectFactory;
-use wcmf\test\lib\TestUtil;
+use wcmf\lib\util\TestUtil;
 
 /**
  * SeleniumTestCase is a PHPUnit test case, that
@@ -45,12 +45,12 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
   protected function setUp() {
 
     // framework setup
-    TestUtil::initFramework(get_class($this), $this->getName());
+    TestUtil::initFramework(WCMF_BASE.'app/config/');
 
     // override connection settings in order to use testing db
     // path is relative to WCMF_BASE
     $config = ObjectFactory::getConfigurationInstance();
-    $config->addConfiguration('../../test/tests.ini');
+    $config->addConfiguration('../../../test/tests.ini');
 
     // database setup
 
@@ -65,7 +65,7 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
     if ($params['dbType'] == 'sqlite') {
       $numTables = $pdo->query('SELECT count(*) FROM sqlite_master WHERE type = "table"')->fetchColumn();
       if ($numTables == 0) {
-        $schema = file_get_contents(WCMF_BASE.'install/tables_sqlite.sql');
+        $schema = file_get_contents('tables_sqlite.sql');
         $pdo->exec($schema);
       }
     }
@@ -73,7 +73,7 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
 
     $this->databaseTester = new \PHPUnit_Extensions_Database_DefaultTester($conn);
     $this->databaseTester->setSetUpOperation(\PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT());
-      $this->databaseTester->setDataSet($this->getDataSet());
+    $this->databaseTester->setDataSet($this->getDataSet());
     $this->databaseTester->onSetUp();
 
     // selenium setup

@@ -20,7 +20,7 @@ use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\util\DBUtil;
 
-new ClassLoader();
+new ClassLoader(WCMF_BASE);
 
 Log::configure('log4php.php');
 Log::info("updating wCMF database tables...", "dbupdate");

@@ -34,7 +34,7 @@ use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\model\output\DotOutputStrategy;
 use wcmf\lib\model\visitor\OutputVisitor;
 
-new ClassLoader();
+new ClassLoader(WCMF_BASE);
 
 Log::configure('../log4php.php');
 

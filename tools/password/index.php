@@ -12,7 +12,7 @@ use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\security\principal\PasswordService;
 
-new ClassLoader();
+new ClassLoader(WCMF_BASE);
 
 Log::configure('../log4php.php');
 

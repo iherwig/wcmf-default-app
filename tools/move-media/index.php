@@ -34,7 +34,7 @@ use wcmf\lib\core\Log;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 
-new ClassLoader();
+new ClassLoader(WCMF_BASE);
 
 Log::configure('../log4php.php');
 

@@ -22,7 +22,7 @@ use wcmf\lib\persistence\BuildDepth;
 use wcmf\lib\security\impl\NullPermissionManager;
 use wcmf\lib\util\DBUtil;
 
-new ClassLoader();
+new ClassLoader(WCMF_BASE);
 
 Log::configure('log4php.php');
 Log::info("initializing wCMF database tables...", "install");

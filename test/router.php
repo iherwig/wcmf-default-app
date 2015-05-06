@@ -1,6 +1,10 @@
 <?php
+/**
+ * Router script for test server
+ * NOTE: we are serving from the dist/ directory
+ */
 error_reporting(E_ALL | E_PARSE);
-define('WCMF_BASE', realpath(dirname(__FILE__).'/..').'/');
+define('WCMF_BASE', realpath(dirname(__FILE__).'/../dist').'/');
 
 use \Exception;
 use wcmf\lib\core\ObjectFactory;
@@ -21,7 +25,7 @@ else {
 
     // override connection settings in order to use testing db
     $config = ObjectFactory::getConfigurationInstance();
-    $config->addConfiguration('../../test/tests.ini');
+    $config->addConfiguration('../../../test/tests.ini');
 
     // run the application
     $application->run($request);
