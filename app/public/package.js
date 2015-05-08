@@ -13,7 +13,7 @@ var profile = (function (){
             },
 
             amd: function (filename, moduleId) {
-                return /\.js$/.test(filename) && /^app\/js\//.test(moduleId);
+                return /\.js$/.test(filename) && /^app\/js\//.test(moduleId) && !/^app\/js\/config\//.test(moduleId);
             }
         }
     };

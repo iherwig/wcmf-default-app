@@ -28,7 +28,7 @@ define([
             oid: oid,
             relationName: relationName,
             typeName: relationTypeName,
-            target: appConfig.pathPrefix+"/rest/"+appConfig.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
+            target: appConfig.pathPrefix+"rest/"+appConfig.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
         });
         return jsonRest;
     };

@@ -20,7 +20,7 @@ function(
 ) {
     return declare([_BrowserControl], {
 
-        browserUrl: appConfig.pathPrefix+'/link',
+        browserUrl: appConfig.pathPrefix+'link',
 
         postCreate: function() {
             this.inherited(arguments);

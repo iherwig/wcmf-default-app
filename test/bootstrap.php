@@ -8,7 +8,6 @@ use wcmf\lib\util\TestUtil;
 new ClassLoader(WCMF_BASE);
 new ClassLoader('../');
 
-// refresh resources
 setup();
 TestUtil::startServer(WCMF_BASE.'app/public', 'router.php');
 register_shutdown_function("cleanup");
@@ -18,7 +17,10 @@ register_shutdown_function("cleanup");
  */
 function setup() {
   @unlink('log.txt');
-  @unlink(WCMF_BASE.'test-db.sq3');
+  @unlink(WCMF_BASE.'app/test-db.sq3');
+  FileUtil::emptyDir(WCMF_BASE.'app/cache');
+  FileUtil::emptyDir(WCMF_BASE.'app/log');
+  FileUtil::emptyDir(WCMF_BASE.'app/searchIndex');
   copy(WCMF_BASE.'../install/tables_sqlite.sql', 'tables_sqlite.sql');
 }
 
@@ -27,9 +29,5 @@ function setup() {
  */
 function cleanup() {
   @unlink('tables_sqlite.sql');
-  @unlink(WCMF_BASE.'test-db.sq3');
-  FileUtil::emptyDir(WCMF_BASE.'app/cache');
-  FileUtil::emptyDir(WCMF_BASE.'app/log');
-  FileUtil::emptyDir(WCMF_BASE.'app/searchIndex');
 }
 ?>

@@ -47,7 +47,7 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "contentTab") {
-                    window.location.href = appConfig.pathPrefix+'/link?'+this.request.getQueryString();
+                    window.location.href = appConfig.pathPrefix+'link?'+this.request.getQueryString();
                 }
             }));
 

@@ -1,4 +1,7 @@
-window.CKEDITOR_BASEPATH = appConfig.pathPrefix+'/vendor/ckeditor/ckeditor/';
+if (typeof window !== "undefined") {
+    // window is undefined in non-browser context
+    window.CKEDITOR_BASEPATH = appConfig.pathPrefix+'vendor/ckeditor/ckeditor/';
+}
 
 define( [
     "dojo/_base/declare",
@@ -43,12 +46,12 @@ function(
         postCreate: function() {
             this.inherited(arguments);
 
-            var mediaBrowserRoute = appConfig.pathPrefix+'/media';
-            var linkBrowserRoute = appConfig.pathPrefix+'/link';
-            var mediaFileBasePath = appConfig.pathPrefix+'/media';
+            var mediaBrowserRoute = appConfig.pathPrefix+'media';
+            var linkBrowserRoute = appConfig.pathPrefix+'link';
+            var mediaFileBasePath = appConfig.pathPrefix+'media';
 
             this.editorInstance = CKEDITOR.replace(this.textbox, {
-                customConfig: appConfig.pathPrefix+'/js/config/ckeditor_config.js',
+                customConfig: appConfig.pathPrefix+'js/config/ckeditor_config.js',
                 filebrowserBrowseUrl: mediaBrowserRoute,
                 filebrowserLinkBrowseUrl: linkBrowserRoute,
                 baseHref: mediaFileBasePath,

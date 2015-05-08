@@ -102,7 +102,7 @@ class RootController extends Controller {
       'color' => $appColor,
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
-      'pathPrefix' => $pathPrefix,
+      'pathPrefix' => $basePath,
       'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPathRelScript, $baseHref),
       'mediaBasePath' => $mediaPathRelScript,
       'mediaSavePath' => $mediaPathRelBase,

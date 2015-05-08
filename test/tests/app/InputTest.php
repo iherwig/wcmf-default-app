@@ -1,0 +1,28 @@
+<?php
+/**
+ * wCMF - wemove Content Management Framework
+ * Copyright (C) 2005-2014 wemove digital solutions GmbH
+ *
+ * Licensed under the terms of the MIT License.
+ *
+ * See the LICENSE file distributed with this work for
+ * additional information.
+ */
+namespace test\tests\app;
+
+use test\lib\SeleniumTestCase;
+
+class InputTest extends SeleniumTestCase {
+
+  public function testCKEditor() {
+    $this->setDisplay('large');
+
+    $this->login('admin', 'admin');
+    $this->timeouts()->implicitWait(5000);
+    // navigate to new chapter
+    $this->url(self::getAppUrl().'/data/Chapter/~');
+    $this->assertRegExp('/New Chapter/i', $this->source());
+    $this->byXPath('//*[starts-with(@id,"cke_uniqName_")]');
+  }
+}
+?>

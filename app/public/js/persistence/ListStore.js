@@ -37,7 +37,7 @@ define([
             }
 
             // set target for xhr requests
-            this.target = appConfig.pathPrefix+"/list/"+this.language+"/"+base64.encode(b)+"/";
+            this.target = appConfig.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
         },
 
         get: function(id) {

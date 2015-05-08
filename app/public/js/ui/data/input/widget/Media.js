@@ -18,7 +18,7 @@ function(
 ) {
     return declare([_BrowserControl], {
 
-        browserUrl: appConfig.pathPrefix+'/media',
+        browserUrl: appConfig.pathPrefix+'media',
 
         postCreate: function() {
             this.inherited(arguments);

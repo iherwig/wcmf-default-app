@@ -53,7 +53,7 @@ define([
             var jsonRest = new Store({
                 typeName: fqTypeName,
                 language: language,
-                target: appConfig.pathPrefix+"/rest/"+language+"/"+fqTypeName+"/"
+                target: appConfig.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
             });
             var cache = Cache.create(jsonRest);
             Store.storeInstances[fqTypeName][language] = {

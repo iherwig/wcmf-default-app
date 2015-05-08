@@ -4,6 +4,7 @@
          verbose="true">
   <testsuites>
     <testsuite name="App">
+      <file>tests/app/InputTest.php</file>
       <file>tests/app/LoginTest.php</file>
     </testsuite>
   </testsuites>
