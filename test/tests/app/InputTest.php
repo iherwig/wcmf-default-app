@@ -21,6 +21,7 @@ class InputTest extends SeleniumTestCase {
     $this->timeouts()->implicitWait(5000);
     // navigate to new chapter
     $this->url(self::getAppUrl().'/data/Chapter/~');
+    $this->timeouts()->implicitWait(5000);
     $this->assertRegExp('/New Chapter/i', $this->source());
     $this->byXPath('//*[starts-with(@id,"cke_uniqName_")]');
   }
