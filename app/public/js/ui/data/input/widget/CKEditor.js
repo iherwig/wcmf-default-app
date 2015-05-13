@@ -6,8 +6,10 @@ if (typeof window !== "undefined") {
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/window",
     "dojo/on",
     "dojo/topic",
+    "dojo/query",
     "dijit/form/TextBox",
     "ckeditor/ckeditor",
     "../Factory",
@@ -19,8 +21,10 @@ define( [
 function(
     declare,
     lang,
+    win,
     on,
     topic,
+    query,
     TextBox,
     CKEditor,
     ControlFactory,
@@ -71,6 +75,11 @@ function(
             );
             this.editorInstance.on("instanceReady", lang.hitch(this, function() {
                 this.editorInstance.on("change", lang.hitch(this, this.editorValueChanged));
+                // set padding on editor content
+                var content = query("iframe", this.domNode)[0].contentWindow.document;
+                win.withDoc(content, function() {
+                  query(".cke_editable").style("padding", "5px");
+                }, this);
             }));
         },
 

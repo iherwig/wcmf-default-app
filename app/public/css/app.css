@@ -183,6 +183,11 @@ th.field-actions-4, td.field-actions-4 {
   padding: 0 5px;
 }
 
+.dgrid-cell.dgrid-cell-editing div {
+  /* disable scrollbars on inline editors */
+  overflow: hidden;
+}
+
 .dgrid-cell .dijitInputField {
   margin-top: -8px;
 }
@@ -257,6 +262,10 @@ th.field-actions-4, td.field-actions-4 {
 /* entity form */
 .entity-form-valueCell {
   padding: 10px 0;
+}
+
+.entity-form-valueCell div {
+  overflow: hidden;
 }
 
 .checkBoxLabel {
