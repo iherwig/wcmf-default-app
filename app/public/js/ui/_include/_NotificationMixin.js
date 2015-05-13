@@ -114,7 +114,7 @@ define([
             }
         },
 
-        showBackendError: function (errorData) {
+        showBackendError: function (errorData, noRefresh) {
             var error = BackendError.parseResponse(errorData);
             if (error.code === 'SESSION_INVALID') {
                 // prevent circular dependency
@@ -122,11 +122,7 @@ define([
                     new LoginDlg({
                         success: function() {
                             topic.publish('refresh', function(request) {
-                                if (request.getPathParam('id') !== null) {
-                                    // don't refresh an entity page
-                                    return false;
-                                }
-                                return true;
+                                return !noRefresh;
                             });
                         }
                     }).show();

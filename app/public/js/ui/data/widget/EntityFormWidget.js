@@ -173,7 +173,7 @@ function(
                             disabled: disabled,
                             helpText: Dict.translate(attribute.description),
                             inputType: attribute.inputType,
-                            original: this.original
+                            entity: this.entity
                         });
                         if (this.permissions[cleanOid+'??update'] === true &&
                                 this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
@@ -246,7 +246,7 @@ function(
 
             this.own(
                 topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
-                    this.showBackendError(error);
+                    this.showBackendError(error, this.isModified);
                 }))
             );
         },
@@ -432,7 +432,7 @@ function(
                     this.saveBtn.reset();
                     if (response.errorMessage) {
                         // error
-                        this.showBackendError(response);
+                        this.showBackendError(response, true);
                     }
                     else {
                         // success
@@ -509,7 +509,7 @@ function(
                         });
                     }
                     else {
-                        this.showBackendError(error);
+                        this.showBackendError(error, true);
                     }
                 }));
             }
@@ -537,7 +537,7 @@ function(
                 }),
                 errback: lang.hitch(this, function(data, result) {
                     // error
-                    this.showBackendError(result);
+                    this.showBackendError(result, true);
                 })
             }).execute(e, this.entity);
         },

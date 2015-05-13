@@ -15,7 +15,7 @@ function(
     return declare([CheckBox, _HelpMixin, _AttributeWidgetMixin], {
 
         inputType: null, // control description as string as used in Factory.getControlClass()
-        original: {},
+        entity: {},
 
         constructor: function(args) {
             declare.safeMixin(this, args);

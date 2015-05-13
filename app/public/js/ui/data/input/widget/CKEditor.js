@@ -38,7 +38,7 @@ function(
         templateString: template,
         intermediateChanges: true,
         inputType: null, // control description as string as used in Factory.getControlClass()
-        original: {},
+        entity: {},
         editorInstance: null,
 
         constructor: function(args) {
@@ -64,10 +64,10 @@ function(
                 filebrowserWindowHeight: '700'
             });
 
-            // subscribe to entity change events to change tab links
             this.own(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    if (data.name === this.name) {
+                    if ((this.entity && this.entity.get('oid') === data.entity.get('oid')) &&
+                            data.name === this.name) {
                         this.set("value", data.newValue);
                         this.editorInstance.setData(data.newValue);
                     }

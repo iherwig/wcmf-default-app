@@ -180,7 +180,7 @@ define([
                         name: curAttributeDef.name,
                         helpText: Dict.translate(curAttributeDef.description),
                         inputType: curAttributeDef.inputType,
-                        original: this.original,
+                        entity: null, // will be set in dgrid-editor-show event
                         style: 'height:20px; padding:0;',
                         isInlineEditor: true
                     },
@@ -245,11 +245,16 @@ define([
                 noDataMessage: Dict.translate("No data")
             }, this.gridNode);
 
-            grid.on("dgrid-error", function (evt) {
+            grid.on("dgrid-editor-show", function(evt) {
+                // set the entity property on the input control
+                evt.editor.entity = evt.cell.row.data;
+            })
+
+            grid.on("dgrid-error", function(evt) {
                 topic.publish('ui/_include/widget/GridWidget/error', evt.error);
             });
 
-            grid.on("dgrid-refresh-complete", lang.hitch(this, function (evt) {
+            grid.on("dgrid-refresh-complete", lang.hitch(this, function(evt) {
                 grid.resize();
             }));
 
