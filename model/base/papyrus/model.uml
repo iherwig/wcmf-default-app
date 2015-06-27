@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
-    <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf base">
+    <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf test">
       <packagedElement xmi:type="uml:Package" xmi:id="_1jaukLQuEeOLlbB2YLI0iw" name="PrimitiveTypes">
         <packagedElement xmi:type="uml:Class" xmi:id="_X7HiELQwEeOLlbB2YLI0iw" name="Date"/>
         <packagedElement xmi:type="uml:Class" xmi:id="_agg3ALQwEeOLlbB2YLI0iw" name="String"/>
@@ -20,7 +20,7 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_3bHusLQ8EeOQ5oJFa1i8cg" name="Application">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_7I8EQLQ8EeOQ5oJFa1i8cg" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_7I8EQLQ8EeOQ5oJFa1i8cg" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-qgGgLQ8EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-qgtkLQ8EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_-qh7sLQ8EeOQ5oJFa1i8cg" value="WCMF BASE MODEL"/>
@@ -527,6 +527,9 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_za6-AL1jEeO1KMg8cXW3Mg" name="date" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_2ctUAL1jEeO1KMg8cXW3Mg" value="app/js/ui/data/display/renderer/Date"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_xCE3gB0YEeWsd8Y5mBAgtw" name="check" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_xCE3gR0YEeWsd8Y5mBAgtw" value="app/js/ui/data/display/renderer/Check"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_nvfmsLRlEeOfbtYsPp7Oyg" name="InputTypes">
