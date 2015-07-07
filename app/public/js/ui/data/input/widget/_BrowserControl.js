@@ -99,7 +99,9 @@ function(
 
         getDirectory: function() {
             var value = this.get("value");
-            return value ? value.replace(/[^\/]*$/, '') : '';
+            // replace base path, remove file name
+            return value ? value.replace(/[^\/]*$/, '').
+                    replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
         },
 
         destroy: function() {
