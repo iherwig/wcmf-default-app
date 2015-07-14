@@ -15,7 +15,6 @@ if (!defined('WCMF_BASE')) {
 }
 require_once(WCMF_BASE."/vendor/autoload.php");
 
-use \Exception;
 use wcmf\lib\presentation\Application;
 
 $application = new Application();
@@ -26,11 +25,11 @@ try {
   // run the application
   $application->run($request);
 }
-catch (Exception $ex) {
+catch (\Exception $ex) {
   try {
     $application->handleException($ex, isset($request) ? $request : null);
   }
-  catch (Exception $unhandledEx) {
+  catch (\Exception $unhandledEx) {
     echo("An unhandled exception occured. Please see log file for details.");
   }
 }
