@@ -14,7 +14,8 @@ app/public/js/model/_TypeList.js
 app/src/controller
 !app/src/controller/RootController.php
 app/src/model
-!app/src/model/EntityBase*
+!app/src/model/EntityBase.php
+!app/src/model/wcmf/Translation.php
 app/src/views
 !app/src/views/cms.tpl
 install/*.sql

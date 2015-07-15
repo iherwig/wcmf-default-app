@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://www.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf test">
       <packagedElement xmi:type="uml:Package" xmi:id="_1jaukLQuEeOLlbB2YLI0iw" name="PrimitiveTypes">
@@ -20,7 +20,7 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_3bHusLQ8EeOQ5oJFa1i8cg" name="Application">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_7I8EQLQ8EeOQ5oJFa1i8cg" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw" isUnique="false">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_7I8EQLQ8EeOQ5oJFa1i8cg" name="title" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-qgGgLQ8EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-qgtkLQ8EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_-qh7sLQ8EeOQ5oJFa1i8cg" value="WCMF BASE MODEL"/>
@@ -51,7 +51,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_7gMtsLQ8EeOQ5oJFa1i8cg" name="listeners" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OYK5QLQ9EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OYLgULQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_OYMucLQ9EeOQ5oJFa1i8cg" value="{Search}"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_OYMucLQ9EeOQ5oJFa1i8cg" value="{Search, EventListener}"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_SQkHILQ9EeOQ5oJFa1i8cg" name="Media">
@@ -168,6 +168,11 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_lEaWkFUxEeS4i-N-Z4Tllg" name="cacheDir" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_oaPp8FUxEeS4i-N-Z4Tllg" value="app/cache/"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_QM0nECshEeWUuIR_KoweBQ" name="EventListener">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_XEozcCshEeWUuIR_KoweBQ" name="__class" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_adlsQCshEeWUuIR_KoweBQ" value="app\src\lib\EventListener"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -1723,4 +1728,5 @@
   <Chronos:ChiSystem xmi:id="_UsmaoFUxEeS4i-N-Z4Tllg" plattform="wcmf" base_Class="_Un6u8FUxEeS4i-N-Z4Tllg"/>
   <Chronos:ChiSystem xmi:id="_28CKYO46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_23RmMO46EeSt-PWkeJaU5w"/>
   <Chronos:ChiSystem xmi:id="_3J3yFe46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_3J3yEO46EeSt-PWkeJaU5w"/>
+  <Chronos:ChiSystem xmi:id="_RvInMCtJEeWQ0dw1eRj6JQ" plattform="wcmf" base_Class="_QM0nECshEeWUuIR_KoweBQ"/>
 </xmi:XMI>
