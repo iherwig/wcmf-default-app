@@ -52,7 +52,7 @@ Log::info($searchDirs, "locale");
 // get messages from search directories
 $allMessages = array();
 foreach ($searchDirs as $searchDir) {
-  $allMessages = array_merge($allMessages, I18nUtil::getMessages($searchDir, $exclude, "/\.php$|\.js$|\.html$/"));
+  $allMessages = array_merge($allMessages, I18nUtil::getMessages($searchDir, $exclude, "/\.php$|\.js$|\.html$|\.tpl$/"));
 }
 
 foreach ($languages as $language) {
