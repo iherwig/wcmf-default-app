@@ -15,16 +15,14 @@ class EventListener {
    * Constructor
    */
   public function __construct() {
-    // listen to persistence events
     ObjectFactory::getInstance('eventManager')->addListener(PersistenceEvent::NAME,
       array($this, 'persisted'));
-    register_shutdown_function(array($this, 'shutdown'));
   }
 
   /**
-   * Shutdown listener
+   * Destructor
    */
-  public function shutdown() {
+  public function __destruct() {
     ObjectFactory::getInstance('eventManager')->removeListener(PersistenceEvent::NAME,
       array($this, 'persisted'));
   }
