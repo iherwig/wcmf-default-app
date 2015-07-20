@@ -81,23 +81,6 @@ class EntityBase extends EntityBaseBase {
   protected function getInitialSortkey() {
     return $this->getOID()->getFirstId();
   }
-
-  /**
-   * Get the object's children to display in given stage
-   * @param role The children's role
-   * @param minPublish The minimum stage value
-   * @return Array of Node instances
-   */
-  public function getChildrenForStage($role, $minPublish) {
-    $children = array();
-    $childrenAll = $this->getValue($role);
-    for ($i=0, $count=sizeof($childrenAll); $i<$count; $i++) {
-      if ($childrenAll[$i]->getValue('stage') >= $minPublish) {
-        $children[] = $childrenAll[$i];
-  }
-  }
-    return $children;
-  }
 // PROTECTED REGION END
 }
 ?>

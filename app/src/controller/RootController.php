@@ -39,8 +39,8 @@ class RootController extends Controller {
     $response = $this->getResponse();
 
     // check for authenticated user
-    $permissionManager = ObjectFactory::getInstance('permissionManager');
-    $isLoggedIn = !($permissionManager->getAuthUser() instanceof AnonymousUser);
+    $session = ObjectFactory::getInstance('session');
+    $isLoggedIn = !($session->getAuthUser() instanceof AnonymousUser);
 
     // get configuration values
     $config = ObjectFactory::getConfigurationInstance();
