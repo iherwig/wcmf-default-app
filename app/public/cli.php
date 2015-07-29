@@ -52,8 +52,8 @@ if ($numArguments == 2) {
 }
 
 // initialize the remote application
-$application = new Application();
-$application->initialize('config/', 'config.ini', 'wcmf\application\controller\LoginController', '', 'login');
+$application = new Application('config/', 'config.ini');
+$application->initialize('wcmf\application\controller\LoginController', '', 'login');
 
 // process the requested action
 $serializedRequest = base64_decode($arguments[0]);

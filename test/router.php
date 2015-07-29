@@ -18,10 +18,10 @@ if (!preg_match('/^\/$|^\/\?/', $requestedResource) || is_file(WCMF_BASE.$reques
 else {
   require_once(WCMF_BASE."/vendor/autoload.php");
 
-  $application = new Application();
+  $application = new Application(WCMF_BASE.'app/config/', 'config.ini');
   try {
     // initialize the application
-    $request = $application->initialize(WCMF_BASE.'app/config/', 'config.ini', '', '', 'cms');
+    $request = $application->initialize('', '', 'cms');
 
     // override connection settings in order to use testing db
     $config = ObjectFactory::getConfigurationInstance();
