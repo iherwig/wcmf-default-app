@@ -181,7 +181,7 @@ function(
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name);
                                 // intentionally !=
-                                if (widgetValue != entityValue) {
+                                if (this.normalizeForComparison(widgetValue) != this.normalizeForComparison(entityValue)) {
                                     this.setModified(true);
                                 }
                             }, attributeWidget)));
@@ -400,6 +400,10 @@ function(
 
         canDelete: function() {
             return !this.isNew && this.permissions[Model.removeDummyOid(this.entity.get('oid'))+'??delete'] === true;
+        },
+
+        normalizeForComparison: function(value) {
+          return !value ? null : value;
         },
 
         _save: function(e) {
