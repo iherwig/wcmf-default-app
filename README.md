@@ -3,10 +3,10 @@ wcmf-default-app
 
 Dojo based default application for the [wCMF](https://github.com/iherwig/wcmf) web application framework
 
-[![Build Status](https://img.shields.io/travis/iherwig/wcmf-default-app.svg?style=flat-square)](https://travis-ci.org/iherwig/wcmf)
+[![Build Status](https://img.shields.io/travis/iherwig/wcmf-default-app.svg?style=flat-square)](https://travis-ci.org/iherwig/wcmf-default-app)
 [![GitHub license](https://img.shields.io/github/license/iherwig/wcmf-default-app.svg?style=flat-square)]()
-<!--[![Packagist Downloads](https://img.shields.io/packagist/dm/wcmf/wcmf-default-app.svg?style=flat-square)](https://packagist.org/packages/wcmf/wcmf)-->
-<!--[![Packagist Version](https://img.shields.io/packagist/v/wcmf/wcmf-default-app.svg?style=flat-square)](https://packagist.org/packages/wcmf/wcmf)-->
+<!--[![Packagist Downloads](https://img.shields.io/packagist/dm/wcmf/wcmf-default-app.svg?style=flat-square)](https://packagist.org/packages/wcmf/wcmf-default-app)-->
+<!--[![Packagist Version](https://img.shields.io/packagist/v/wcmf/wcmf-default-app.svg?style=flat-square)](https://packagist.org/packages/wcmf/wcmf-default-app)-->
 
 ### Getting Started
 
