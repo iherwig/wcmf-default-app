@@ -39,7 +39,7 @@ function(
         templateString: template,
         intermediateChanges: true,
         inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: {},
+        entity: null,
 
         spinnerNode: null,
 

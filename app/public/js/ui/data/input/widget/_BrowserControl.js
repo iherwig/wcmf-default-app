@@ -27,7 +27,7 @@ function(
     return declare([ContentPane, _HelpMixin, _AttributeWidgetMixin], {
 
         inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: {},
+        entity: null,
 
         callbackName: null,
         browserUrl: null,

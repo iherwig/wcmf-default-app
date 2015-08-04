@@ -39,7 +39,7 @@ class RootController extends Controller {
     $response = $this->getResponse();
 
     // check for authenticated user
-    $session = ObjectFactory::getInstance('session');
+    $session = $this->getInstance('session');
     $isLoggedIn = !($session->getAuthUser() instanceof AnonymousUser);
 
     // get configuration values
@@ -47,14 +47,14 @@ class RootController extends Controller {
     $appTitle = $config->getValue('title', 'application');
     $appColor = $config->getValue('color', 'application');
     $rootTypes = $config->getValue('rootTypes', 'application');
-    $uiLanguage = $config->getValue('language', 'application');
+    $uiLanguage = $config->getValue('language', 'message');
     $defaultLanguage = $config->getValue('defaultLanguage', 'localization');
     $languages = $config->getSection('languages');
     $mediaAbsPath = $config->getDirectoryValue('uploadDir', 'media');
     $inputTypes = $config->getSection('inputTypes');
     $displayTypes = $config->getSection('displayTypes');
 
-    $principalFactory = ObjectFactory::getInstance('principalFactory');
+    $principalFactory = $this->getInstance('principalFactory');
     if ($principalFactory instanceof DefaultPrincipalFactory) {
       $roleType = $config->getValue('roleType', 'principalFactory');
       $userType = $config->getValue('userType', 'principalFactory');

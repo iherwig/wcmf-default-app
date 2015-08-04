@@ -22,7 +22,7 @@ function(
         liveUpdate: true,
         animatePoint: false,
         inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: {},
+        entity: null,
 
         constructor: function(args) {
             declare.safeMixin(this, args);

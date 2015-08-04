@@ -40,7 +40,7 @@ function(
         intermediateChanges: true,
 
         inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: {},
+        entity: null,
 
         multiValued: true,
 

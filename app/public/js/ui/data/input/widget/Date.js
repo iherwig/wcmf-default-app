@@ -23,7 +23,7 @@ function(
         intermediateChanges: true,
         hasDownArrow: false,
         inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: {},
+        entity: null,
 
         dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd', locale: appConfig.uiLanguage},
 
