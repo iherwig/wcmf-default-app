@@ -111,7 +111,7 @@ define([
                 this.entity.setDefaults();
                 this.entity.setState("new");
                 this.buildForm();
-                this.setTitle(this.title+" - "+Dict.translate("New %0%",
+                this.setTitle(this.title+" - "+Dict.translate("New <em>%0%</em>",
                         [Dict.translate(this.type)]));
             }
 
@@ -127,7 +127,7 @@ define([
                 var deferred = new Deferred();
                 new ConfirmDlg({
                     title: Dict.translate("Confirm Leave Page"),
-                    message: Dict.translate("'%0%' has unsaved changes. Leaving the page will discard these. Do you want to proceed?",
+                    message: Dict.translate("<em>%0%</em> has unsaved changes. Leaving the page will discard these. Do you want to proceed?",
                         [this.typeClass.getDisplayValue(this.entity)]),
                     okCallback: lang.hitch(this, function(dlg) {
                         deferred.resolve(true);
@@ -173,7 +173,7 @@ define([
                     // error
                     this.showNotification({
                         type: "error",
-                        message: Dict.translate("Detail view class for type '%0%' not found.", [this.type])
+                        message: Dict.translate("Detail view class for type <em>%0%</em> not found.", [this.type])
                     });
                 }
             }));

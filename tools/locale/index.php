@@ -29,13 +29,15 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\util\I18nUtil;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('../log4php.php');
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
+$logger = $logManager->getLogger("locale");
 
 // get configuration from file
 $config = new InifileConfiguration('./');
@@ -47,7 +49,7 @@ $localeDir = $config->getDirectoryValue("localeDir", "application");
 $searchDirs = $config->getDirectoryValue("searchDirs", "i18n");
 $exclude = $config->getValue("exclude", "i18n");
 $languages = $config->getValue("languages", "i18n");
-Log::info($searchDirs, "locale");
+$logger->info($searchDirs);
 
 // get messages from search directories
 $allMessages = array();
@@ -78,7 +80,7 @@ foreach ($languages as $language) {
   }
   $messages = natcaseksort($messages);
   foreach ($messages as $message => $attributes) {
-    Log::info($language." ".$message." = ".$attributes['translation']." [".$attributes['files']."]", "locale");
+    $logger->info($language." ".$message." = ".$attributes['translation']." [".$attributes['files']."]");
   }
 
   I18nUtil::createPHPLanguageFile($language, $messages);

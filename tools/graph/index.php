@@ -29,14 +29,16 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\model\output\DotOutputStrategy;
 use wcmf\lib\model\visitor\OutputVisitor;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('../log4php.php');
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
+$logger = $logManager->getLogger("graph");
 
 // get configuration from file
 $configPath = realpath(WCMF_BASE.'app/config/').'/';
@@ -51,9 +53,9 @@ $rootTypes = $config->getValue('rootTypes', 'application');
 if (is_array($rootTypes)) {
   $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
   foreach($rootTypes as $rootType) {
-    Log::info("Getting oids for: ".$rootType, "graph");
+    $logger->info("Getting oids for: ".$rootType);
     $oidsTmp = $persistenceFacade->getOIDs($rootType);
-    Log::info("Found: ".sizeof($oidsTmp), "graph");
+    $logger->info("Found: ".sizeof($oidsTmp));
     $oids = array_merge($oids, $oidsTmp);
   }
 }
@@ -70,8 +72,8 @@ $filename = "graph.dot";
 $os = new DotOutputStrategy($filename);
 $ov = new OutputVisitor($os);
 $ov->startArray($nodes);
-Log::info("Created file: <a href='".$filename."'>".$filename."</a>", "graph");
-Log::info("Use dot to create image: dot -Tpng ".$filename." > graph.png", "graph");
+$logger->info("Created file: <a href='".$filename."'>".$filename."</a>");
+$logger->info("Use dot to create image: dot -Tpng ".$filename." > graph.png");
 ?>
           </pre>
         </section>

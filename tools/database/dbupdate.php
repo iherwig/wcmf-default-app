@@ -15,15 +15,18 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 use \Exception;
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\util\DBUtil;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('log4php.php');
-Log::info("updating wCMF database tables...", "dbupdate");
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', 'log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
+$logger = $logManager->getLogger("dbupdate");
+
+$logger->info("updating wCMF database tables...");
 
 // get configuration from file
 $configPath = realpath(WCMF_BASE.'app/config/').'/';
@@ -79,7 +82,7 @@ foreach($lines as $line) {
 // process table definitions
 $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 foreach ($tables as $tableDef) {
-  Log::info(("processing table ".$tableDef['name']."..."), "dbupdate");
+  $logger->info(("processing table ".$tableDef['name']."..."));
   $mapper = $persistenceFacade->getMapper($tableDef['entityType']);
   $connection = $mapper->getConnection();
   $connection->beginTransaction();
@@ -108,7 +111,7 @@ foreach ($tables as $tableDef) {
   $connection->commit();
 }
 
-Log::info("done.", "dbupdate");
+$logger->info("done.");
 
 
 /**
@@ -117,6 +120,7 @@ Log::info("done.", "dbupdate");
  * @return True/False
  */
 function ensureDatabases() {
+  global $logger;
   $createdDatabases = array();
   // check all initparams sections for database connections
   $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
@@ -127,7 +131,7 @@ function ensureDatabases() {
       if (strtolower($connectionParams['dbType']) === 'mysql') {
         $dbKey = join(':', array_values($connectionParams));
         if (!in_array($dbKey, $createdDatabases)) {
-          Log::info('preparing database '.$connectionParams['dbName'], "dbupdate");
+          $logger->info('preparing database '.$connectionParams['dbName']);
           DBUtil::createDatabase(
                   $connectionParams['dbName'],
                   $connectionParams['dbHostName'],
@@ -148,6 +152,7 @@ function ensureDatabases() {
  * @return True/False
  */
 function ensureUpdateTable($connection) {
+  global $logger;
   try {
     $connection->query('SELECT count(*) FROM dbupdate');
   }
@@ -158,7 +163,7 @@ function ensureUpdateTable($connection) {
                                 '`table` VARCHAR(255), `column` VARCHAR(255), `updated` DATETIME, PRIMARY KEY (`table_id`, `column_id`, `type`)) ENGINE=MyISAM');
     }
     catch (Exception $e) {
-      Log::error('Error creating update table '.$e->getMessage(), "dbupdate");
+      $logger->error('Error creating update table '.$e->getMessage());
       return false;
     }
   }
@@ -174,6 +179,7 @@ function ensureUpdateTable($connection) {
  * @return An array with keys 'table' and 'column' or null if not stored
  */
 function getOldValue($connection, $tableId, $columnId, $type) {
+  global $logger;
   $result = null;
   if ($type == 'column') {
     // selection for columns
@@ -204,6 +210,7 @@ function getOldValue($connection, $tableId, $columnId, $type) {
  * @param column The column name
  */
 function updateValue($connection, $tableId, $columnId, $type, $table, $column) {
+  global $logger;
   $oldValue = getOldValue($connection, $tableId, $columnId, $type);
   $result = false;
   try {
@@ -217,7 +224,7 @@ function updateValue($connection, $tableId, $columnId, $type, $table, $column) {
     }
   }
   catch (Exception $e) {
-    Log::error('Error inserting/updating entry '.$e->getMessage(), "dbupdate");
+    $logger->error('Error inserting/updating entry '.$e->getMessage());
   }
 }
 
@@ -227,6 +234,7 @@ function updateValue($connection, $tableId, $columnId, $type, $table, $column) {
  * @param tableDef The table definition array as provided by processTableDef
  */
 function updateEntry($connection, $tableDef) {
+  global $logger;
   updateValue($connection, $tableDef['id'], '-', 'table', $tableDef['name'], '-');
   foreach ($tableDef['columns'] as $columnDef) {
     if ($columnDef['id']) {
@@ -241,13 +249,14 @@ function updateEntry($connection, $tableDef) {
  * @param tableDef The table definition array as provided by processTableDef
  */
 function createTable($connection, $tableDef) {
-  Log::info("> create table '".$tableDef['name']."'", "dbupdate");
+  global $logger;
+  $logger->info("> create table '".$tableDef['name']."'");
   $sql = $tableDef['create'];
   try {
     $connection->query($sql);
   }
   catch (Exception $e) {
-    Log::error('Error creating table '.$e->getMessage()."\n".$sql, "dbupdate");
+    $logger->error('Error creating table '.$e->getMessage()."\n".$sql);
   }
 }
 
@@ -258,13 +267,14 @@ function createTable($connection, $tableDef) {
  * @param name The new name
  */
 function alterTable($connection, $oldName, $name) {
-  Log::info("> alter table '".$name."'", "dbupdate");
+  global $logger;
+  $logger->info("> alter table '".$name."'");
   $sql = 'ALTER TABLE `'.$oldName.'` RENAME `'.$name.'`';
   try {
     $connection->query($sql);
   }
   catch (Exception $e) {
-    Log::error('Error altering table '.$e->getMessage()."\n".$sql, "dbupdate");
+    $logger->error('Error altering table '.$e->getMessage()."\n".$sql);
   }
 }
 
@@ -275,13 +285,14 @@ function alterTable($connection, $oldName, $name) {
  * @param columnDef An associative array with keys 'name' and 'type'
  */
 function createColumn($connection, $table, $columnDef) {
-  Log::info("> create column '".$table.".".$columnDef['name'], "dbupdate");
+  global $logger;
+  $logger->info("> create column '".$table.".".$columnDef['name']);
   $sql = 'ALTER TABLE `'.$table.'` ADD `'.$columnDef['name'].'` '.$columnDef['type'];
   try {
     $connection->query($sql);
   }
   catch (Exception $e) {
-    Log::error('Error creating column '.$e->getMessage()."\n".$sql, "dbupdate");
+    $logger->error('Error creating column '.$e->getMessage()."\n".$sql);
   }
 }
 
@@ -293,13 +304,14 @@ function createColumn($connection, $table, $columnDef) {
  * @param columnDef An associative array with keys 'name' and 'type'
  */
 function alterColumn(&$connection, $table, $oldColumnDef, $columnDef) {
-  Log::info("> alter column '".$table.".".$columnDef['name'], "dbupdate");
+  global $logger;
+  $logger->info("> alter column '".$table.".".$columnDef['name']);
   $sql = 'ALTER TABLE `'.$table.'` CHANGE `'.$oldColumnDef['name'].'` `'.$columnDef['name'].'` '.$columnDef['type'];
   try {
     $connection->query($sql);
   }
   catch (Exception $e) {
-    Log::error('Error altering column '.$e->getMessage()."\n".$sql, "dbupdate");
+    $logger->error('Error altering column '.$e->getMessage()."\n".$sql);
   }
 }
 
@@ -310,8 +322,9 @@ function alterColumn(&$connection, $table, $oldColumnDef, $columnDef) {
  * @param columnDefs The column definitions as provided by conncetion->MetaColumns
  */
 function updateColumns($connection, $tableDef, $oldColumnDefs) {
+  global $logger;
   foreach ($tableDef['columns'] as $columnDef) {
-    Log::debug("> process column '".$columnDef['name'], "dbupdate");
+    $logger->debug("> process column '".$columnDef['name']);
     $oldValue = getOldValue($connection, $tableDef['id'], $columnDef['id'], 'column');
     if ($oldValue) {
       $oldColumnDef = isset($oldColumnDefs[$oldValue['column']]) ? $oldColumnDefs[$oldValue['column']] : null;
@@ -350,6 +363,7 @@ function updateColumns($connection, $tableDef, $oldColumnDefs) {
  * Extract table information from a sql command string
  */
 function processTableDef($tableDef, &$tables) {
+  global $logger;
   preg_match('/CREATE\s+TABLE\s+`(.*?)`.+entityType=(.*?)\s+tableId=(.*?)\s+\((.*)\)/s', $tableDef, $matches);
   $tableName = $matches[1];
   $entityType = $matches[2];
@@ -387,8 +401,8 @@ function processTableDef($tableDef, &$tables) {
   }
   $tables[$tableName]['pks'] = $pks;
   $tables[$tableName]['columns'] = $columns;
-  Log::debug("processed table: '".$tableName."'", "dbupdate");
-  Log::debug($tables[$tableName]['columns'], "dbupdate");
+  $logger->debug("processed table: '".$tableName."'");
+  $logger->debug($tables[$tableName]['columns']);
 }
 
 /**
@@ -397,6 +411,7 @@ function processTableDef($tableDef, &$tables) {
  * associative arrays with keys 'Field', 'Type', 'Null'[YES|NO], 'Key' [empty|PRI], 'Default', 'Extra' as values
  */
 function getMetaData(&$connection, $table) {
+  global $logger;
   $result = array();
   try {
     $columns = $connection->query('SHOW COLUMNS FROM `'.$table.'`', PDO::FETCH_ASSOC);

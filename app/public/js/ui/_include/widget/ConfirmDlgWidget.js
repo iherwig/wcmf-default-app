@@ -9,8 +9,8 @@ define([
      * Modal confirmation dialog. Usage:
      * @code
      * new ConfirmDlg({
-     *      title: "Confirm Object Deletion",
-     *      message: "Do you really want to delete <em>"+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+"</em> ?",
+     *      title: Dict.translate("Confirm Object Deletion"),
+     *      message: Dict.translate("Do you really want to delete <em>%0%</em> ?", [Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)]),
      *      okCallback: function() {
      *          // will be called when OK button is clicked
      *          var deferred = new Deferred();

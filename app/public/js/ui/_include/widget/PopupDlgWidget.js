@@ -35,8 +35,8 @@ define([
      * Modal popup dialog. Usage:
      * @code
      * new PopupDlg({
-     *      title: "Confirm Object Deletion",
-     *      message: "Do you really want to delete <em>"+Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)+"</em> ?",
+     *      title: Dict.translate("Confirm Object Deletion"),
+     *      message: Dict.translate("Do you really want to delete <em>%0%</em> ?", [Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)]),
      *      contentWidget: myTextBox, // optional, will be set below message
      *      okCallback: function() {
      *          // will be called when OK button is clicked

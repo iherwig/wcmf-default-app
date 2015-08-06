@@ -8,13 +8,14 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\security\principal\PasswordService;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('../log4php.php');
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
 
 // get configuration from file
 $configPath = realpath(WCMF_BASE.'app/config/').'/';

@@ -40,7 +40,7 @@ define([
             return new ObjectSelectDlg({
                 type: this.relation.type,
                 title: Dict.translate("Choose Objects"),
-                message: Dict.translate("Select '%0%' objects, you want to link to '%1%'",
+                message: Dict.translate("Select <em>%0%</em> objects, you want to link to <em>%1%</em>",
                     [Dict.translate(this.relation.type), Model.getTypeFromOid(this.source.get('oid')).getDisplayValue(this.source)]),
                 okCallback: lang.hitch(this, function(dlg) {
                     var store = RelationStore.getStore(this.source.get('oid'), this.relation.name);

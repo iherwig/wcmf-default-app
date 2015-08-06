@@ -55,7 +55,7 @@ define([
             lang.mixin(elfinderConfig, {
                 lang: appConfig.uiLanguage,
                 url: appConfig.backendUrl+'?action=browseMedia&directory='+directory,
-                rememberLastDir: false,
+                rememberLastDir: true,
                 resizable: false,
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);

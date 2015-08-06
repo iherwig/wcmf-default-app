@@ -456,8 +456,8 @@ function(
                             this.attributeWidgets[i].setDirty(false);
                         }
 
-                        var message = this.isNew ? Dict.translate("'%0%' was successfully created", [this.typeClass.getDisplayValue(this.entity)]) :
-                                Dict.translate("'%0%' was successfully updated", [this.typeClass.getDisplayValue(this.entity)]);
+                        var message = this.isNew ? Dict.translate("<em>%0%</em> was successfully created", [this.typeClass.getDisplayValue(this.entity)]) :
+                                Dict.translate("<em>%0%</em> was successfully updated", [this.typeClass.getDisplayValue(this.entity)]);
                         this.showNotification({
                             type: "ok",
                             message: message,
@@ -557,8 +557,8 @@ function(
             var displayValue = this.typeClass.getDisplayValue(this.entity);
             this.showNotification({
                 type: "process",
-                message: this.isLocked ? Dict.translate("Unlocking '%0%'", [displayValue]) :
-                        Dict.translate("Locking '%0%'", [displayValue])
+                message: this.isLocked ? Dict.translate("Unlocking <em>%0%</em>", [displayValue]) :
+                        Dict.translate("Locking <em>%0%</em>", [displayValue])
             });
             new Lock({
                 action: this.isLocked ? "unlock" : "lock",
@@ -569,8 +569,8 @@ function(
                     // success
                     this.showNotification({
                         type: "ok",
-                        message: this.isLocked ? Dict.translate("'%0%' was successfully unlocked", [displayValue]) :
-                                Dict.translate("'%0%' was successfully locked", [displayValue]),
+                        message: this.isLocked ? Dict.translate("<em>%0%</em> was successfully unlocked", [displayValue]) :
+                                Dict.translate("<em>%0%</em> was successfully locked", [displayValue]),
                         fadeOut: true
                     });
                     this.setLockState(!this.isLocked, true);
@@ -595,7 +595,7 @@ function(
             var displayValue = this.typeClass.getDisplayValue(this.entity);
             new PermissionDlg({
                 oid: this.entity.get('oid'),
-                message: Dict.translate("Permissions for '%0%'", [displayValue])
+                message: Dict.translate("Permissions for <em>%0%</em>", [displayValue])
             }).show();
         }
     });

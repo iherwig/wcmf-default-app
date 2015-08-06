@@ -30,13 +30,15 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('../log4php.php');
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
+$logger = $logManager->getLogger("move");
 
 // get configuration from file
 $configPath = realpath(WCMF_BASE.'app/config/').'/';
@@ -51,7 +53,7 @@ $toolConfig = $config->getSection("move", true);
 $locations = $config->getSection("locations", true);
 
 $deleteEmptyFolders = ($toolConfig['deleteEmptyFolders'] == 1);
-Log::info($deleteEmptyFolders, "move");
+$logger->info($deleteEmptyFolders);
 
 // process locations
 foreach ($locations as $source => $target) {
@@ -95,6 +97,7 @@ function isDirName($path) {
  * deleted or not (default: false)
  */
 function relocate($source, $target, $fileBasePath, $dbBasePath, $dbParams, $deleteEmptyFolders=false) {
+  global $logger;
   $fileUtil = new FileUtil();
 
   // collect files first
@@ -113,7 +116,7 @@ function relocate($source, $target, $fileBasePath, $dbBasePath, $dbParams, $dele
     }
   }
   else {
-    Log::error($source." does not exist", "move");
+    $logger->error($source." does not exist");
   }
 
   // actually move
@@ -125,7 +128,7 @@ function relocate($source, $target, $fileBasePath, $dbBasePath, $dbParams, $dele
       replaceInDatabase($dbBasePath.urldecode($source), $dbBasePath.$newFile, $dbParams);
     }
     else {
-      Log::error("Failed to move ".$source, "move");
+      $logger->error("Failed to move ".$source);
     }
   }
 }
@@ -141,6 +144,7 @@ function relocate($source, $target, $fileBasePath, $dbBasePath, $dbParams, $dele
  * @return The new location of the file or null, on failure
  */
 function moveFile($source, $target, $basePath, $deleteEmptyFolders=false) {
+  global $logger;
   $result = null;
   $fileUtil = new FileUtil();
 
@@ -151,7 +155,7 @@ function moveFile($source, $target, $basePath, $deleteEmptyFolders=false) {
 
   $sourceFile = $basePath.$source;
   $targetFile = $basePath.$target;
-  Log::info("move file: ".$sourceFile." -> ".$targetFile, "move");
+  $logger->info("move file: ".$sourceFile." -> ".$targetFile);
 
   // create the target directory if not existing
   $targetDir = dirname($targetFile);
@@ -169,7 +173,7 @@ function moveFile($source, $target, $basePath, $deleteEmptyFolders=false) {
   if ($deleteEmptyFolders) {
     $sourceDir = dirname($sourceFile);
     if (sizeof($fileUtil->getFiles($sourceDir, '/./', true, true)) == 0) {
-      Log::info("delete directory: ".$sourceDir, "move");
+      $logger->info("delete directory: ".$sourceDir);
       rmdir($sourceDir);
     }
   }
@@ -183,7 +187,8 @@ function moveFile($source, $target, $basePath, $deleteEmptyFolders=false) {
  * @param newStr String to replace with
  */
 function replaceInDatabase($oldStr, $newStr, $dbParams) {
-  Log::info("replace in database: ".$oldStr." -> ".$newStr, "move");
+  global $logger;
+  $logger->info("replace in database: ".$oldStr." -> ".$newStr);
 
   // Connect to database server
   mysql_connect(
@@ -200,22 +205,22 @@ function replaceInDatabase($oldStr, $newStr, $dbParams) {
   $tables_result = mysql_query($sql);
 
   if (!$tables_result) {
-    Log::error("Database error, could not list tables\nMySQL error: ".mysql_error(), "move");
+    $logger->error("Database error, could not list tables\nMySQL error: ".mysql_error());
     exit;
   }
 
-  Log::debug("In these fields '$oldStr' have been replaced with '$newStr'", "move");
+  $logger->debug("In these fields '$oldStr' have been replaced with '$newStr'");
   while ($table = mysql_fetch_row($tables_result)) {
-    Log::debug("Table: ".$table[0], "move");
+    $logger->debug("Table: ".$table[0]);
     $fields_result = mysql_query("SHOW COLUMNS FROM ".$table[0]);
     if (!$fields_result) {
-      Log::error("Could not run query: ".mysql_error(), "move");
+      $logger->error("Could not run query: ".mysql_error());
       exit;
     }
     if (mysql_num_rows($fields_result) > 0) {
       while ($field = mysql_fetch_assoc($fields_result)) {
         if (stripos($field['Type'], "VARCHAR") !== false || stripos($field['Type'], "TEXT") !== false) {
-          Log::debug("  ".$field['Field'], "move");
+          $logger->debug("  ".$field['Field']);
           $sql = "UPDATE ".$table[0]." SET ".$field['Field']." = replace(".$field['Field'].", '$oldStr', '$newStr')";
           mysql_query($sql);
         }

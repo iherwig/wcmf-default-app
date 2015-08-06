@@ -30,7 +30,7 @@ define([
             var displayValue = typeClass.getDisplayValue(entity);
             new PermissionDlg({
                 oid: entity.get('oid'),
-                message: Dict.translate("Permissions for '%0%'", [displayValue])
+                message: Dict.translate("Permissions for <em>%0%</em>", [displayValue])
             }).show();
 
         }

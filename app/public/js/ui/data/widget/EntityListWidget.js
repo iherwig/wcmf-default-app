@@ -161,14 +161,14 @@ function(
                     init: lang.hitch(this, function(data) {
                         this.showNotification({
                             type: "process",
-                            message: Dict.translate("Copying '%0%'", [this.typeClass.getDisplayValue(data)])
+                            message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(data)])
                         });
                     }),
                     callback: lang.hitch(this, function(result) {
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("'%0%' was successfully copied", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(result)]),
                             fadeOut: true
                         });
                         this.gridWidget.refresh();
@@ -190,7 +190,7 @@ function(
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("'%0%' was successfully deleted", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(result)]),
                             fadeOut: true
                         });
                     }),

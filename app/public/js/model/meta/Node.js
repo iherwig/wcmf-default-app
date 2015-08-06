@@ -134,7 +134,7 @@ define([
             var type = Model.getTypeFromOid(oid);
             if (type) {
                 if (Model.isDummyOid(oid)) {
-                    result = Dict.translate("New %0%",
+                    result = Dict.translate("New <em>%0%</em>",
                         [Dict.translate(Model.getSimpleTypeName(type.typeName))]);
                 }
                 else {

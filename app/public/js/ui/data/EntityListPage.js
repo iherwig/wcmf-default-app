@@ -81,7 +81,7 @@ define([
                     // error
                     this.showNotification({
                         type: "error",
-                        message: Dict.translate("List view class for type '%0%' not found.", [this.type])
+                        message: Dict.translate("List view class for type <em>%0%</em> not found.", [this.type])
                     });
                 }
             }));

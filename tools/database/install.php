@@ -15,7 +15,7 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 use \Exception;
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
-use wcmf\lib\core\Log;
+use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\BuildDepth;
@@ -24,8 +24,11 @@ use wcmf\lib\util\DBUtil;
 
 new ClassLoader(WCMF_BASE);
 
-Log::configure('log4php.php');
-Log::info("initializing wCMF database tables...", "install");
+$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', 'log4php.php'));
+ObjectFactory::registerInstance('logManager', $logManager);
+$logger = $logManager->getLogger("install");
+
+$logger->info("initializing wCMF database tables...");
 
 // get configuration from file
 $configPath = realpath(WCMF_BASE.'app/config/').'/';
@@ -55,7 +58,7 @@ $transaction->begin();
 try {
   // initialize database sequence, create default user/role
   if(sizeof($persistenceFacade->getOIDs("DBSequence")) == 0) {
-    Log::info("initializing database sequence...", "install");
+    $logger->info("initializing database sequence...");
     $seq = $persistenceFacade->create("DBSequence", BuildDepth::SINGLE);
     $seq->setValue("id", 1);
   }
@@ -67,13 +70,13 @@ try {
 
     $adminRole = $principalFactory->getRole("administrators");
     if (!$adminRole) {
-      Log::info("creating role with name 'administrators'...", "install");
+      $logger->info("creating role with name 'administrators'...");
       $adminRole = $persistenceFacade->create($roleType);
       $adminRole->setName("administrators");
     }
     $adminUser = $principalFactory->getUser("admin");
     if (!$adminUser) {
-      Log::info("creating user with login 'admin' password 'admin'...", "install");
+      $logger->info("creating user with login 'admin' password 'admin'...");
       $adminUser = $persistenceFacade->create($userType);
       $adminUser->setLogin("admin");
       $adminUser->setPassword("admin");
@@ -82,16 +85,16 @@ try {
       }
     }
     if (!$adminUser->hasRole("administrators")) {
-      Log::info("adding user 'admin' to role 'administrators'...", "install");
+      $logger->info("adding user 'admin' to role 'administrators'...");
       $adminUser->addNode($adminRole);
     }
   }
 
   $transaction->commit();
-  Log::info("done.", "install");
+  $logger->info("done.");
 }
 catch (Exception $ex) {
-  Log::error($ex, "install");
+  $logger->error($ex);
   $transaction->rollback();
 }
 ?>
