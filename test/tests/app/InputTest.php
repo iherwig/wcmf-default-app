@@ -23,7 +23,7 @@ class InputTest extends SeleniumTestCase {
     $this->url(self::getAppUrl().'/data/Chapter/~');
     $editor = $this->waitForXpath('//*[starts-with(@id,"cke_uniqName_")]');
     $this->assertTrue($editor !== false);
-    $this->assertRegExp('/New Chapter/i', $this->source());
+    $this->assertRegExp('/New <em>Chapter<\/em>/i', $this->source());
   }
 }
 ?>
