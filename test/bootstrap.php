@@ -18,9 +18,10 @@ register_shutdown_function("cleanup");
 function setup() {
   @unlink('log.txt');
   @unlink(WCMF_BASE.'app/test-db.sq3');
-  FileUtil::emptyDir(WCMF_BASE.'app/cache');
-  FileUtil::emptyDir(WCMF_BASE.'app/log');
-  FileUtil::emptyDir(WCMF_BASE.'app/searchIndex');
+  $fileUtil = new FileUtil();
+  $fileUtil->emptyDir(WCMF_BASE.'app/cache');
+  $fileUtil->emptyDir(WCMF_BASE.'app/log');
+  $fileUtil->emptyDir(WCMF_BASE.'app/searchIndex');
   copy(WCMF_BASE.'../install/tables_sqlite.sql', 'tables_sqlite.sql');
 }
 

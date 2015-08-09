@@ -30,20 +30,10 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FuLx0nSyEeSTpe7Uq_EO2A" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_FuLx03SyEeSTpe7Uq_EO2A" value="#428BCA"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_7QHDQLQ8EeOQ5oJFa1i8cg" name="localeDir" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FIxxgLQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FIxxgbQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_FIy_oLQ9EeOQ5oJFa1i8cg" value="app/locale/"/>
-                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_7TEQoLQ8EeOQ5oJFa1i8cg" name="rootTypes" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H-uq8LQ9EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H-vSALQ9EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_H-wgILQ9EeOQ5oJFa1i8cg" value="{}"/>
-                </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_7WlesLQ8EeOQ5oJFa1i8cg" name="language" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Jj-xgLQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Jj_YkLQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_JkAmsLQ9EeOQ5oJFa1i8cg" value="en"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_eAuLgGdzEeS0cYV-lZk3DA" name="timezone" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_h0kQkGdzEeS0cYV-lZk3DA" value="Europe/Berlin"/>
@@ -70,12 +60,29 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_g2nKgLQ9EeOQ5oJFa1i8cg" name="languageType" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_vBTuoLQ9EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_vBUVsLQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_vBVj0LQ9EeOQ5oJFa1i8cg" value="Language"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_vBVj0LQ9EeOQ5oJFa1i8cg" value="app.src.model.wcmf.Language"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_g5b1ALQ9EeOQ5oJFa1i8cg" name="translationType" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wzAVwLQ9EeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wzA80LQ9EeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_wzCK8LQ9EeOQ5oJFa1i8cg" value="Translation"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_wzCK8LQ9EeOQ5oJFa1i8cg" value="app.src.model.wcmf.Translation"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_6Ex0UDbFEeW4SLkzJtsk6g" name="Message">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_6Ex0UTbFEeW4SLkzJtsk6g" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6Ex0UjbFEeW4SLkzJtsk6g" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6Ex0UzbFEeW4SLkzJtsk6g" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_6Ex0VDbFEeW4SLkzJtsk6g" value="wcmf\lib\i18n\impl\FileMessage"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_6Ex0VTbFEeW4SLkzJtsk6g" name="localeDir" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6Ex0VjbFEeW4SLkzJtsk6g" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6Ex0VzbFEeW4SLkzJtsk6g" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_6Ex0WDbFEeW4SLkzJtsk6g" value="app/locale/"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_6Ex0WTbFEeW4SLkzJtsk6g" name="language" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6Ex0WjbFEeW4SLkzJtsk6g" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6Ex0WzbFEeW4SLkzJtsk6g" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_6Ex0XDbFEeW4SLkzJtsk6g" value="en"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_DKMvgLQ-EeOQ5oJFa1i8cg" name="Search">
@@ -245,11 +252,6 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_iZH3YLRDEeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_iZH3YbRDEeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_iZJFgLRDEeOQ5oJFa1i8cg" value="$typeMapping"/>
-                </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_bL2_cLRDEeOQ5oJFa1i8cg" name="logging" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_kVyYYLRDEeOQ5oJFa1i8cg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_kVy_cLRDEeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_kV1bsLRDEeOQ5oJFa1i8cg" value="false"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_bOdAcLRDEeOQ5oJFa1i8cg" name="logStrategy" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_l5LdwLRDEeOQ5oJFa1i8cg" value="1"/>
