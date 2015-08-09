@@ -17,6 +17,7 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
 use wcmf\lib\core\impl\Log4phpLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
@@ -28,13 +29,15 @@ $configPath = WCMF_BASE.'app/config/';
 
 // setup logging
 $logger = new Log4phpLogger('main', $configPath.'log4php.php');
-$logManager = new LogManager($logger);
-ObjectFactory::registerInstance('logManager', $logManager);
+LogManager::configure($logger);
 
 // setup configuration
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-ObjectFactory::configure($config);
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 // create the application
 $application = new Application();

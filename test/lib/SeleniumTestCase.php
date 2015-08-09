@@ -49,7 +49,7 @@ abstract class SeleniumTestCase extends \PHPUnit_Extensions_Selenium2TestCase {
 
     // override connection settings in order to use testing db
     // path is relative to WCMF_BASE
-    $config = ObjectFactory::getConfigurationInstance();
+    $config = ObjectFactory::getInstance('configuration');
     $config->addConfiguration('../../../test/tests.ini');
 
     // database setup
