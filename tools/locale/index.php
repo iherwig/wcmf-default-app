@@ -23,32 +23,39 @@
 /**
  * This script extracts application messages from calls to Message::get
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\util\I18nUtil;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
-$logger = $logManager->getLogger("locale");
+$configPath = './';
 
-// get configuration from file
-$config = new InifileConfiguration('./');
-$config->addConfiguration('config.ini');
-ObjectFactory::configure($config);
+// setup logging
+$logger = new MonologFileLogger('locale', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 // get config values
-$localeDir = $config->getDirectoryValue("localeDir", "application");
-$searchDirs = $config->getDirectoryValue("searchDirs", "i18n");
-$exclude = $config->getValue("exclude", "i18n");
-$languages = $config->getValue("languages", "i18n");
+$localeDir = $configuration->getDirectoryValue("localeDir", "application");
+$searchDirs = $configuration->getDirectoryValue("searchDirs", "i18n");
+$exclude = $configuration->getValue("exclude", "i18n");
+$languages = $configuration->getValue("languages", "i18n");
 $logger->info($searchDirs);
 
 // get messages from search directories

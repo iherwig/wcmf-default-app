@@ -24,33 +24,39 @@
  * This script moves a given file to another location and updates all references
  * in the database
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
-$logger = $logManager->getLogger("move");
+$configPath = WCMF_BASE.'app/config/';
 
-// get configuration from file
-$configPath = realpath(WCMF_BASE.'app/config/').'/';
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-$config->addConfiguration('../../tools/move-media/config.ini');
-ObjectFactory::configure($config);
+// setup logging
+$logger = new MonologFileLogger('move', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('../../tools/move-media/config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 // get config values
-$dbParams = $config->getSection("database", true);
-$toolConfig = $config->getSection("move", true);
-$locations = $config->getSection("locations", true);
+$dbParams = $configuration->getSection("database", true);
+$toolConfig = $configuration->getSection("move", true);
+$locations = $configuration->getSection("locations", true);
 
 $deleteEmptyFolders = ($toolConfig['deleteEmptyFolders'] == 1);
 $logger->info($deleteEmptyFolders);

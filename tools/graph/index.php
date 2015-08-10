@@ -23,12 +23,14 @@
 /**
  * This script demonstrates how to output an object tree to a dot file
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\model\output\DotOutputStrategy;
@@ -36,22 +38,27 @@ use wcmf\lib\model\visitor\OutputVisitor;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
-$logger = $logManager->getLogger("graph");
+$configPath = WCMF_BASE.'app/config/';
 
-// get configuration from file
-$configPath = realpath(WCMF_BASE.'app/config/').'/';
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-$config->addConfiguration('../../tools/graph/config.ini');
-ObjectFactory::configure($config);
+// setup logging
+$logger = new MonologFileLogger('graph', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('../../tools/graph/config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
+
+$persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 
 // get root oids
 $oids = array();
-$rootTypes = $config->getValue('rootTypes', 'application');
+$rootTypes = $configuration->getValue('rootTypes', 'application');
 if (is_array($rootTypes)) {
-  $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
   foreach($rootTypes as $rootType) {
     $logger->info("Getting oids for: ".$rootType);
     $oidsTmp = $persistenceFacade->getOIDs($rootType);
@@ -61,7 +68,6 @@ if (is_array($rootTypes)) {
 }
 
 // construct tree from root oids
-$persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 $nodes = array();
 foreach($oids as $oid) {
   $nodes[] = $persistenceFacade->load($oid);

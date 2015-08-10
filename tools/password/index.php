@@ -2,26 +2,33 @@
 /**
  * This script converts a word into a wCMF password
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\security\principal\PasswordService;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', '../log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
+$configPath = WCMF_BASE.'app/config/';
 
-// get configuration from file
-$configPath = realpath(WCMF_BASE.'app/config/').'/';
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-ObjectFactory::configure($config);
+// setup logging
+$logger = new MonologFileLogger('password', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 $requestPassword = filter_input(INPUT_GET, 'password');
 $hashedPassword = $requestPassword ? PasswordService::hash($requestPassword) : '';
