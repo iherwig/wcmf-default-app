@@ -5,9 +5,9 @@
  * Manual modifications should be placed inside the protected regions.
  */
 namespace app\src\controller;
+
+use wcmf\lib\presentation\Controller;
 // PROTECTED REGION ID(app/src/controller/RootController.php/Import) ENABLED START
-
-
 use wcmf\lib\config\Configuration;
 use wcmf\lib\config\ConfigurationException;
 use wcmf\lib\core\Session;
@@ -15,7 +15,6 @@ use wcmf\lib\i18n\Localization;
 use wcmf\lib\i18n\Message;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\PersistenceFacade;
-use wcmf\lib\presentation\Controller;
 use wcmf\lib\security\PermissionManager;
 use wcmf\lib\security\principal\impl\AnonymousUser;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
