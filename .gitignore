@@ -6,6 +6,7 @@ app/searchIndex
 app/release
 app/public/media
 app/config/*.ini
+!app/config/logging.ini
 app/public/soap-interface.php
 app/public/js/app/
 !app/public/js/app/src/model/wcmf/RoleClass.js

@@ -8,39 +8,45 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
-use \Exception;
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
+use wcmf\lib\model\mapper\RDBMapper;
 use wcmf\lib\util\DBUtil;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', 'log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
-$logger = $logManager->getLogger("dbupdate");
+$configPath = WCMF_BASE.'app/config/';
+
+// setup logging
+$logger = new MonologFileLogger('dbupdate', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('../../tools/database/config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 $logger->info("updating wCMF database tables...");
-
-// get configuration from file
-$configPath = realpath(WCMF_BASE.'app/config/').'/';
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-$config->addConfiguration('../../tools/database/config.ini');
-ObjectFactory::configure($config);
 
 if (!ensureDatabases()) {
   exit();
 }
 
 // execute custom scripts from the directory 'custom-dbupdate'
-$migrationScriptsDir = $config->getDirectoryValue('migrationScriptsDir', 'installation');
+$migrationScriptsDir = $configuration->getDirectoryValue('migrationScriptsDir', 'installation');
 if (is_dir($migrationScriptsDir)) {
   $sqlScripts = FileUtil::getFiles($migrationScriptsDir, '/[^_]+_.*\.sql$/', true);
   sort($sqlScripts);
@@ -56,7 +62,7 @@ if (is_dir($migrationScriptsDir)) {
 $tables = array();
 $readingTable = false;
 $tableDef = '';
-$lines = file($config->getFileValue('ddlFile', 'installation'));
+$lines = file($configuration->getFileValue('ddlFile', 'installation'));
 foreach($lines as $line) {
   $line = trim($line);
   if(strlen($line) > 0) {
@@ -126,7 +132,7 @@ function ensureDatabases() {
   $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
   foreach ($persistenceFacade->getKnownTypes() as $type) {
     $mapper = $persistenceFacade->getMapper($type);
-    if ($mapper instanceof wcmf\lib\model\mapper\RDBMapper) {
+    if ($mapper instanceof RDBMapper) {
       $connectionParams = $mapper->getConnectionParams();
       if (strtolower($connectionParams['dbType']) === 'mysql') {
         $dbKey = join(':', array_values($connectionParams));
@@ -156,13 +162,13 @@ function ensureUpdateTable($connection) {
   try {
     $connection->query('SELECT count(*) FROM dbupdate');
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     try {
       // the update table does not exist
       $connection->query('CREATE TABLE `dbupdate` (`table_id` VARCHAR(100) NOT NULL, `column_id` VARCHAR(100) NOT NULL, `type` VARCHAR(100) NOT NULL, '.
                                 '`table` VARCHAR(255), `column` VARCHAR(255), `updated` DATETIME, PRIMARY KEY (`table_id`, `column_id`, `type`)) ENGINE=MyISAM');
     }
-    catch (Exception $e) {
+    catch (\Exception $e) {
       $logger->error('Error creating update table '.$e->getMessage());
       return false;
     }
@@ -223,7 +229,7 @@ function updateValue($connection, $tableId, $columnId, $type, $table, $column) {
       $result = $st->execute(array($table, $column, date("Y-m-d H:i:s"), $tableId, $columnId, $type));
     }
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     $logger->error('Error inserting/updating entry '.$e->getMessage());
   }
 }
@@ -255,7 +261,7 @@ function createTable($connection, $tableDef) {
   try {
     $connection->query($sql);
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     $logger->error('Error creating table '.$e->getMessage()."\n".$sql);
   }
 }
@@ -273,7 +279,7 @@ function alterTable($connection, $oldName, $name) {
   try {
     $connection->query($sql);
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     $logger->error('Error altering table '.$e->getMessage()."\n".$sql);
   }
 }
@@ -291,7 +297,7 @@ function createColumn($connection, $table, $columnDef) {
   try {
     $connection->query($sql);
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     $logger->error('Error creating column '.$e->getMessage()."\n".$sql);
   }
 }
@@ -310,7 +316,7 @@ function alterColumn(&$connection, $table, $oldColumnDef, $columnDef) {
   try {
     $connection->query($sql);
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     $logger->error('Error altering column '.$e->getMessage()."\n".$sql);
   }
 }
@@ -419,7 +425,7 @@ function getMetaData(&$connection, $table) {
       $result[$col['Field']] = $col;
     }
   }
-  catch (Exception $e) {
+  catch (\Exception $e) {
     return null;
   }
   return $result;

@@ -9,7 +9,7 @@ define('WCMF_BASE', realpath(dirname(__FILE__).'/../dist').'/');
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
 use wcmf\lib\core\impl\DefaultFactory;
-use wcmf\lib\core\impl\Log4phpLogger;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\presentation\Application;
@@ -26,7 +26,7 @@ else {
   $configPath = WCMF_BASE.'app/config/';
 
   // setup logging
-  $logger = new Log4phpLogger('main', $configPath.'log4php.php');
+  $logger = new MonologFileLogger('main', $configPath.'logging.ini');
   LogManager::configure($logger);
 
   // setup configuration
@@ -46,7 +46,7 @@ else {
     $request = $application->initialize('', '', 'cms');
 
     // override connection settings in order to use testing db
-    $config->addConfiguration('../../../test/tests.ini');
+    $configuration->addConfiguration('../../../test/tests.ini');
 
     // run the application
     $application->run($request);

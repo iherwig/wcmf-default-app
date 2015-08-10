@@ -8,37 +8,43 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
-use \Exception;
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
+use wcmf\lib\core\impl\DefaultFactory;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\BuildDepth;
 use wcmf\lib\security\impl\NullPermissionManager;
+use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\util\DBUtil;
 
 new ClassLoader(WCMF_BASE);
 
-$logManager = new LogManager(new \wcmf\lib\core\impl\Log4phpLogger('wcmf', 'log4php.php'));
-ObjectFactory::registerInstance('logManager', $logManager);
-$logger = $logManager->getLogger("install");
+$configPath = WCMF_BASE.'app/config/';
+
+// setup logging
+$logger = new MonologFileLogger('install', '../logging.ini');
+LogManager::configure($logger);
+
+// setup configuration
+$configuration = new InifileConfiguration($configPath);
+$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('../../tools/database/config.ini');
+
+// setup object factory
+ObjectFactory::configure(new DefaultFactory($configuration));
+ObjectFactory::registerInstance('configuration', $configuration);
 
 $logger->info("initializing wCMF database tables...");
 
-// get configuration from file
-$configPath = realpath(WCMF_BASE.'app/config/').'/';
-$config = new InifileConfiguration($configPath);
-$config->addConfiguration('config.ini');
-$config->addConfiguration('../../tools/database/config.ini');
-ObjectFactory::configure($config);
-
 // execute custom scripts from the directory 'custom-install'
-$installScriptsDir = $config->getDirectoryValue('installScriptsDir', 'installation');
+$installScriptsDir = $configuration->getDirectoryValue('installScriptsDir', 'installation');
 if (is_dir($installScriptsDir)) {
   $sqlScripts = FileUtil::getFiles($installScriptsDir, '/[^_]+_.*\.sql$/', true);
   sort($sqlScripts);
@@ -49,8 +55,6 @@ if (is_dir($installScriptsDir)) {
     DBUtil::executeScript($script, $initSection);
   }
 }
-
-ObjectFactory::registerInstance('permissionManager', new NullPermissionManager());
 
 $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 $transaction = $persistenceFacade->getTransaction();
@@ -64,9 +68,9 @@ try {
   }
 
   $principalFactory = ObjectFactory::getInstance('principalFactory');
-  if ($principalFactory instanceof wcmf\lib\security\principal\impl\DefaultPrincipalFactory) {
-    $roleType = $config->getValue('roleType', 'principalFactory');
-    $userType = $config->getValue('userType', 'principalFactory');
+  if ($principalFactory instanceof DefaultPrincipalFactory) {
+    $roleType = $configuration->getValue('roleType', 'principalFactory');
+    $userType = $configuration->getValue('userType', 'principalFactory');
 
     $adminRole = $principalFactory->getRole("administrators");
     if (!$adminRole) {
@@ -80,7 +84,7 @@ try {
       $adminUser = $persistenceFacade->create($userType);
       $adminUser->setLogin("admin");
       $adminUser->setPassword("admin");
-      if (in_array("admin.ini", $config->getConfigurations())) {
+      if (in_array("admin.ini", $configuration->getConfigurations())) {
         $adminUser->setConfig("admin.ini");
       }
     }
@@ -93,7 +97,7 @@ try {
   $transaction->commit();
   $logger->info("done.");
 }
-catch (Exception $ex) {
+catch (\Exception $ex) {
   $logger->error($ex);
   $transaction->rollback();
 }

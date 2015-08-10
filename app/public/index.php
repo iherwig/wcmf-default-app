@@ -18,7 +18,7 @@ require_once(WCMF_BASE."/vendor/autoload.php");
 use wcmf\lib\config\impl\InifileConfiguration;
 use wcmf\lib\core\ClassLoader;
 use wcmf\lib\core\impl\DefaultFactory;
-use wcmf\lib\core\impl\Log4phpLogger;
+use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\presentation\Application;
@@ -28,7 +28,7 @@ new ClassLoader(WCMF_BASE);
 $configPath = WCMF_BASE.'app/config/';
 
 // setup logging
-$logger = new Log4phpLogger('main', $configPath.'log4php.php');
+$logger = new MonologFileLogger('main', $configPath.'logging.ini');
 LogManager::configure($logger);
 
 // setup configuration
@@ -48,12 +48,13 @@ try {
   // run the application
   $application->run($request);
 }
-catch (\Exception $ex) {
+catch (Exception $ex) {
   try {
     $application->handleException($ex, isset($request) ? $request : null);
   }
-  catch (\Exception $unhandledEx) {
+  catch (Exception $unhandledEx) {
     echo("An unhandled exception occured. Please see log file for details.");
+    var_dump($unhandledEx);
   }
 }
 ?>

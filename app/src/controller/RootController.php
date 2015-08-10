@@ -5,15 +5,22 @@
  * Manual modifications should be placed inside the protected regions.
  */
 namespace app\src\controller;
-
-use wcmf\lib\presentation\Controller;
 // PROTECTED REGION ID(app/src/controller/RootController.php/Import) ENABLED START
+
+
+use wcmf\lib\config\Configuration;
 use wcmf\lib\config\ConfigurationException;
-use wcmf\lib\core\ObjectFactory;
+use wcmf\lib\core\Session;
+use wcmf\lib\i18n\Localization;
+use wcmf\lib\i18n\Message;
 use wcmf\lib\io\FileUtil;
-use wcmf\lib\util\URIUtil;
+use wcmf\lib\persistence\PersistenceFacade;
+use wcmf\lib\presentation\Controller;
+use wcmf\lib\security\PermissionManager;
 use wcmf\lib\security\principal\impl\AnonymousUser;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
+use wcmf\lib\security\principal\PrincipalFactory;
+use wcmf\lib\util\URIUtil;
 // PROTECTED REGION END
 
 /**
@@ -32,6 +39,31 @@ use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
  */
 class RootController extends Controller {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Body) ENABLED START
+  private $_principalFactory = null;
+
+  /**
+   * Constructor
+   * @param $session
+   * @param $persistenceFacade
+   * @param $permissionManager
+   * @param $localization
+   * @param $message
+   * @param $configuration
+   * @param $principalFactory
+   */
+  public function __construct(Session $session,
+          PersistenceFacade $persistenceFacade,
+          PermissionManager $permissionManager,
+          Localization $localization,
+          Message $message,
+          Configuration $configuration,
+          PrincipalFactory $principalFactory) {
+    parent::__construct($session, $persistenceFacade, $permissionManager,
+            $localization, $message, $configuration);
+
+    $this->_principalFactory = $principalFactory;
+  }
+
   /**
    * @see Controller::doExecute()
    */
@@ -39,11 +71,11 @@ class RootController extends Controller {
     $response = $this->getResponse();
 
     // check for authenticated user
-    $session = $this->getInstance('session');
+    $session = $this->getSession();
     $isLoggedIn = !($session->getAuthUser() instanceof AnonymousUser);
 
     // get configuration values
-    $config = ObjectFactory::getConfigurationInstance();
+    $config = $this->getConfiguration();
     $appTitle = $config->getValue('title', 'application');
     $appColor = $config->getValue('color', 'application');
     $rootTypes = $config->getValue('rootTypes', 'application');
@@ -54,8 +86,7 @@ class RootController extends Controller {
     $inputTypes = $config->getSection('inputTypes');
     $displayTypes = $config->getSection('displayTypes');
 
-    $principalFactory = $this->getInstance('principalFactory');
-    if ($principalFactory instanceof DefaultPrincipalFactory) {
+    if ($this->_principalFactory instanceof DefaultPrincipalFactory) {
       $roleType = $config->getValue('roleType', 'principalFactory');
       $userType = $config->getValue('userType', 'principalFactory');
     }
