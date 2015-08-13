@@ -815,6 +815,61 @@
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_aP1y0EHYEeWnT_5Q0apEXg" name="log.ini">
+              <packagedElement xmi:type="uml:Class" xmi:id="_LrimcEHZEeWnT_5Q0apEXg" name="Root">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_LrimcUHZEeWnT_5Q0apEXg" name="level" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LrimckHZEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Lrimc0HZEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_LrimdEHZEeWnT_5Q0apEXg" value="ERROR"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_LrimdUHZEeWnT_5Q0apEXg" name="target" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LrimdkHZEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Lrimd0HZEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_LrimeEHZEeWnT_5Q0apEXg" value="app/log/"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_fDyNgEHZEeWnT_5Q0apEXg" name="Logger">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_n-7jkEHZEeWnT_5Q0apEXg" name=";wcmf\lib\presentation\Controller" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ts3WwEHZEeWnT_5Q0apEXg" value="INFO"/>
+                </ownedAttribute>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_fIqi8EHYEeWnT_5Q0apEXg" name="test.ini">
+              <packagedElement xmi:type="uml:Class" xmi:id="_sh508EHYEeWnT_5Q0apEXg" name="Database">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh508UHYEeWnT_5Q0apEXg" name="dbType" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh508kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh5080HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh509EHYEeWnT_5Q0apEXg" value="sqlite"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh509UHYEeWnT_5Q0apEXg" name="dbHostName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh509kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh5090HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh50-EHYEeWnT_5Q0apEXg" value="127.0.0.1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh50-UHYEeWnT_5Q0apEXg" name="dbName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh50-kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh50-0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh50_EHYEeWnT_5Q0apEXg" value="app/test-db.sq3"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh50_UHYEeWnT_5Q0apEXg" name="dbUserName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh50_kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh50_0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51AEHYEeWnT_5Q0apEXg" value=""/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh51AUHYEeWnT_5Q0apEXg" name="dbPassword" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh51AkHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh51A0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51BEHYEeWnT_5Q0apEXg">
+                    <value xsi:nil="true"/>
+                  </defaultValue>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh51BUHYEeWnT_5Q0apEXg" name="dbCharSet" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh51BkHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh51B0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51CEHYEeWnT_5Q0apEXg" value="utf8"/>
+                </ownedAttribute>
+              </packagedElement>
+            </packagedElement>
           </packagedElement>
         </packagedElement>
         <packagedElement xmi:type="uml:Package" xmi:id="_o5NM8LQGEeOIMOFxCilDfw" name="wcmf">
@@ -1860,4 +1915,7 @@
   <Chronos:ChiValue xmi:id="_nmvoYPT-EeSdk57oe2HXMQ" app_data_type="DATATYPE_ATTRIBUTE|TRANSLATABLE" db_data_type="TEXT" is_editable="true" input_type="ckeditor:{&quot;toolbarSet&quot;:&quot;wcmf&quot;}" base_Property="_njBmAPT-EeSdk57oe2HXMQ"/>
   <Chronos:ChiSystem xmi:id="_2_GakCtFEeWoF5Z7Jotdrw" plattform="wcmf" base_Class="_QM0nECshEeWUuIR_KoweBQ"/>
   <Chronos:ChiSystem xmi:id="_6E03oDbFEeW4SLkzJtsk6g" plattform="wcmf" base_Class="_6Ex0UDbFEeW4SLkzJtsk6g"/>
+  <Chronos:ChiSystem xmi:id="_slxBQEHYEeWnT_5Q0apEXg" plattform="wcmf" config="test.ini" base_Class="_sh508EHYEeWnT_5Q0apEXg"/>
+  <Chronos:ChiSystem xmi:id="_Lrj0kEHZEeWnT_5Q0apEXg" plattform="wcmf" config="log.ini" base_Class="_LrimcEHZEeWnT_5Q0apEXg"/>
+  <Chronos:ChiSystem xmi:id="_fDy0kEHZEeWnT_5Q0apEXg" plattform="wcmf" config="log.ini" base_Class="_fDyNgEHZEeWnT_5Q0apEXg"/>
 </xmi:XMI>

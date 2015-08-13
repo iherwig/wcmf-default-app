@@ -10,7 +10,7 @@
  */
 namespace test\tests\app;
 
-use test\lib\SeleniumTestCase;
+use wcmf\test\lib\SeleniumTestCase;
 
 class LoginTest extends SeleniumTestCase {
 

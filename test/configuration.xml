@@ -10,8 +10,9 @@
   </testsuites>
   <groups>
     <exclude>
-      <!--group>controller</group-->
-      <!--group>performance</group-->
     </exclude>
   </groups>
+  <logging>
+    <log type="testdox-text" target="log/testdox.txt"/>
+  </logging>
 </phpunit>

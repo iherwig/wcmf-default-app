@@ -84,6 +84,12 @@
         <exclude name="olympos//**"/>
         <exclude name="wcmf/asset-installer/**"/>
         <include name="**"/>
+        <include name="wcmf/wcmf/src/wcmf/test/lib/**"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist.dir}/vendor">
+      <fileset dir="${build.base}vendor/">
+        <include name="wcmf/wcmf/src/wcmf/test/lib/**"/>
       </fileset>
     </copy>
     <copy todir="${dist.dir}/${app.name}">
