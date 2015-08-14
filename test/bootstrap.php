@@ -1,5 +1,5 @@
 <?php
-define('WCMF_BASE', realpath(dirname(__FILE__).'/../dist').'/');
+require_once('config.php');
 require_once(WCMF_BASE."/vendor/autoload.php");
 
 use wcmf\lib\core\ClassLoader;

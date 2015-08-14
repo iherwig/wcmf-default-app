@@ -3,7 +3,7 @@
  * Router script for test server
  */
 error_reporting(E_ALL | E_PARSE);
-define('WCMF_BASE', realpath(dirname(__FILE__).'/../dist').'/');
+require_once('config.php');
 
 use wcmf\lib\core\ClassLoader;
 use wcmf\lib\presentation\Application;
