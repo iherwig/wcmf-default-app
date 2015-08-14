@@ -16,7 +16,7 @@ if (is_file(WCMF_BASE.'app/public'.$requestedFile)) {
   return false;
 }
 else {
-  require_once(dirname(WCMF_BASE)."/vendor/autoload.php");
+  require_once(WCMF_BASE.'/vendor/autoload.php');
   new ClassLoader(WCMF_BASE);
 
   TestUtil::initFramework(WCMF_BASE.'app/config/');

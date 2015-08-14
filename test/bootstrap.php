@@ -1,6 +1,6 @@
 <?php
 require_once('config.php');
-require_once(WCMF_BASE."/vendor/autoload.php");
+require_once(WCMF_BASE.'/vendor/autoload.php');
 
 use wcmf\lib\core\ClassLoader;
 use wcmf\lib\io\FileUtil;
