@@ -17,7 +17,7 @@ register_shutdown_function("cleanup");
 function setup() {
   @unlink(WCMF_BASE.'app/test-db.sq3');
   $fileUtil = new FileUtil();
-  $fileUtil->emptyDir('log');
+  $fileUtil->mkdirRec(WCMF_BASE.'app/public');
   $fileUtil->emptyDir(WCMF_BASE.'app/cache');
   $fileUtil->emptyDir(WCMF_BASE.'app/log');
   $fileUtil->emptyDir(WCMF_BASE.'app/searchIndex');

@@ -1,7 +1,6 @@
 <?php
 /**
  * Router script for test server
- * NOTE: we are serving from the dist/ directory
  */
 error_reporting(E_ALL | E_PARSE);
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../dist').'/');
