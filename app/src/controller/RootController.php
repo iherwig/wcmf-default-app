@@ -57,9 +57,8 @@ class RootController extends Controller {
           Message $message,
           Configuration $configuration,
           PrincipalFactory $principalFactory) {
-    parent::__construct($session, $persistenceFacade, $permissionManager,
-            $localization, $message, $configuration);
-
+    parent::__construct($session, $persistenceFacade,
+            $permissionManager, $localization, $message, $configuration);
     $this->_principalFactory = $principalFactory;
   }
 
@@ -74,28 +73,28 @@ class RootController extends Controller {
     $isLoggedIn = !($session->getAuthUser() instanceof AnonymousUser);
 
     // get configuration values
-    $config = $this->getConfiguration();
-    $appTitle = $config->getValue('title', 'application');
-    $appColor = $config->getValue('color', 'application');
-    $rootTypes = $config->getValue('rootTypes', 'application');
-    $uiLanguage = $config->getValue('language', 'message');
-    $defaultLanguage = $config->getValue('defaultLanguage', 'localization');
-    $languages = $config->getSection('languages');
-    $mediaAbsPath = $config->getDirectoryValue('uploadDir', 'media');
-    $inputTypes = $config->getSection('inputTypes');
-    $displayTypes = $config->getSection('displayTypes');
+    $configuration = $this->getConfiguration();
+    $appTitle = $configuration->getValue('title', 'application');
+    $appColor = $configuration->getValue('color', 'application');
+    $rootTypes = $configuration->getValue('rootTypes', 'application');
+    $uiLanguage = $configuration->getValue('language', 'message');
+    $defaultLanguage = $configuration->getValue('defaultLanguage', 'localization');
+    $languages = $configuration->getSection('languages');
+    $mediaAbsPath = $configuration->getDirectoryValue('uploadDir', 'media');
+    $inputTypes = $configuration->getSection('inputTypes');
+    $displayTypes = $configuration->getSection('displayTypes');
 
     if ($this->_principalFactory instanceof DefaultPrincipalFactory) {
-      $roleType = $config->getValue('roleType', 'principalFactory');
-      $userType = $config->getValue('userType', 'principalFactory');
+      $roleType = $configuration->getValue('roleType', 'principalFactory');
+      $userType = $configuration->getValue('userType', 'principalFactory');
     }
     else {
       $userType = '';
       $roleType = '';
     }
 
-    if ($config->hasValue('permissionType', 'defaultPermissionManager')) {
-      $permissionType = $config->getValue('permissionType', 'defaultPermissionManager');
+    if ($configuration->hasValue('permissionType', 'defaultPermissionManager')) {
+      $permissionType = $configuration->getValue('permissionType', 'defaultPermissionManager');
     }
     else {
       $permissionType = '';

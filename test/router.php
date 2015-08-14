@@ -10,7 +10,9 @@ use wcmf\lib\core\ClassLoader;
 use wcmf\lib\presentation\Application;
 use wcmf\lib\util\TestUtil;
 
-if (!preg_match('/^\/$|^\/\?/', $_SERVER["REQUEST_URI"]) || is_file(WCMF_BASE.$_SERVER["REQUEST_URI"])) {
+// remove everything after ? from url
+$requestedFile = preg_replace('/\?.*$/', '', $_SERVER["REQUEST_URI"]);
+if (is_file(WCMF_BASE.'app/public'.$requestedFile)) {
   // serve the requested resource as-is.
   return false;
 }
