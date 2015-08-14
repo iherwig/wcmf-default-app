@@ -22,7 +22,7 @@ function setup() {
   $fileUtil->emptyDir(WCMF_BASE.'app/log');
   $fileUtil->emptyDir(WCMF_BASE.'app/searchIndex');
   $fileUtil->mkdirRec(WCMF_BASE.'install');
-  copy(WCMF_BASE.'../install/tables_sqlite.sql', WCMF_BASE.'install/tables_sqlite.sql');
+  copy('../install/tables_sqlite.sql', WCMF_BASE.'install/tables_sqlite.sql');
 }
 
 /**
