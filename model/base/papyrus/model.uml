@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.1" xmlns:xmi="http://www.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Chronos="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/Chronos/_jAH0gM-nEd6fypAGO026Fw/0 chronos.profile.uml#_jARlgc-nEd6fypAGO026Fw">
   <uml:Model xmi:id="_ItyOULQGEeOIMOFxCilDfw" name="model">
     <packagedElement xmi:type="uml:Package" xmi:id="_e7sa8LQGEeOIMOFxCilDfw" name="wcmf test">
       <packagedElement xmi:type="uml:Package" xmi:id="_1jaukLQuEeOLlbB2YLI0iw" name="PrimitiveTypes">
@@ -425,6 +425,18 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_8kYjALRGEeOQ5oJFa1i8cg" value="wcmf\lib\presentation\format\impl\NullFormat"/>
                 </ownedAttribute>
               </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_u6fNwETJEeWiTYfex376ig" name="Formatter">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_u6fNwUTJEeWiTYfex376ig" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_u6fNwkTJEeWiTYfex376ig" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_u6fNw0TJEeWiTYfex376ig" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_u6fNxETJEeWiTYfex376ig" value="wcmf\lib\presentation\format\impl\DefaultFormatter"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_qNn5METNEeWiTYfex376ig" name="formats" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qNn5MUTNEeWiTYfex376ig" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qNn5MkTNEeWiTYfex376ig" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_qNn5M0TNEeWiTYfex376ig" value="$formats"/>
+                </ownedAttribute>
+              </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_23RmMO46EeSt-PWkeJaU5w" name="Request">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_23RmMe46EeSt-PWkeJaU5w" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_23RmMu46EeSt-PWkeJaU5w" value="1"/>
@@ -812,6 +824,61 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1mktYjkOEeSuCfpXnqk73Q" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1mktYzkOEeSuCfpXnqk73Q" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_1mktZDkOEeSuCfpXnqk73Q" value="wcmf\lib\security\impl\StaticPermissionManager"/>
+                </ownedAttribute>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_aP1y0EHYEeWnT_5Q0apEXg" name="log.ini">
+              <packagedElement xmi:type="uml:Class" xmi:id="_LrimcEHZEeWnT_5Q0apEXg" name="Root">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_LrimcUHZEeWnT_5Q0apEXg" name="level" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LrimckHZEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Lrimc0HZEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_LrimdEHZEeWnT_5Q0apEXg" value="ERROR"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_LrimdUHZEeWnT_5Q0apEXg" name="target" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_LrimdkHZEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Lrimd0HZEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_LrimeEHZEeWnT_5Q0apEXg" value="app/log/"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_fDyNgEHZEeWnT_5Q0apEXg" name="Logger">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_n-7jkEHZEeWnT_5Q0apEXg" name=";wcmf\lib\presentation\Controller" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_ts3WwEHZEeWnT_5Q0apEXg" value="INFO"/>
+                </ownedAttribute>
+              </packagedElement>
+            </packagedElement>
+            <packagedElement xmi:type="uml:Package" xmi:id="_fIqi8EHYEeWnT_5Q0apEXg" name="test.ini">
+              <packagedElement xmi:type="uml:Class" xmi:id="_sh508EHYEeWnT_5Q0apEXg" name="Database">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh508UHYEeWnT_5Q0apEXg" name="dbType" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh508kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh5080HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh509EHYEeWnT_5Q0apEXg" value="sqlite"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh509UHYEeWnT_5Q0apEXg" name="dbHostName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh509kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh5090HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh50-EHYEeWnT_5Q0apEXg" value="127.0.0.1"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh50-UHYEeWnT_5Q0apEXg" name="dbName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh50-kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh50-0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh50_EHYEeWnT_5Q0apEXg" value="app/test-db.sq3"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh50_UHYEeWnT_5Q0apEXg" name="dbUserName" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh50_kHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh50_0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51AEHYEeWnT_5Q0apEXg" value=""/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh51AUHYEeWnT_5Q0apEXg" name="dbPassword" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh51AkHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh51A0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51BEHYEeWnT_5Q0apEXg">
+                    <value xsi:nil="true"/>
+                  </defaultValue>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_sh51BUHYEeWnT_5Q0apEXg" name="dbCharSet" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sh51BkHYEeWnT_5Q0apEXg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sh51B0HYEeWnT_5Q0apEXg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_sh51CEHYEeWnT_5Q0apEXg" value="utf8"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -1733,5 +1800,10 @@
   <Chronos:ChiSystem xmi:id="_UsmaoFUxEeS4i-N-Z4Tllg" plattform="wcmf" base_Class="_Un6u8FUxEeS4i-N-Z4Tllg"/>
   <Chronos:ChiSystem xmi:id="_28CKYO46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_23RmMO46EeSt-PWkeJaU5w"/>
   <Chronos:ChiSystem xmi:id="_3J3yFe46EeSt-PWkeJaU5w" plattform="wcmf" config="presentation.ini" base_Class="_3J3yEO46EeSt-PWkeJaU5w"/>
-  <Chronos:ChiSystem xmi:id="_RvInMCtJEeWQ0dw1eRj6JQ" plattform="wcmf" base_Class="_QM0nECshEeWUuIR_KoweBQ"/>
+  <Chronos:ChiSystem xmi:id="_2_GakCtFEeWoF5Z7Jotdrw" plattform="wcmf" base_Class="_QM0nECshEeWUuIR_KoweBQ"/>
+  <Chronos:ChiSystem xmi:id="_6E03oDbFEeW4SLkzJtsk6g" plattform="wcmf" base_Class="_6Ex0UDbFEeW4SLkzJtsk6g"/>
+  <Chronos:ChiSystem xmi:id="_slxBQEHYEeWnT_5Q0apEXg" plattform="wcmf" config="test.ini" base_Class="_sh508EHYEeWnT_5Q0apEXg"/>
+  <Chronos:ChiSystem xmi:id="_Lrj0kEHZEeWnT_5Q0apEXg" plattform="wcmf" config="log.ini" base_Class="_LrimcEHZEeWnT_5Q0apEXg"/>
+  <Chronos:ChiSystem xmi:id="_fDy0kEHZEeWnT_5Q0apEXg" plattform="wcmf" config="log.ini" base_Class="_fDyNgEHZEeWnT_5Q0apEXg"/>
+  <Chronos:ChiSystem xmi:id="_u_rPwETJEeWiTYfex376ig" plattform="wcmf" config="presentation.ini" base_Class="_u6fNwETJEeWiTYfex376ig"/>
 </xmi:XMI>

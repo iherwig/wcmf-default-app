@@ -15,6 +15,7 @@ use wcmf\lib\i18n\Localization;
 use wcmf\lib\i18n\Message;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\PersistenceFacade;
+use wcmf\lib\presentation\ActionMapper;
 use wcmf\lib\security\PermissionManager;
 use wcmf\lib\security\principal\impl\AnonymousUser;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
@@ -45,6 +46,7 @@ class RootController extends Controller {
    * @param $session
    * @param $persistenceFacade
    * @param $permissionManager
+   * @param $actionMapper
    * @param $localization
    * @param $message
    * @param $configuration
@@ -53,12 +55,13 @@ class RootController extends Controller {
   public function __construct(Session $session,
           PersistenceFacade $persistenceFacade,
           PermissionManager $permissionManager,
+          ActionMapper $actionMapper,
           Localization $localization,
           Message $message,
           Configuration $configuration,
           PrincipalFactory $principalFactory) {
-    parent::__construct($session, $persistenceFacade,
-            $permissionManager, $localization, $message, $configuration);
+    parent::__construct($session, $persistenceFacade, $permissionManager,
+            $actionMapper, $localization, $message, $configuration);
     $this->_principalFactory = $principalFactory;
   }
 
