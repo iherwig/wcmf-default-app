@@ -2,7 +2,7 @@
     "name": "wcmf/wcmf-default-app",
     "type": "project",
     "description": "Default application for the wCMF web application framework",
-    "keywords": ["application", "cms", "wcmf"],
+    "keywords": ["application", "app", "cms", "template", "wcmf"],
     "homepage": "http://wcmf.wemove.com",
     "license": "MIT",
     "authors": [
