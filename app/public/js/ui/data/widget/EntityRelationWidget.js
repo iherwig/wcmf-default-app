@@ -92,7 +92,7 @@ function(
                 this.permissions = results[0];
 
                 var enabledFeatures = [];
-                if (this.typeClass.isSortable) {
+                if (this.relation.isSortable) {
                     enabledFeatures.push('DnD');
                 }
 
