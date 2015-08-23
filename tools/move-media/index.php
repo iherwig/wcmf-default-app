@@ -41,7 +41,7 @@ new ClassLoader(WCMF_BASE);
 $configPath = WCMF_BASE.'app/config/';
 
 // setup logging
-$logger = new MonologFileLogger('move', '../logging.ini');
+$logger = new MonologFileLogger('move', '../log.ini');
 LogManager::configure($logger);
 
 // setup configuration

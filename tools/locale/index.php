@@ -40,7 +40,7 @@ new ClassLoader(WCMF_BASE);
 $configPath = './';
 
 // setup logging
-$logger = new MonologFileLogger('locale', '../logging.ini');
+$logger = new MonologFileLogger('locale', '../log.ini');
 LogManager::configure($logger);
 
 // setup configuration
