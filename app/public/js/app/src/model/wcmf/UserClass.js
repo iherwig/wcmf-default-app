@@ -105,6 +105,7 @@ define([
             aggregationKind: "composite",
             maxMultiplicity: "unbounded",
             thisEndName: "User",
+            isSortable: false,
             relationType: "child"
         }, {
             name: "Role",
@@ -113,6 +114,7 @@ define([
             aggregationKind: "none",
             maxMultiplicity: "unbounded",
             thisEndName: "User",
+            isSortable: false,
             relationType: "child"
         }]
 

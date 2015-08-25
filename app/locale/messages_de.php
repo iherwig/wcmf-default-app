@@ -212,7 +212,7 @@ $messages_de['Moving'] = 'Verschiebe';
 // file(s): src/model/AuthorRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/PublisherRDBMapper.php, src/model/wcmf/LanguageRDBMapper.php, src/model/wcmf/RoleRDBMapper.php, src/model/wcmf/UserRDBMapper.php
 $messages_de['name'] = 'Name';
 // file(s): public/js/model/meta/Node.js, public/js/ui/data/EntityPage.js
-$messages_de['New <em>%0%</em>'] = '';
+$messages_de['New <em>%0%</em>'] = '*<em>%0%</em>';
 // file(s): public/js/ui/settings/template/SettingsPage.html
 $messages_de['New password'] = 'Neues Passwort';
 // file(s): public/js/ui/settings/template/SettingsPage.html

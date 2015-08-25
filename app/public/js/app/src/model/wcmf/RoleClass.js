@@ -57,6 +57,7 @@ define([
             aggregationKind: "none",
             maxMultiplicity: "unbounded",
             thisEndName: "Role",
+            isSortable: false,
             relationType: "child"
         }]
 
