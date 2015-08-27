@@ -21,7 +21,7 @@
  * - request A serialized and base64 encoded Request instance
  * - sid A session id [optional]
  */
-error_reporting(E_ALL | E_PARSE);
+error_reporting(E_ERROR);
 
 define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
 require_once(WCMF_BASE."/vendor/autoload.php");

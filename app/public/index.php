@@ -8,7 +8,7 @@
  * See the LICENSE file distributed with this work for
  * additional information.
  */
-error_reporting(E_ALL | E_PARSE);
+error_reporting(E_ERROR);
 
 if (!defined('WCMF_BASE')) {
   define('WCMF_BASE', realpath(dirname(__FILE__).'/../..').'/');
