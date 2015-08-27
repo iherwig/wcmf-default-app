@@ -43,7 +43,7 @@ $numArguments = sizeof($arguments);
 if ($numArguments < 1) {
   echo <<<END
 Usage:
-/path/to/php rpc_call.php request sid
+/path/to/php cli.php request sid
 
 Parameters:
 - request request A serialized and base64 encoded Request instance
