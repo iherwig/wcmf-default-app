@@ -18,6 +18,7 @@ app/src/model
 !app/src/model/wcmf/Translation.php
 app/src/views
 !app/src/views/cms.tpl
+!app/src/views/failure.tpl
 install/*.sql
 dist
 vendor/*
