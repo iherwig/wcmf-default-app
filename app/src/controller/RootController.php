@@ -29,7 +29,7 @@ use wcmf\lib\util\URIUtil;
  * The following configuration settings are defined for this controller:
  *
  * [actionmapping]
- * ??cms = app\src\controller\RootController
+ * ??cms = app\src\controller\RootController::renderPage
  *
  * [views]
  * app\src\controller\RootController?? = app/src/views/cms.tpl
@@ -64,11 +64,15 @@ class RootController extends Controller {
             $actionMapper, $localization, $message, $configuration);
     $this->_principalFactory = $principalFactory;
   }
+// PROTECTED REGION END
 
   /**
-   * @see Controller::doExecute()
+   * Method renderPage
+   * description: Render the CMS page.
+   * @return
    */
-  protected function doExecute() {
+  protected function renderPage() {
+// PROTECTED REGION ID(app/src/controller/RootController.php/Methods/renderPage) ENABLED START
     $response = $this->getResponse();
 
     // check for authenticated user
@@ -152,8 +156,7 @@ class RootController extends Controller {
     $response->setValue('baseHref', $baseHref);
     $response->setValue('uiLanguage', $uiLanguage);
     $response->setValue('clientConfig', json_encode($clientConfig));
-  }
 // PROTECTED REGION END
-
+  }
 }
 ?>

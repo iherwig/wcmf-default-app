@@ -1112,7 +1112,7 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wcTaQbRvEeOfbtYsPp7Oyg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wcTaQrRvEeOfbtYsPp7Oyg" value="1"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_3mg2YPu5EeOmMdys2glKCA" name="homeController" type="_FrS1MPu5EeOmMdys2glKCA" association="_3mhdcPu5EeOmMdys2glKCA">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_3mg2YPu5EeOmMdys2glKCA" name="renderPage" type="_FrS1MPu5EeOmMdys2glKCA" association="_3mhdcPu5EeOmMdys2glKCA">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3mg2Yfu5EeOmMdys2glKCA" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3mg2Yvu5EeOmMdys2glKCA" value="1"/>
                 </ownedAttribute>
@@ -1146,7 +1146,7 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_3mhdcPu5EeOmMdys2glKCA" name="cms" memberEnd="_3mhdcfu5EeOmMdys2glKCA _3mg2YPu5EeOmMdys2glKCA">
-                <ownedEnd xmi:type="uml:Property" xmi:id="_3mhdcfu5EeOmMdys2glKCA" name="controller" type="_3TWiULQGEeOIMOFxCilDfw" association="_3mhdcPu5EeOmMdys2glKCA">
+                <ownedEnd xmi:type="uml:Property" xmi:id="_3mhdcfu5EeOmMdys2glKCA" type="_3TWiULQGEeOIMOFxCilDfw" association="_3mhdcPu5EeOmMdys2glKCA">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3mhdcvu5EeOmMdys2glKCA" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3mhdc_u5EeOmMdys2glKCA" value="1"/>
                 </ownedEnd>
@@ -1747,6 +1747,11 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lK8S8fu5EeOmMdys2glKCA" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lK8S8vu5EeOmMdys2glKCA" value="1"/>
                 </ownedAttribute>
+                <ownedOperation xmi:type="uml:Operation" xmi:id="_taQWEHUZEeW1fYhayTwSlA" name="renderPage" visibility="protected">
+                  <ownedComment xmi:type="uml:Comment" xmi:id="_7PHeAHUiEeW1fYhayTwSlA" annotatedElement="_taQWEHUZEeW1fYhayTwSlA">
+                    <body>Render the CMS page.</body>
+                  </ownedComment>
+                </ownedOperation>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_lK86APu5EeOmMdys2glKCA" name="" memberEnd="_lK86Afu5EeOmMdys2glKCA _lK8S8Pu5EeOmMdys2glKCA">
                 <ownedEnd xmi:type="uml:Property" xmi:id="_lK86Afu5EeOmMdys2glKCA" name="homeController" type="_FrS1MPu5EeOmMdys2glKCA" association="_lK86APu5EeOmMdys2glKCA">
