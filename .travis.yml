@@ -15,6 +15,7 @@ env:
   - TEST_DIR=$TRAVIS_BUILD_DIR/test WCMF_BASE_DIR=$TRAVIS_BUILD_DIR
 
 before_script:
+  - jdk_switcher use oraclejdk8
   - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
   - "wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar"
@@ -27,5 +28,4 @@ before_script:
   - cd $WCMF_BASE_DIR/build && ant generate && ant dist
 
 script:
-  - jdk_switcher use oraclejdk8
   - cd $TEST_DIR && phpunit --bootstrap bootstrap.php -c configuration.xml
