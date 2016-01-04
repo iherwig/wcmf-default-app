@@ -13,26 +13,24 @@ define([
 ) {
     return declare([ActionBase], {
 
-        name: 'checkPermissions',
-        iconClass: 'fa fa-check',
+        name: 'lock',
+        iconClass: 'fa fa-unlock',
 
-        path: appConfig.backendUrl+'permissions',
+        path: appConfig.backendUrl+'lock',
+        lockType: "optimistic", // "optimistic|pessimistic"
 
         /**
-         * Check permissions for the given object
+         * Remove a pessimistic lock from the object
          * @param e The event that triggered execution, might be null
-         * @param operations Array of operations to check
+         * @param entity Entity to unlock
          * @return Deferred
          */
-        execute: function(e, operations) {
+        execute: function(e, entity) {
             if (this.init instanceof Function) {
-                this.init(operations);
+                this.init(entity);
             }
             var deferred = new Deferred();
-            request.get(this.path, {
-                query: {
-                    "operations[]": operations
-                },
+            request.del(this.path+'/'+this.lockType+'/'+entity.get('oid'), {
                 headers: {
                     Accept: "application/json"
                 },
@@ -41,9 +39,9 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(response.result);
+                    this.callback(response);
                 }
-                deferred.resolve(response.result);
+                deferred.resolve(response);
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {

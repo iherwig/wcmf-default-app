@@ -13,26 +13,24 @@ define([
 ) {
     return declare([ActionBase], {
 
-        name: 'checkPermissions',
-        iconClass: 'fa fa-check',
+        name: 'login',
+        iconClass: 'fa fa-sign-in',
 
-        path: appConfig.backendUrl+'permissions',
+        path: appConfig.backendUrl+'session',
 
         /**
-         * Check permissions for the given object
+         * Login the user with the given data
          * @param e The event that triggered execution, might be null
-         * @param operations Array of operations to check
+         * @param data Login data
          * @return Deferred
          */
-        execute: function(e, operations) {
+        execute: function(e, data) {
             if (this.init instanceof Function) {
-                this.init(operations);
+                this.init(data);
             }
             var deferred = new Deferred();
-            request.get(this.path, {
-                query: {
-                    "operations[]": operations
-                },
+            request.post(this.path, {
+                data: data,
                 headers: {
                     Accept: "application/json"
                 },
@@ -41,7 +39,7 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(response.result);
+                    this.callback(response);
                 }
                 deferred.resolve(response.result);
             }), lang.hitch(this, function(error) {

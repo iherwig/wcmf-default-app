@@ -16,7 +16,7 @@ define([
         name: 'lock',
         iconClass: 'fa fa-lock',
 
-        action: "lock", // "lock|unlock"
+        path: appConfig.backendUrl+'lock',
         lockType: "optimistic", // "optimistic|pessimistic"
 
         /**
@@ -30,12 +30,7 @@ define([
                 this.init(entity);
             }
             var deferred = new Deferred();
-            request.post(appConfig.backendUrl, {
-                data: {
-                    action: this.action,
-                    oid: entity.get('oid'),
-                    type: this.lockType
-                },
+            request.post(this.path+'/'+this.lockType+'/'+entity.get('oid'), {
                 headers: {
                     Accept: "application/json"
                 },

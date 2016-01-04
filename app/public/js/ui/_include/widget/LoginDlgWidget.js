@@ -6,6 +6,7 @@ define([
     "dijit/form/TextBox",
     "../../../User",
     "../../../locale/Dictionary",
+    "../../../action/Login",
     "./PopupDlgWidget",
     "dojo/text!./template/LoginDlgWidget.html"
 ], function (
@@ -16,6 +17,7 @@ define([
     TextBox,
     User,
     Dict,
+    Login,
     PopupDlg,
     template
 ) {
@@ -37,22 +39,15 @@ define([
         title: '<i class="fa fa-sign-in"></i> '+Dict.translate("Sign in"),
         okCallback: function(dlg) {
             var data = domForm.toObject("loginForm");
-            data.action = "login";
-
-            return request.post(appConfig.backendUrl, {
-                data: data,
-                headers: {
-                    Accept: "application/json"
-                },
-                handleAs: 'json'
-
-            }).then(function(response) {
-                // success
-                User.create(data.user, response.roles);
-                if (dlg.success instanceof Function) {
-                    dlg.success(this);
-                }
-            });
+            new Login({
+                callback: lang.hitch(this, function(response) {
+                    // success
+                    User.create(data.user, response.roles);
+                    if (dlg.success instanceof Function) {
+                        dlg.success(this);
+                    }
+                })
+            }).execute({}, data);
         },
 
         /**

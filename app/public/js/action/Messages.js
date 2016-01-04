@@ -13,26 +13,23 @@ define([
 ) {
     return declare([ActionBase], {
 
-        name: 'checkPermissions',
-        iconClass: 'fa fa-check',
+        name: 'messages',
+        iconClass: 'fa fa-book',
 
-        path: appConfig.backendUrl+'permissions',
+        path: appConfig.backendUrl+'messages',
 
         /**
-         * Check permissions for the given object
+         * Get localized messages for the given language
          * @param e The event that triggered execution, might be null
          * @param operations Array of operations to check
          * @return Deferred
          */
-        execute: function(e, operations) {
+        execute: function(e, language) {
             if (this.init instanceof Function) {
-                this.init(operations);
+                this.init(language);
             }
             var deferred = new Deferred();
-            request.get(this.path, {
-                query: {
-                    "operations[]": operations
-                },
+            request.get(this.path+'/'+language, {
                 headers: {
                     Accept: "application/json"
                 },
@@ -41,9 +38,9 @@ define([
             }).then(lang.hitch(this, function(response) {
                 // success
                 if (this.callback instanceof Function) {
-                    this.callback(response.result);
+                    this.callback(response);
                 }
-                deferred.resolve(response.result);
+                deferred.resolve(response);
             }), lang.hitch(this, function(error) {
                 // error
                 if (this.errback instanceof Function) {

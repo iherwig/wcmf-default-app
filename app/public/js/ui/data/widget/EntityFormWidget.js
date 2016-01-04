@@ -20,6 +20,7 @@ define( [
     "../../_include/widget/Button",
     "../../../action/CheckPermissions",
     "../../../action/Lock",
+    "../../../action/Unlock",
     "../../../model/meta/Model",
     "../../../persistence/BackendError",
     "../../../persistence/Store",
@@ -53,6 +54,7 @@ function(
     Button,
     CheckPermissions,
     Lock,
+    Unlock,
     Model,
     BackendError,
     Store,
@@ -367,7 +369,6 @@ function(
 
         acquireLock: function() {
             new Lock({
-                action: "lock",
                 lockType: "optimistic",
                 init: lang.hitch(this, function(data) {})
             }).execute({}, this.entity).then(
@@ -560,8 +561,8 @@ function(
                 message: this.isLocked ? Dict.translate("Unlocking <em>%0%</em>", [displayValue]) :
                         Dict.translate("Locking <em>%0%</em>", [displayValue])
             });
-            new Lock({
-                action: this.isLocked ? "unlock" : "lock",
+            var action = this.isLocked ? Unlock : Lock;
+            new action({
                 lockType: "pessimistic",
                 init: lang.hitch(this, function(data) {})
             }).execute(e, this.entity).then(

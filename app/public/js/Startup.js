@@ -3,14 +3,18 @@ define([
     "dojo/promise/all",
     "dojo/Deferred",
     "./User",
+    "./action/Messages",
     "./action/CheckPermissions",
+    "./locale/Dictionary",
     "./model/meta/Model"
 ], function (
     declare,
     all,
     Deferred,
     User,
+    Messages,
     CheckPermissions,
+    Dictionary,
     Model
 ) {
     var Startup = declare(null, {
@@ -29,6 +33,9 @@ define([
 
         var deferredList = {};
 
+        // load localized ui text
+        deferredList["messages"] = new Messages().execute({}, appConfig.uiLanguage);
+
         // check for read access to root types for the current user
         if (User.isLoggedIn()) {
             var requiredPermissions = [];
@@ -41,6 +48,8 @@ define([
 
         // wait for all operations
         all(deferredList).then(function(results) {
+            // initialize dictionary
+            Dictionary.setContent(results["messages"]);
 
             // restrict root types to those visible to the current user
             if (User.isLoggedIn()) {

@@ -2,7 +2,6 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/request",
     "dojo/dom-form",
     "dijit/form/TextBox",
     "../_include/_PageMixin",
@@ -11,12 +10,12 @@ define([
     "../_include/FormLayout",
     "../_include/widget/Button",
     "../../locale/Dictionary",
+    "../../action/ChangePassword",
     "dojo/text!./template/SettingsPage.html"
 ], function (
     require,
     declare,
     lang,
-    request,
     domForm,
     TextBox,
     _Page,
@@ -25,6 +24,7 @@ define([
     FormLayout,
     Button,
     Dict,
+    ChangePassword,
     template
 ) {
     return declare([_Page, _Notification], {
@@ -42,31 +42,26 @@ define([
             e.preventDefault();
 
             var data = domForm.toObject("settingsForm");
-            data.action = "changePassword";
 
             this.saveBtn.setProcessing();
 
             this.hideNotification();
-            request.post(appConfig.backendUrl, {
-                data: data,
-                headers: {
-                    Accept: "application/json"
-                },
-                handleAs: 'json'
-
-            }).then(lang.hitch(this, function(response) {
-                // success
-                this.saveBtn.reset();
-                this.showNotification({
-                    type: "ok",
-                    message: Dict.translate("The password was successfully changed"),
-                    fadeOut: true
-                });
-            }), lang.hitch(this, function(error) {
-                // error
-                this.saveBtn.reset();
-                this.showBackendError(error);
-            }));
+            new ChangePassword({
+                callback: lang.hitch(this, function(response) {
+                    // success
+                    this.saveBtn.reset();
+                    this.showNotification({
+                        type: "ok",
+                        message: Dict.translate("The password was successfully changed"),
+                        fadeOut: true
+                    });
+                }),
+                errback: lang.hitch(this, function(error) {
+                    // error
+                    this.saveBtn.reset();
+                    this.showBackendError(error);
+                })
+            }).execute({}, data);
         }
     });
 });

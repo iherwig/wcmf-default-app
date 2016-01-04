@@ -1,15 +1,21 @@
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/request"
+    "dojo/_base/lang"
 ],
 function(
     declare,
-    lang,
-    request
+    lang
 ) {
     var Dictionary = declare(null, {
     });
+
+    /**
+     * Set the content for the dictionary
+     * @param data Map containing message ids and translations
+     */
+    Dictionary.setContent = function(data) {
+        Dictionary.dict = data;
+    };
 
     /**
      * Translate templates to the ui language.
@@ -23,7 +29,6 @@ function(
      * @returns String
      */
     Dictionary.tplTranslate = function(_, text) {
-        var dict = Dictionary.getDictionary();
         if (text.match(/^translate:/)) {
             var key = text.replace(/^translate:/, "");
             // check for message|params combination
@@ -33,15 +38,7 @@ function(
                 key = splitKey[0];
                 params = splitKey[1].split(",");
             }
-            // dict maybe "not-found", if language file does not exist
-            var translation = (typeof dict === "string" | !dict[key]) ? key : dict[key];
-            // replace parameters
-            if (typeof params === "object") {
-                return lang.replace(translation, params, /\%([^\%]+)\%/g);
-            }
-            else {
-                return translation;
-            }
+            return Dictionary.translate(key, params);
         }
         else {
             return _;
@@ -58,8 +55,7 @@ function(
      */
     Dictionary.translate = function(text, params) {
         var dict = Dictionary.getDictionary();
-        // dict maybe "not-found", if language file does not exist
-        var translation = (typeof dict === "string" | !dict[text]) ? text : dict[text];
+        var translation = !dict[text] ? text : dict[text];
         // replace parameters
         if (typeof params === "object") {
             return lang.replace(translation, params, /\%([^\%]+)\%/g);
@@ -69,43 +65,10 @@ function(
         }
     };
 
-    Dictionary.dict = null;
+    Dictionary.dict = {};
 
     Dictionary.getDictionary = function() {
-        if (Dictionary.dict === null) {
-            // load dictionary on first call
-            request.post(appConfig.backendUrl, {
-                sync: true,
-                timeout: 100,
-                data: {
-                    action: "messages",
-                    language: appConfig.uiLanguage
-                },
-                headers: {
-                    Accept: "application/json"
-                },
-                handleAs: 'json'
-
-            }).then(function(response) {
-                // callback completes
-                Dictionary.dict = response;
-            }, function(error) {
-                // error
-                Dictionary.dict = "not-found";
-            });
-            // wait until resolved
-            // TODO is there a better way to do that?
-            for (var i=0; i<10000; i++) {
-              if (Dictionary.dict !== null) {
-                  break;
-              }
-            };
-            return Dictionary.dict;
-        }
-        else {
-            // already loaded
-            return Dictionary.dict;
-        }
+        return Dictionary.dict;
     };
 
     return Dictionary;

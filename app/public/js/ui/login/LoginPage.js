@@ -2,7 +2,6 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/request",
     "dojo/dom-form",
     "dijit/form/TextBox",
     "../_include/_PageMixin",
@@ -12,6 +11,7 @@ define([
     "../../User",
     "../../Startup",
     "../../locale/Dictionary",
+    "../../action/Login",
     "d3/d3.min",
     "trianglify/trianglify.min",
     "dojo/text!./template/LoginPage.html"
@@ -19,7 +19,6 @@ define([
     require,
     declare,
     lang,
-    request,
     domForm,
     TextBox,
     _Page,
@@ -29,6 +28,7 @@ define([
     User,
     Startup,
     Dict,
+    Login,
     d3,
     trianglify,
     template
@@ -96,43 +96,38 @@ define([
             e.preventDefault();
 
             var data = domForm.toObject("loginForm");
-            data.action = "login";
 
             this.loginBtn.setProcessing();
 
             this.hideNotification();
-            request.post(appConfig.backendUrl, {
-                data: data,
-                headers: {
-                    Accept: "application/json"
-                },
-                handleAs: 'json'
+            new Login({
+                callback: lang.hitch(this, function(response) {
+                    // success
+                    this.loginBtn.reset();
+                    User.create(data.user, response.roles);
 
-            }).then(lang.hitch(this, function(response) {
-                // success
-                this.loginBtn.reset();
-                User.create(data.user, response.roles);
-
-                // run startup code
-                Startup.run().then(lang.hitch(this, function(result) {
-                      var redirectRoute = this.request.getQueryParam("route");
-                      if (redirectRoute) {
-                          // redirect to initially requested route if given
-                          window.location.href = this.request.getPathname()+redirectRoute;
-                      }
-                      else {
-                          // redirect to default route
-                          window.location.href = this.request.getPathname()+"home";
-                      }
-                }), lang.hitch(this, function(error) {
-                      // error
-                      this.showBackendError(error);
-                }));
-            }), lang.hitch(this, function(error) {
-                // error
-                this.loginBtn.reset();
-                this.showBackendError(error);
-            }));
+                    // run startup code
+                    Startup.run().then(lang.hitch(this, function(result) {
+                          var redirectRoute = this.request.getQueryParam("route");
+                          if (redirectRoute) {
+                              // redirect to initially requested route if given
+                              window.location.href = this.request.getPathname()+redirectRoute;
+                          }
+                          else {
+                              // redirect to default route
+                              window.location.href = this.request.getPathname()+"home";
+                          }
+                    }), lang.hitch(this, function(error) {
+                          // error
+                          this.showBackendError(error);
+                    }));
+                }),
+                errback: lang.hitch(this, function(error) {
+                    // error
+                    this.loginBtn.reset();
+                    this.showBackendError(error);
+                })
+            }).execute({}, data);
         }
     });
 });
