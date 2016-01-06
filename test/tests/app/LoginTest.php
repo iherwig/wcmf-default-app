@@ -69,6 +69,7 @@ class LoginTest extends SeleniumTestCase {
     // click logout
     $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
     $btn->click();
+    $this->timeouts()->implicitWait(5000);
     $this->assertEquals(self::getAppUrl().'/', $this->url());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
@@ -86,6 +87,7 @@ class LoginTest extends SeleniumTestCase {
     // click logout
     $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
     $btn->click();
+    $this->timeouts()->implicitWait(5000);
     $this->assertEquals(self::getAppUrl().'/', $this->url());
     $this->assertEquals('WCMF TEST MODEL', $this->title());
   }
