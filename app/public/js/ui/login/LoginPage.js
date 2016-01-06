@@ -111,11 +111,11 @@ define([
                           var redirectRoute = this.request.getQueryParam("route");
                           if (redirectRoute) {
                               // redirect to initially requested route if given
-                              window.location.href = this.request.getPathname()+redirectRoute;
+                              window.location.assign(this.request.getPathname()+redirectRoute);
                           }
                           else {
                               // redirect to default route
-                              window.location.href = this.request.getPathname()+"home";
+                              window.location.assign(this.request.getPathname()+"home");
                           }
                     }), lang.hitch(this, function(error) {
                           // error

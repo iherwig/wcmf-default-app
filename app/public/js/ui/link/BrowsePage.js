@@ -48,7 +48,7 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "mediaTab") {
-                    window.location.href = appConfig.pathPrefix+'media?'+this.request.getQueryString();
+                    window.location.assign(appConfig.pathPrefix+'media?'+this.request.getQueryString());
                 }
             }));
 
