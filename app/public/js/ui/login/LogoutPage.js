@@ -37,7 +37,7 @@ define([
                 callback: lang.hitch(this, function(response) {
                     // redirect to login
                     Cookie.destroy();
-                    window.document.location.href = appConfig.backendUrl;
+                    window.location.href = appConfig.backendUrl;
                 }),
                 errback: lang.hitch(this, function(error) {
                     // error
