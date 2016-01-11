@@ -19,14 +19,15 @@ env:
 before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
-  - "wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar"
-  - "java -jar selenium-server-standalone-2.46.0.jar &"
+  - "wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar"
+  - "java -jar selenium-server-standalone-2.48.2.jar &"
   - sleep 5
 
   - composer self-update
   - composer install
 
   - cd $WCMF_BASE_DIR/build && ant generate && ant dist
+  - chmod +x ../dist/vendor/phpunit/phpunit/phpunit
 
 script:
-  - cd $TEST_DIR && phpunit --bootstrap bootstrap.php -c configuration.xml
+  - cd $TEST_DIR &&  ../dist/vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php -c configuration.xml
