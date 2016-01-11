@@ -29,4 +29,4 @@ before_script:
   - cd $WCMF_BASE_DIR/build && ant generate && ant dist
 
 script:
-  - cd $TEST_DIR && phpunit --bootstrap bootstrap.php -c configuration.xml
+  - cd $TEST_DIR &&  ../vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php -c configuration.xml
