@@ -27,6 +27,7 @@ before_script:
   - composer install
 
   - cd $WCMF_BASE_DIR/build && ant generate && ant dist
+  - chmod +x ../dist/vendor/phpunit/phpunit/phpunit
 
 script:
   - cd $TEST_DIR &&  ../dist/vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php -c configuration.xml
