@@ -28,9 +28,7 @@ define([
          * @param entity Entity to copy
          */
         execute: function(e, entity) {
-            if (this.init instanceof Function) {
-                this.init(entity);
-            }
+            this.init(entity);
             this.entity = entity;
             this.deferred = new Deferred();
             new Process().run("copy", {
@@ -50,23 +48,17 @@ define([
                 oid: this.entity.get('oid'),
                 action: "add"
             });
-            if (this.callback instanceof Function) {
-                this.callback(this.entity);
-            }
+            this.callback(this.entity);
             this.deferred.resolve(this.entity);
         },
 
         errorHandler: function(error) {
-            if (this.errback instanceof Function) {
-                this.errback(error);
-            }
+            this.errback(error);
             this.deferred.reject(error);
         },
 
         progressHandler: function(data) {
-            if (this.progback instanceof Function) {
-                this.progback(data);
-            }
+            this.progback(data);
             this.deferred.progress(data);
         }
     });

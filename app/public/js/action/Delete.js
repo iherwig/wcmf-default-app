@@ -27,9 +27,7 @@ define([
          * @return Deferred
          */
         execute: function(e, entity) {
-            if (this.init instanceof Function) {
-                this.init(entity);
-            }
+            this.init(entity);
             return new ConfirmDlg({
                 title: Dict.translate("Confirm Object Deletion"),
                 message: Dict.translate("Do you really want to delete <em>%0%</em> ?", [Model.getTypeFromOid(entity.get('oid')).getDisplayValue(entity)]),
@@ -37,15 +35,11 @@ define([
                     var typeName = Model.getTypeNameFromOid(entity.get('oid'));
                     var store = Store.getStore(typeName, appConfig.defaultLanguage);
                     var deferred = store.remove(store.getIdentity(entity)).then(lang.hitch(this, function(results) {
-                        // callback completes
-                        if (this.callback instanceof Function) {
-                            this.callback(entity);
-                        }
+                        // success
+                        this.callback(entity);
                     }), lang.hitch(this, function(error) {
                         // error
-                        if (this.errback instanceof Function) {
-                            this.errback(error);
-                        }
+                        this.errback(error);
                     }));
                     return deferred;
                 })

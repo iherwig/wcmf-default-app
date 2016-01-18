@@ -12,6 +12,7 @@ define([
     "../../Startup",
     "../../locale/Dictionary",
     "../../action/Login",
+    "../../action/Log",
     "d3/d3.min",
     "trianglify/trianglify.min",
     "dojo/text!./template/LoginPage.html"
@@ -29,6 +30,7 @@ define([
     Startup,
     Dict,
     Login,
+    Log,
     d3,
     trianglify,
     template
@@ -102,6 +104,7 @@ define([
             this.hideNotification();
             new Login({
                 callback: lang.hitch(this, function(response) {
+                    Log.error("logged into FE");
                     // success
                     this.loginBtn.reset();
                     User.create(data.user, response.roles);

@@ -22,9 +22,7 @@ define([
          * @param entity Entity to open permissions dialog for
          */
         execute: function(e, entity) {
-            if (this.init instanceof Function) {
-                this.init(entity);
-            }
+            this.init(entity);
             var oid = entity.get('oid');
             var typeClass = Model.getType(Model.getTypeNameFromOid(oid));
             var displayValue = typeClass.getDisplayValue(entity);
@@ -32,7 +30,6 @@ define([
                 oid: entity.get('oid'),
                 message: Dict.translate("Permissions for <em>%0%</em>", [displayValue])
             }).show();
-
         }
     });
 });

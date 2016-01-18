@@ -34,9 +34,7 @@ define([
          * @return Deferred
          */
         execute: function(e) {
-            if (this.init instanceof Function) {
-                this.init();
-            }
+            this.init();
             return new ObjectSelectDlg({
                 type: this.relation.type,
                 title: Dict.translate("Choose Objects"),
@@ -53,14 +51,10 @@ define([
                     }
                     all(deferredList).then(lang.hitch(this, function(results) {
                         // callback completes
-                        if (this.callback instanceof Function) {
-                            this.callback(results);
-                        }
+                        this.callback(results);
                     }), lang.hitch(this, function(error) {
                         // error
-                        if (this.errback instanceof Function) {
-                            this.errback(error);
-                        }
+                        this.errback(error);
                     }));
                     return all(deferredList);
                 })

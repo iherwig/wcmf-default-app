@@ -25,9 +25,7 @@ define([
          * @return Deferred
          */
         execute: function(e, language) {
-            if (this.init instanceof Function) {
-                this.init(language);
-            }
+            this.init(language);
             var deferred = new Deferred();
             request.get(this.path+'/'+language, {
                 headers: {
@@ -37,15 +35,11 @@ define([
 
             }).then(lang.hitch(this, function(response) {
                 // success
-                if (this.callback instanceof Function) {
-                    this.callback(response);
-                }
+                this.callback(response);
                 deferred.resolve(response);
             }), lang.hitch(this, function(error) {
                 // error
-                if (this.errback instanceof Function) {
-                    this.errback(error);
-                }
+                this.errback(error);
                 deferred.reject(error);
             }));
             return deferred;

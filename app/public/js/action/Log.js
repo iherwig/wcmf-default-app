@@ -38,9 +38,8 @@ define([
      * @param level Log level (TRACE|DEBUG|INFO|WARNING|ERROR|FATAL)
      */
     Log.log = function(message, level) {
-      request.post(appConfig.backendUrl, {
+      request.post(appConfig.backendUrl+'log', {
           data: {
-              action: "log",
               message: message,
               type: level
           },

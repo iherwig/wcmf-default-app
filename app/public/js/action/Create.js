@@ -29,9 +29,7 @@ define([
          * @param type Name of the type to create
          */
         execute: function(e, type) {
-            if (this.init instanceof Function) {
-                this.init(type);
-            }
+            this.init(type);
             var route = this.page.getRoute(this.route);
             var oid = Model.createDummyOid(type);
             var pathParams = { type:type, id:Model.getIdFromOid(oid) };

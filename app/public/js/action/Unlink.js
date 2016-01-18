@@ -26,22 +26,16 @@ define([
          * @return Deferred
          */
         execute: function(e, entity) {
-            if (this.init instanceof Function) {
-                this.init(entity);
-            }
+            this.init(entity);
             var store = RelationStore.getStore(this.source.get('oid'), this.relation.name);
             var deferred = new Deferred();
             store.remove(store.getIdentity(entity)).then(lang.hitch(this, function(results) {
                 // callback completes
-                if (this.callback instanceof Function) {
-                    this.callback(entity);
-                }
+                this.callback(entity);
                 deferred.resolve(entity);
             }), lang.hitch(this, function(error) {
                 // error
-                if (this.errback instanceof Function) {
-                    this.errback(error);
-                }
+                this.errback(error);
                 deferred.reject(error);
             }));
             return deferred;

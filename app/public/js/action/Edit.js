@@ -29,9 +29,7 @@ define([
          * @param entity Entity to edit
          */
         execute: function(e, entity) {
-            if (this.init instanceof Function) {
-                this.init(entity);
-            }
+            this.init(entity);
             var oid = entity.get('oid');
             var route = this.page.getRoute(this.route);
             var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(oid));

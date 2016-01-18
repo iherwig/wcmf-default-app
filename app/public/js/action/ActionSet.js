@@ -28,9 +28,7 @@ define([
          * @return Deferred
          */
         execute: function(e, data) {
-            if (this.init instanceof Function) {
-                this.init(data);
-            }
+            this.init(data);
             var deferred = new Deferred();
             var requestData = JSON.stringify({
                 action: this.action,
@@ -45,15 +43,11 @@ define([
 
             }).then(lang.hitch(this, function(response) {
                 // success
-                if (this.callback instanceof Function) {
-                    this.callback(response.data);
-                }
+                this.callback(response.data);
                 deferred.resolve(response.data);
             }), lang.hitch(this, function(error) {
                 // error
-                if (this.errback instanceof Function) {
-                    this.errback(error);
-                }
+                this.errback(error);
                 deferred.reject(error);
             }));
             return deferred;

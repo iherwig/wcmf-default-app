@@ -15,10 +15,10 @@ define([
 
         name: '',
         iconClass:  'fa fa-asterisk',
-        init: null,
-        callback: null,
-        errback: null,
-        progback: null,
+        init: function(){},
+        callback: function(){},
+        errback: function(){},
+        progback: function(){},
 
         _iconNode: null,
         _hasSpinner: false,
