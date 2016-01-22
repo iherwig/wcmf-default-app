@@ -17,6 +17,12 @@ Vagrant.configure("2") do |config|
   forward_port[80, 8080]  # apache
   forward_port[81, 8081]  # phpmyadmin
 
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "wcmf-trusty64"
+    vb.memory = 4096
+    vb.cpus = 4
+  end
+  
   # Shell provisioning
   config.vm.provision "shell" do |s|
     s.path = "provision/setup.sh"
