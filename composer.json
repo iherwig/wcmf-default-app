@@ -139,9 +139,9 @@
             "package": {
                 "name": "nao-pon/elfinder",
                 "type": "wcmf-asset",
-                "version": "2.1",
+                "version": "dev-2.1_n",
                 "dist": {
-                    "url": "http://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1.zip",
+                    "url": "http://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1_n.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -243,7 +243,7 @@
         "ckeditor/ckeditor": "~4.4",
         "components/jquery": "~1.11",
         "components/jqueryui": "~1.11",
-        "nao-pon/elfinder": "2.1",
+        "nao-pon/elfinder": "dev-2.1_n",
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
         "kriszyp/put-selector": "~0.3",
@@ -252,7 +252,7 @@
         "sybio/image-workshop": "~2.0",
         "sybio/gif-frame-extractor": "~1.0",
         "sybio/gif-creator": "~1.0",
-        "helios-ag/fm-elfinder-php-connector": "~2.2",
+        "nao-pon/elfinder-nightly": "dev-2.1_n",
         "smarty/smarty": "~3.1",
         "kriswallsmith/assetic": "~1.2",
         "toopay/assetic-minifier": "~1.3"

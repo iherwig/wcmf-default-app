@@ -119,6 +119,10 @@ label {
 }
 
 /* dgrid */
+.relation-container .dgrid {
+  height: 500px !important;
+}
+
 .dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
   background-color: #08c;
 }
