@@ -169,6 +169,9 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_MknSsLMHEeWcwaDPJFy4ig" name="DELETE/lock/{type|optimistic|pessimistic}/{oid}" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_MknSsbMHEeWcwaDPJFy4ig" value="action=unlock"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="__vNvgMweEeWPWdu5UKHfcA" name="GET,POST/media/files" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="__vNvgcweEeWPWdu5UKHfcA" value="action=browseMedia"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_S4bEswRHEeSxY9ess8EBIw" name="/rest/{language}/{className}" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_S4bEtARHEeSxY9ess8EBIw" value="action=restAction&amp;collection=1"/>
                 </ownedAttribute>

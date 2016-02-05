@@ -54,7 +54,7 @@ define([
             var directory = this.request.getQueryParam("directory");
             lang.mixin(elfinderConfig, {
                 lang: appConfig.uiLanguage,
-                url: appConfig.backendUrl+'?action=browseMedia&directory='+directory,
+                url: appConfig.backendUrl+'media/files?directory='+directory,
                 rememberLastDir: true,
                 resizable: false,
                 getFileCallback: lang.hitch(this, function(file) {
