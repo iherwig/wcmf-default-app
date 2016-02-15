@@ -5,13 +5,17 @@ define([
     declare,
     Node
 ) {
+// Names to be included by l10n tools
+// Dict.translate('_displayValue')
+// Dict.translate('_summary')
+// Dict.translate('_type')
     var SearchResult = declare([Node
     ], {
         typeName: "SearchResult",
         description: "?",
         isSortable: false,
         displayValues: [
-            "displayValue", "summary", "type"
+            "_displayValue", "_summary", "_type"
         ],
         pkNames: [
             "id"
@@ -29,7 +33,7 @@ define([
             tags: ['DATATYPE_IGNORE'],
             isReference: false
         }, {
-            name: "displayValue",
+            name: "_displayValue",
             type: "String",
             description: "?",
             isEditable: false,
@@ -40,7 +44,7 @@ define([
             tags: ['DATATYPE_ATTRIBUTE'],
             isReference: false
         }, {
-            name: "summary",
+            name: "_summary",
             type: "String",
             description: "?",
             isEditable: false,
@@ -51,7 +55,7 @@ define([
             tags: ['DATATYPE_ATTRIBUTE'],
             isReference: false
         }, {
-            name: "type",
+            name: "_type",
             type: "String",
             description: "",
             isEditable: false,

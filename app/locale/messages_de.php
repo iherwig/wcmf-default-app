@@ -465,4 +465,10 @@ $messages_de['Wrong value for %0% (%1%). '] = 'Ungültiger Wert für %0% (%1%). 
 $messages_de['year'] = 'Jahr';
 // file(s): public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_de['Your session is lost. Please sign in.'] = '';
+// file(s): public/js/ui/search/SearchResult.js
+$messages_de['_displayValue'] = 'Objekt';
+// file(s): public/js/ui/search/SearchResult.js
+$messages_de['_summary'] = 'Zusammenfassung';
+// file(s): public/js/ui/search/SearchResult.js
+$messages_de['_type'] = 'Typ';
 ?>
