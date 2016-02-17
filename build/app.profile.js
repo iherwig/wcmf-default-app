@@ -106,6 +106,7 @@ var appSrc = [
     "app/js/ui/search/SearchResultPage",
     "app/js/ui/settings/SettingsPage",
 
+    "dgrid/util/touch",
     "xstyle/core/load-css"
 ];
 

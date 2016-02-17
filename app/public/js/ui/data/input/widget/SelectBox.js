@@ -45,6 +45,11 @@ function(
 
         searchAttr: "displayText",
 
+        // initialize base class attributes to avoid errors
+        params: {},
+        valueNode: {},
+        textbox: {},
+
         constructor: function(args) {
             // TODO remove store adapter if not required by select any more
             if (!args.store) {

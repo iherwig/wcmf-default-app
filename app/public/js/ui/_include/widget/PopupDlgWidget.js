@@ -1,14 +1,11 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/_base/array",
     "dojo/on",
     "dojo/dom-construct",
     "dojo/Deferred",
-    "dijit/registry",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
     "../_NotificationMixin",
     "dijit/Dialog",
     "./Button",
@@ -17,14 +14,11 @@ define([
 ], function (
     declare,
     lang,
-    array,
     on,
     domConstruct,
     Deferred,
-    registry,
     _WidgetBase,
     _TemplatedMixin,
-    _WidgetsInTemplateMixin,
     _Notification,
     Dialog,
     Button,
@@ -51,46 +45,77 @@ define([
      * }).show();
      * @endcode
      */
-    var PopupDlg = declare([Dialog], {
+    var PopupDlg = declare([Dialog, _Notification], {
 
+        // OK button (will be displayed, if callback is not null)
+        okBtnText: Dict.translate('OK'),
         okCallback: null,
-        cancelCallback: null,
+
+        // Cancel button (will be displayed, if callback is not null)
+        cancelBtnText: Dict.translate('Cancel'),
+        cancelCallback: this.hide,
+
+        okBtn: null,
+        cancelBtn: null,
         deferred: null,
 
         constructor: function(args) {
             lang.mixin(this, args);
 
-            var message = this.message || '';
-            var contentWidget = new (declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _Notification], {
-                templateString: lang.replace(this.getTemplate(), Dict.tplTranslate)
+            // create the dialog content
+            // NOTE: all attach points contained in the template are accessible
+            // via this.content
+            dialogWidget = new (declare([_WidgetBase, _TemplatedMixin], {
+                templateString: lang.replace(template, Dict.tplTranslate)
             }));
-            if (contentWidget.contentNode) {
-              contentWidget.contentNode.innerHTML = '<p>'+message+'</p>';
-            }
-            if (this.contentWidget) {
-              domConstruct.place(this.contentWidget.domNode, contentWidget.contentNode, "after");
-            }
-            contentWidget.startup();
-            this.content = contentWidget;
+            dialogWidget.startup();
+            this.content = dialogWidget;
         },
 
         postCreate: function () {
             this.inherited(arguments);
 
+            if (this.message) {
+              this.content.messageNode.innerHTML = this.message;
+            }
+
+            var contentWidget = this.getContentWidget();
+            if (contentWidget) {
+              domConstruct.place(contentWidget.domNode, this.content.contentNode, "after");
+              contentWidget.startup();
+            }
+
+            // create buttons
+            if (this.okCallback !== null) {
+                this.okBtn = new Button({
+                    label: this.okBtnText,
+                    'class': "primary",
+                    onClick: lang.hitch(this, function(e) {
+                        this.okBtn.setProcessing();
+                        this.doCallback(e, this.okCallback);
+                    })
+                });
+                domConstruct.place(this.okBtn.domNode, this.content.buttonsNode);
+                this.okBtn.startup();
+            }
+            if (this.cancelCallback !== null) {
+                this.cancelBtn = new Button({
+                    label: this.cancelBtnText,
+                    onClick: lang.hitch(this, function(e) {
+                        this.doCallback(e, this.cancelCallback);
+                    })
+                });
+                domConstruct.place(this.cancelBtn.domNode, this.content.buttonsNode);
+                this.cancelBtn.startup();
+            }
+
             this.own(
-                on(this.content.okBtn, "click", lang.hitch(this, function(e) {
-                    this.content.okBtn.setProcessing();
-                    this.doCallback(e, this.okCallback);
-                })),
-                on(this.content.cancelBtn, "click", lang.hitch(this, function(e) {
-                    this.doCallback(e, this.cancelCallback);
-                })),
                 on(this, "hide", lang.hitch(this, function(e) {
                     this.deferred.resolve();
                 })),
-                on(dojo.body(), 'keyup', lang.hitch(this, function (e) {
+                on(dojo.body(), "keyup", lang.hitch(this, function (e) {
                     if (e.which === 13) {
-                        this.content.okBtn.setProcessing();
+                        this.okBtn.setProcessing();
                         this.doCallback(e, this.okCallback);
                     }
                     if (e.which === 27) {
@@ -101,39 +126,27 @@ define([
         },
 
         /**
-         * Get a child widget of the content node
-         * @param name The widget's name
+         * Override this method in subclasses to provide a custom content
+         * widget. The default implentation returns the contentWidget property.
          * @returns Widget
          */
-        getContentWidget: function(name) {
-            var widgets = registry.findWidgets(this.content.domNode);
-            var matches = array.filter(widgets, function(item) {
-                return item.name === name;
-            });
-            return matches.length > 0 ? matches[0] : null;
-        },
-
-        /**
-         * Override this method in subclasses to provide your custom template
-         * @returns String
-         */
-        getTemplate: function() {
-          return template;
+        getContentWidget: function() {
+            return this.contentWidget;
         },
 
         doCallback: function(e, callback) {
-            this.content.hideNotification();
+            this.hideNotification();
             if (callback instanceof Function) {
                 e.preventDefault();
-                var result = callback(this);
+                var result = lang.hitch(this, callback)(this);
                 if (result && result.then instanceof Function) {
                     result.then(lang.hitch(this, function() {
                         // success
                         this.hide();
                     }), lang.hitch(this, function(error) {
                         // error
-                        this.content.okBtn.reset();
-                        this.content.showBackendError(error);
+                        this.okBtn.reset();
+                        this.showBackendError(error);
                     }))
                 }
                 else {

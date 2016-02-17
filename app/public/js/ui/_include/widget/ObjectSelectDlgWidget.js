@@ -1,12 +1,10 @@
 define([
     "dojo/_base/declare",
-    "dojo/dom-construct",
     "./PopupDlgWidget",
     "./GridWidget",
     "../../../persistence/Store"
 ], function (
     declare,
-    domConstruct,
     PopupDlg,
     GridWidget,
     Store
@@ -37,18 +35,18 @@ define([
         grid: null,
         style: "width: 500px",
 
-        postCreate: function () {
-            this.inherited(arguments);
-
-            var gridNode = domConstruct.create("div", null, this.content.contentNode.parentNode);
+        /**
+         * @Override
+         */
+        getContentWidget: function() {
             this.grid = new GridWidget({
                 type: this.type,
                 store: Store.getStore(this.type, appConfig.defaultLanguage),
                 actions: [],
                 canEdit: false,
                 height: 198
-            }, gridNode);
-            this.grid.startup();
+            });
+            return this.grid;
         },
 
         getSelectedOids: function () {

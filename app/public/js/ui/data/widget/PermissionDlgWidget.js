@@ -3,6 +3,8 @@ define([
     "dojo/_base/lang",
     "dojo/promise/all",
     "dstore/Memory",
+    "dijit/_WidgetBase",
+    "dijit/_TemplatedMixin",
     "../../_include/widget/PopupDlgWidget",
     "../../data/input/widget/BinaryCheckBox",
     "../../data/input/widget/RadioButton",
@@ -18,6 +20,8 @@ define([
     lang,
     all,
     Memory,
+    _WidgetBase,
+    _TemplatedMixin,
     PopupDlg,
     BinaryCheckBox,
     Radio,
@@ -45,7 +49,9 @@ define([
         actions: ['read', 'update', 'delete'],
         userSelectCtrl: null,
 
-        style: "width: 500px",
+        okBtnText: Dict.translate('Save'),
+
+        style: "width: 600px",
         title: '<i class="fa fa-shield"></i> '+Dict.translate("Permissions"),
 
         postCreate: function () {
@@ -86,26 +92,23 @@ define([
             this.userSelectCtrl = new Select({
                 name: 'userSelectCtrl',
                 inputType: 'select:{"list":{"type":"node","types":["'+appConfig.userType+'"]}}'
-            }, this.content['userSelectCtrl']);
+            }, this.permissionsWidget.userSelectCtrl);
             this.userSelectCtrl.on('change', lang.hitch(this, function(id) {
                 var login = this.userSelectCtrl.get('displayedValue');
                 this.checkUserPermissions(login);
             }));
             this.userSelectCtrl.startup();
-
-            // save on ok clicked
-            this.okCallback = lang.hitch(this, this.save);
         },
 
         hide: function() {
             // close any multiselect popup menus
             for (var i=0, count=this.actions.length; i<count; i++) {
-                this.getContentWidget(this.actions[i]+'PermCtrl').close();
+                this[this.actions[i]+'PermCtrl'].close();
             }
             this.inherited(arguments);
         },
 
-        save: function() {
+        okCallback: function() {
             // save permissions
             var permissions = {};
             for (var i=0, count=this.actions.length; i<count; i++) {
@@ -113,10 +116,10 @@ define([
                 permissions[action] = {
                     'allow': [], 'deny': []
                 };
-                var defaultWidget = this.getContentWidget(action+'DefaultCtrl');
+                var defaultWidget = this[action+'DefaultCtrl'];
                 permissions[action]['default'] = defaultWidget.get('value') === '+' ? true : false;
 
-                var widget = this.getContentWidget(action+'PermCtrl');
+                var widget = this[action+'PermCtrl'];
                 var roles = widget.get('value');
                 for (var j=0, countJ=roles.length; j<countJ; j++) {
                   var role = roles[j];
@@ -144,14 +147,15 @@ define([
             var active = (permissions !== null);
 
             // activate control
-            var activateCtrl = new BinaryCheckBox({
-                name: action+'ActivateCtrl',
+            var name = action+'ActivateCtrl';
+            this[name] = new BinaryCheckBox({
+                name: name,
                 value: active ? "1" : "0"
-            }, this.content[action+'ActivateCtrl']);
-            activateCtrl.on('change', lang.hitch(this, function(isSelected) {
+            }, this.permissionsWidget[name]);
+            this[name].on('change', lang.hitch(this, function(isSelected) {
                 this.setDisabled(action, !isSelected);
             }));
-            activateCtrl.startup();
+            this[name].startup();
 
             // default permission control
             var defaultStore = new Memory({
@@ -160,11 +164,13 @@ define([
                     { id: '-', displayText: Dict.translate('deny') }
                 ]
             });
-            new Radio({
-                name: action+'DefaultCtrl',
+            var name = action+'DefaultCtrl';
+            this[name] = new Radio({
+                name: name,
                 store: defaultStore,
                 value: (permissions && permissions['default'] === true) ? '+' : '-'
-            }, this.content[action+'DefaultCtrl']).startup();
+            }, this.permissionsWidget[name]);
+            this[name].startup();
 
             // roles control
             var data = [];
@@ -176,22 +182,24 @@ define([
             var roleStore = new Memory({
                 data: data
             });
-            new MultiSelect({
-                name: action+'PermCtrl',
+            var name = action+'PermCtrl';
+            this[name] = new MultiSelect({
+                name: name,
                 store: roleStore,
                 value: this.permissionsToInput(permissions)
-            }, this.content[action+'PermCtrl']).startup();
+            }, this.permissionsWidget[name]);
+            this[name].startup();
 
             this.setDisabled(action, !active);
         },
 
         isDisabled: function(action) {
-            return this.getContentWidget(action+'ActivateCtrl').get('value') === "0";
+            return this[action+'ActivateCtrl'].get('value') === "0";
         },
 
         setDisabled: function(action, value) {
-            this.getContentWidget(action+'DefaultCtrl').set('disabled', value);
-            this.getContentWidget(action+'PermCtrl').set('disabled', value);
+            this[action+'DefaultCtrl'].set('disabled', value);
+            this[action+'PermCtrl'].set('disabled', value);
         },
 
         /**
@@ -236,19 +244,22 @@ define([
                         str += ' '+action;
                         display.push(str);
                     }
-                    this.content.userPermissions.innerHTML = display.join(' ');
+                    this.permissionsWidget.userPermissions.innerHTML = display.join(' ');
                 }));
             }
             else {
-                this.content.userPermissions.innerHTML = '';
+                this.permissionsWidget.userPermissions.innerHTML = '';
             }
         },
 
         /**
-         * Provide custom template
+         * @Override
          */
-        getTemplate: function() {
-            return template;
+        getContentWidget: function() {
+            this.permissionsWidget = new (declare([_WidgetBase, _TemplatedMixin], {
+                templateString: lang.replace(template, Dict.tplTranslate)
+            }));
+            return this.permissionsWidget;
         }
     });
 });
