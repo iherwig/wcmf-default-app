@@ -33,7 +33,6 @@ function(
                 onClick: lang.hitch(this, function() {
                     new PopupDlg({
                         title: Dict.translate("External source"),
-                        message: "",
                         contentWidget: codeTextBox,
                         okCallback: lang.hitch(this, function() {
                             // extract src from iframe

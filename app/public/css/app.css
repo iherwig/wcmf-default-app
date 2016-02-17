@@ -3,8 +3,6 @@
 @import url('../vendor/font-awesome/css/font-awesome.min.css');
 @import url('../vendor/sitepen/dgrid/css/dgrid.css');
 @import url('../vendor/dojo/dojo/resources/dnd.css');
-@import url('../vendor/sitepen/dgrid/css/extensions/ColumnHider.css');
-@import url('../vendor/sitepen/dgrid/css/extensions/ColumnResizer.css');
 @import url('../vendor/dojo/dojox/widget/ColorPicker/ColorPicker.css');
 @import url('../vendor/dojo/dojox/form/resources/CheckedMultiSelect.css');
 

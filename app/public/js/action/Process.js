@@ -88,6 +88,7 @@ define([
             });
 
             if (response.action === "download") {
+                iframe._currentDfd = null; // make sure the request is sent
                 iframe.post(appConfig.backendUrl, {
                     data: {
                         controller: controller,

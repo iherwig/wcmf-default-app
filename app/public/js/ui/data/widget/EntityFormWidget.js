@@ -218,7 +218,7 @@ function(
                 // set button states
                 this.setBtnState("save", false); // no modifications yet
                 this.setBtnState("delete", this.canDelete());
-                if (this.permissions['??setPermissions'] !== true) {
+                if (this.permissions['??setPermissions'] !== true && this.permissionsBtn) {
                     domClass.add(this.permissionsBtn.domNode, "hidden");
                 }
 

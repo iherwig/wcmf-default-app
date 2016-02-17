@@ -3,6 +3,9 @@ define([
     "dojo/_base/lang",
     "dojo/request",
     "dojo/dom-form",
+    "dijit/_WidgetBase",
+    "dijit/_TemplatedMixin",
+    "dijit/_WidgetsInTemplateMixin",
     "dijit/form/TextBox",
     "../../../User",
     "../../../locale/Dictionary",
@@ -13,6 +16,9 @@ define([
     lang,
     request,
     domForm,
+    _WidgetBase,
+    _TemplatedMixin,
+    _WidgetsInTemplateMixin,
     TextBox,
     User,
     Dict,
@@ -35,6 +41,7 @@ define([
 
         style: "width: 400px",
         title: '<i class="fa fa-sign-in"></i> '+Dict.translate("Sign in"),
+
         okCallback: function(dlg) {
             var data = domForm.toObject("loginForm");
             data.action = "login";
@@ -56,10 +63,13 @@ define([
         },
 
         /**
-         * Provide custom template
+         * @Override
          */
-        getTemplate: function() {
-            return template;
+        getContentWidget: function() {
+            this.formWidget = new (declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+                templateString: lang.replace(template, Dict.tplTranslate)
+            }));
+            return this.formWidget;
         },
 
         /**

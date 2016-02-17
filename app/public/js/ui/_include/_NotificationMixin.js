@@ -118,7 +118,7 @@ define([
             var error = BackendError.parseResponse(errorData);
             if (error.code === 'SESSION_INVALID') {
                 // prevent circular dependency
-                require([require.toAbsMid("./widget/LoginDlgWidget")], function(LoginDlg) {
+                require(['./widget/LoginDlgWidget'], function(LoginDlg) {
                     new LoginDlg({
                         success: function() {
                             topic.publish('refresh', function(request) {
