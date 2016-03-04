@@ -15,22 +15,11 @@ define([
         route: '',
         page: null,
 
-        /**
-         * Constructor. For additional parameters see ActionBase.
-         * @param page Instance of _PageMixin used for navigation
-         */
-        constructor: function(args) {
-            declare.safeMixin(this, args);
-        },
+        // action parameters
+        entity: null,
 
-        /**
-         * Navigate to edit page
-         * @param e The event that triggered execution, might be null
-         * @param entity Entity to edit
-         */
-        execute: function(e, entity) {
-            this.init(entity);
-            var oid = entity.get('oid');
+        execute: function() {
+            var oid = this.entity.get('oid');
             var route = this.page.getRoute(this.route);
             var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(oid));
             var id = Model.getIdFromOid(oid);

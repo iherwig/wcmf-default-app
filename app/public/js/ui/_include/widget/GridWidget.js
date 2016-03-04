@@ -122,7 +122,8 @@ define([
 
                               var columnNode = e.target.parentNode;
                               var row = this.grid.row(columnNode);
-                              action.execute(e, row.data);
+                              action.entity = row.data;
+                              action.execute();
                           }
                         }
                     })),

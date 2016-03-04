@@ -86,10 +86,12 @@ function(
                 this.type+'??delete',
                 '??setPermissions'
             ];
-            deferredList.push(new CheckPermissions().execute({}, requiredPermissions));
+            deferredList.push(new CheckPermissions({
+                operations: requiredPermissions
+            }).execute());
 
             all(deferredList).then(lang.hitch(this, function(results) {
-                this.permissions = results[0];
+                this.permissions = results[0].result ? results[0].result : {};
 
                 var enabledFeatures = [];
                 if (this.relation.isSortable) {
@@ -220,17 +222,15 @@ function(
                 route: this.route,
                 source: this.entity,
                 relation: this.relation,
-                init: lang.hitch(this, function(data) {
+                init: lang.hitch(this, function() {
                     this.hideNotification();
-                }),
-                callback: lang.hitch(this, function(result) {
-                    // success
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.showBackendError(error);
                 })
-            }).execute(e, this.relation.type);
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+            }), lang.hitch(this, function(error) {
+                // error
+                this.showBackendError(error);
+            }));
         },
 
         _link: function(e) {

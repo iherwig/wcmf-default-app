@@ -78,7 +78,7 @@ define([
             var getPermissions = new ActionSet().execute(null, getPermissionActions);
 
             // do server requests
-            all([loadRoles, getPermissions]).then(lang.hitch(this, function(results){
+            all([loadRoles, getPermissions]).then(lang.hitch(this, function(results) {
                 var roles = results[0];
                 var permissions = results[1];
 

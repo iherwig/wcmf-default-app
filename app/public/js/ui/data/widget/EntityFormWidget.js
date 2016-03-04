@@ -147,11 +147,13 @@ function(
                 var relation = relations[i];
                 requiredPermissions.push(Model.getFullyQualifiedTypeName(relation.type)+'??read');
             }
-            deferredList.push(new CheckPermissions().execute({}, requiredPermissions));
+            deferredList.push(new CheckPermissions({
+                operations: requiredPermissions
+            }).execute());
 
             all(deferredList).then(lang.hitch(this, function(results) {
                 var controls = results[0];
-                this.permissions = results[1];
+                this.permissions = results[1].result ? results[1].result : {};
 
                 this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
 

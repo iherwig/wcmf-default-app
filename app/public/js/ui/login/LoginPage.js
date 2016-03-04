@@ -12,7 +12,6 @@ define([
     "../../Startup",
     "../../locale/Dictionary",
     "../../action/Login",
-    "../../action/Log",
     "d3/d3.min",
     "trianglify/trianglify.min",
     "dojo/text!./template/LoginPage.html"
@@ -30,7 +29,6 @@ define([
     Startup,
     Dict,
     Login,
-    Log,
     d3,
     trianglify,
     template
@@ -103,34 +101,33 @@ define([
 
             this.hideNotification();
             new Login({
-                callback: lang.hitch(this, function(response) {
-                    Log.error("logged into FE");
-                    // success
-                    this.loginBtn.reset();
-                    User.create(data.user, response.roles);
+                user: data.user,
+                password: data.password
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                this.loginBtn.reset();
+                User.create(data.user, response.roles);
 
-                    // run startup code
-                    Startup.run().then(lang.hitch(this, function(result) {
-                          var redirectRoute = this.request.getQueryParam("route");
-                          if (redirectRoute) {
-                              // redirect to initially requested route if given
-                              window.location.assign(this.request.getPathname()+redirectRoute);
-                          }
-                          else {
-                              // redirect to default route
-                              window.location.assign(this.request.getPathname()+"home");
-                          }
-                    }), lang.hitch(this, function(error) {
-                          // error
-                          this.showBackendError(error);
-                    }));
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.loginBtn.reset();
-                    this.showBackendError(error);
-                })
-            }).execute({}, data);
+                // run startup code
+                Startup.run().then(lang.hitch(this, function(result) {
+                      var redirectRoute = this.request.getQueryParam("route");
+                      if (redirectRoute) {
+                          // redirect to initially requested route if given
+                          window.location.assign(this.request.getPathname()+redirectRoute);
+                      }
+                      else {
+                          // redirect to default route
+                          window.location.assign(this.request.getPathname()+"home");
+                      }
+                }), lang.hitch(this, function(error) {
+                      // error
+                      this.showBackendError(error);
+                }));
+            }), lang.hitch(this, function(error) {
+                // error
+                this.loginBtn.reset();
+                this.showBackendError(error);
+            }));
         }
     });
 });

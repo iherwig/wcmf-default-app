@@ -77,7 +77,7 @@ class RootController extends Controller {
 
     // check for authenticated user
     $session = $this->getSession();
-    $isLoggedIn = !($session->getAuthUser() instanceof AnonymousUser);
+    $isLoggedIn = $session->getAuthUser() != AnonymousUser::USER_GROUP_NAME;
 
     // get configuration values
     $configuration = $this->getConfiguration();

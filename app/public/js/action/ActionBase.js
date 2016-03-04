@@ -11,10 +11,16 @@ define([
     query,
     domClass
 ) {
+    /**
+     * Base class for actions. Actions are executed using the execute() method.
+     * They can either act local or perform a server call.
+     */
     return declare([], {
 
         name: '',
         iconClass:  'fa fa-asterisk',
+
+        // action parameters (optional)
         init: function(){},
         callback: function(){},
         errback: function(){},
@@ -24,13 +30,7 @@ define([
         _hasSpinner: false,
 
         /**
-         * Constructor. Clients may either use the callback/errback/progback
-         * parameters or the deferred instances returned by execute to handle
-         * the action response.
-         * @param init Function to be before action is executed (optional)
-         * @param callback Function to be called on success (optional)
-         * @param errback Function to be called on error (optional)
-         * @param progback Function to be called to signal a progress (optional)
+         * Constructor
          */
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -38,6 +38,10 @@ define([
             // set spinner icon, if execution event target has iconClass
             aspect.around(this, "execute", function(original) {
                 return function() {
+                    // call init before execution
+                    if (this.init instanceof Function) {
+                        this.init();
+                    }
                     var deferred = original.apply(this, arguments);
 
                     if (deferred && deferred.then instanceof Function) {
@@ -62,6 +66,7 @@ define([
                                 domClass.replace(this._iconNode, this.iconClass, "fa fa-spinner fa-spin");
                             }
                         }));
+                        deferred.then(this.callback, this.errback, this.progback)
                     }
                     return deferred;
                 };
@@ -71,11 +76,7 @@ define([
         /**
          * Execute the action.
          * @param e The event that triggered execution, might be null
-         * @return Deferred if the action is async
-         *
-         * Note: Concrete Action classes may require additional parameters
-         * Implementation hints: Before start, call this.init. When done, call
-         * this.callback, this.errback, this.progback depending on the execution result.
+         * @return Deferred instance
          */
         execute: function(e) {
             throw("Method execute() must be implemented by concrete action.");

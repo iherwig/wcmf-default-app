@@ -18,7 +18,7 @@
                 "name": "olympos/chronos-generator",
                 "version": "1.0.0",
                 "dist": {
-                    "url": "http://downloads.sourceforge.net/project/olympos/ChronosGenerator-wCMF/ChronosGenerator-wCMF-1.0.0.zip",
+                    "url": "https://downloads.sourceforge.net/project/olympos/ChronosGenerator-wCMF/ChronosGenerator-wCMF-1.0.0.zip",
                     "type": "zip"
                 }
             }
@@ -141,7 +141,7 @@
                 "type": "wcmf-asset",
                 "version": "dev-2.1_n",
                 "dist": {
-                    "url": "http://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1_n.zip",
+                    "url": "https://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1_n.zip",
                     "type": "zip"
                 },
                 "require": {

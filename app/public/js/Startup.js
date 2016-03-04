@@ -34,7 +34,9 @@ define([
         var deferredList = {};
 
         // load localized ui text
-        deferredList["messages"] = new Messages().execute({}, appConfig.uiLanguage);
+        deferredList["messages"] = new Messages({
+            language: appConfig.uiLanguage
+        }).execute();
 
         // check for read access to root types for the current user
         if (User.isLoggedIn()) {
@@ -43,7 +45,9 @@ define([
                 var rootType = appConfig.rootTypes[i];
                 requiredPermissions.push(Model.getFullyQualifiedTypeName(rootType)+'??read');
             }
-            deferredList["rootTypePermissions"] = new CheckPermissions().execute({}, requiredPermissions);
+            deferredList["rootTypePermissions"] = new CheckPermissions({
+                operations: requiredPermissions
+            }).execute();
         }
 
         // wait for all operations
@@ -53,7 +57,8 @@ define([
 
             // restrict root types to those visible to the current user
             if (User.isLoggedIn()) {
-                var permissions = results["rootTypePermissions"];
+                var permissionsResponse = results["rootTypePermissions"];
+                var permissions = permissionsResponse.result ? permissionsResponse.result : {};
                 var visibleRootTypes = [];
                 for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
                     var rootType = appConfig.rootTypes[i];

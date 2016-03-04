@@ -13,26 +13,15 @@ define([
         iconClass: 'fa fa-star',
 
         route: '',
-        source: null, /* Entity */
-        relation: null,
         page: null,
 
-        /**
-         * Constructor. For additional parameters see ActionBase.
-         * @param page Instance of _PageMixin used for navigation
-         */
-        constructor: function(args) {
-            declare.safeMixin(this, args);
-        },
+        // action parameters
+        source: null, /* Entity */
+        relation: null,
 
-        /**
-         * Navigate to create page for an object that is in relation to source
-         * @param e The event that triggered execution, might be null
-         * @param type Name of the type to create
-         */
-        execute: function(e, type) {
-            this.init(type);
+        execute: function() {
             var route = this.page.getRoute(this.route);
+            var type = this.relation.type;
             var oid = Model.createDummyOid(type);
             var pathParams = { type:type, id:Model.getIdFromOid(oid) };
             var url = route.assemble(pathParams);

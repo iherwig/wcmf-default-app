@@ -47,14 +47,15 @@ define([
         okCallback: function(dlg) {
             var data = domForm.toObject("loginForm");
             new Login({
-                callback: lang.hitch(this, function(response) {
-                    // success
-                    User.create(data.user, response.roles);
-                    if (dlg.success instanceof Function) {
-                        dlg.success(this);
-                    }
-                })
-            }).execute({}, data);
+                user: data.user,
+                password: data.password
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                User.create(data.user, response.roles);
+                if (dlg.success instanceof Function) {
+                    dlg.success(this);
+                }
+            }));
         },
 
         /**

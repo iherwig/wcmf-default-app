@@ -1,14 +1,10 @@
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang",
     "dojo/request",
-    "dojo/Deferred",
     "./ActionBase"
 ], function (
     declare,
-    lang,
     request,
-    Deferred,
     ActionBase
 ) {
     return declare([ActionBase], {
@@ -16,34 +12,25 @@ define([
         name: 'changePassword',
         iconClass: 'fa fa-user-secret',
 
-        path: appConfig.backendUrl+'settings/password',
+        path: appConfig.backendUrl+'user/password',
 
-        /**
-         * Change the user's password
-         * @param e The event that triggered execution, might be null
-         * @param data Login data
-         * @return Deferred
-         */
-        execute: function(e, data) {
-            this.init(data);
-            var deferred = new Deferred();
-            request.put(this.path, {
-                data: data,
+        // action paramenters
+        oldpassword: '',
+        newpassword1: '',
+        newpassword2: '',
+
+        execute: function() {
+            return request.put(this.path, {
+                data: {
+                    oldpassword: this.oldpassword,
+                    newpassword1: this.newpassword1,
+                    newpassword2: this.newpassword2
+                },
                 headers: {
                     Accept: "application/json"
                 },
                 handleAs: 'json'
-
-            }).then(lang.hitch(this, function(response) {
-                // success
-                this.callback(response);
-                deferred.resolve(response.result);
-            }), lang.hitch(this, function(error) {
-                // error
-                this.errback(error);
-                deferred.reject(error);
-            }));
-            return deferred;
+            });
         }
     });
 });

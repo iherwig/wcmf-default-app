@@ -85,10 +85,12 @@ function(
                 this.type+'??delete',
                 '??setPermissions'
             ];
-            deferredList.push(new CheckPermissions().execute({}, requiredPermissions));
+            deferredList.push(new CheckPermissions({
+                operations: requiredPermissions
+            }).execute());
 
             all(deferredList).then(lang.hitch(this, function(results) {
-                this.permissions = results[0];
+                this.permissions = results[0].result ? results[0].result : {};
 
                 var store = Store.getStore(this.type, appConfig.defaultLanguage);
 
@@ -158,12 +160,12 @@ function(
 
             if (this.permissions[this.type+'??copy'] === true) {
                 var copyAction = new Copy({
-                    init: lang.hitch(this, function(data) {
+                    init: lang.hitch(this, lang.partial(function() {
                         this.showNotification({
                             type: "process",
-                            message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(data)])
+                            message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(copyAction.entity)])
                         });
-                    }),
+                    }, copyAction)),
                     callback: lang.hitch(this, function(result) {
                         // success
                         this.showNotification({
@@ -183,7 +185,7 @@ function(
 
             if (this.permissions[this.type+'??delete'] === true) {
                 var deleteAction = new Delete({
-                    init: lang.hitch(this, function(data) {
+                    init: lang.hitch(this, function() {
                         this.hideNotification();
                     }),
                     callback: lang.hitch(this, function(result) {
@@ -216,8 +218,9 @@ function(
 
             new Create({
                 page: this.page,
-                route: this.route
-            }).execute(e, this.type);
+                route: this.route,
+                type: this.type
+            }).execute();
         }
     });
 });

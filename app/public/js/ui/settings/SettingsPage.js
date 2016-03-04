@@ -47,21 +47,22 @@ define([
 
             this.hideNotification();
             new ChangePassword({
-                callback: lang.hitch(this, function(response) {
-                    // success
-                    this.saveBtn.reset();
-                    this.showNotification({
-                        type: "ok",
-                        message: Dict.translate("The password was successfully changed"),
-                        fadeOut: true
-                    });
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.saveBtn.reset();
-                    this.showBackendError(error);
-                })
-            }).execute({}, data);
+                oldpassword: data.oldpassword,
+                newpassword1: data.newpassword1,
+                newpassword2: data.newpassword2
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                this.saveBtn.reset();
+                this.showNotification({
+                    type: "ok",
+                    message: Dict.translate("The password was successfully changed"),
+                    fadeOut: true
+                });
+            }), lang.hitch(this, function(error) {
+                // error
+                this.saveBtn.reset();
+                this.showBackendError(error);
+            }));
         }
     });
 });
