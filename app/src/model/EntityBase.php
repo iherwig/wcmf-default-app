@@ -34,8 +34,8 @@ class EntityBase extends EntityBaseBase {
     // set creator on nodes with appropriate attribute
     if ($mapper->hasAttribute('creator')) {
       $session = ObjectFactory::getInstance('session');
-      $authUser = $session->getAuthUser();
-      $this->setValue('creator', $authUser->getLogin());
+      $authUserLogin = $session->getAuthUser();
+      $this->setValue('creator', $authUserLogin);
     }
     $this->beforeUpdate();
   }
@@ -54,8 +54,8 @@ class EntityBase extends EntityBaseBase {
     // set last_editor on nodes with appropriate attribute
     if ($mapper->hasAttribute('last_editor')) {
       $session = ObjectFactory::getInstance('session');
-      $authUser = $session->getAuthUser();
-      $this->setValue('last_editor', $authUser->getLogin());
+      $authUserLogin = $session->getAuthUser();
+      $this->setValue('last_editor', $authUserLogin);
     }
   }
 // PROTECTED REGION END
