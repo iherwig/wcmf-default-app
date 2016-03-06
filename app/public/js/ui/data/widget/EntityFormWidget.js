@@ -531,22 +531,21 @@ function(
             }
 
             new Delete({
-                init: lang.hitch(this, function(data) {
+                entity: this.entity,
+                init: lang.hitch(this, function() {
                     this.hideNotification();
-                }),
-                callback: lang.hitch(this, function(data, result) {
-                    // success
-                    // notify tab panel to close tab
-                    topic.publish("tab-closed", {
-                        oid: this.entity.get('oid')
-                    });
-                    this.destroyRecursive();
-                }),
-                errback: lang.hitch(this, function(data, result) {
-                    // error
-                    this.showBackendError(result, true);
                 })
-            }).execute(e, this.entity);
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                // notify tab panel to close tab
+                topic.publish("tab-closed", {
+                    oid: this.entity.get('oid')
+                });
+                this.destroyRecursive();
+            }), lang.hitch(this, function(error) {
+                // error
+                this.showBackendError(error, true);
+            }));
         },
 
         _toggleLock: function(e) {

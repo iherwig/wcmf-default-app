@@ -16,18 +16,15 @@ define([
         name: 'permissions',
         iconClass: 'fa fa-shield',
 
-        /**
-         * Open to permissions dialog
-         * @param e The event that triggered execution, might be null
-         * @param entity Entity to open permissions dialog for
-         */
-        execute: function(e, entity) {
-            this.init(entity);
-            var oid = entity.get('oid');
+        // action parameters
+        entity: null,
+
+        execute: function() {
+            var oid = this.entity.get('oid');
             var typeClass = Model.getType(Model.getTypeNameFromOid(oid));
-            var displayValue = typeClass.getDisplayValue(entity);
+            var displayValue = typeClass.getDisplayValue(this.entity);
             new PermissionDlg({
-                oid: entity.get('oid'),
+                oid: this.entity.get('oid'),
                 message: Dict.translate("Permissions for <em>%0%</em>", [displayValue])
             }).show();
         }

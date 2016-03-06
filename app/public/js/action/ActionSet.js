@@ -1,15 +1,13 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/request",
-    "dojo/json",
+    "dojo/promise/all",
     "dojo/Deferred",
     "./ActionBase"
 ], function (
     declare,
     lang,
-    request,
-    JSON,
+    all,
     Deferred,
     ActionBase
 ) {
@@ -51,13 +49,12 @@ define([
 //            }));
           var promises = [];
           for (var i=0, count=actions.length; i<count; i++) {
-            promises.push(actions[i].execute())
+              promises.push(actions[i].execute())
           }
-          promises.push(store.get(store.getIdentity(this.entity)));
-          all(promises).then(lang.hitch(this, function(loadResults) {
+          all(promises).then(lang.hitch(this, function(results) {
               // allow to watch for changes of the object data
-              this.entity = loadResults[0];
-              this.original = this.isTranslation ? loadResults[1] : {};
+              this.entity = results[0];
+              this.original = this.isTranslation ? results[1] : {};
               this.buildForm();
               this.setTitle(this.title+" - "+this.typeClass.getDisplayValue(this.entity));
           }), lang.hitch(this, function(error) {

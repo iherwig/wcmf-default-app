@@ -225,12 +225,7 @@ function(
                 init: lang.hitch(this, function() {
                     this.hideNotification();
                 })
-            }).execute().then(lang.hitch(this, function(response) {
-                // success
-            }), lang.hitch(this, function(error) {
-                // error
-                this.showBackendError(error);
-            }));
+            }).execute();
         },
 
         _link: function(e) {
