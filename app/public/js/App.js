@@ -60,39 +60,37 @@ define([
         makeNotFoundPage: function () {
             var request = new Request(window.location.href),
                 makePage = function (Page) {
-                    this.setCss();
-                    this.setPageNode();
+                    this.clearCss();
+                    this.prepareDomNode();
 
                     var page = new Page({
                         request: request,
                         router: this.router
-                    }, this.pageNodeId);
+                    }, this.domNode);
 
-                    page.startup();
                     this.notification.clear();
+                    page.startup();
                 }
             ;
-
             require(['./ui/error/NotFoundPage'], lang.hitch(this, makePage));
         },
 
         makeErrorPage: function (error) {
             var request = new Request(window.location.href),
                 makePage = function (Page) {
-                    this.setCss();
-                    this.setPageNode();
+                    this.clearCss();
+                    this.prepareDomNode();
 
                     var page = new Page({
                         request: request,
                         router: this.router,
                         error: error
-                    }, this.pageNodeId);
+                    }, this.domNode);
 
-                    page.startup();
                     this.notification.clear();
+                    page.startup();
                 }
             ;
-
             require(['./ui/error/ErrorPage'], lang.hitch(this, makePage));
         },
 

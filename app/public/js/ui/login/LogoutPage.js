@@ -33,17 +33,14 @@ define([
         },
 
         _logout: function() {
-            new Logout({
-                callback: lang.hitch(this, function(response) {
-                    // redirect to login
-                    Cookie.destroy();
-                    window.location.assign(appConfig.backendUrl);
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.showBackendError(error);
-                })
-            }).execute({});
+            new Logout().execute().then(lang.hitch(this, function(response) {
+                // redirect to login
+                Cookie.destroy();
+                window.location.assign(appConfig.backendUrl);
+            }), lang.hitch(this, function(error) {
+                // error
+                this.showBackendError(error);
+            }));
         }
     });
 });

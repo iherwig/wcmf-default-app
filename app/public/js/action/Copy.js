@@ -23,7 +23,7 @@ define([
         entity: null,
 
         execute: function() {
-            this.deferred = new Process().run("copy", {
+            this.deferred = new Process('copy').run({
                 oid: this.entity.get('oid'),
                 targetoid: this.targetOid
             });

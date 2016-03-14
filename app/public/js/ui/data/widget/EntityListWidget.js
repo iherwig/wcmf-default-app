@@ -160,6 +160,7 @@ function(
 
             if (this.permissions[this.type+'??copy'] === true) {
                 var copyAction = new Copy({
+                    targetOid: null,
                     init: lang.hitch(this, lang.partial(function() {
                         this.showNotification({
                             type: "process",

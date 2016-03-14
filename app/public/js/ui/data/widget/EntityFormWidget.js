@@ -371,8 +371,8 @@ function(
 
         acquireLock: function() {
             new Lock({
-                lockType: "optimistic",
-                init: lang.hitch(this, function(data) {})
+                entity: this.entity,
+                lockType: "optimistic"
             }).execute({}, this.entity).then(
                 lang.hitch(this, function(result) {
                     // success
@@ -564,8 +564,8 @@ function(
             });
             var action = this.isLocked ? Unlock : Lock;
             new action({
-                lockType: "pessimistic",
-                init: lang.hitch(this, function(data) {})
+                entity: this.entity,
+                lockType: "pessimistic"
             }).execute(e, this.entity).then(
                 lang.hitch(this, function(result) {
                     // success

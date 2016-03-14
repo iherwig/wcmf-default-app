@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/Deferred",
     "dojo/promise/all",
     "./ActionBase",
     "../ui/_include/widget/ObjectSelectDlgWidget",
@@ -11,6 +12,7 @@ define([
 ], function (
     declare,
     lang,
+    Deferred,
     all,
     ActionBase,
     ObjectSelectDlg,
@@ -24,24 +26,24 @@ define([
         name: 'link',
         iconClass: 'fa fa-link',
 
+        // action parameters
         source: null, /* Entity */
         relation: null,
 
-        /**
-         * Show a object selection dialog and execute the link action for
-         * the selected objects on the store
-         * @param e The event that triggered execution, might be null
-         * @return Deferred
-         */
-        execute: function(e) {
-            this.init();
-            return new ObjectSelectDlg({
-                type: this.relation.type,
+        execute: function() {
+            var relationType = this.relation.type;
+            var relationName = this.relation.name;
+            var oid = this.source.get('oid');
+            var displayValue = Model.getTypeFromOid(oid).getDisplayValue(this.source);
+
+            var deferred = new Deferred();
+            new ObjectSelectDlg({
+                type: relationType,
                 title: Dict.translate("Choose Objects"),
                 message: Dict.translate("Select <em>%0%</em> objects, you want to link to <em>%1%</em>",
-                    [Dict.translate(this.relation.type), Model.getTypeFromOid(this.source.get('oid')).getDisplayValue(this.source)]),
+                    [Dict.translate(relationType), displayValue]),
                 okCallback: lang.hitch(this, function(dlg) {
-                    var store = RelationStore.getStore(this.source.get('oid'), this.relation.name);
+                    var store = RelationStore.getStore(oid, relationName);
 
                     var oids = dlg.getSelectedOids();
                     var deferredList = [];
@@ -51,14 +53,15 @@ define([
                     }
                     all(deferredList).then(lang.hitch(this, function(results) {
                         // callback completes
-                        this.callback(results);
+                        deferred.resolve(results);
                     }), lang.hitch(this, function(error) {
                         // error
-                        this.errback(error);
+                        deferred.reject(error);
                     }));
                     return all(deferredList);
                 })
             }).show();
+            return deferred;
         }
     });
 });

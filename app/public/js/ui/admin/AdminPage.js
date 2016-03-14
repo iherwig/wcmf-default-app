@@ -54,7 +54,7 @@ define([
         startProcess: function(action, btn, message) {
             btn.setProcessing();
             this.hideNotification();
-            new Process().run(action).then(
+            new Process(action).run().then(
                 lang.hitch(this, lang.partial(this.finishProcess, btn, message)),
                 lang.hitch(this, lang.partial(this.errorHandler, btn)),
                 lang.hitch(this, this.progressHandler)

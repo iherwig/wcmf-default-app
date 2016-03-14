@@ -235,19 +235,17 @@ function(
             new Link({
                 source: this.entity,
                 relation: this.relation,
-                init: lang.hitch(this, function(data) {
+                init: lang.hitch(this, function() {
                     this.hideNotification();
-                }),
-                callback: lang.hitch(this, function(result) {
-                    // success
-                    this.gridWidget.refresh();
-                }),
-                errback: lang.hitch(this, function(error) {
-                    // error
-                    this.showBackendError(error);
-                    this.gridWidget.refresh();
                 })
-            }).execute(e);
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                this.gridWidget.refresh();
+            }), lang.hitch(this, function(error) {
+                // error
+                this.showBackendError(error);
+                this.gridWidget.refresh();
+            }));
         }
     });
 });
