@@ -185,13 +185,13 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_UIW6AeoHEeWY_Z6IknJMgQ" value="action=continue&amp;controller=wcmf\application\controller\CopyController"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_UfoxkOoHEeWY_Z6IknJMgQ" name="POST/process/export" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_UfoxkeoHEeWY_Z6IknJMgQ" value="action=export"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_UfoxkeoHEeWY_Z6IknJMgQ" value="action=exportAll"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_Uu8Y4OoHEeWY_Z6IknJMgQ" name="POST/process/export/continue" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_Uu8Y4eoHEeWY_Z6IknJMgQ" value="action=continue&amp;controller=wcmf\application\controller\XMLExportController"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_U10c8OoHEeWY_Z6IknJMgQ" name="POST/process/index" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_U10c8eoHEeWY_Z6IknJMgQ" value="action=index"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_U10c8eoHEeWY_Z6IknJMgQ" value="action=indexAll"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_U7520OoHEeWY_Z6IknJMgQ" name="POST/process/index/continue" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_U7520eoHEeWY_Z6IknJMgQ" value="action=continue&amp;controller=wcmf\application\controller\SearchIndexController"/>

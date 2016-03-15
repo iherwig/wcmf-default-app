@@ -89,11 +89,11 @@ define([
                 response: response
             });
 
-            if (response.action === "download") {
+            if (response.status === 'download') {
                 iframe.post(this.getBackendUrl());
                 this.deferred.resolve(response);
             }
-            else if (response.action === "done") {
+            else if (response.status === 'done') {
                 // the task is finished
                 this.deferred.resolve(response);
             }

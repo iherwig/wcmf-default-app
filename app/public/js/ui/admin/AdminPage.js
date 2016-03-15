@@ -39,7 +39,7 @@ define([
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            this.startProcess("indexAll",
+            this.startProcess('index',
                 this.indexBtn, Dict.translate("The search index was successfully updated."));
         },
 
@@ -47,7 +47,7 @@ define([
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            this.startProcess("exportAll",
+            this.startProcess('export',
                 this.exportBtn, Dict.translate("The content was successfully exported."));
         },
 

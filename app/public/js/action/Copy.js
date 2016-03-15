@@ -2,12 +2,14 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/topic",
+    "dojo/Deferred",
     "./Process",
     "./ActionBase"
 ], function (
     declare,
     lang,
     topic,
+    Deferred,
     Process,
     ActionBase
 ) {
@@ -23,11 +25,11 @@ define([
         entity: null,
 
         execute: function() {
-            this.deferred = new Process('copy').run({
+            this.deferred = new Deferred();
+            new Process('copy').run({
                 oid: this.entity.get('oid'),
                 targetoid: this.targetOid
-            });
-            this.deferred.then(
+            }).then(
                 lang.hitch(this, this.successHandler),
                 lang.hitch(this, this.errorHandler),
                 lang.hitch(this, this.progressHandler)
