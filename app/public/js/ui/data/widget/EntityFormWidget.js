@@ -374,11 +374,11 @@ function(
                 entity: this.entity,
                 lockType: "optimistic"
             }).execute({}, this.entity).then(
-                lang.hitch(this, function(result) {
+                lang.hitch(this, function(response) {
                     // success
                     // not locked by other user
                     this.setLockState(false, true);
-                    if (result.type === "pessimistic") {
+                    if (response.type === "pessimistic") {
                         // pessimistic lock owned by user
                         this.setLockState(true, true);
                     }
@@ -434,12 +434,12 @@ function(
                 }
 
                 var storeMethod = this.isNew ? "add" : "put";
-                store[storeMethod](data, {overwrite: !this.isNew}).then(lang.hitch(this, function(response) {
+                store[storeMethod](data, {overwrite: !this.isNew}).then(lang.hitch(this, function(result) {
                     // callback completes
                     this.saveBtn.reset();
-                    if (response.errorMessage) {
+                    if (result.errorMessage) {
                         // error
-                        this.showBackendError(response, true);
+                        this.showBackendError(result, true);
                     }
                     else {
                         // success
@@ -450,9 +450,9 @@ function(
                         for (var i=0, count=attributes.length; i<count; i++) {
                             var attributeName = attributes[i].name;
                             // notify listeners
-                            this.entity.set(attributeName, response[attributeName]);
+                            this.entity.set(attributeName, result[attributeName]);
                         }
-                        this.entity.set('oid', response.get('oid'));
+                        this.entity.set('oid', result.get('oid'));
 
                         // reset attribute widgets
                         for (var i=0, c=this.attributeWidgets.length; i<c; i++) {
@@ -567,7 +567,7 @@ function(
                 entity: this.entity,
                 lockType: "pessimistic"
             }).execute(e, this.entity).then(
-                lang.hitch(this, function(result) {
+                lang.hitch(this, function(response) {
                     // success
                     this.showNotification({
                         type: "ok",

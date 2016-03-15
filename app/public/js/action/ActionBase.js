@@ -75,10 +75,9 @@ define([
 
         /**
          * Execute the action.
-         * @param e The event that triggered execution, might be null
          * @return Deferred instance
          */
-        execute: function(e) {
+        execute: function() {
             throw("Method execute() must be implemented by concrete action.");
         }
     });

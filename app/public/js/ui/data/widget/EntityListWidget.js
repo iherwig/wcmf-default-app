@@ -167,11 +167,11 @@ function(
                             message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(copyAction.entity)])
                         });
                     }, copyAction)),
-                    callback: lang.hitch(this, function(result) {
+                    callback: lang.hitch(this, function(response) {
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
                         this.gridWidget.refresh();
@@ -189,11 +189,11 @@ function(
                     init: lang.hitch(this, function() {
                         this.hideNotification();
                     }),
-                    callback: lang.hitch(this, function(result) {
+                    callback: lang.hitch(this, function(response) {
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
                     }),

@@ -108,8 +108,8 @@
       </fileset>
     </copy>
     <!-- replace rewriteBase in .htaccess -->
-    <property name="path.app" location="${build.base}/${app.name}/public"/>
-    <property name="path.dist" location="${dist.dir}/${app.name}/public"/>
+    <property name="path.app" location="${build.base}/${app.name}"/>
+    <property name="path.dist" location="${dist.dir}/${app.name}"/>
     <script language="javascript"><![CDATA[
       var path1 = new String(project.getProperty("path.app"));
       var path2 = new String(project.getProperty("path.dist"));
@@ -132,7 +132,7 @@
         return index == 1 ? path1 : path2;
       }
     ]]></script>
-    <replaceregexp file="${dist.dir}/${app.name}/public/.htaccess"
+    <replaceregexp file="${dist.dir}/${app.name}/.htaccess"
       match="RewriteBase (.*)${rewritebase.search}"
       replace="RewriteBase \1${rewritebase.replace}"
     />

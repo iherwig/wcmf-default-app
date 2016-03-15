@@ -147,11 +147,11 @@ function(
                             message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(data)])
                         });
                     }),
-                    callback: lang.hitch(this, function(result) {
+                    callback: lang.hitch(this, function(response) {
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
                         this.gridWidget.refresh();
@@ -167,11 +167,11 @@ function(
             if (this.relation.aggregationKind === "composite") {
                 if (this.permissions[this.type+'??delete'] === true) {
                     var deleteAction = new Delete({
-                        callback: lang.hitch(this, function(result) {
+                        callback: lang.hitch(this, function(response) {
                             // success
                             this.showNotification({
                                 type: "ok",
-                                message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(result)]),
+                                message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(response)]),
                                 fadeOut: true
                             });
                             this.gridWidget.refresh();
@@ -188,11 +188,11 @@ function(
                 var unlinkAction = new Unlink({
                     source: this.entity,
                     relation: this.relation,
-                    callback: lang.hitch(this, function(result) {
+                    callback: lang.hitch(this, function(response) {
                         // success
                         this.showNotification({
                             type: "ok",
-                            message: Dict.translate("<em>%0%</em> was successfully unlinked", [this.typeClass.getDisplayValue(result)]),
+                            message: Dict.translate("<em>%0%</em> was successfully unlinked", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
                         this.gridWidget.refresh();

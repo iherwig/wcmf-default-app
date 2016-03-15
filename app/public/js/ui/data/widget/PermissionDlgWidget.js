@@ -10,7 +10,10 @@ define([
     "../../data/input/widget/RadioButton",
     "../../data/input/widget/MultiSelectBox",
     "../../data/input/widget/SelectBox",
-    "../../../action/ActionSet",
+    "../../../action/CheckPermissions",
+    "../../../action/GetPermissions",
+    "../../../action/SetPermissions",
+    "../../../action/Log",
     "../../../model/meta/Model",
     "../../../persistence/Store",
     "../../../locale/Dictionary",
@@ -27,7 +30,10 @@ define([
     Radio,
     MultiSelect,
     Select,
-    ActionSet,
+    CheckPermissions,
+    GetPermissions,
+    SetPermissions,
+    Log,
     Model,
     Store,
     Dict,
@@ -56,36 +62,29 @@ define([
 
         postCreate: function () {
             this.inherited(arguments);
+            var deferredList = {};
 
             // query roles
             var store = Store.getStore(Model.getSimpleTypeName(appConfig.roleType),
                 appConfig.defaultLanguage);
-            var loadRoles = store.fetch();
+            deferredList['roles'] = store.fetch();
 
             // get permissions
-            var getPermissionActions = {};
             for (var i=0, count=this.actions.length; i<count; i++) {
                 var action = this.actions[i];
-                getPermissionActions[action] = {
-                    action: 'getPermissions',
-                    params: {
-                        resource: this.oid,
-                        context: '',
-                        action: action
-                    }
-                };
+                deferredList[action] = new GetPermissions({
+                    operation: this.oid+'??'+action
+                }).execute();
             }
-            var getPermissions = new ActionSet().execute(null, getPermissionActions);
 
             // do server requests
-            all([loadRoles, getPermissions]).then(lang.hitch(this, function(results) {
-                var roles = results[0];
-                var permissions = results[1];
+            all(deferredList).then(lang.hitch(this, function(results) {
+                var roles = results['roles'];
 
                 // create permission controls
                 for (var i=0, count=this.actions.length; i<count; i++) {
                     var action = this.actions[i];
-                    this.createControls(action, permissions[action].result, roles);
+                    this.createControls(action, results[action].result, roles);
                 }
             }));
 
@@ -127,20 +126,15 @@ define([
                   permissions[action][section].push(role.substring(1, role.length));
                 }
             }
-            var setPermissionActions = {};
+            var deferredList = {};
             for (var i=0, count=this.actions.length; i<count; i++) {
                 var action = this.actions[i];
-                setPermissionActions[action] = {
-                    action: 'setPermissions',
-                    params: {
-                        resource: this.oid,
-                        context: '',
-                        action: action,
-                        permissions: this.isDisabled(action) ? null : permissions[action]
-                    }
-                };
+                deferredList[action] = new SetPermissions({
+                    operation: this.oid+'??'+action,
+                    permissions: this.isDisabled(action) ? null : permissions[action]
+                }).execute();
             }
-            return new ActionSet().execute(null, setPermissionActions);
+            return all(deferredList);
         },
 
         createControls: function(action, permissions, roles) {
@@ -227,15 +221,11 @@ define([
                 for (var i=0, count=this.actions.length; i<count; i++) {
                     operations.push(this.oid+'??'+this.actions[i]);
                 }
-                var checkPermissionsAction = [{
-                    action: 'checkPermissionsOfUser',
-                    params: {
-                        operations: operations,
-                        user: login
-                    }
-                }];
-                new ActionSet().execute(null, checkPermissionsAction).then(lang.hitch(this, function(result) {
-                    var permissions = result[0].result;
+                new CheckPermissions({
+                    operations: operations,
+                    user: login
+                }).execute().then(lang.hitch(this, function(response) {
+                    var permissions = response.result;
                     var display = [];
                     for (var i=0, count=this.actions.length; i<count; i++) {
                         var action = this.actions[i];

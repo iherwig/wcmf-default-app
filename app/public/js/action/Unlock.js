@@ -13,10 +13,10 @@ define([
         iconClass: 'fa fa-unlock',
 
         path: appConfig.backendUrl+'lock',
-        lockType: "optimistic", // "optimistic|pessimistic"
 
         // action parameters
         entity: null, /* Entity */
+        lockType: "optimistic", // "optimistic|pessimistic"
 
         execute: function() {
             return request.del(this.path+'/'+this.lockType+'/'+this.entity.get('oid'), {
@@ -24,7 +24,6 @@ define([
                     Accept: "application/json"
                 },
                 handleAs: 'json'
-
             });
         }
     });

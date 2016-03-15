@@ -28,7 +28,6 @@ define([
                     Accept: "application/json"
                 },
                 handleAs: 'json'
-
             });
         }
     });

@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /wcmf-default-app/app
+
+# redirect to app
+RewriteRule ^[\/]?$ public/ [R,QSA,L]
+
+
+# forbid non public resources
+RewriteRule !^public/? - [NC,F]
+
+# map all requests to not existing files to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^public/(.*)$ public/index.php [QSA,L]

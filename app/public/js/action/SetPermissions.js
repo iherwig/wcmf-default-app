@@ -9,19 +9,20 @@ define([
 ) {
     return declare([ActionBase], {
 
-        name: 'checkPermissions',
-        iconClass: 'fa fa-check',
+        name: 'getPermissions',
+        iconClass: 'fa fa-shield',
 
-        path: appConfig.backendUrl+'user/permissions',
+        path: appConfig.backendUrl+'permissions',
 
         // action parameters
-        operations: [],
-        user: '',
+        operation: '',
+        permissions: {},
 
         execute: function() {
-            return request.get(this.path+(this.user ? '/'+this.user : ''), {
-                query: {
-                    "operations[]": this.operations
+            return request.put(this.path, {
+                data: {
+                    operation: this.operation,
+                    permissions: this.permissions
                 },
                 headers: {
                     Accept: "application/json"

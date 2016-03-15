@@ -13,10 +13,10 @@ define([
         iconClass: 'fa fa-lock',
 
         path: appConfig.backendUrl+'lock',
-        lockType: "optimistic", // "optimistic|pessimistic"
 
         // action parameters
         entity: null, /* Entity */
+        lockType: "optimistic", // "optimistic|pessimistic"
 
         execute: function() {
             return request.post(this.path+'/'+this.lockType+'/'+this.entity.get('oid'), {
