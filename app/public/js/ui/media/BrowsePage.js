@@ -15,9 +15,6 @@ define([
     "dijit/layout/ContentPane",
     "../../locale/Dictionary",
     "dojo/text!./template/BrowsePage.html",
-    "xstyle/css!jquery-ui/themes/smoothness/jquery-ui.min.css",
-    "xstyle/css!elfinder/css/elfinder.min.css",
-    "xstyle/css!elfinder/css/theme.css",
     "dojo/domReady!"
 ], function (
     require,
@@ -43,6 +40,16 @@ define([
 
         postCreate: function() {
             this.inherited(arguments);
+
+            // get package locations
+            var packageLocations = {};
+            for(var i=0, count=dojoConfig.packages.length; i<count; i++) {
+                var curPackage = dojoConfig.packages[i];
+                packageLocations[curPackage.name] = curPackage.location;
+            }
+            this.setCss(packageLocations['jquery-ui']+'/themes/smoothness/jquery-ui.min.css', 'all');
+            this.setCss(packageLocations['elfinder']+'/css/elfinder.min.css', 'all');
+            this.setCss(packageLocations['elfinder']+'/css/theme.css', 'all');
 
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){

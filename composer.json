@@ -180,51 +180,6 @@
                     "wcmf/asset-installer": "*"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "kriszyp/put-selector",
-                "type": "wcmf-asset",
-                "version": "0.3.6",
-                "dist": {
-                    "url": "https://github.com/kriszyp/put-selector/archive/v0.3.6.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "kriszyp/xstyle",
-                "type": "wcmf-asset",
-                "version": "0.3.1",
-                "dist": {
-                    "url": "https://github.com/kriszyp/xstyle/archive/v0.3.1.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "mbostock/d3",
-                "type": "wcmf-asset",
-                "version": "3.5.5",
-                "dist": {
-                    "url": "https://github.com/mbostock/d3/releases/download/v3.5.5/d3.zip",
-                    "type": "zip"
-                },
-                "require": {
-                    "wcmf/asset-installer": "*"
-                }
-            }
         }
     ],
     "require": {
@@ -246,9 +201,7 @@
         "nao-pon/elfinder": "dev-2.1_n",
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
-        "kriszyp/put-selector": "~0.3",
-        "kriszyp/xstyle": "~0.3",
-        "mbostock/d3": "~3.5",
+        "redeyeventures/geopattern": "~1.1",
         "sybio/image-workshop": "~2.0",
         "sybio/gif-frame-extractor": "~1.0",
         "sybio/gif-creator": "~1.0",

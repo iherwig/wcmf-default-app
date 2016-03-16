@@ -96,6 +96,17 @@ define([
 
         makePage: function (request, widget, layers, stylesheets) {
             this.inherited(arguments);
+        },
+
+        setCss: function (css, media) {
+            var css = css || '', media = media || 'all';
+
+            domConstruct.create(
+                'link',
+                { media: media, href: css, rel: 'stylesheet' },
+                query('head')[0],
+                'last'
+            );
         }
     });
 });

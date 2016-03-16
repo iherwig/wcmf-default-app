@@ -46,14 +46,10 @@
               { name: 'dojomat', location: 'vendor/sirprize/dojomat' },
               { name: 'dstore', location: 'vendor/sitepen/dstore' },
               { name: 'dgrid', location: 'vendor/sitepen/dgrid' },
-              { name: 'xstyle', location: 'vendor/kriszyp/xstyle' },
-              { name: 'put-selector', location: 'vendor/kriszyp/put-selector' },
               { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor' },
               { name: 'jquery', location: 'vendor/jquery' },
               { name: 'jquery-ui', location: 'vendor/jquery-ui' },
               { name: 'elfinder', location: 'vendor/nao-pon/elfinder' },
-              { name: 'd3', location: 'vendor/mbostock/d3' },
-              { name: 'trianglify', location: 'http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2' },
 
               { name: 'app', location: '.' }
           ],
@@ -80,7 +76,7 @@
       <div class="container">
         <p class="pull-right muted">created with
           <a href="http://wcmf.wemove.com" target="_blank">wCMF</a></p>
-        <p class="muted">&copy; 2015</p>
+        <p class="muted">{$appTitle}</p>
       </div>
     </div>
 

@@ -18,7 +18,7 @@ var appSrc = [
     "app/js/User",
     "app/js/routing-map",
     "app/js/action/ActionBase",
-    "app/js/action/ActionSet",
+    "app/js/action/ChangePassword",
     "app/js/action/CheckPermissions",
     "app/js/action/Copy",
     "app/js/action/Create",
@@ -28,9 +28,14 @@ var appSrc = [
     "app/js/action/Link",
     "app/js/action/Lock",
     "app/js/action/Log",
+    "app/js/action/Login",
+    "app/js/action/Logout",
+    "app/js/action/Messages",
     "app/js/action/Permissions",
     "app/js/action/Process",
+    "app/js/action/SetPermissions",
     "app/js/action/Unlink",
+    "app/js/action/Unlock",
     "app/js/locale/Dictionary",
     "app/js/model/_TypeList",
     "app/js/model/meta/Model",
@@ -104,10 +109,7 @@ var appSrc = [
     "app/js/ui/media/BrowsePage",
     "app/js/ui/search/SearchResult",
     "app/js/ui/search/SearchResultPage",
-    "app/js/ui/settings/SettingsPage",
-
-    "dgrid/util/touch",
-    "xstyle/core/load-css"
+    "app/js/ui/settings/SettingsPage"
 ];
 
 var profile = {
@@ -176,14 +178,14 @@ var profile = {
       { name: 'dojomat', location: 'vendor/sirprize/dojomat', destLocation: 'vendor/sirprize/dojomat' },
       { name: 'dstore', location: 'vendor/sitepen/dstore', destLocation: 'vendor/sitepen/dstore' },
       { name: 'dgrid', location: 'vendor/sitepen/dgrid', destLocation: 'vendor/sitepen/dgrid' },
-      { name: 'xstyle', location: 'vendor/kriszyp/xstyle', destLocation: 'vendor/kriszyp/xstyle' },
-      { name: 'put-selector', location: 'vendor/kriszyp/put-selector', destLocation: 'vendor/kriszyp/put-selector' },
-      { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor', destLocation: 'vendor/ckeditor/ckeditor' },
+      { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor', destLocation: 'vendor/ckeditor/ckeditor',
+          trees: [
+              [".", ".", /(\/\.)|(~$)|(samples)/]
+          ]
+      },
       { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery' },
       { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui' },
       { name: 'elfinder', location: 'vendor/nao-pon/elfinder', destLocation: 'vendor/nao-pon/elfinder' },
-      { name: 'd3', location: 'vendor/mbostock/d3', destLocation: 'vendor/mbostock/d3' },
-      { name: 'trianglify', location: 'http://cdnjs.cloudflare.com/ajax/libs/trianglify/0.1.2' },
 
       { name: 'app', location: '.', destLocation: '.' }
     ],

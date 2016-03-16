@@ -12,8 +12,6 @@ define([
     "../../Startup",
     "../../locale/Dictionary",
     "../../action/Login",
-    "d3/d3.min",
-    "trianglify/trianglify.min",
     "dojo/text!./template/LoginPage.html"
 ], function (
     require,
@@ -29,8 +27,6 @@ define([
     Startup,
     Dict,
     Login,
-    d3,
-    trianglify,
     template
 ) {
     return declare([_Page, _Notification], {
@@ -49,20 +45,7 @@ define([
         },
 
         setHeaderBackground: function() {
-          // get time dependent color
-          var baseColor = appConfig.color;
-          var now = new Date();
-          var lum = parseInt(Math.round(2*now.getHours()/24))-1; // -1..1
-          var colour = this.colorLuminance(baseColor, lum);
-
-          // generate pattern
-          var t = new Trianglify({
-              cellsize: 90,
-              noiseIntensity: 0,
-              x_gradient: [colour, "#2F2F2F"]
-          });
-          var pattern = t.generate(window.screen.width, window.screen.height);
-          this.header.setAttribute('style', 'background-image: '+pattern.dataUrl);
+            this.header.setAttribute('style', 'background-image: '+appConfig.background);
         },
 
         /**

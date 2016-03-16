@@ -131,11 +131,20 @@ class RootController extends Controller {
     $baseHref = str_replace('\\', '/', dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/');
     $mediaPathRelScript = URIUtil::makeRelative($mediaAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/');
     $mediaPathRelBase = URIUtil::makeRelative($mediaAbsPath, WCMF_BASE);
+    
+    // create background image
+    $geopattern = new \RedeyeVentures\GeoPattern\GeoPattern();
+    $generators = array('hexagons', 'overlapping_rings', 'overlapping_circles');
+    $geopattern->setString('1234567890123456789012345678901234567890');
+    $geopattern->setBaseColor('#2F2F2F');
+    $geopattern->setColor($appColor);
+    $geopattern->setGenerator($generators[array_rand($generators)]);
 
     // define client configuration
     $clientConfig = array(
       'title' => $appTitle,
       'color' => $appColor,
+      'background' => $geopattern->toDataURL(),
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
       'pathPrefix' => $basePath,
