@@ -5,7 +5,7 @@ RewriteBase /wcmf-default-app/app
 RewriteRule ^[\/]?$ public/ [R,QSA,L]
 
 # forbid non public resources
-# NOTE: comment this rule in DEV mode only
+# NOTE: deactivate this rule for development only
 RewriteRule !^public/? - [NC,F]
 
 # map all requests to not existing files to index.php
