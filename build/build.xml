@@ -54,14 +54,16 @@
   </target>
 
   <target name="compile" description="build the frontend" >
-    <condition property="dojo.build.script" value="${dojo.build.script_windows}">
+    <condition property="dojo.build.script" value="${dojo.build.script_windows}"
+               else="${dojo.build.script_unix}">
        <os family="windows"/>
     </condition>
-    <condition property="dojo.build.script" value="${dojo.build.script_unix}">
-       <os family="unix"/>
+    <condition property="dojo.build.args" value="profile=${dojo.build.profile}"
+               else="--bin java --profile ${dojo.build.profile}">
+       <os family="windows"/>
     </condition>
     <exec dir="${dojo.build.base}" executable="${dojo.build.script}" output="${dojo.build.log}">
-      <arg line="profile=${dojo.build.profile}"/>
+      <arg line="${dojo.build.args}"/>
     </exec>
     <loadfile property="compile.log" srcFile="${dojo.build.log}"/>
     <echo level="debug">${compile.log}</echo>
@@ -169,12 +171,11 @@
         <include name="vendor/dojo/dojo/resources/**/*.*"/>
         <include name="vendor/sitepen/dgrid/css/images/*.*"/>
         <!-- fonts -->
-        <include name="vendor/thesociable/dbootstrap/theme/dbootstrap/font/*.*"/>
         <include name="vendor/font-awesome/fonts/*.*"/>
         <!-- elfinder -->
-        <include name="vendor/nao-pon/elfinder/css/*.*"/>
-        <include name="vendor/nao-pon/elfinder/img/*.*"/>
-        <include name="vendor/nao-pon/elfinder/js/i18n/elfinder.de.js"/>
+        <include name="vendor/studio-42/elfinder-js/css/*.*"/>
+        <include name="vendor/studio-42/elfinder-js/img/*.*"/>
+        <include name="vendor/studio-42/elfinder-js/js/i18n/elfinder.de.js"/>
         <include name="vendor/jquery/jquery.min.js"/>
         <include name="vendor/jquery-ui/jquery-ui.min.js"/>
         <include name="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>

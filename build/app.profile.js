@@ -120,6 +120,9 @@ var profile = {
 
     layerOptimize: "closure",
     optimize: "closure",
+    optimizeOptions: {
+        languageIn: Packages.com.google.javascript.jscomp.CompilerOptions.LanguageMode.ECMASCRIPT5
+    },
     cssOptimize: "comments",
     maxOptimizationProcesses: 1,
     mini: true,
@@ -185,9 +188,13 @@ var profile = {
       },
       { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery' },
       { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui' },
-      { name: 'elfinder', location: 'vendor/nao-pon/elfinder', destLocation: 'vendor/nao-pon/elfinder' },
+      { name: 'elfinder', location: 'vendor/studio-42/elfinder-js', destLocation: 'vendor/studio-42/elfinder-js' },
 
-      { name: 'app', location: '.', destLocation: '.' }
+      { name: 'app', location: '.', destLocation: '.',
+          trees: [
+              [".", ".", /(\/\.)|(~$)|(dojo\/util)/]
+          ]
+      },
     ],
 
     layers: {
@@ -200,3 +207,7 @@ var profile = {
         }
     }
 };
+
+if (typeof Packages !== 'undefined' && Packages.com.google.javascript.jscomp.Compiler) {
+//    Packages.com.google.javascript.jscomp.Compiler.setLoggingLevel(Packages.java.util.logging.Level.WARNING);
+}

@@ -49,7 +49,7 @@
               { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor' },
               { name: 'jquery', location: 'vendor/jquery' },
               { name: 'jquery-ui', location: 'vendor/jquery-ui' },
-              { name: 'elfinder', location: 'vendor/nao-pon/elfinder' },
+              { name: 'elfinder', location: 'vendor/studio-42/elfinder-js' },
 
               { name: 'app', location: '.' }
           ],

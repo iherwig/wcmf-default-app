@@ -9,7 +9,7 @@ define([
     "jquery/jquery.min",
     "jquery-ui/jquery-ui.min",
     "../../config/elfinder_config",
-    "elfinder/js/elfinder.min",
+    "elfinder/js/elfinder.full",
     "elfinder/js/i18n/elfinder.de",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
@@ -75,7 +75,7 @@ define([
 
             setTimeout(function() {
                 $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
-            }, 1000);
+            }, 500);
         },
 
         onItemClick: function(item) {
