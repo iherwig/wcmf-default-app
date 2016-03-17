@@ -76,7 +76,7 @@
       <div class="container">
         <p class="pull-right muted">created with
           <a href="http://wcmf.wemove.com" target="_blank">wCMF</a></p>
-        <p class="muted">{$appTitle}</p>
+        <p class="muted">{$appTitle} <small><em>{$version}</em></small></p>
       </div>
     </div>
 

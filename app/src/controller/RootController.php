@@ -131,7 +131,7 @@ class RootController extends Controller {
     $baseHref = str_replace('\\', '/', dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/');
     $mediaPathRelScript = URIUtil::makeRelative($mediaAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/');
     $mediaPathRelBase = URIUtil::makeRelative($mediaAbsPath, WCMF_BASE);
-    
+
     // create background image
     $geopattern = new \RedeyeVentures\GeoPattern\GeoPattern();
     $generators = array('hexagons', 'overlapping_rings', 'overlapping_circles');
@@ -139,6 +139,14 @@ class RootController extends Controller {
     $geopattern->setBaseColor('#2F2F2F');
     $geopattern->setColor($appColor);
     $geopattern->setGenerator($generators[array_rand($generators)]);
+
+    // load version info
+    $version = 'dev';
+    $buildInfoFile = WCMF_BASE.'build.info';
+    if (file_exists($buildInfoFile)) {
+      $buildInfo = parse_ini_file($buildInfoFile);
+      $version = $buildInfo['version'].'.'.$buildInfo['build'];
+    }
 
     // define client configuration
     $clientConfig = array(
@@ -165,6 +173,7 @@ class RootController extends Controller {
     $response->setValue('baseHref', $baseHref);
     $response->setValue('uiLanguage', $uiLanguage);
     $response->setValue('clientConfig', json_encode($clientConfig));
+    $response->setValue('version', $version);
 // PROTECTED REGION END
   }
 }

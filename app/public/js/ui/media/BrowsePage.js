@@ -38,18 +38,22 @@ define([
         contextRequire: require,
         title: Dict.translate('Media'),
 
-        postCreate: function() {
-            this.inherited(arguments);
-
+        constructor: function(params) {
+            declare.safeMixin(this, params);
             // get package locations
             var packageLocations = {};
             for(var i=0, count=dojoConfig.packages.length; i<count; i++) {
                 var curPackage = dojoConfig.packages[i];
                 packageLocations[curPackage.name] = curPackage.location;
             }
+            // add elfinder css
             this.setCss(packageLocations['jquery-ui']+'/themes/smoothness/jquery-ui.min.css', 'all');
             this.setCss(packageLocations['elfinder']+'/css/elfinder.min.css', 'all');
             this.setCss(packageLocations['elfinder']+'/css/theme.css', 'all');
+        },
+
+        postCreate: function() {
+            this.inherited(arguments);
 
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
@@ -71,7 +75,7 @@ define([
 
             setTimeout(function() {
                 $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
-            }, 500);
+            }, 1000);
         },
 
         onItemClick: function(item) {
