@@ -144,7 +144,7 @@ class RootController extends Controller {
     $version = 'dev';
     $buildInfoFile = WCMF_BASE.'build.info';
     if (file_exists($buildInfoFile)) {
-      $buildInfo = parse_ini_file($buildInfoFile);
+      $buildInfo = @parse_ini_file($buildInfoFile);
       $version = $buildInfo['version'].'.'.$buildInfo['build'];
     }
 
