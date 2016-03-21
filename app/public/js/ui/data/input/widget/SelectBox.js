@@ -3,6 +3,7 @@ define( [
     "dojo/_base/lang",
     "dojo/aspect",
     "dojo/on",
+    "dojo/when",
     "dojo/query",
     "dojo/dom-construct",
     "dojo/dom-geometry",
@@ -21,6 +22,7 @@ function(
     lang,
     aspect,
     on,
+    when,
     query,
     domConstruct,
     domGeom,
@@ -44,6 +46,7 @@ function(
         spinnerNode: null,
 
         searchAttr: "displayText",
+        listItem: null, // the selected item from the ListStore
 
         // initialize base class attributes to avoid errors
         params: {},
@@ -102,6 +105,33 @@ function(
                     this.hideSpinner();
                 }))
             );
+        },
+
+        _getValueAttr: function() {
+            return this.listItem ? this.listItem.value : null;
+        },
+
+        _setValueAttr: function(value, priorityChange, displayedValue, item) {
+            // since the value of the items in the ListStore is stored in
+            // their value property and not in the id property, we need to
+            // change the behaviour of the parent class, which use the id
+            // property as value
+            if (item) {
+                // if an item is given, we can fall back to the
+                // parent class' behaviour
+                this.listItem = item;
+                this.inherited(arguments);
+                return;
+            }
+            // find the item whith the value property equal to value
+            var args = arguments;
+            when(this.store.query({value: 'eq='+value}), lang.hitch(this, function(result) {
+                if (result && result.length === 1) {
+                    this.listItem = result[0];
+                    value = this.listItem.oid;
+                    this.inherited(args, [value, priorityChange, displayedValue, item]);
+                }
+            }));
         },
 
         showSpinner: function() {

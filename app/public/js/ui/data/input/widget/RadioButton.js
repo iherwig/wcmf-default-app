@@ -18,7 +18,7 @@ function(
             // create radio button
             var widget = new RadioButton({
                 name: this.name,
-                value: ""+value,
+                value: value,
                 checked: (this.value === value), // value may be string or number
                 disabled: this.disabled
             });

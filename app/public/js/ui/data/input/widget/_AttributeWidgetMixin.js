@@ -1,11 +1,13 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/on"
+    "dojo/on",
+    "../../../../model/meta/Model"
 ], function (
     declare,
     lang,
-    on
+    on,
+    Model
 ) {
     /**
      * Attribute widget mixin. Manages the dirty flag.
@@ -23,12 +25,20 @@ define([
             );
         },
 
-        setDirty: function (isDirty) {
+        setDirty: function(isDirty) {
             this._isDirty = isDirty;
         },
 
-        isDirty: function () {
+        isDirty: function() {
             return this._isDirty;
+        },
+
+        getAttributeDefinition: function() {
+            if (this.entity) {
+                var typeClass = Model.getTypeFromOid(this.entity.oid);
+                return typeClass.getAttribute(this.name);
+            }
+            return null;
         }
     });
 });

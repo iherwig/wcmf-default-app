@@ -118,8 +118,7 @@ function(
             when(store.fetch(), lang.partial(function(value, list) {
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];
-                    // intentionally ==
-                    if (store.getIdentity(item) == value) {
+                    if (item.value === value) {
                         deferred.resolve(item.displayText);
                     }
                 }

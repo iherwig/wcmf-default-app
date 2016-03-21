@@ -17,6 +17,11 @@ define([
     Cache,
     base64
 ) {
+    /**
+     * ListStore is used to get the content for list controls from the server.
+     * It expects an array of objects with properties 'oid', 'value' and
+     * 'displayText' sent by the server.
+     */
     var ListStore = declare([Rest], {
 
         listDef: '',

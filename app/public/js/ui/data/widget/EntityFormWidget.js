@@ -184,8 +184,7 @@ function(
                             this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                 var widgetValue = widget.get("value");
                                 var entityValue = this.entity.get(widget.name);
-                                // intentionally !=
-                                if (this.normalizeForComparison(widgetValue) != this.normalizeForComparison(entityValue)) {
+                                if (this.normalizeForComparison(widgetValue) !== this.normalizeForComparison(entityValue)) {
                                     this.setModified(true);
                                 }
                             }, attributeWidget)));
@@ -406,7 +405,7 @@ function(
         },
 
         normalizeForComparison: function(value) {
-          return !value ? null : value;
+          return value === undefined ? null : value;
         },
 
         _save: function(e) {

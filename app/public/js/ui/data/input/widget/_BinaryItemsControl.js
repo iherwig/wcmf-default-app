@@ -36,7 +36,7 @@ function(
 ) {
     return declare([ContentPane, _FormValueWidget, _HelpMixin, _AttributeWidgetMixin], {
 
-    		templateString: template,
+        templateString: template,
         intermediateChanges: true,
 
         inputType: null, // control description as string as used in Factory.getControlClass()
@@ -45,7 +45,6 @@ function(
         multiValued: true,
 
         spinnerNode: null,
-        listenToWidgetChanges: true,
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -54,6 +53,12 @@ function(
             // get store from input type, if not set yet
             if (!this.store) {
                 this.store = ControlFactory.getListStore(this.inputType);
+            }
+            // multivalued controls are only useful for a string attribute
+            var attribute = this.getAttributeDefinition();
+            if (this.multiValued && attribute.type.toLowerCase() !== 'string') {
+                throw "Multivalued controls can only be used with a string attribute. "+
+                        "Attribute '"+attribute.name+"' is of type "+attribute.type+".";
             }
         },
 
@@ -68,16 +73,15 @@ function(
                 this.hideSpinner();
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];
-                    var itemValue = this.store.getIdentity(item);
+                    var itemValue = this.multiValued ? ""+item.value : item.value;
                     var itemLabel = item.displayText;
                     var itemWidget = this.buildItemWidget(itemValue, itemLabel);
                     this.own(
                         on(itemWidget, "change", function(isSelected) {
                             var control = registry.getEnclosingWidget(this.domNode.parentNode);
-                            if (control.listenToWidgetChanges) {
-                                control.updateValue(this.value, isSelected);
+                            control.updateValue(this.value, isSelected);
                         }
-                    }));
+                    ));
                 }
                 this.updateDisplay(this.value);
             }));
@@ -91,9 +95,7 @@ function(
                 })),
                 on(this, "attrmodified-value", lang.hitch(this, function(e) {
                     var value = e.detail.newValue;
-                    if (value) {
-                      this.updateDisplay(value);
-                    }
+                    this.updateDisplay(value);
                 }))
             );
         },
@@ -102,7 +104,7 @@ function(
          * Build a checkbox/radio button item with the given value and label
          * @param value
          * @param label
-         * @returns Widget
+         * @return Widget
          */
         buildItemWidget: function(value, label) {
             throw "must be implemented by subclass";
@@ -117,20 +119,18 @@ function(
         },
 
         updateValue: function(value, isSelected) {
-            var oldListenValue = this.listenToWidgetChanges;
-            this.listenToWidgetChanges = false;
             if (this.multiValued) {
-                var values = this.get("value").split(",");
+                var values = this.getValueArray(this.get("value"));
                 if (isSelected) {
                     // add value
-                    if (array.indexOf(values, value) === -1) {
+                    if (values.indexOf(value) === -1) {
                         values.push(value);
                     }
                 }
                 else {
                     // remove value
-                    values = array.filter(values, function(item){
-                        return (item != value); // value may be string or number
+                    values = array.filter(values, function(item) {
+                        return (item !== value); // value may be string or number
                     });
                 }
                 this.set("value", values.join(","));
@@ -140,24 +140,22 @@ function(
                     this.set("value", value);
                 }
             }
-            this.listenToWidgetChanges = oldListenValue;
         },
 
         updateDisplay: function(value) {
             // update item widgets
-            var oldListenValue = this.listenToWidgetChanges;
-            this.listenToWidgetChanges = false;
-            var values = (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
+            var values = this.getValueArray(value);
             var itemWidgets = registry.findWidgets(this.domNode);
             for (var i=0, count=itemWidgets.length; i<count; i++) {
                 var widget = itemWidgets[i];
                 // we don't use the public get method for the value, because it
                 // will return false instead of the text value, if the widget is
                 // not checked
-                var isChecked = array.indexOf(values, widget._get("value")) !== -1;
+                var isChecked = values.indexOf(widget._get("value")) !== -1;
+                widget._onChangeActive = false;
                 widget.set("checked", isChecked);
+                widget._onChangeActive = true;
             }
-            this.listenToWidgetChanges = oldListenValue;
         },
 
         _setDisabledAttr: function(value) {
@@ -180,6 +178,11 @@ function(
                     break;
                 }
             }
+        },
+
+        getValueArray: function(value) {
+            value = this.multiValued ? ""+value : value;
+            return (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
         }
     });
 });
