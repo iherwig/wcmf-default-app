@@ -12,6 +12,7 @@ define([
     "dgrid/extensions/ColumnResizer",
     "dgrid/extensions/DijitRegistry",
     "dgrid/Editor",
+    "dgrid/Selector",
     "dgrid/Tree",
     "dojo/dom",
     "dojo/dom-attr",
@@ -44,6 +45,7 @@ define([
     ColumnResizer,
     DijitRegistry,
     Editor,
+    Selector,
     Tree,
     dom,
     domAttr,
@@ -84,6 +86,7 @@ define([
             'DijitRegistry': DijitRegistry
         },
         optionalFeatures: {
+            'Selector': Selector,
             'DnD': DnD,
             'Tree': Tree
         },
@@ -119,11 +122,14 @@ define([
                           if (action) {
                               // cell action
                               e.preventDefault();
-
+                              // execute the action
                               var columnNode = e.target.parentNode;
                               var row = this.grid.row(columnNode);
                               action.entity = row.data;
                               action.execute();
+                              // refresh the action cell
+                              var cell = this.grid.cell(columnNode);
+                              this.grid.refreshCell(cell);
                           }
                         }
                     })),
@@ -167,6 +173,16 @@ define([
 
             // create columns
             var columns = [];
+            if (array.indexOf(featureNames, 'Selector') !== -1) {
+                columns.push({
+                    label: " ",
+                    selector: "checkbox",
+                    field: "selector",
+                    unhidable: true,
+                    sortable: true,
+                    resizable: false
+                });
+            }
             var typeClass = Model.getType(this.type);
             var displayValues = typeClass.displayValues;
             for (var i=0, count=displayValues.length; i<count; i++) {
@@ -215,11 +231,12 @@ define([
                     unhidable: true,
                     sortable: false,
                     resizable: false,
-                    formatter: lang.hitch(this, function(data, obj) {
+                    formatter: lang.hitch(this, function(data, entity) {
                         var html = '<div>';
                         for (var name in this.actionsByName) {
                             var action = this.actionsByName[name];
-                            html += '<a class="btn-mini" href="#" data-action="'+name+'"><i class="'+action.iconClass+'"></i></a>';
+                            action.entity = entity;
+                            html += '<a class="btn-mini" href="#" data-action="'+name+'"><i class="'+action.getIconClass()+'"></i></a>';
                         }
                         html += '</div>';
                         return html;
@@ -243,7 +260,13 @@ define([
                     })
                 },
                 loadingMessage: Dict.translate("Loading"),
-                noDataMessage: Dict.translate("No data")
+                noDataMessage: Dict.translate("No data"),
+                minRowsPerPage: 50,
+                maxRowsPerPage: 250,
+                bufferRows: 200,
+                pagingDelay: 50,
+                farOffRemoval: Infinity,
+                pagingMethod: 'throttleDelayed',
             }, this.gridNode);
 
             grid.on("dgrid-editor-show", function(evt) {
@@ -287,7 +310,9 @@ define([
 
         filter: function(filter) {
             this.gridFilter = filter;
-            this.grid.set('collection', this.store.filter(this.gridFilter));
+            if (this.grid) {
+                this.grid.set('collection', this.store.filter(this.gridFilter));
+            }
         },
 
         onResize: function() {

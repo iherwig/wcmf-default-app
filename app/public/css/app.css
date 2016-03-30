@@ -116,6 +116,18 @@ label {
   display: block;
 }
 
+.entity-page .attribute_group {
+  padding: 8px;
+  margin: 2px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
+.entity-page .group_default {
+  background: #f1f1f1;
+}
+
 /* dgrid */
 .relation-container .dgrid {
   height: 500px !important;
@@ -155,6 +167,10 @@ label {
   display: none;
 }
 
+th.field-selector, td.field-selector {
+  width: 20px;
+}
+
 th.field-oid, td.field-oid {
   width: 30px;
 }
@@ -173,6 +189,10 @@ th.field-actions-3, td.field-actions-3 {
 
 th.field-actions-4, td.field-actions-4 {
   width: 120px;
+}
+
+th.field-actions-5, td.field-actions-5 {
+  width: 150px;
 }
 
 .dgrid-cell {

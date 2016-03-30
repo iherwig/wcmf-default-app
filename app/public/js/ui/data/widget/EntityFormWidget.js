@@ -15,6 +15,7 @@ define( [
     "dijit/form/DropDownButton",
     "dijit/Menu",
     "dijit/MenuItem",
+    "dijit/Fieldset",
     "../../_include/FormLayout",
     "../../_include/_NotificationMixin",
     "../../_include/widget/Button",
@@ -49,6 +50,7 @@ function(
     DropDownButton,
     Menu,
     MenuItem,
+    Fieldset,
     FormLayout,
     _Notification,
     Button,
@@ -98,7 +100,7 @@ function(
 
         attributeWidgets: [],
         relationWidgets: [],
-        layoutWidget: null,
+        layoutWidgets: [],
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -155,47 +157,55 @@ function(
                 var controls = results[0];
                 this.permissions = results[1].result ? results[1].result : {};
 
-                this.layoutWidget = registry.byNode(this.fieldsNode.domNode);
-
                 // add attribute widgets
                 this.attributeWidgets = [];
-                var attributes = this.getAttributes();
-                for (var i=0, count=attributes.length; i<count; i++) {
-                    var attribute = attributes[i];
-                    // only show attributes with read permission
-                    if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
-                        // disabled if not editable
-                        var disabled = this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false;
-                        // disabled if not translatable
-                        if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
-                            disabled = true;
+                var attributeGroups = this.getAttributeGroups();
+                for (var group in attributeGroups) {
+                    // group
+                    var groupNode = domConstruct.create('fieldset', {
+                        'class': 'attribute_group group_'+group.toLowerCase()
+                    }, this.fieldsNode);
+                    var layoutWidget = new FormLayout({}, groupNode);
+                    this.layoutWidgets.push(layoutWidget);
+                    // attributes
+                    var attributes = attributeGroups[group];
+                    for (var i=0, count=attributes.length; i<count; i++) {
+                        var attribute = attributes[i];
+                        // only show attributes with read permission
+                        if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
+                            // disabled if not editable
+                            var disabled = this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false;
+                            // disabled if not translatable
+                            if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
+                                disabled = true;
+                            }
+                            var controlClass = controls[attribute.inputType];
+                            var attributeWidget = new controlClass({
+                                name: attribute.name,
+                                'class': attribute.tags.join(' ').toLowerCase(),
+                                value: this.entity[attribute.name],
+                                disabled: disabled,
+                                helpText: Dict.translate(attribute.description),
+                                inputType: attribute.inputType,
+                                entity: this.entity
+                            });
+                            if (this.permissions[cleanOid+'??update'] === true &&
+                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
+                                this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
+                                    var widgetValue = widget.get("value");
+                                    var entityValue = this.entity.get(widget.name);
+                                    if (this.normalizeForComparison(widgetValue) !== this.normalizeForComparison(entityValue)) {
+                                        this.setModified(true);
+                                    }
+                                }, attributeWidget)));
+                            }
+                            else {
+                                // disable widget, if no update permission
+                                attributeWidget.set('disabled', true);
+                            }
+                            layoutWidget.addChild(attributeWidget);
+                            this.attributeWidgets.push(attributeWidget);
                         }
-                        var controlClass = controls[attribute.inputType];
-                        var attributeWidget = new controlClass({
-                            name: attribute.name,
-                            value: this.entity[attribute.name],
-                            disabled: disabled,
-                            helpText: Dict.translate(attribute.description),
-                            inputType: attribute.inputType,
-                            entity: this.entity
-                        });
-                        if (this.permissions[cleanOid+'??update'] === true &&
-                                this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
-                            this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
-                                var widgetValue = widget.get("value");
-                                var entityValue = this.entity.get(widget.name);
-                                if (this.normalizeForComparison(widgetValue) !== this.normalizeForComparison(entityValue)) {
-                                    this.setModified(true);
-                                }
-                            }, attributeWidget)));
-                        }
-                        else {
-                            // disable widget, if no update permission
-                            attributeWidget.set('disabled', true);
-                        }
-                        this.layoutWidget.addChild(attributeWidget);
-
-                        this.attributeWidgets.push(attributeWidget);
                     }
                 }
 
@@ -256,7 +266,9 @@ function(
 
         startup: function() {
             this.inherited(arguments);
-            this.layoutWidget.startup(); // starts up attribute widgets
+            for (var i=0, c=this.layoutWidgets.length; i<c; i++) {
+                this.layoutWidgets[i].startup(); // starts up attribute widgets
+            }
             for (var i=0, c=this.relationWidgets.length; i<c; i++) {
                 this.relationWidgets[i].startup();
             }
@@ -269,6 +281,35 @@ function(
         getAttributes: function() {
             var typeClass = Model.getType(this.type);
             return typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+        },
+
+        /**
+         * Get the type's attributes grouped together by GROUP_ tags.
+         * Attributes withoout GROUP_ tag are listed in a group named 'default'.
+         * @returns Associative array with the group names as keys and
+         * an array of the group's attributes as value
+         */
+        getAttributeGroups: function() {
+            var typeClass = Model.getType(this.type);
+            var attributes = typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+            var groups = {
+                'default': []
+            };
+            for(var i=0, c=attributes.length; i<c; i++) {
+              var attribute = attributes[i];
+              var groupTags = array.filter(attribute.tags, function(tag) {
+                  return tag.match(/^GROUP_/);
+              });
+              groupName = 'default';
+              if (groupTags.length > 0) {
+                  var groupName = groupTags[0].replace(/^GROUP_/, '');
+                  if (!groups[groupName]) {
+                      groups[groupName] = [];
+                  }
+              }
+              groups[groupName].push(attribute);
+            }
+            return groups;
         },
 
         /**

@@ -12,15 +12,15 @@ define([
         name: 'checkPermissions',
         iconClass: 'fa fa-check',
 
-        path: appConfig.backendUrl+'user/permissions',
+        path: appConfig.backendUrl+'permissions/check',
 
         // action parameters
         operations: [],
         user: '',
 
         execute: function() {
-            return request.get(this.path+(this.user ? '/'+this.user : ''), {
-                query: {
+            return request.post(this.path+(this.user ? '/'+this.user : ''), {
+                data: {
                     "operations[]": this.operations
                 },
                 headers: {

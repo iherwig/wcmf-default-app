@@ -18,7 +18,7 @@ define([
     return declare([], {
 
         name: '',
-        iconClass:  'fa fa-asterisk',
+        iconClass: 'fa fa-asterisk',
 
         // action parameters (optional)
         init: function(){},
@@ -52,18 +52,18 @@ define([
                             var e = arguments[0];
                             if (e && e.target) {
                                 // icon is either target or a child
-                                var iconNodes = query("."+this.iconClass, e.target.parentNode);
+                                var iconNodes = query("."+this.getIconClass(), e.target.parentNode);
                                 if (iconNodes.length > 0) {
                                     this._iconNode = iconNodes[0];
                                     this._hasSpinner = true;
-                                    domClass.replace(this._iconNode, "fa fa-spinner fa-spin", this.iconClass);
+                                    domClass.replace(this._iconNode, "fa fa-spinner fa-spin", this.getIconClass());
                                 }
                             }
                         }
                         deferred.then(lang.hitch(this, function() {
                             // reset icon
                             if (this._iconNode && this._hasSpinner) {
-                                domClass.replace(this._iconNode, this.iconClass, "fa fa-spinner fa-spin");
+                                domClass.replace(this._iconNode, this.getIconClass(), "fa fa-spinner fa-spin");
                             }
                         }));
                         deferred.then(this.callback, this.errback, this.progback)
@@ -71,6 +71,14 @@ define([
                     return deferred;
                 };
             });
+        },
+
+        /**
+         * Get the css class of the action's icon
+         * @return String
+         */
+        getIconClass: function() {
+            return this.iconClass;
         },
 
         /**

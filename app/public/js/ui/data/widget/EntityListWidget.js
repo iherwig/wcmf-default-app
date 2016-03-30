@@ -107,18 +107,11 @@ function(
                 }
 
                 // setup grid
-                var enabledFeatures = [];
-                if (this.hasTree) {
-                    enabledFeatures.push('Tree');
-                }
-                if (this.typeClass.isSortable) {
-                    enabledFeatures.push('DnD');
-                }
                 this.gridWidget = new GridWidget({
                     type: this.type,
                     store: store.filter(filter),
                     actions: this.getGridActions(),
-                    enabledFeatures: enabledFeatures
+                    enabledFeatures: this.getGridFeatures()
                 }, this.gridNode);
                 this.gridWidget.startup();
 
@@ -147,6 +140,17 @@ function(
                     });
                 }))
             );
+        },
+
+        getGridFeatures: function() {
+            var enabledFeatures = [];
+            if (this.hasTree) {
+                enabledFeatures.push('Tree');
+            }
+            if (this.typeClass.isSortable) {
+                enabledFeatures.push('DnD');
+            }
+            return enabledFeatures;
         },
 
         getGridActions: function() {
