@@ -57,7 +57,6 @@ function(
 
         permissions: {},
 
-        onCreated: null, // function to be called after the widget is created
         gridWidget: null,
 
         constructor: function(args) {
@@ -110,6 +109,7 @@ function(
                 this.gridWidget = new GridWidget({
                     type: this.type,
                     store: store.filter(filter),
+                    columns: this.getGridColumns(),
                     actions: this.getGridActions(),
                     enabledFeatures: this.getGridFeatures()
                 }, this.gridNode);
@@ -117,9 +117,8 @@ function(
 
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
 
-                if (this.onCreated instanceof Function) {
-                    this.onCreated(this);
-                }
+                // notify listeners
+                topic.publish("entity-list-widget-created", this);
             }));
 
             this.own(
@@ -215,6 +214,11 @@ function(
             }
 
             return actions;
+        },
+
+        getGridColumns: function() {
+            var typeClass = Model.getType(this.type);
+            return typeClass.displayValues;
         },
 
         _create: function(e) {

@@ -11,27 +11,67 @@ define([
 
         name: appConfig.title.replace(/\s/g, '_'),
 
-        set: function(name, value) {
-            var data = this.getAll();
-            data[name] = value;
-            cookie(this.name, JSON.stringify(data), { path: '/' });
+        /**
+         * Set a value in a cookie
+         * @param key The key
+         * @param value The value
+         * @param name Optional cookie name (default to application title)
+         */
+        set: function(key, value, name) {
+            var cookieName = this._getCookieName(name);
+            var data = this.getAll(name);
+            data[key] = value;
+            cookie(cookieName, JSON.stringify(data), { path: '/' });
         },
 
-        get: function(name, defaultValue) {
-            var data = this.getAll();
-            if (data[name] === undefined) {
-                data[name] = defaultValue;
+        /**
+         * Get a value from a cookie
+         * @param key The key
+         * @param defaultValue The default value, if the key does not exist
+         * @param name Optional cookie name (default to application title)
+         * @return Object
+         */
+        get: function(key, defaultValue, name) {
+            var data = this.getAll(name);
+            if (data[key] === undefined) {
+                data[key] = defaultValue;
             }
-            return data[name];
+            return data[key];
         },
 
-        getAll: function() {
-            var cookieValue = cookie(this.name) || '{}';
+        /**
+         * Get all values from a cookie
+         * @param name Optional cookie name (default to application title)
+         * @returns Object
+         */
+        getAll: function(name) {
+            var cookieName = this._getCookieName(name);
+            var cookieValue = cookie(cookieName) || '{}';
             return JSON.parse(cookieValue, true);
         },
 
-        destroy: function() {
-            cookie(this.name, '', { path: '/' });
+        /**
+         * Delete a cookie
+         * @param name Optional cookie name (default to application title)
+         */
+        destroy: function(name) {
+            var cookieName = this._getCookieName(name);
+            cookie(cookieName, '', { path: '/' });
+        },
+
+        /**
+         * Delete all cookies for the current page
+         */
+        destroyAll: function() {
+            var cookies = document.cookie.split(";");
+            for (var i=0; i<cookies.length; i++) {
+              var cookieName = cookies[i].split("=")[0];
+              cookie(cookieName, '', { path: '/' });
+            }
+        },
+
+        _getCookieName: function(cookieName) {
+            return cookieName ? this.name+'.'+cookieName : this.name;
         }
     });
 

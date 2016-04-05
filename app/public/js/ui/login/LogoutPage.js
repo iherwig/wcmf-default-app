@@ -35,7 +35,7 @@ define([
         _logout: function() {
             new Logout().execute().then(lang.hitch(this, function(response) {
                 // redirect to login
-                Cookie.destroy();
+                Cookie.destroyAll();
                 window.location.assign(appConfig.backendUrl);
             }), lang.hitch(this, function(error) {
                 // error

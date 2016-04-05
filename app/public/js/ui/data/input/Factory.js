@@ -112,21 +112,55 @@ function(
      */
     Factory.translateValue = function(inputType, value) {
         var deferred = new Deferred();
+        when(Factory.getItem(inputType, value), function(item) {
+            var value = item !== null && item.hasOwnProperty('displayText') ? item.displayText : item;
+            deferred.resolve(value);
+        });
+        return deferred;
+    },
+
+    /**
+     * Get the list item for the given value according to the list definition that
+     * might be contained in the input type
+     * @param inputType The input type (contains the list definition after '#' char)
+     * @param value The value
+     * @returns Deferred
+     */
+    Factory.getItem = function(inputType, value) {
+        var translateKey = inputType+'.'+value;
+        if (!Factory._translatePromises.hasOwnProperty(translateKey)) {
+            Factory._translatePromises[translateKey] = new Deferred();
+        }
+        var deferred = Factory._translatePromises[translateKey];
         var options = Factory.getOptions(inputType);
         if (options['list']) {
-            var store = ListStore.getStore(options['list'], appConfig.defaultLanguage);
-            when(store.fetch(), lang.partial(function(value, list) {
-                for (var i=0, c=list.length; i<c; i++) {
-                    var item = list[i];
-                    if (item.value === value) {
-                        deferred.resolve(item.displayText);
-                    }
-                }
-                deferred.resolve(null);
-            }, value));
+            // check list cache
+            var listKey = inputType;
+            if (Factory._listCache.hasOwnProperty(listKey)) {
+                // if a cache value exists, it might be a promise for the load result
+                // or an already resolved list
+                when(Factory._listCache[listKey], lang.partial(function(listKey, result) {
+                    // cache result and return requested value
+                    Factory._listCache[listKey] = result;
+                    result.forEach(function(object) {
+                        var translateKey = listKey+'.'+object.value;
+                        if (Factory._translatePromises.hasOwnProperty(translateKey)) {
+                            Factory._translatePromises[translateKey].resolve(object);
+                        }
+                    });
+                }, listKey));
+            }
+            else {
+                // NOTE loading all items once and caching the result
+                // is faster than resolving the value on each request
+                // store promise in cache and resolve later
+                var store = ListStore.getStore(options['list'], appConfig.defaultLanguage);
+                Factory._listCache[listKey] = store.fetch();
+                return Factory.getItem(inputType, value);
+            }
         }
         else {
-            deferred.resolve(value);
+            deferred.resolve(value, null);
         }
         return deferred;
     };
@@ -144,6 +178,12 @@ function(
         }
         return {};
     };
+
+    /**
+     * Registry for translated values
+     */
+    Factory._listCache = {};
+    Factory._translatePromises = {};
 
     return Factory;
 });

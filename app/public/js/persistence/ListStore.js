@@ -2,7 +2,6 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/Deferred",
-    "dojo/when",
     "dojo/json",
     "dstore/Rest",
     "dstore/Cache",
@@ -11,7 +10,6 @@ define([
     declare,
     lang,
     Deferred,
-    when,
     JSON,
     Rest,
     Cache,
@@ -47,16 +45,11 @@ define([
 
         get: function(id) {
             var deferred = new Deferred();
-            when(this.fetch(), lang.hitch(this, function(result) {
-                for (var i=0, count=result.length; i<count; i++) {
-                    var curResult = result[i];
-                    // intentionally ==
-                    if (this.getIdentity(curResult) == id) {
-                        deferred.resolve(curResult);
-                    }
-                }
-            }), lang.hitch(this, function(error) {
-                deferred.reject(error);
+            var filter = {};
+            filter[this.idProperty] = 'eq='+id;
+            this.filter(filter).forEach(lang.hitch(this, function (object) {
+                // we expect only one object
+                deferred.resolve(object);
             }));
             return deferred;
         },
@@ -64,17 +57,7 @@ define([
         parse: function(response) {
             var data = JSON.parse(response);
             var result = data.list ? data.list : [];
-            if (data["static"]) {
-                this.persist();
-            }
             return result;
-        },
-
-        persist: function() {
-            var store = ListStore.storeInstances[this.listDefStr][this.language];
-            if (store.cache) {
-                store.cache.isValidFetchCache = true;
-            }
         }
     });
 
@@ -101,7 +84,9 @@ define([
                 listDef: listDef,
                 language: language
             });
-            var cache = Cache.create(jsonRest);
+            var cache = Cache.create(jsonRest, {
+                canCacheQuery: true
+            });
             ListStore.storeInstances[listDefStr][language] = {
                 jsonRest: jsonRest,
                 cache: cache

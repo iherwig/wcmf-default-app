@@ -54,7 +54,7 @@ function(
         textbox: {},
 
         constructor: function(args) {
-            // TODO remove store adapter if not required by select any more
+            // TODO remove store adapter if not required by FilteringSelect any more
             if (!args.store) {
                 // get store from input type, if not set yet
                 args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
@@ -80,15 +80,6 @@ function(
                 }
                 this.showSpinner();
             });
-
-            // render value
-            if (args.inputType) {
-                ControlFactory.translateValue(args.inputType, this.value).
-                    then(lang.hitch(this, function(displayText) {
-                        this.set("value", this.value);
-                    })
-                );
-            }
         },
 
         postCreate: function() {
@@ -114,7 +105,7 @@ function(
         _setValueAttr: function(value, priorityChange, displayedValue, item) {
             // since the value of the items in the ListStore is stored in
             // their value property and not in the id property, we need to
-            // change the behaviour of the parent class, which use the id
+            // change the behaviour of the parent class, which uses the id
             // property as value
             if (item) {
                 // if an item is given, we can fall back to the
@@ -123,15 +114,24 @@ function(
                 this.inherited(arguments);
                 return;
             }
-            // find the item whith the value property equal to value
+            // find the item with the value property equal to value
             var args = arguments;
-            when(this.store.query({value: 'eq='+value}), lang.hitch(this, function(result) {
-                if (result && result.length === 1) {
-                    this.listItem = result[0];
-                    value = this.listItem.oid;
-                    this.inherited(args, [value, priorityChange, displayedValue, item]);
-                }
-            }));
+
+            if (this.inputType) {
+                when(ControlFactory.getItem(this.inputType, value), lang.hitch(this, function(object) {
+                    this.listItem = object;
+                    this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                }));
+            }
+            else {
+                // TODO use this.store, if FilteringSelect uses store api
+                var store = !this.store.filter ? this.store.store : this.store;
+                store.filter({value: 'eq='+value}).forEach(lang.hitch(this, function (object) {
+                    // we expect only one object
+                    this.listItem = object;
+                    this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                }));
+            }
         },
 
         showSpinner: function() {

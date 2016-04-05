@@ -151,8 +151,10 @@ define([
                         sourceOid: this.isNew ? this.sourceOid : undefined,
                         relation: this.isNew ? this.relation : undefined,
                         language: this.language,
-                        page: this,
-                        onCreated: lang.hitch(this, function(panel) {
+                        page: this
+                    });
+                    panel.own(
+                        topic.subscribe("entity-form-widget-created", lang.hitch(this, function(panel) {
                             // create the tab container
                             var tabs = new EntityTabWidget({
                                 route: this.baseRoute,
@@ -166,8 +168,8 @@ define([
                             ready(function() {
                                 tabs.startup();
                             });
-                        })
-                    });
+                        }))
+                    );
                 }
                 else {
                     // error

@@ -3,6 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/ready",
+    "dojo/topic",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
@@ -15,6 +16,7 @@ define([
     declare,
     lang,
     ready,
+    topic,
     _Page,
     _Notification,
     NavigationWidget,
@@ -59,8 +61,10 @@ define([
                         type: this.type,
                         hasTree: this.hasTree,
                         page: this,
-                        route: this.baseRoute,
-                        onCreated: lang.hitch(this, function(panel) {
+                        route: this.baseRoute
+                    });
+                    panel.own(
+                        topic.subscribe("entity-list-widget-created", lang.hitch(this, function(panel) {
                             // create the tab container
                             var tabs = new EntityTabWidget({
                                 route: this.baseRoute,
@@ -74,8 +78,8 @@ define([
                             ready(function() {
                                 tabs.startup();
                             });
-                        })
-                    });
+                        }))
+                    );
                 }
                 else {
                     // error

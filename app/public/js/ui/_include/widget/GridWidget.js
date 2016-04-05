@@ -69,6 +69,7 @@ define([
 
         type: null,
         store: null,
+        columns: [], // array of attribute names or columns objects
         actions: [],
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
@@ -92,6 +93,11 @@ define([
         },
 
         dndInProgress: false,
+
+        // too many filter calls make the rows disapear sometimes
+        // so we define a minimal time span that has to be passed until the next filter is set
+        lastFiltered: null,
+        filterLifetime: 1000,
 
         constructor: function (params) {
             if (params && params.actions) {
@@ -184,43 +190,52 @@ define([
                 });
             }
             var typeClass = Model.getType(this.type);
-            var displayValues = typeClass.displayValues;
-            for (var i=0, count=displayValues.length; i<count; i++) {
-                var curValue = displayValues[i];
-                var curAttributeDef = typeClass.getAttribute(curValue);
-                var controlClass = controls[curAttributeDef.inputType];
-                var column = {
-                    label: Dict.translate(curValue),
-                    field: curValue,
-                    editor: controlClass,
-                    editorArgs: {
-                        name: curAttributeDef.name,
-                        helpText: Dict.translate(curAttributeDef.description),
-                        inputType: curAttributeDef.inputType,
-                        entity: null, // will be set in dgrid-editor-show event
-                        style: 'height:20px; padding:0;',
-                        isInlineEditor: true
-                    },
-                    editOn: "dblclick",
-                    canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
-                        // only allow to edit editable objects of grid's own type
-                        var sameType = _this.isSameType(obj);
-                        return sameType && typeClass.isEditable(curAttributeDef, obj);
-                    }) : function(obj, value) {
-                        return false;
-                    },
-                    autoSave: true,
-                    sortable: true,
-                    renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
-                        when(Renderer.render(data, this), function(value) {
-                            td.innerHTML = value;
-                        });
-                    })
-                };
-                if (array.indexOf(featureNames, 'Tree') !== -1) {
-                    column.renderExpando = true;
+            for (var i=0, count=this.columns.length; i<count; i++) {
+                var columnDef = this.columns[i];
+                if (typeof(columnDef) === "string") {
+                    // attribute column
+                    var curValue = columnDef;
+                    var curAttributeDef = typeClass.getAttribute(curValue);
+                    if (curAttributeDef !== null) {
+                        var controlClass = controls[curAttributeDef.inputType];
+                        var column = {
+                            label: Dict.translate(curValue),
+                            field: curValue,
+                            editor: controlClass,
+                            editorArgs: {
+                                name: curAttributeDef.name,
+                                helpText: Dict.translate(curAttributeDef.description),
+                                inputType: curAttributeDef.inputType,
+                                entity: null, // will be set in dgrid-editor-show event
+                                style: 'height:20px; padding:0;',
+                                isInlineEditor: true
+                            },
+                            editOn: "dblclick",
+                            canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
+                                // only allow to edit editable objects of grid's own type
+                                var sameType = _this.isSameType(obj);
+                                return sameType && typeClass.isEditable(curAttributeDef, obj);
+                            }) : function(obj, value) {
+                                return false;
+                            },
+                            autoSave: true,
+                            sortable: true,
+                            renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
+                                when(Renderer.render(data, this), function(value) {
+                                    td.innerHTML = value;
+                                });
+                            })
+                        };
+                        if (array.indexOf(featureNames, 'Tree') !== -1) {
+                            column.renderExpando = true;
+                        }
+                        columns.push(column);
+                    }
                 }
-                columns.push(column);
+                else {
+                    // custom column
+                    columns.push(columnDef);
+                }
             }
 
             // add actions column
@@ -308,7 +323,18 @@ define([
             });
         },
 
+        createFilter: function() {
+            return new this.store.Filter();
+        },
+
         filter: function(filter) {
+            // prevent too many filter calls
+            var now = (new Date()).getTime();
+            if (this.lastFiltered !== null && now-this.lastFiltered < this.filterLifetime) {
+                return;
+            }
+            this.lastFiltered = now;
+
             this.gridFilter = filter;
             if (this.grid) {
                 this.grid.set('collection', this.store.filter(this.gridFilter));

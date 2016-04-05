@@ -96,8 +96,6 @@ function(
         isTranslation: false,
         original: null, // untranslated entity
 
-        onCreated: null, // function to be called after the widget is created
-
         attributeWidgets: [],
         relationWidgets: [],
         layoutWidgets: [],
@@ -249,9 +247,8 @@ function(
                     this.buildLanguageMenu();
                 }
 
-                if (this.onCreated instanceof Function) {
-                    this.onCreated(this);
-                }
+                // notify listeners
+                topic.publish("entity-form-widget-created", this);
             }), lang.hitch(this, function(error) {
                 // error
                 this.showBackendError(error);
