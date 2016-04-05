@@ -176,23 +176,27 @@ th.field-oid, td.field-oid {
 }
 
 th.field-actions-1, td.field-actions-1 {
-  width: 30px;
+  width: 24px;
 }
 
 th.field-actions-2, td.field-actions-2 {
-  width: 60px;
+  width: 48px;
 }
 
 th.field-actions-3, td.field-actions-3 {
-  width: 90px;
+  width: 72px;
 }
 
 th.field-actions-4, td.field-actions-4 {
-  width: 120px;
+  width: 96px;
 }
 
 th.field-actions-5, td.field-actions-5 {
-  width: 150px;
+  width: 120px;
+}
+
+th.field-actions-6, td.field-actions-6 {
+  width: 144px;
 }
 
 .dgrid-cell {
