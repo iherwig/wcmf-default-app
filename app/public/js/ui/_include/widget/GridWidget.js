@@ -115,7 +115,7 @@ define([
 
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
 
-                this.grid = this.buildGrid(controls, this.store);
+                this.grid = this.buildGrid(controls);
                 this.grid.startup();
                 this.own(
                     on(window, "resize", lang.hitch(this, this.onResize)),
@@ -159,7 +159,7 @@ define([
             }));
         },
 
-        buildGrid: function (controls, store) {
+        buildGrid: function (controls) {
             var _this = this;
 
             // select features
@@ -263,7 +263,7 @@ define([
             var grid = new (declare([OnDemandGrid, Editor].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
-                collection: store,
+                collection: this.store.filter(this.initialFilter),
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
@@ -321,10 +321,6 @@ define([
             this.grid.refresh({
                 keepScrollPosition: true
             });
-        },
-
-        createFilter: function() {
-            return new this.store.Filter();
         },
 
         filter: function(filter) {

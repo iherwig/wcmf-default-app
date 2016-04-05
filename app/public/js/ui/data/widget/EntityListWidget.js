@@ -91,26 +91,13 @@ function(
             all(deferredList).then(lang.hitch(this, function(results) {
                 this.permissions = results[0].result ? results[0].result : {};
 
-                var store = Store.getStore(this.type, appConfig.defaultLanguage);
-
-                // check if the type might have parents of the same type,
-                // and set the filter to retrieve only root nodes, if yes
-                var filter = {};
-                var simpleType = Model.getSimpleTypeName(this.type);
-                var relations = this.typeClass.getRelations('parent');
-                for (var i=0, count=relations.length; i<count; i++) {
-                    var relation = relations[i];
-                    if (relation.type === simpleType) {
-                        filter[this.type+'.'+relation.fkName] = null;
-                    }
-                }
-
                 // setup grid
                 this.gridWidget = new GridWidget({
                     type: this.type,
-                    store: store.filter(filter),
+                    store: this.getGridStore(),
                     columns: this.getGridColumns(),
                     actions: this.getGridActions(),
+                    initialFilter: this.getGridFilter(),
                     enabledFeatures: this.getGridFeatures()
                 }, this.gridNode);
                 this.gridWidget.startup();
@@ -219,6 +206,26 @@ function(
         getGridColumns: function() {
             var typeClass = Model.getType(this.type);
             return typeClass.displayValues;
+        },
+
+        getGridFilter: function() {
+            // check if the type might have parents of the same type,
+            // and set the filter to retrieve only root nodes, if yes
+            var filter = {};
+            var simpleType = Model.getSimpleTypeName(this.type);
+            var relations = this.typeClass.getRelations('parent');
+            for (var i=0, count=relations.length; i<count; i++) {
+                var relation = relations[i];
+                if (relation.type === simpleType) {
+                    filter[this.type+'.'+relation.fkName] = null;
+                }
+            }
+            return filter;
+        },
+
+        getGridStore: function() {
+            var store = Store.getStore(this.type, appConfig.defaultLanguage);
+            return store.filter(this.getGridFilter());
         },
 
         _create: function(e) {
