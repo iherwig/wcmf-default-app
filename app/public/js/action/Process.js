@@ -90,7 +90,11 @@ define([
             });
 
             if (response.status === 'download') {
-                iframe.post(this.getBackendUrl());
+                iframe(this.getBackendUrl(), {
+                    preventCache: true,
+                    timeout: 1000,
+                    method: "POST"
+                });
                 this.deferred.resolve(response);
             }
             else if (response.status === 'done') {
