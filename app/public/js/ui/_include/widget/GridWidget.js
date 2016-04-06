@@ -73,6 +73,7 @@ define([
         actions: [],
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
+        initialFilter: null,
 
         actionsByName: {},
         templateString: lang.replace(template, Dict.tplTranslate),

@@ -65,7 +65,7 @@ define([
             // create the dialog content
             // NOTE: all attach points contained in the template are accessible
             // via this.content
-            dialogWidget = new (declare([_WidgetBase, _TemplatedMixin], {
+            var dialogWidget = new (declare([_WidgetBase, _TemplatedMixin], {
                 templateString: lang.replace(template, Dict.tplTranslate)
             }));
             dialogWidget.startup();

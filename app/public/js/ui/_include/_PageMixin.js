@@ -10,6 +10,7 @@ define([
     "dojo/on",
     "dojo/topic",
     "dojo/when",
+    "dojo/Deferred",
     "dojomat/_AppAware",
     "dojomat/_StateAware",
     "dijit/_WidgetBase",
@@ -28,6 +29,7 @@ define([
     on,
     topic,
     when,
+    Deferred,
     _AppAware,
     _StateAware,
     _WidgetBase,
@@ -150,15 +152,18 @@ define([
          * Push with asking for confimation
          */
         pushConfirmed: function (url) {
+            var deferred = new Deferred();
             if (!this.inConfirmLeave) {
                 this.inConfirmLeave = true;
                 when(this.confirmLeave(url), lang.hitch(this, function(result) {
                     this.inConfirmLeave = false;
                     if (result === true) {
                         this.pushState(url);
+                        deferred.resolve();
                     }
                 }));
             }
+            return deferred;
         },
 
         /**

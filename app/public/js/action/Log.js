@@ -36,9 +36,10 @@ define([
      * Write to the backend log
      * @param message The log message
      * @param level Log level (TRACE|DEBUG|INFO|WARNING|ERROR|FATAL)
+     * @return Deferred instance
      */
     Log.log = function(message, level) {
-      request.post(appConfig.backendUrl+'log', {
+      return request.post(appConfig.backendUrl+'log', {
           data: {
               message: message,
               type: level

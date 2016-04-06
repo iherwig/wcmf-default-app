@@ -23,7 +23,7 @@ define([
             var oid = Model.createDummyOid(this.type);
             var pathParams = { type:this.type, id:Model.getIdFromOid(oid) };
             var url = route.assemble(pathParams);
-            this.page.pushConfirmed(url);
+            return this.page.pushConfirmed(url);
         }
     });
 });

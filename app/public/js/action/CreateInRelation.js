@@ -26,7 +26,7 @@ define([
             var pathParams = { type:type, id:Model.getIdFromOid(oid) };
             var url = route.assemble(pathParams);
             url += "?oid="+this.source.get('oid')+"&relation="+this.relation.name;
-            this.page.pushConfirmed(url);
+            return this.page.pushConfirmed(url);
         }
     });
 });
