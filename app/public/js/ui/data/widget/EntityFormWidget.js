@@ -603,7 +603,7 @@ function(
             new action({
                 entity: this.entity,
                 lockType: "pessimistic"
-            }).execute(e, this.entity).then(
+            }).execute(this.entity).then(
                 lang.hitch(this, function(response) {
                     // success
                     this.showNotification({
