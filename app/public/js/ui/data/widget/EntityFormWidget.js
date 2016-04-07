@@ -410,7 +410,7 @@ function(
             new Lock({
                 entity: this.entity,
                 lockType: "optimistic"
-            }).execute({}, this.entity).then(
+            }).execute().then(
                 lang.hitch(this, function(response) {
                     // success
                     // not locked by other user
@@ -603,7 +603,7 @@ function(
             new action({
                 entity: this.entity,
                 lockType: "pessimistic"
-            }).execute(this.entity).then(
+            }).execute().then(
                 lang.hitch(this, function(response) {
                     // success
                     this.showNotification({

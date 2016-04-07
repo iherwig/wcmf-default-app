@@ -24,7 +24,7 @@ use wcmf\lib\util\URIUtil;
 // PROTECTED REGION END
 
 /**
- * RootController description:
+ * RootController
  *
  * The following configuration settings are defined for this controller:
  *
@@ -33,9 +33,6 @@ use wcmf\lib\util\URIUtil;
  *
  * [views]
  * app\src\controller\RootController?? = app/src/views/cms.tpl
- *
- * @author
- * @version 1.0
  */
 class RootController extends Controller {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Body) ENABLED START
@@ -67,8 +64,7 @@ class RootController extends Controller {
 // PROTECTED REGION END
 
   /**
-   * Method renderPage
-   * description: Render the CMS page.
+   * Render the CMS page.
    * @return
    */
   protected function renderPage() {

@@ -53,7 +53,9 @@ define([
 
         // Cancel button (will be displayed, if callback is not null)
         cancelBtnText: Dict.translate('Cancel'),
-        cancelCallback: this.hide,
+        cancelCallback: function() {
+            this.hide();
+        },
 
         okBtn: null,
         cancelBtn: null,

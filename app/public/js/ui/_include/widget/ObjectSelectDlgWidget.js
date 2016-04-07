@@ -2,12 +2,14 @@ define([
     "dojo/_base/declare",
     "./PopupDlgWidget",
     "./GridWidget",
-    "../../../persistence/Store"
+    "../../../persistence/Store",
+    "../../../model/meta/Model"
 ], function (
     declare,
     PopupDlg,
     GridWidget,
-    Store
+    Store,
+    Model
 ) {
     /**
      * Modal link dialog. Usage:
@@ -42,6 +44,7 @@ define([
             this.grid = new GridWidget({
                 type: this.type,
                 store: Store.getStore(this.type, appConfig.defaultLanguage),
+                columns: Model.getType(this.type).displayValues,
                 actions: [],
                 canEdit: false,
                 height: 198

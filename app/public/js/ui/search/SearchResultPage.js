@@ -59,21 +59,21 @@ define([
         },
 
         buildForm: function() {
+            var type = "SearchResult";
             new GridWidget({
-                type: "SearchResult",
+                type: type,
                 store: SearchStore.getStore(this.searchterm),
+                columns: Model.getType(type).displayValues,
                 actions: this.getGridActions(),
                 enabledFeatures: []
             }, this.gridNode);
         },
 
         getGridActions: function() {
-
             var editAction = new Edit({
                 page: this,
                 route: "entity"
             });
-
             return [editAction];
         }
     });

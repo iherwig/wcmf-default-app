@@ -12,10 +12,7 @@ use wcmf\lib\core\ObjectFactory;
 // PROTECTED REGION END
 
 /**
- * EntityBase description:
- *
- * @author
- * @version 1.0
+ * EntityBase
  */
 class EntityBase extends EntityBaseBase {
 // PROTECTED REGION ID(app/src/model/EntityBase.php/Body) ENABLED START

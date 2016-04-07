@@ -101,6 +101,7 @@ function(
                 this.gridWidget = new GridWidget({
                     type: this.relation.type,
                     store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
+                    columns: Model.getType(this.relation.type).displayValues,
                     actions: this.getGridActions(),
                     enabledFeatures: enabledFeatures,
                     height: 183
