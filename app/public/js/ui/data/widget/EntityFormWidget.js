@@ -443,7 +443,28 @@ function(
         },
 
         normalizeForComparison: function(value) {
-          return value === undefined ? null : value;
+            if (value && value.toJSON) {
+                value = value.toJSON();
+            }
+            return value === undefined ? null : value;
+        },
+        
+        /**
+         * Update the entity and display with the data returned from the server
+         * @param data The entity data
+         */
+        updateEntity: function(data) {
+            var typeClass = Model.getType(this.type);
+            var attributes = typeClass.getAttributes();
+            for (var i=0, count=attributes.length; i<count; i++) {
+                var attributeName = attributes[i].name;
+                // notify listeners
+                this.entity.set(attributeName, data[attributeName]);
+            }
+            // reset attribute widgets
+            for (var i=0, c=this.attributeWidgets.length; i<c; i++) {
+                this.attributeWidgets[i].setDirty(false);
+            }
         },
 
         _save: function(e) {
@@ -451,7 +472,7 @@ function(
             e.preventDefault();
 
             if (this.isModified) {
-                // update entity from form data
+                // merge form data into entity
                 var data = {};
                 for (var i=0, c=this.attributeWidgets.length; i<c; i++) {
                     var widget = this.attributeWidgets[i];
@@ -482,20 +503,9 @@ function(
                         // success
 
                         // update entity
-                        var typeClass = Model.getType(this.type);
-                        var attributes = typeClass.getAttributes();
-                        for (var i=0, count=attributes.length; i<count; i++) {
-                            var attributeName = attributes[i].name;
-                            // notify listeners
-                            this.entity.set(attributeName, result[attributeName]);
-                        }
+                        this.updateEntity(result);
                         this.entity.set('oid', result.get('oid'));
-
-                        // reset attribute widgets
-                        for (var i=0, c=this.attributeWidgets.length; i<c; i++) {
-                            this.attributeWidgets[i].setDirty(false);
-                        }
-
+                        
                         var message = this.isNew ? Dict.translate("<em>%0%</em> was successfully created", [this.typeClass.getDisplayValue(this.entity)]) :
                                 Dict.translate("<em>%0%</em> was successfully updated", [this.typeClass.getDisplayValue(this.entity)]);
                         this.showNotification({
