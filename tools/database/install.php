@@ -20,7 +20,6 @@ use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\BuildDepth;
-use wcmf\lib\security\impl\NullPermissionManager;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\util\DBUtil;
 
@@ -60,13 +59,7 @@ $persistenceFacade = ObjectFactory::getInstance('persistenceFacade');
 $transaction = $persistenceFacade->getTransaction();
 $transaction->begin();
 try {
-  // initialize database sequence, create default user/role
-  if(sizeof($persistenceFacade->getOIDs("DBSequence")) == 0) {
-    $logger->info("initializing database sequence...");
-    $seq = $persistenceFacade->create("DBSequence", BuildDepth::SINGLE);
-    $seq->setValue("id", 1);
-  }
-
+  // create default user/role
   $principalFactory = ObjectFactory::getInstance('principalFactory');
   if ($principalFactory instanceof DefaultPrincipalFactory) {
     $roleType = $configuration->getValue('roleType', 'principalFactory');

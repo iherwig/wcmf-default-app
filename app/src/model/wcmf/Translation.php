@@ -13,10 +13,7 @@ use wcmf\lib\persistence\ObjectId;
 // PROTECTED REGION END
 
 /**
- * Translation description: Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.
- *
- * @author
- * @version 1.0
+ * Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.
  */
 class Translation extends TranslationBase {
 // PROTECTED REGION ID(app/src/model/wcmf/Translation.php/Body) ENABLED START
