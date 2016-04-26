@@ -8,7 +8,8 @@ define([
     "../_include/widget/NavigationWidget",
     "../_include/FormLayout",
     "../_include/widget/Button",
-    "../../action/Process",
+    "../../action/Index",
+    "../../action/ExportXML",
     "../../locale/Dictionary",
     "dojo/text!./template/AdminPage.html"
 ], function (
@@ -21,7 +22,8 @@ define([
     NavigationWidget,
     FormLayout,
     Button,
-    Process,
+    Index,
+    ExportXML,
     Dict,
     template
 ) {
@@ -39,24 +41,28 @@ define([
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            this.startProcess('index',
-                this.indexBtn, Dict.translate("The search index was successfully updated."));
+            var message = Dict.translate("The search index was successfully updated.");
+
+            this.indexBtn.setProcessing();
+            this.hideNotification();
+            new Index().execute().then(
+                lang.hitch(this, lang.partial(this.finishProcess, this.indexBtn, message)),
+                lang.hitch(this, lang.partial(this.errorHandler, this.indexBtn)),
+                lang.hitch(this, this.progressHandler)
+            );
         },
 
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            this.startProcess('export',
-                this.exportBtn, Dict.translate("The content was successfully exported."));
-        },
+            var message = Dict.translate("The content was successfully exported.");
 
-        startProcess: function(action, btn, message) {
-            btn.setProcessing();
+            this.exportBtn.setProcessing();
             this.hideNotification();
-            new Process(action).run().then(
-                lang.hitch(this, lang.partial(this.finishProcess, btn, message)),
-                lang.hitch(this, lang.partial(this.errorHandler, btn)),
+            new ExportXML().execute().then(
+                lang.hitch(this, lang.partial(this.finishProcess, this.exportBtn, message)),
+                lang.hitch(this, lang.partial(this.errorHandler, this.exportBtn)),
                 lang.hitch(this, this.progressHandler)
             );
         },

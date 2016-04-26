@@ -13,6 +13,7 @@ define( [
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
+    "../../../action/ExportCSV",
     "../../../action/Create",
     "../../../action/Edit",
     "../../../action/Copy",
@@ -36,6 +37,7 @@ function(
     CheckPermissions,
     Model,
     Store,
+    ExportCSV,
     Create,
     Edit,
     Copy,
@@ -51,7 +53,7 @@ function(
 
         type: null,
         typeClass: null,
-        hasTree: true,
+        hasTree: false,
         page: null,
         route: '',
 
@@ -226,6 +228,24 @@ function(
         getGridStore: function() {
             var store = Store.getStore(this.type, appConfig.defaultLanguage);
             return store.filter(this.getGridFilter());
+        },
+
+        _export: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+
+            this.exportBtn.setProcessing();
+            new ExportCSV({
+                type: this.type
+            }).execute().then(
+                lang.hitch(this, function() {
+                    this.exportBtn.reset();
+                }),
+                lang.hitch(this, function(error) {
+                    this.showBackendError(error);
+                    this.exportBtn.reset();
+                })
+            );
         },
 
         _create: function(e) {
