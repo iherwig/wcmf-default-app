@@ -50,6 +50,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Zr5QQLQ9EeOQ5oJFa1i8cg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_Zr6eYLQ9EeOQ5oJFa1i8cg" value="app/public/media/"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_G6nQIA4TEeaDh6xKuYoMqA" name="cacheDir" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_G6nQIQ4TEeaDh6xKuYoMqA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_G6nQIg4TEeaDh6xKuYoMqA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_G6nQIw4TEeaDh6xKuYoMqA" value="app/public/cache/"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_dXAQELQ9EeOQ5oJFa1i8cg" name="Localization">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_gwhJkLQ9EeOQ5oJFa1i8cg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
