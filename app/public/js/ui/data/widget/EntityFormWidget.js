@@ -255,7 +255,7 @@ function(
             }));
 
             this.own(
-                topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
+                topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error, this.isModified);
                 }))
             );
@@ -448,7 +448,7 @@ function(
             }
             return value === undefined ? null : value;
         },
-        
+
         /**
          * Update the entity and display with the data returned from the server
          * @param data The entity data
@@ -505,7 +505,7 @@ function(
                         // update entity
                         this.updateEntity(result);
                         this.entity.set('oid', result.get('oid'));
-                        
+
                         var message = this.isNew ? Dict.translate("<em>%0%</em> was successfully created", [this.typeClass.getDisplayValue(this.entity)]) :
                                 Dict.translate("<em>%0%</em> was successfully updated", [this.typeClass.getDisplayValue(this.entity)]);
                         this.showNotification({

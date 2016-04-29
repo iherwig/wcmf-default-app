@@ -111,16 +111,16 @@ function(
             }));
 
             this.own(
-                topic.subscribe('ui/_include/widget/GridWidget/error', lang.hitch(this, function(error) {
+                topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error);
                 })),
-                topic.subscribe('ui/_include/widget/GridWidget/dnd-start', lang.hitch(this, function(error) {
+                topic.subscribe("ui/_include/widget/GridWidget/dnd-start", lang.hitch(this, function(error) {
                     this.showNotification({
                         type: "process",
                         message: Dict.translate("Saving positions")
                     });
                 })),
-                topic.subscribe('ui/_include/widget/GridWidget/dnd-end', lang.hitch(this, function(error) {
+                topic.subscribe("ui/_include/widget/GridWidget/dnd-end", lang.hitch(this, function(error) {
                     this.showNotification({
                         type: "ok",
                         message: Dict.translate("Finished"),
@@ -236,7 +236,8 @@ function(
 
             this.exportBtn.setProcessing();
             new ExportCSV({
-                type: this.type
+                type: this.type,
+                filter: this.getGridStore()._renderFilterParams(this.getGridFilter())[0]
             }).execute().then(
                 lang.hitch(this, function() {
                     this.exportBtn.reset();

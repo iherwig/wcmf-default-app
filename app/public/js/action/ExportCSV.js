@@ -1,9 +1,13 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/io-query",
     "./Process",
     "./ActionBase"
 ], function (
     declare,
+    lang,
+    ioQuery,
     Process,
     ActionBase
 ) {
@@ -16,11 +20,16 @@ define([
 
         // action parameters
         type: null,
+        filter: null,
 
         execute: function() {
-            return new Process('exportCSV').run({
+            var params = {
                 className: this.type
-            });
+            };
+            if (this.filter) {
+                lang.mixin(params, ioQuery.queryToObject(this.filter));
+            }
+            return new Process('exportCSV').run(params);
         }
     });
 });

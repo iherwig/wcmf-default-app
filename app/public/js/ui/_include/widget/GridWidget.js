@@ -140,9 +140,6 @@ define([
                           }
                         }
                     })),
-                    topic.subscribe("store-error", lang.hitch(this, function(error) {
-                        topic.publish('ui/_include/widget/GridWidget/error', error);
-                    })),
                     topic.subscribe("store-datachange", lang.hitch(this, function(error) {
                         if (this.dndInProgress) {
                           topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
