@@ -382,7 +382,7 @@ function processTableDef($tableDef, &$tables) {
   $columnDef = preg_split('/\n/', $matches[4]);
   foreach ($columnDef as $columnDef) {
     if (strlen(trim($columnDef)) > 0) {
-      preg_match_all('/`(.*?)`\s+(.*?),([^`]*)/', $columnDef, $matches);
+      preg_match_all('/`(.*?)`\s+(.*),([^`]*)/', $columnDef, $matches);
       if (isset($matches)) {
         $columnNames = $matches[1];
         $columnTypes = $matches[2];
