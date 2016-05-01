@@ -32,9 +32,9 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.10.4",
+                "version": "1.11.1",
                 "dist": {
-                    "url": "https://github.com/dojo/dojo/archive/1.10.4.zip",
+                    "url": "https://github.com/dojo/dojo/archive/1.11.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -47,9 +47,9 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.10.4",
+                "version": "1.11.1",
                 "dist": {
-                    "url": "https://github.com/dojo/dijit/archive/1.10.4.zip",
+                    "url": "https://github.com/dojo/dijit/archive/1.11.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -62,9 +62,9 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.10.4",
+                "version": "1.11.1",
                 "dist": {
-                    "url": "https://github.com/dojo/dojox/archive/1.10.4.zip",
+                    "url": "https://github.com/dojo/dojox/archive/1.11.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -77,9 +77,9 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.10.4",
+                "version": "1.11.1",
                 "dist": {
-                    "url": "https://github.com/dojo/util/archive/1.10.4.zip",
+                    "url": "https://github.com/dojo/util/archive/1.11.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -186,10 +186,10 @@
         "php": ">=5.3.0",
         "wcmf/asset-installer": "~1.0",
         "wcmf/wcmf": "dev-master",
-        "dojo/dojo": "~1.10",
-        "dojo/dijit": "~1.10",
-        "dojo/dojox": "~1.10",
-        "dojo/util": "~1.10",
+        "dojo/dojo": "~1.11",
+        "dojo/dijit": "~1.11",
+        "dojo/dojox": "~1.11",
+        "dojo/util": "~1.11",
         "sitepen/dstore": "~1.1",
         "sitepen/dgrid": "~1.0",
         "robloach/component-installer": "*",
