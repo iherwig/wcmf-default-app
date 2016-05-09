@@ -1,8 +1,10 @@
 define([
     "dojo/_base/declare",
+    "../../model/meta/Model",
     "../../model/meta/Node"
 ], function(
     declare,
+    Model,
     Node
 ) {
 // Names to be included by l10n tools
@@ -71,6 +73,13 @@ define([
 
         , listView: '../data/widget/EntityListWidget'
         , detailView: '../data/widget/EntityFormWidget'
+        , getSummary: function(data) {
+            var typeClass = Model.getType(data['_type']);
+            if (typeClass.getSummary instanceof Function) {
+                return typeClass.getSummary(data);
+            }
+            return '';
+        }
     });
     return SearchResult;
 });

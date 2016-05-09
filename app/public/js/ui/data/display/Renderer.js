@@ -1,7 +1,9 @@
 
 // dynamically define requirements
 var requirements = [
-    "dojo/_base/declare"
+    "dojo/_base/declare",
+    "dojo/when",
+    "dojo/Deferred"
 ];
 
 // add display type renderers to requirements
@@ -16,7 +18,10 @@ define(
 function(
 ) {
     // extract requirements manually from arguments object
-    var declare = arguments[0];
+    var i=0;
+    var declare = arguments[i++];
+    var when = arguments[i++];
+    var Deferred = arguments[i++];
     var Renderer = declare(null, {
     });
 
@@ -24,15 +29,21 @@ function(
      * Render the given value according to the given attribute definition.
      * @param value The value
      * @param attribute The attribute definition
-     * @param synch Boolean, if true, return a string immediatly
-     * @returns Deferred/String
+     * @param synch Boolean, if true, resolve deferred immediatly
+     * @returns Deferred
      */
     Renderer.render = function(value, attribute, synch) {
+        var deferred = new Deferred();
         var renderer = Renderer.getRenderer(attribute.displayType);
         if (renderer instanceof Function) {
-            return renderer(value, attribute, synch);
+            when(renderer(value, attribute, synch), function(value) {
+                deferred.resolve(value);
+            });
         }
-        return value;
+        else {
+            deferred.resolve(value);
+        }
+        return deferred;
     };
 
     Renderer.getRenderer = function(displayType) {
@@ -58,9 +69,8 @@ function(
 
     // initialize renderers
     Renderer.renderers = {};
-    var i=0;
     for (var key in appConfig.displayTypes) {
-        Renderer.renderers[key] = arguments[++i];
+        Renderer.renderers[key] = arguments[i++];
     }
 
     return Renderer;

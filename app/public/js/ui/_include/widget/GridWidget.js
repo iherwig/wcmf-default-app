@@ -4,6 +4,8 @@ define([
     "dojo/_base/array",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
+    "dijit/TooltipDialog",
+    "dijit/popup",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -26,6 +28,7 @@ define([
     "dojo/on",
     "dojo/when",
     "dojo/has",
+    "dojo/mouse",
     "../../../model/meta/Model",
     "../../../locale/Dictionary",
     "../../data/input/Factory",
@@ -37,6 +40,8 @@ define([
     array,
     _WidgetBase,
     _TemplatedMixin,
+    TooltipDialog,
+    popup,
     OnDemandGrid,
     Selection,
     Keyboard,
@@ -59,6 +64,7 @@ define([
     on,
     when,
     has,
+    mouse,
     Model,
     Dict,
     ControlFactory,
@@ -138,6 +144,32 @@ define([
                               var cell = this.grid.cell(columnNode);
                               this.grid.refreshCell(cell);
                           }
+                        }
+                    })),
+                    on(this.grid, mouse.enter, lang.hitch(this, function(e) {
+                        var row = this.grid.row(e.target.parentNode);
+                        if (row) {
+                            var typeClass = Model.getType(this.type);
+                            if (typeClass.getSummary instanceof Function) {
+                                var text = typeClass.getSummary(row.data);
+                                if (text) {
+                                    this.summaryDialog = new TooltipDialog({
+                                        content: text,
+                                        onMouseLeave: lang.hitch(this, function() {
+                                            popup.close(this.summaryDialog);
+                                        })
+                                    });
+                                    popup.open({
+                                        popup: this.summaryDialog,
+                                        around: e.target.parentNode
+                                    });
+                                }
+                            }
+                        }
+                    })),
+                    on(this.grid, mouse.leave, lang.hitch(this, function(e) {
+                        if (this.summaryDialog) {
+                            popup.close(this.summaryDialog);
                         }
                     })),
                     topic.subscribe("store-datachange", lang.hitch(this, function(error) {

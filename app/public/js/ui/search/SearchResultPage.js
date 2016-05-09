@@ -2,11 +2,14 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/promise/all",
+    "dojo/when",
     "dojo/topic",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
     "../_include/widget/GridWidget",
+    "../../ui/data/display/Renderer",
     "../../model/meta/Model",
     "../../persistence/SearchStore",
     "./SearchResult",
@@ -17,11 +20,14 @@ define([
     require,
     declare,
     lang,
+    all,
+    when,
     topic,
     _Page,
     _Notification,
     NavigationWidget,
     GridWidget,
+    Renderer,
     Model,
     SearchStore,
     SearchResult,
@@ -59,11 +65,28 @@ define([
         },
 
         buildForm: function() {
-            var type = "SearchResult";
             new GridWidget({
-                type: type,
+                type: "SearchResult",
                 store: SearchStore.getStore(this.searchterm),
-                columns: Model.getType(type).displayValues,
+                columns: [{
+                    label: Dict.translate("_displayValue"),
+                    field: "_displayValue",
+                    canEdit: false,
+                    sortable: true,
+                    renderCell: function(object, data, td, options) {
+                        var typeClass = Model.getType(object["_type"]);
+                        var displayValues = typeClass.displayValues;
+                        for (var i=0, count=displayValues.length; i<count; i++) {
+                            var displayValue = displayValues[i];
+                            when(Renderer.render(object[displayValue],
+                                typeClass.getAttribute(displayValue), false), function(value) {
+                                if (value) {
+                                    td.innerHTML += value+" ";
+                                }
+                            });
+                        }
+                    }
+                }],
                 actions: this.getGridActions(),
                 enabledFeatures: []
             }, this.gridNode);
