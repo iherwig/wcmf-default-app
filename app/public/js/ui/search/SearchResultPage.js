@@ -44,6 +44,8 @@ define([
         constructor: function(params) {
             this.searchterm = this.request.getQueryParam("q");
 
+            this.headline = Dict.translate("Searchresults for '%0%'", [this.searchterm]);
+
             // register search result type if not done already
             if (!Model.isKnownType("SearchResult")) {
               Model.registerType(new SearchResult());
@@ -60,6 +62,9 @@ define([
             this.own(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error);
+                })),
+                topic.subscribe("ui/_include/widget/GridWidget/refresh-complete", lang.hitch(this, function(grid) {
+                    this.statusNode.innerHTML = Dict.translate("%0% items", [grid._total]);
                 }))
             );
         },

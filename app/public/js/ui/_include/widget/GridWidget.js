@@ -324,6 +324,7 @@ define([
             });
 
             grid.on("dgrid-refresh-complete", lang.hitch(this, function(evt) {
+                topic.publish('ui/_include/widget/GridWidget/refresh-complete', evt.grid);
                 grid.resize();
             }));
 
