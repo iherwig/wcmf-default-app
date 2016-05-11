@@ -1,6 +1,8 @@
 <?php
 $messages_de = array();
 $messages_de[''] = '';
+// file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/search/SearchResultPage.js
+$messages_de['%0% item(s)'] = '%0% Objekt(e)';
 // file(s): public/js/ui/data/input/widget/MultiSelectBox.js
 $messages_de['%0% selected'] = '%0% ausgewählt';
 // file(s): public/js/ui/data/EntityPage.js
@@ -49,7 +51,7 @@ $messages_de['attribute'] = '';
 $messages_de['Authentication failed.'] = 'Authorisierung fehlgeschlagen';
 // file(s): src/model/AuthorRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php
 $messages_de['Author'] = 'Autor';
-// file(s): application/controller/DisplayController.php, application/controller/ListController.php, lib/persistence/impl/AbstractMapper.php
+// file(s): application/controller/DisplayController.php, lib/persistence/impl/AbstractMapper.php
 $messages_de['Authorization failed for action \'%0%\' on \'%1%\'.'] = 'Autorisierung für Aktion \'%0%\' auf \'%1%\' fehlgeschlagen.';
 // file(s): src/model/AuthorRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php
 $messages_de['Author [Pl.]'] = 'Autoren';
@@ -61,7 +63,7 @@ $messages_de['Backend error'] = 'Backend-Fehler';
 $messages_de['Book'] = 'Buch';
 // file(s): src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_de['Book [Pl.]'] = 'Bücher';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html, public/js/ui/_include/widget/template/LoginDlgWidget.html, public/js/ui/_include/widget/template/PopupDlgWidget.html
+// file(s): public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_de['Cancel'] = 'Abbrechen';
 // file(s): lib/io/FileUtil.php
 $messages_de['Cannot copy %0% (it\'s neither a file nor a directory).'] = '%0% kann nicht kopiert werden (keine Datei und kein Verzeichnis).';
@@ -81,10 +83,10 @@ $messages_de['config'] = 'Konfiguration';
 $messages_de['Confirm Leave Page'] = 'Seitenwechsel bestätigen';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_de['Confirm Object Deletion'] = 'Löschen bestätigen';
-// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_de['Content'] = 'Inhalt';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_de['content'] = '';
+// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_de['Content'] = 'Inhalt';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['context'] = 'Kontext';
 // file(s): application/controller/CopyController.php
@@ -123,6 +125,10 @@ $messages_de['Embed Code'] = 'Einbetten-Code';
 $messages_de['Error'] = 'Fehler';
 // file(s): lib/util/GraphicsUtil.php
 $messages_de['exactly'] = 'exakt';
+// file(s): public/js/ui/data/widget/template/EntityListWidget.html
+$messages_de['Export CSV'] = 'Export CSV';
+// file(s): application/controller/CSVExportController.php
+$messages_de['Exporting %0%'] = 'Exportiere %0%';
 // file(s): application/controller/XMLExportController.php
 $messages_de['Exporting tree: continue with %0%'] = 'Exportiere Baum: Fortgesetzt bei %0%';
 // file(s): application/controller/XMLExportController.php
@@ -149,6 +155,10 @@ $messages_de['fk_book_id'] = '';
 $messages_de['fk_chapter_id'] = '';
 // file(s): src/model/BookRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php
 $messages_de['fk_publisher_id'] = '';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['fk_referencedbook_id'] = '';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['fk_referencingbook_id'] = '';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php
 $messages_de['fk_role_id'] = '';
 // file(s): src/model/ImageRDBMapper.php
@@ -157,7 +167,7 @@ $messages_de['fk_titlechapter_id'] = '';
 $messages_de['fk_user_id'] = '';
 // file(s): public/js/ui/home/HomePage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Home'] = 'Home';
-// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php, src/model/wcmf/DBSequenceRDBMapper.php, src/model/wcmf/LanguageRDBMapper.php, src/model/wcmf/LockRDBMapper.php, src/model/wcmf/PermissionRDBMapper.php, src/model/wcmf/RoleRDBMapper.php, src/model/wcmf/TranslationRDBMapper.php, src/model/wcmf/UserConfigRDBMapper.php, src/model/wcmf/UserRDBMapper.php
+// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/NMBookBookRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php, src/model/wcmf/DBSequenceRDBMapper.php, src/model/wcmf/LanguageRDBMapper.php, src/model/wcmf/LockRDBMapper.php, src/model/wcmf/PermissionRDBMapper.php, src/model/wcmf/RoleRDBMapper.php, src/model/wcmf/TranslationRDBMapper.php, src/model/wcmf/UserConfigRDBMapper.php, src/model/wcmf/UserRDBMapper.php
 $messages_de['id'] = 'Id';
 // file(s): src/model/ImageRDBMapper.php
 $messages_de['Image'] = 'Bild';
@@ -165,16 +175,16 @@ $messages_de['Image'] = 'Bild';
 $messages_de['Image [Pl.]'] = 'Bilder';
 // file(s): application/controller/SearchIndexController.php
 $messages_de['Indexing %0%'] = 'Indexiere %0%';
-// file(s): application/controller/XMLExportController.php
+// file(s): application/controller/CSVExportController.php, application/controller/XMLExportController.php
 $messages_de['Initialization'] = 'Initialisierung';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
 $messages_de['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
 // file(s): src/model/wcmf/UserConfigRDBMapper.php
 $messages_de['key'] = 'Schlüssel';
-// file(s): src/model/wcmf/LanguageRDBMapper.php
-$messages_de['Language'] = 'Sprache';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
 $messages_de['language'] = 'Sprache';
+// file(s): src/model/wcmf/LanguageRDBMapper.php
+$messages_de['Language'] = 'Sprache';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_de['Language [Pl.]'] = 'Sprachen';
 // file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
@@ -193,10 +203,10 @@ $messages_de['Locking <em>%0%</em>'] = 'Sperre <em>%0%</em>';
 $messages_de['Lock [Pl.]'] = 'Sperren';
 // file(s): application/views/plugins/function.translate.php
 $messages_de['Logged in as %0% since %1%'] = '';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_de['Login'] = 'Anmeldename';
 // file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/UserRDBMapper.php
 $messages_de['login'] = 'Anmeldename';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_de['Login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Logout'] = 'Abmelden';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -217,6 +227,10 @@ $messages_de['New <em>%0%</em>'] = '*<em>%0%</em>';
 $messages_de['New password'] = 'Neues Passwort';
 // file(s): public/js/ui/settings/template/SettingsPage.html
 $messages_de['New password repeated'] = 'Passwortwiederholung';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['NMBookBook'] = '';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['NMBookBook [Pl.]'] = '';
 // file(s): src/model/AuthorRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_de['NMPublisherAuthor'] = '';
 // file(s): src/model/AuthorRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php
@@ -243,13 +257,15 @@ $messages_de['NormalChapter [Pl.]'] = 'Kapitel';
 $messages_de['NormalImage'] = 'Kapitel';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_de['NormalImage [Pl.]'] = 'Kapitel';
+// file(s): lib/presentation/impl/DefaultRequest.php
+$messages_de['No route matching the request path can be found.'] = 'Es wurde keine zur Anfrage passende Route gefunden.';
 // file(s): lib/persistence/validator/Validator.php
 $messages_de['No valid JSON format: %1%'] = '';
 // file(s): lib/persistence/impl/NullMapper.php
 $messages_de['NULLType'] = '';
 // file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/TranslationRDBMapper.php
 $messages_de['objectid'] = 'Objekt ID';
-// file(s): public/js/ui/_include/widget/template/PopupDlgWidget.html
+// file(s): public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_de['OK'] = 'OK';
 // file(s): public/js/ui/settings/template/SettingsPage.html
 $messages_de['Old password'] = 'Altes Passwort';
@@ -271,10 +287,10 @@ $messages_de['Page not found'] = 'Seite nicht gefunden';
 $messages_de['ParentChapter'] = 'Überkapitel';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_de['ParentChapter [Pl.]'] = 'Überkapitel';
-// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
-$messages_de['Password'] = 'Passwort';
 // file(s): src/model/wcmf/UserRDBMapper.php
 $messages_de['password'] = 'Passwort';
+// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
+$messages_de['Password'] = 'Passwort';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['Permission'] = 'Recht';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
@@ -297,19 +313,37 @@ $messages_de['Publisher'] = 'Verlag';
 $messages_de['Publisher [Pl.]'] = 'Verlage';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_de['Read'] = 'Lesen';
-// file(s): application/controller/DisplayController.php, application/controller/ListController.php
+// file(s): application/controller/DisplayController.php
 $messages_de['read'] = 'lesen';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['ReferencedBook'] = 'Referenziertes Buch';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['ReferencedBook [Pl.]'] = 'Referenzierte Bücher';
+// file(s): src/model/BookRDBMapper.php
+$messages_de['ReferencedNMBookBook'] = '';
+// file(s): src/model/BookRDBMapper.php
+$messages_de['ReferencedNMBookBook [Pl.]'] = '';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['ReferencingBook'] = 'Referenzierendes Buch';
+// file(s): src/model/NMBookBookRDBMapper.php
+$messages_de['ReferencingBook [Pl.]'] = 'Referenzierende Bücher';
+// file(s): src/model/BookRDBMapper.php
+$messages_de['ReferencingNMBookBook'] = '';
+// file(s): src/model/BookRDBMapper.php
+$messages_de['ReferencingNMBookBook [Pl.]'] = '';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['resource'] = 'Resource';
+// file(s): public/js/ui/search/SearchResultPage.js
+$messages_de['Results for \'%0%\''] = 'Ergebnisse für \'%0%\'';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_de['Role'] = 'Rolle';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['roles'] = 'Rollen';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_de['Role [Pl.]'] = 'Rollen';
-// file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/data/widget/template/PermissionDlgWidget.html, public/js/ui/settings/template/SettingsPage.html
+// file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_de['Save'] = 'Speichern';
 // file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
 $messages_de['Saving positions'] = 'Speichere Reihenfolge';
@@ -321,7 +355,7 @@ $messages_de['Searchresult'] = 'Suchergebnis';
 $messages_de['Select <em>%0%</em> objects, you want to link to <em>%1%</em>'] = 'Wählen Sie <em>%0%</em> Objekte, die Sie mit <em>%1%</em> verknüpfen wollen';
 // file(s): public/js/ui/admin/AdminPage.js, public/js/ui/settings/SettingsPage.js, public/js/ui/settings/template/SettingsPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Settings'] = 'Einstellungen';
-// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/LoginDlgWidget.js, public/js/ui/_include/widget/template/LoginDlgWidget.html
+// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/LoginDlgWidget.js
 $messages_de['Sign in'] = 'Anmelden';
 // file(s): lib/util/GraphicsUtil.php
 $messages_de['smaller than'] = 'kleiner als';
@@ -329,6 +363,8 @@ $messages_de['smaller than'] = 'kleiner als';
 $messages_de['SubChapter'] = 'Unterkapitel';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_de['SubChapter [Pl.]'] = 'Unterkapitel';
+// file(s): src/model/wcmf/DBSequenceRDBMapper.php
+$messages_de['table'] = '';
 // file(s): public/js/locale/Dictionary.js
 $messages_de['text_%0%_%1%'] = '';
 // file(s): public/js/locale/Dictionary.js
@@ -349,10 +385,14 @@ $messages_de['The content was successfully exported.'] = 'Die Inhalte wurden erf
 $messages_de['The directory \'%0%\' does not exist.'] = 'Das Verzeichnis \'%0%\' existiert nicht.';
 // file(s): application/controller/UserController.php
 $messages_de['The given passwords don\'t match'] = 'Die angegebenen Passwörter stimmen nicht überein';
+// file(s): lib/presentation/impl/DefaultRequest.php
+$messages_de['The HTTP method is not allowed on the requested path.'] = 'Die HTTP Methode ist auf dem Anfragepfad nicht erlaubt.';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
 $messages_de['The language of the translation'] = 'Übersetzungssprache';
 // file(s): lib/security/principal/impl/AbstractUser.php
 $messages_de['The login \'%0%\' already exists'] = 'Der Anmeldename \'%0%\' existiert bereits';
+// file(s): lib/security/principal/impl/AbstractUser.php
+$messages_de['The login \'%0%\' is not allowed'] = 'Der Anmeldename \'%0%\' ist nicht erlaubt';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
 $messages_de['The object id of the object to which the translation belongs'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -465,7 +505,7 @@ $messages_de['Wrong value for %0% (%1%). '] = 'Ungültiger Wert für %0% (%1%). 
 $messages_de['year'] = 'Jahr';
 // file(s): public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_de['Your session is lost. Please sign in.'] = '';
-// file(s): public/js/ui/search/SearchResult.js
+// file(s): public/js/ui/search/SearchResult.js, public/js/ui/search/SearchResultPage.js
 $messages_de['_displayValue'] = 'Objekt';
 // file(s): public/js/ui/search/SearchResult.js
 $messages_de['_summary'] = 'Zusammenfassung';

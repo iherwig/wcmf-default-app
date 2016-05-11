@@ -128,7 +128,7 @@ function(
                     });
                 })),
                 topic.subscribe("ui/_include/widget/GridWidget/refresh-complete", lang.hitch(this, function(grid) {
-                    this.statusNode.innerHTML = Dict.translate("%0% items", [grid._total]);
+                    this.statusNode.innerHTML = Dict.translate("%0% item(s)", [grid._total]);
                 }))
             );
         },

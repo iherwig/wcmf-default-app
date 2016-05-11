@@ -96,6 +96,15 @@ define([
             return results;
         },
 
+        // put query into 'query' parameter
+        _renderQueryParams: function () {
+            var result = this.inherited(arguments);
+            for (var i=0, count=result.length; i<count; i++) {
+                result[i] = 'query='+encodeURIComponent(result[i]);
+            }
+            return result;
+        },
+
         createBackEndDummyId: function() {
             return 'wcmf'+uuid().replace(/-/g, '');
         }
