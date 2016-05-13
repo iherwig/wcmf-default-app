@@ -85,6 +85,7 @@ function(
                             window.open(file, "_blank");
                         })
                     });
+                    this.addChild(this.downloadBtn);
                 }
             }
 
