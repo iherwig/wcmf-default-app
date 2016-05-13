@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "dojo/aspect",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/TooltipDialog",
@@ -28,7 +29,6 @@ define([
     "dojo/on",
     "dojo/when",
     "dojo/has",
-    "dojo/mouse",
     "../../../model/meta/Model",
     "../../../locale/Dictionary",
     "../../data/input/Factory",
@@ -38,6 +38,7 @@ define([
     declare,
     lang,
     array,
+    aspect,
     _WidgetBase,
     _TemplatedMixin,
     TooltipDialog,
@@ -64,7 +65,6 @@ define([
     on,
     when,
     has,
-    mouse,
     Model,
     Dict,
     ControlFactory,
@@ -80,6 +80,7 @@ define([
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
         initialFilter: null,
+        rowEnhancer: null,
 
         actionsByName: {},
         templateString: lang.replace(template, Dict.tplTranslate),
@@ -127,6 +128,10 @@ define([
                 this.own(
                     on(window, "resize", lang.hitch(this, this.onResize)),
                     on(this.grid, "click", lang.hitch(this, function(e) {
+                        // close summary tooltip
+                        if (this.summaryDialog) {
+                            popup.close(this.summaryDialog);
+                        }
                         // process grid clicks
                         var links = query(e.target).closest("a");
                         if (links.length > 0) {
@@ -146,7 +151,7 @@ define([
                           }
                         }
                     })),
-                    on(this.grid, mouse.enter, lang.hitch(this, function(e) {
+                    on(this.grid, "mouseover", lang.hitch(this, function(e) {
                         var row = this.grid.row(e.target.parentNode);
                         if (row) {
                             var typeClass = Model.getType(this.type);
@@ -167,7 +172,7 @@ define([
                             }
                         }
                     })),
-                    on(this.grid, mouse.leave, lang.hitch(this, function(e) {
+                    on(this.grid, "mouseout", lang.hitch(this, function(e) {
                         if (this.summaryDialog) {
                             popup.close(this.summaryDialog);
                         }
@@ -313,6 +318,12 @@ define([
                 farOffRemoval: Infinity,
                 pagingMethod: 'throttleDelayed',
             }, this.gridNode);
+
+            if (this.rowEnhancer instanceof Function) {
+                aspect.after(grid, 'renderRow', lang.hitch(this, function(row, args) {
+                    return this.rowEnhancer(row, args[0]);
+                }));
+            }
 
             grid.on("dgrid-editor-show", function(evt) {
                 // set the entity property on the input control

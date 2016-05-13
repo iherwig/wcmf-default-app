@@ -91,6 +91,9 @@ define([
                             });
                         }
                     }
+                }, {
+                    label: Dict.translate("_type"),
+                    field: "_type"
                 }],
                 actions: this.getGridActions(),
                 enabledFeatures: []

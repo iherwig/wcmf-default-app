@@ -346,7 +346,7 @@ $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_en['Save'] = '';
 // file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
-$messages_en['Saving positions'] = '';
+$messages_en['Saving data'] = '';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Search'] = '';
 // file(s): public/js/ui/search/SearchResultPage.js

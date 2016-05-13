@@ -3,6 +3,7 @@ define( [
     "dojo/_base/lang",
     "dojo/topic",
     "dojo/on",
+    "dojo/dom-construct",
     "dijit/registry",
     "dijit/form/TextBox",
     "../../../_include/widget/Button",
@@ -16,6 +17,7 @@ function(
     lang,
     topic,
     on,
+    domConstruct,
     registry,
     TextBox,
     Button,
@@ -33,6 +35,7 @@ function(
         browserUrl: null,
         textbox: null,
         browseBtn: null,
+        downloadBtn: null,
         listenToWidgetChanges: true,
 
         constructor: function(args) {
@@ -60,7 +63,7 @@ function(
                 this.set("value", value);
             });
 
-            // create button
+            // create button / child
             if (this.browserUrl) {
                 this.browseBtn = new Button({
                     disabled: this.disabled,
@@ -71,6 +74,18 @@ function(
                     })
                 });
                 this.addChild(this.browseBtn);
+
+                var file = this.getFile();
+                if (file) {
+                    this.downloadBtn = new Button({
+                        disabled: this.disabled,
+                        innerHTML: '<i class="fa fa-download"></i>',
+                        "class": "btn-mini",
+                        onClick: lang.hitch(this, function() {
+                            window.open(file, "_blank");
+                        })
+                    });
+                }
             }
 
             this.own(
@@ -97,11 +112,14 @@ function(
             );
         },
 
-        getDirectory: function() {
+        getFile: function() {
             var value = this.get("value");
-            // replace base path, remove file name
-            return value ? value.replace(/[^\/]*$/, '').
-                    replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
+            // replace base path
+            return value ? value.replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
+        },
+
+        getDirectory: function() {
+            return this.getFile().replace(/[^\/]*$/, '');
         },
 
         destroy: function() {

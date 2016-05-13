@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/on",
+    "dojo/keys",
     "dojo/dom-construct",
     "dojo/Deferred",
     "dijit/_WidgetBase",
@@ -15,6 +16,7 @@ define([
     declare,
     lang,
     on,
+    keys,
     domConstruct,
     Deferred,
     _WidgetBase,
@@ -116,12 +118,14 @@ define([
                     this.deferred.resolve();
                 })),
                 on(dojo.body(), "keyup", lang.hitch(this, function (e) {
-                    if (e.which === 13) {
-                        this.okBtn.setProcessing();
-                        this.doCallback(e, this.okCallback);
-                    }
-                    if (e.which === 27) {
-                        this.doCallback(e, this.cancelCallback);
+                    switch(e.keyCode) {
+                        case keys.ENTER:
+                            this.okBtn.setProcessing();
+                            this.doCallback(e, this.okCallback);
+                            break;
+                        case keys.ESCAPE:
+                            this.doCallback(e, this.cancelCallback);
+                            break;
                     }
                 }))
             );

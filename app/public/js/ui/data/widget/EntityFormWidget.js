@@ -4,6 +4,7 @@ define( [
     "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/promise/all",
+    "dojo/on",
     "dojo/topic",
     "dojo/dom-class",
     "dojo/dom-construct",
@@ -39,6 +40,7 @@ function(
     lang,
     array,
     all,
+    on,
     topic,
     domClass,
     domConstruct,
@@ -257,6 +259,17 @@ function(
             this.own(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error, this.isModified);
+                })),
+                on(dojo.body(), "keydown", lang.hitch(this, function (e) {
+                    if (e.keyCode === 83 && e.ctrlKey || e.metaKey) {
+                        e.stopPropagation();
+                        this.showNotification({
+                            type: "process",
+                            message: Dict.translate("Saving data")
+                        });
+                        this._save(e, true);
+                        return false;
+                    };
                 }))
             );
         },
@@ -467,7 +480,7 @@ function(
             }
         },
 
-        _save: function(e) {
+        _save: function(e, keepNotification) {
             // prevent the page from navigating after submit
             e.preventDefault();
 
@@ -481,7 +494,9 @@ function(
                 data = lang.mixin(lang.clone(this.entity), data);
 
                 this.saveBtn.setProcessing();
-                this.hideNotification();
+                if (!keepNotification) {
+                    this.hideNotification();
+                }
 
                 var store = null;
                 if (this.isRelatedObject()) {

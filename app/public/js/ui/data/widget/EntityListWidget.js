@@ -100,7 +100,8 @@ function(
                     columns: this.getGridColumns(),
                     actions: this.getGridActions(),
                     initialFilter: this.getGridFilter(),
-                    enabledFeatures: this.getGridFeatures()
+                    enabledFeatures: this.getGridFeatures(),
+                    rowEnhancer: this.getRowEnhancer()
                 }, this.gridNode);
                 this.gridWidget.startup();
 
@@ -117,7 +118,7 @@ function(
                 topic.subscribe("ui/_include/widget/GridWidget/dnd-start", lang.hitch(this, function(error) {
                     this.showNotification({
                         type: "process",
-                        message: Dict.translate("Saving positions")
+                        message: Dict.translate("Saving data")
                     });
                 })),
                 topic.subscribe("ui/_include/widget/GridWidget/dnd-end", lang.hitch(this, function(error) {
@@ -211,6 +212,16 @@ function(
         getGridColumns: function() {
             var typeClass = Model.getType(this.type);
             return typeClass.displayValues;
+        },
+
+        /**
+         * Get a function to be used to enhance row instances
+         * The function will get the row object and the row data passed
+         * as arguments and must return the row.
+         * @returns Function or null
+         */
+        getRowEnhancer: function() {
+            return null;
         },
 
         getGridFilter: function() {

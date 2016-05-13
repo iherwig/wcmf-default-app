@@ -117,7 +117,7 @@ function(
                 topic.subscribe('ui/_include/widget/GridWidget/dnd-start', lang.hitch(this, function(error) {
                     this.showNotification({
                         type: "process",
-                        message: Dict.translate("Saving positions")
+                        message: Dict.translate("Saving data")
                     });
                 })),
                 topic.subscribe('ui/_include/widget/GridWidget/dnd-end', lang.hitch(this, function(error) {
