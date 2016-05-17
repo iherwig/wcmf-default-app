@@ -153,8 +153,9 @@ define([
                     })),
                     on(this.grid, "mouseover", lang.hitch(this, function(e) {
                         var row = this.grid.row(e.target.parentNode);
-                        if (row) {
+                        var column = this.grid.column(e.target);
                             var typeClass = Model.getType(this.type);
+                        if (row && column.field === typeClass.displayValues[0]) {
                             if (typeClass.getSummary instanceof Function) {
                                 var text = typeClass.getSummary(row.data);
                                 if (text) {
@@ -249,7 +250,7 @@ define([
                             canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
                                 // only allow to edit editable objects of grid's own type
                                 var sameType = _this.isSameType(obj);
-                                return sameType && typeClass.isEditable(curAttributeDef, obj);
+                                return sameType && typeClass.isEditable(this, obj);
                             }) : function(obj, value) {
                                 return false;
                             },
