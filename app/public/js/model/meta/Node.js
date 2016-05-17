@@ -1,12 +1,14 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
+    "dojo/when",
     "./Model",
     "../../locale/Dictionary",
     "../../ui/data/display/Renderer"
 ], function(
     declare,
     array,
+    when,
     Model,
     Dict,
     Renderer
@@ -142,10 +144,11 @@ define([
                     for (var i=0; i<type.displayValues.length; i++) {
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
-                        var renderedValue = Renderer.render(entity[curValue], curAttribute, true);
-                        if (renderedValue && renderedValue.length > 0) {
-                            values.push(renderedValue);
+                        when(Renderer.render(entity[curValue], curAttribute), function(value) {
+                            if (value && value.length > 0) {
+                                values.push(value);
                         }
+                        });
                     }
                     result = values.join(" - ");
                 }
