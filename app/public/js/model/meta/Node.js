@@ -145,7 +145,7 @@ define([
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
                         when(Renderer.render(entity[curValue], curAttribute), function(value) {
-                            if (value && value.length > 0) {
+                            if (value && (value).toString().length > 0) {
                                 values.push(value);
                         }
                         });
