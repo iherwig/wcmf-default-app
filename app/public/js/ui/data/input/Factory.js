@@ -133,7 +133,7 @@ function(
         }
         var deferred = Factory._translatePromises[translateKey];
         var options = Factory.getOptions(inputType);
-        if (options['list']) {
+        if (options['list'] && value !== null) {
             // check list cache
             var listKey = inputType;
             if (Factory._listCache.hasOwnProperty(listKey)) {

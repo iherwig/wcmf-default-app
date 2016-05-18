@@ -29,14 +29,13 @@ function(
      * Render the given value according to the given attribute definition.
      * @param value The value
      * @param attribute The attribute definition
-     * @param synch Boolean, if true, resolve deferred immediatly
      * @returns Deferred
      */
-    Renderer.render = function(value, attribute, synch) {
+    Renderer.render = function(value, attribute) {
         var deferred = new Deferred();
         var renderer = Renderer.getRenderer(attribute.displayType);
         if (renderer instanceof Function) {
-            when(renderer(value, attribute, synch), function(value) {
+            when(renderer(value, attribute), function(value) {
                 deferred.resolve(value);
             });
         }

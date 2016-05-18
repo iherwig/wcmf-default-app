@@ -4,7 +4,7 @@ define([
 function(
     locale
 ) {
-    return function(value, attribute, synch) {
+    return function(value, attribute) {
         if (value) {
             var parseDateFormat = {
                 selector: 'date',

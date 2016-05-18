@@ -100,7 +100,9 @@ define([
         _renderQueryParams: function () {
             var result = this.inherited(arguments);
             for (var i=0, count=result.length; i<count; i++) {
-                result[i] = 'query='+encodeURIComponent(result[i]);
+                var curResult = result[i];
+                result[i] = !curResult.match(/^sort\(|^limit\(/) ?
+                    'query='+encodeURIComponent(curResult) : curResult;
             }
             return result;
         },

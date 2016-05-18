@@ -74,19 +74,6 @@ function(
                     })
                 });
                 this.addChild(this.browseBtn);
-
-                var file = this.getFile();
-                if (file) {
-                    this.downloadBtn = new Button({
-                        disabled: this.disabled,
-                        innerHTML: '<i class="fa fa-download"></i>',
-                        "class": "btn-mini",
-                        onClick: lang.hitch(this, function() {
-                            window.open(file, "_blank");
-                        })
-                    });
-                    this.addChild(this.downloadBtn);
-                }
             }
 
             this.own(
@@ -113,10 +100,15 @@ function(
             );
         },
 
+        isFile: function() {
+            var value = this.get("value");
+            return value && value.indexOf(appConfig.mediaSavePath) === 0;
+        },
+
         getFile: function() {
             var value = this.get("value");
             // replace base path
-            return value ? value.replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
+            return this.isFile() ? value.replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
         },
 
         getDirectory: function() {

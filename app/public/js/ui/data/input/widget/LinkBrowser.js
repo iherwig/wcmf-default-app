@@ -31,6 +31,7 @@ function(
                 onClick: lang.hitch(this, function() {
                     var route = this.getLinkRoute();
                     if (route) {
+                        // internal link
                         if (this.isDirty()) {
                             new ConfirmDlg({
                                 title: Dict.translate("Confirm Leave Page"),
@@ -44,6 +45,18 @@ function(
                             topic.publish('navigate', route.name, route.pathParams);
                         }
                     }
+                    else if (this.isFile()) {
+                        // file
+                        window.open(this.getFile(), "_blank");
+                    }
+                    else {
+                        // external link
+                        var value = this.get("value");
+                        if (value && !value.match(/http[s]?:\/\//)) {
+                            value = 'http://'+value;
+                        }
+                        window.open(value, "_blank");
+                    }
                 })
             });
             this.addChild(testBtn);
@@ -54,9 +67,9 @@ function(
          * @returns Object with attributes name, pathParams
          */
         getLinkRoute: function() {
-            var val = this.get("value");
-            if (val) {
-                var oid = val.replace(/^link:\/\//, '');
+            var value = this.get("value");
+            if (value && value.match(/^link:\/\//)) {
+                var oid = value.replace(/^link:\/\//, '');
                 var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(oid));
                 var id = Model.getIdFromOid(oid);
                 var pathParams = { type:type, id:id };
