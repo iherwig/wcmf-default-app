@@ -1,11 +1,13 @@
 define([
     "dojo/_base/declare",
     "dojo/request",
-    "./ActionBase"
+    "./ActionBase",
+    "dojo/json"
 ], function (
     declare,
     request,
-    ActionBase
+    ActionBase,
+    JSON
 ) {
     return declare([ActionBase], {
 
@@ -19,13 +21,15 @@ define([
         permissions: {},
 
         execute: function() {
+            var data = {
+                operation: this.operation,
+                permissions: this.permissions
+            }
             return request.put(this.path, {
-                data: {
-                    operation: this.operation,
-                    permissions: this.permissions
-                },
+                data: JSON.stringify(data),
                 headers: {
-                    Accept: "application/json"
+                    Accept: "application/json",
+                    'Content-Type': 'application/json'
                 },
                 handleAs: 'json'
             });

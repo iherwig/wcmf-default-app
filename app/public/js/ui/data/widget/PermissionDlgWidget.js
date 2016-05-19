@@ -154,8 +154,8 @@ define([
             // default permission control
             var defaultStore = new Memory({
                 data: [
-                    { id: '+', displayText: Dict.translate('allow') },
-                    { id: '-', displayText: Dict.translate('deny') }
+                    { id: '+', value: '+', displayText: Dict.translate('allow') },
+                    { id: '-', value: '-', displayText: Dict.translate('deny') }
                 ]
             });
             var name = action+'DefaultCtrl';

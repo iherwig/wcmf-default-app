@@ -153,24 +153,26 @@ define([
                     })),
                     on(this.grid, "mouseover", lang.hitch(this, function(e) {
                         var row = this.grid.row(e.target.parentNode);
-                        var column = this.grid.column(e.target);
-                        var typeClass = Model.getType(this.type);
-                        if (row && column.field === typeClass.displayValues[0]) {
-                            if (typeClass.getSummary instanceof Function) {
-                                when(typeClass.getSummary(row.data), lang.hitch(this, function(text) {
-                                    if (text) {
-                                        this.summaryDialog = new TooltipDialog({
-                                            content: text,
-                                            onMouseLeave: lang.hitch(this, function() {
-                                                popup.close(this.summaryDialog);
-                                            })
-                                        });
-                                        popup.open({
-                                            popup: this.summaryDialog,
-                                            around: e.target.parentNode
-                                        });
-                                    }
-                                }));
+                        if (row) {
+                            var column = this.grid.column(e.target);
+                            var typeClass = Model.getType(this.type);
+                            if (column && column.field === typeClass.displayValues[0]) {
+                                if (typeClass.getSummary instanceof Function) {
+                                    when(typeClass.getSummary(row.data), lang.hitch(this, function(text) {
+                                        if (text) {
+                                            this.summaryDialog = new TooltipDialog({
+                                                content: text,
+                                                onMouseLeave: lang.hitch(this, function() {
+                                                    popup.close(this.summaryDialog);
+                                                })
+                                            });
+                                            popup.open({
+                                                popup: this.summaryDialog,
+                                                around: e.target.parentNode
+                                            });
+                                        }
+                                    }));
+                                }
                             }
                         }
                     })),

@@ -5,7 +5,7 @@ define([
 ], function(
     declare,
     cookie,
-    json
+    JSON
 ) {
     var Cookie = declare(null, {
 
