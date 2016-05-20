@@ -113,7 +113,9 @@ var appSrc = [
     "app/js/ui/media/BrowsePage",
     "app/js/ui/search/SearchResult",
     "app/js/ui/search/SearchResultPage",
-    "app/js/ui/settings/SettingsPage"
+    "app/js/ui/settings/SettingsPage",
+
+    "dgrid/util/touch"
 ];
 
 var profile = {

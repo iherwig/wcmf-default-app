@@ -120,7 +120,9 @@ function(
             if (this.inputType) {
                 when(ControlFactory.getItem(this.inputType, value), lang.hitch(this, function(object) {
                     this.listItem = object;
-                    this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                    if (this.listItem) {
+                        this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                    }
                 }));
             }
             else {
@@ -129,7 +131,9 @@ function(
                 store.filter({value: 'eq='+value}).forEach(lang.hitch(this, function (object) {
                     // we expect only one object
                     this.listItem = object;
-                    this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                    if (this.listItem) {
+                        this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                    }
                 }));
             }
         },
