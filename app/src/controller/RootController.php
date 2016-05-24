@@ -36,7 +36,7 @@ use wcmf\lib\util\URIUtil;
  */
 class RootController extends Controller {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Body) ENABLED START
-  private $_principalFactory = null;
+  private $principalFactory = null;
 
   /**
    * Constructor
@@ -59,8 +59,10 @@ class RootController extends Controller {
           PrincipalFactory $principalFactory) {
     parent::__construct($session, $persistenceFacade, $permissionManager,
             $actionMapper, $localization, $message, $configuration);
-    $this->_principalFactory = $principalFactory;
+    $this->principalFactory = $principalFactory;
   }
+
+  protected function doExecute() {}
 // PROTECTED REGION END
 
   /**
@@ -87,7 +89,7 @@ class RootController extends Controller {
     $inputTypes = $configuration->getSection('inputTypes');
     $displayTypes = $configuration->getSection('displayTypes');
 
-    if ($this->_principalFactory instanceof DefaultPrincipalFactory) {
+    if ($this->principalFactory instanceof DefaultPrincipalFactory) {
       $roleType = $configuration->getValue('roleType', 'principalFactory');
       $userType = $configuration->getValue('userType', 'principalFactory');
     }
