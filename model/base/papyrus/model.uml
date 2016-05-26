@@ -1868,10 +1868,10 @@
   <Chronos:ChiSystem xmi:id="_v3idwLQWEeOIMOFxCilDfw" plattform="wcmf" config="server.ini" base_Class="_sYqjILQWEeOIMOFxCilDfw"/>
   <Chronos:ChiSystem xmi:id="__sbsULQ2EeOQ5oJFa1i8cg" plattform="wcmf" config="server.ini" base_Class="_4Y0UwLQ2EeOQ5oJFa1i8cg"/>
   <Chronos:ChiNode xmi:id="_4B7M0LQ4EeOQ5oJFa1i8cg" base_Class="_ylwfELQ4EeOQ5oJFa1i8cg"/>
-  <Chronos:ChiValue xmi:id="_Hrj0ILQ5EeOQ5oJFa1i8cg" db_data_type="DATETIME" base_Property="_GAGX4LQ5EeOQ5oJFa1i8cg"/>
-  <Chronos:ChiValue xmi:id="_RRfzoLQ5EeOQ5oJFa1i8cg" base_Property="_QGL3ELQ5EeOQ5oJFa1i8cg"/>
-  <Chronos:ChiValue xmi:id="_WYoFgLQ5EeOQ5oJFa1i8cg" db_data_type="DATETIME" base_Property="_VDL8kLQ5EeOQ5oJFa1i8cg"/>
-  <Chronos:ChiValue xmi:id="_bCo9kLQ5EeOQ5oJFa1i8cg" base_Property="_Z6PLELQ5EeOQ5oJFa1i8cg"/>
+  <Chronos:ChiValue xmi:id="_Hrj0ILQ5EeOQ5oJFa1i8cg" app_data_type="DATATYPE_ATTRIBUTE|GROUP_INTERNAL" db_data_type="DATETIME" base_Property="_GAGX4LQ5EeOQ5oJFa1i8cg"/>
+  <Chronos:ChiValue xmi:id="_RRfzoLQ5EeOQ5oJFa1i8cg" app_data_type="DATATYPE_ATTRIBUTE|GROUP_INTERNAL" base_Property="_QGL3ELQ5EeOQ5oJFa1i8cg"/>
+  <Chronos:ChiValue xmi:id="_WYoFgLQ5EeOQ5oJFa1i8cg" app_data_type="DATATYPE_ATTRIBUTE|GROUP_INTERNAL" db_data_type="DATETIME" base_Property="_VDL8kLQ5EeOQ5oJFa1i8cg"/>
+  <Chronos:ChiValue xmi:id="_bCo9kLQ5EeOQ5oJFa1i8cg" app_data_type="DATATYPE_ATTRIBUTE|GROUP_INTERNAL" base_Property="_Z6PLELQ5EeOQ5oJFa1i8cg"/>
   <Chronos:ChiSystem xmi:id="_e9d-8LQ6EeOQ5oJFa1i8cg" plattform="wcmf" config="server.ini" base_Class="_bbJHsLQ6EeOQ5oJFa1i8cg"/>
   <Chronos:ChiSystem xmi:id="__0gtcLQ6EeOQ5oJFa1i8cg" plattform="wcmf" config="server.ini" base_Class="_92pSkLQ6EeOQ5oJFa1i8cg"/>
   <Chronos:ChiSystem xmi:id="_FpHJULQ7EeOQ5oJFa1i8cg" plattform="wcmf" config="server.ini" base_Class="_DK_hELQ7EeOQ5oJFa1i8cg"/>
