@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/dom",
     "dojo/dom-construct",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -16,6 +17,7 @@ define([
     require,
     declare,
     lang,
+    dom,
     domConstruct,
     _Page,
     _Notification,
@@ -48,7 +50,7 @@ define([
             new Index().execute().then(
                 lang.hitch(this, lang.partial(this.finishProcess, this.indexBtn, message)),
                 lang.hitch(this, lang.partial(this.errorHandler, this.indexBtn)),
-                lang.hitch(this, this.progressHandler)
+                lang.hitch(this, lang.partial(this.progressHandler, this.indexBtn))
             );
         },
 
@@ -63,7 +65,7 @@ define([
             new ExportXML().execute().then(
                 lang.hitch(this, lang.partial(this.finishProcess, this.exportBtn, message)),
                 lang.hitch(this, lang.partial(this.errorHandler, this.exportBtn)),
-                lang.hitch(this, this.progressHandler)
+                lang.hitch(this, lang.partial(this.progressHandler, this.exportBtn))
             );
         },
 
@@ -74,7 +76,11 @@ define([
                 message: message,
                 fadeOut: true,
                 onHide: lang.hitch(this, function () {
-                    domConstruct.empty(this.statusNode);
+                    var id = "status_"+btn.id;
+                    var processStatusNode = dom.byId(id);
+                    if (processStatusNode) {
+                        domConstruct.destroy(processStatusNode);
+                    }
                 })
             });
         },
@@ -84,9 +90,15 @@ define([
             this.showBackendError(error);
         },
 
-        progressHandler: function(data) {
-            var text = domConstruct.toDom("<p>"+data.stepName+"</p>");
-            domConstruct.place(text, this.statusNode, "only");
+        progressHandler: function(btn, data) {
+            var id = "status_"+btn.id;
+            var processStatusNode = dom.byId(id);
+            if (processStatusNode) {
+                domConstruct.destroy(processStatusNode);
+            }
+            processStatusNode = domConstruct.toDom('<li id="'+id+'" class="list-group-item"><span class="badge">'+btn.initialLabel+'</span> <em>'+data.stepName+'</em></li>');
+            domConstruct.place(processStatusNode, this.statusNode);
+
         }
     });
 });

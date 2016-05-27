@@ -184,8 +184,6 @@ define([
                     topic.subscribe("store-datachange", lang.hitch(this, function(error) {
                         if (this.dndInProgress) {
                           topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
-                          // filter must be applied again, otherwise dragged row is missing
-                          this.filter(this.gridFilter);
                           this.dndInProgress = false;
                         }
                     })),
