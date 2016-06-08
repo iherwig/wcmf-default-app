@@ -19,13 +19,16 @@ define([
         entity: null,
 
         execute: function() {
+            return this.page.pushConfirmed(this.getUrl());
+        },
+
+        getUrl: function() {
             var oid = this.entity.get('oid');
             var route = this.page.getRoute(this.route);
             var type = Model.getSimpleTypeName(Model.getTypeNameFromOid(oid));
             var id = Model.getIdFromOid(oid);
             var pathParams = { type:type, id:id };
-            var url = route.assemble(pathParams);
-            return this.page.pushConfirmed(url);
+            return route.assemble(pathParams);
         }
     });
 });

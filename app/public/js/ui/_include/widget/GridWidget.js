@@ -288,7 +288,8 @@ define([
                         for (var name in this.actionsByName) {
                             var action = this.actionsByName[name];
                             action.entity = entity;
-                            html += '<a class="btn-mini" href="#" data-action="'+name+'"><i class="'+action.getIconClass()+'"></i></a>';
+                            var url = action.getUrl() || '#';
+                            html += '<a class="btn-mini" href="'+url+'" data-action="'+name+'"><i class="'+action.getIconClass()+'"></i></a>';
                         }
                         html += '</div>';
                         return html;

@@ -98,7 +98,7 @@ function(
     Factory.getListStore = function(inputType) {
         var options = Factory.getOptions(inputType);
         if (!options['list']) {
-            throw "Input type '"+inputType+"' does not contain a list definition";
+            throw new Error("Input type '"+inputType+"' does not contain a list definition");
         }
         return ListStore.getStore(options['list'], appConfig.defaultLanguage);
     };

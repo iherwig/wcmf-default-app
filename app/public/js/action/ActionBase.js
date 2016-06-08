@@ -66,7 +66,7 @@ define([
                                 domClass.replace(this._iconNode, this.getIconClass(), "fa fa-spinner fa-spin");
                             }
                         }));
-                        deferred.then(this.callback, this.errback, this.progback)
+                        deferred.then(this.callback, this.errback, this.progback);
                     }
                     return deferred;
                 };
@@ -86,7 +86,15 @@ define([
          * @return Deferred instance
          */
         execute: function() {
-            throw("Method execute() must be implemented by concrete action.");
+            throw new Error("Method execute() must be implemented by concrete action.");
+        },
+
+        /**
+         * Get the url of the action if applicaple (e.g. edit action).
+         * @return String or null, if the action has no url
+         */
+        getUrl: function() {
+            return null;
         }
     });
 });

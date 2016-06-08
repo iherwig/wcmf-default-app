@@ -261,7 +261,7 @@ function(
                     this.showBackendError(error, this.isModified);
                 })),
                 on(dojo.body(), "keydown", lang.hitch(this, function (e) {
-                    if (e.keyCode === 83 && e.ctrlKey || e.metaKey) {
+                    if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                         e.stopPropagation();
                         this.showNotification({
                             type: "process",

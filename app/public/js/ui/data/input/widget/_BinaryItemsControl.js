@@ -57,8 +57,8 @@ function(
             // multivalued controls are only useful for a string attribute
             var attribute = this.getAttributeDefinition();
             if (this.multiValued && attribute.type.toLowerCase() !== 'string') {
-                throw "Multivalued controls can only be used with a string attribute. "+
-                        "Attribute '"+attribute.name+"' is of type "+attribute.type+".";
+                throw new Error("Multivalued controls can only be used with a string attribute. "+
+                        "Attribute '"+attribute.name+"' is of type "+attribute.type+".");
             }
         },
 
@@ -107,7 +107,7 @@ function(
          * @return Widget
          */
         buildItemWidget: function(value, label) {
-            throw "must be implemented by subclass";
+            throw new Error("Method buildItemWidget() must be implemented by subclass");
         },
 
         showSpinner: function() {

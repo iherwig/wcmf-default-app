@@ -34,19 +34,19 @@ define([
         },
 
       	get: function(id, options) {
-            throw("Operation 'get' is not supported.");
+            throw new Error("Operation 'get' is not supported.");
         },
 
       	put: function(object, options) {
-            throw("Operation 'put' is not supported.");
+            throw new Error("Operation 'put' is not supported.");
         },
 
       	add: function(object, options) {
-            throw("Operation 'add' is not supported.");
+            throw new Error("Operation 'add' is not supported.");
         },
 
       	remove: function(id, options) {
-            throw("Operation 'remove' is not supported.");
+            throw new Error("Operation 'remove' is not supported.");
         },
 
         query: function(query, options) {
