@@ -383,29 +383,31 @@ define([
         },
 
         onResize: function() {
-            // TODO: remove magic number
-            var vs = win.getBox();
+            if (window.innerWidth > 640) {
+                // TODO: remove magic number
+                var vs = win.getBox();
 
-            // calculate height of dynamic elements
-            var navbarHeight = 0;
-            var toolbarHeight = 0;
-            var footerHeight = 0;
+                // calculate height of dynamic elements
+                var navbarHeight = 0;
+                var toolbarHeight = 0;
+                var footerHeight = 0;
 
-            var navbar = query(".navbar");
-            if (navbar.length > 0) {
-              navbarHeight = domGeom.getMarginBox(navbar[0]).h;
-            }
-            var toolbar = query('[data-dojo-attach-point$=\"toolbarNode\"]');
-            if (toolbar.length > 0) {
-              toolbarHeight = domGeom.getMarginBox(toolbar[0]).h;
-            }
-            var footer = dom.byId("footer");
-            if (footer) {
-              footerHeight = domGeom.getMarginBox(footer).h;
-            }
-            var h = this.height ? this.height : vs.h-navbarHeight-toolbarHeight-footerHeight-210;
-            if (h >= 0) {
-                domAttr.set(this.grid.domNode, "style", {height: h+"px"});
+                var navbar = query(".navbar");
+                if (navbar.length > 0) {
+                  navbarHeight = domGeom.getMarginBox(navbar[0]).h;
+                }
+                var toolbar = query('[data-dojo-attach-point$=\"toolbarNode\"]');
+                if (toolbar.length > 0) {
+                  toolbarHeight = domGeom.getMarginBox(toolbar[0]).h;
+                }
+                var footer = dom.byId("footer");
+                if (footer) {
+                  footerHeight = domGeom.getMarginBox(footer).h;
+                }
+                var h = this.height ? this.height : vs.h-navbarHeight-toolbarHeight-footerHeight-210;
+                if (h >= 0) {
+                    domAttr.set(this.grid.domNode, "style", {height: h+"px"});
+                }
             }
         }
     });
