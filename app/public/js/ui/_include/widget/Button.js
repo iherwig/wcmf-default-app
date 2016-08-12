@@ -12,24 +12,29 @@ define([
     return declare([Button], {
 
         initialLabel: "",
-        progress: 0,
+        progressBar: null,
 
         postCreate: function () {
             this.inherited(arguments);
 
             domStyle.set(this.domNode, 'position', 'relative');
-            this.progress = domConstruct.create('span', {
+            this.progressBar = domConstruct.create('span', {
                 style: {
-                    background: '#ddd',
+                    backgroundColor: '#ddd',
                     position: 'absolute',
                     left: 0,
-                    width: this.progress,
+                    width: 0,
                     height: '100%',
-                    opacity: 0.5,
+                    opacity: 0.9,
                     borderRadius: '4px 0 0 4px'
                 }
             });
-            domConstruct.place(this.progress, this.domNode, 'first');
+            domConstruct.place(this.progressBar, this.domNode, 'first');
+        },
+
+        setProgress: function(value) {
+            value = (value >= 0 && value < 1) ? value : 0;
+            domStyle.set(this.progressBar, 'width', (value*100)+'%');
         },
 
         setProcessing: function() {
@@ -41,6 +46,7 @@ define([
         reset: function() {
             this.set("label", this.initialLabel);
             this.set("disabled", false);
+            this.setProgress(0);
         }
     });
 });

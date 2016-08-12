@@ -129,7 +129,7 @@ function(
                     });
                 })),
                 topic.subscribe("ui/_include/widget/GridWidget/refresh-complete", lang.hitch(this, function(grid) {
-                    this.statusNode.innerHTML = Dict.translate("%0% item(s)", [grid._total]);
+                    this.statusNode.innerHTML = Dict.translate("%0% item(s)", [grid._rows.length]);
                 }))
             );
         },
@@ -259,6 +259,10 @@ function(
                 lang.hitch(this, function(error) {
                     this.showBackendError(error);
                     this.exportBtn.reset();
+                }),
+                lang.hitch(this, function(status) {
+                    var progress = status.stepNumber/status.numberOfSteps;
+                    this.exportBtn.setProgress(progress);
                 })
             );
         },

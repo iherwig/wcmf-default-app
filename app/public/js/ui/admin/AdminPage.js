@@ -91,6 +91,11 @@ define([
         },
 
         progressHandler: function(btn, data) {
+            // set button progress
+            var progress = data.stepNumber/data.numberOfSteps;
+            btn.setProgress(progress);
+
+            // add status line
             var id = "status_"+btn.id;
             var processStatusNode = dom.byId(id);
             if (processStatusNode) {

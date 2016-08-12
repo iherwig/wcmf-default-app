@@ -108,11 +108,11 @@
             "package": {
                 "name": "sitepen/dgrid",
                 "type": "wcmf-asset",
-                "version": "1.0.0",
+                "version": "1.1.0",
                 "source": {
                     "url": "https://github.com/SitePen/dgrid.git",
                     "type": "git",
-                    "reference": "v1.0.0"
+                    "reference": "v1.1.0"
                 },
                 "require": {
                     "wcmf/asset-installer": "*"
@@ -192,7 +192,7 @@
         "dojo/dojox": "~1.11",
         "dojo/util": "~1.11",
         "sitepen/dstore": "~1.1",
-        "sitepen/dgrid": "~1.0",
+        "sitepen/dgrid": "~1.1",
         "robloach/component-installer": "*",
         "components/bootstrap": "~3.3",
         "components/font-awesome": "~4.3",
