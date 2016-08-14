@@ -25,10 +25,10 @@ $messages_en['<em>%0%</em> was successfully updated'] = '';
 $messages_en['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/BookRDBMapper.php
 $messages_en['A book is published by a publisher and consists of chapters.'] = '';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Action'] = '';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_en['action'] = '';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_en['Action'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Active'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
@@ -51,7 +51,7 @@ $messages_en['attribute'] = '';
 $messages_en['Authentication failed.'] = '';
 // file(s): src/model/AuthorRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php
 $messages_en['Author'] = '';
-// file(s): application/controller/DisplayController.php, lib/persistence/impl/AbstractMapper.php
+// file(s): lib/persistence/impl/AbstractMapper.php
 $messages_en['Authorization failed for action \'%0%\' on \'%1%\'.'] = '';
 // file(s): src/model/AuthorRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php
 $messages_en['Author [Pl.]'] = 'Authors';
@@ -97,11 +97,11 @@ $messages_en['Copying <em>%0%</em>'] = '';
 $messages_en['Copying tree: continue with %0%'] = '';
 // file(s): public/js/ui/data/widget/template/EntityListWidget.html
 $messages_en['Create %0%'] = '';
-// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php, src/model/wcmf/LockRDBMapper.php
+// file(s): public/js/ui/home/HomePage.js, src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php, src/model/wcmf/LockRDBMapper.php
 $messages_en['created'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html
 $messages_en['Create Search Index'] = '';
-// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
+// file(s): public/js/ui/home/HomePage.js, src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_en['creator'] = '';
 // file(s): src/model/wcmf/DBSequenceRDBMapper.php
 $messages_en['DBSequence'] = '';
@@ -187,7 +187,9 @@ $messages_en['language'] = '';
 $messages_en['Language'] = '';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
-// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
+// file(s): public/js/ui/home/template/HomePage.html
+$messages_en['Last Updates'] = '';
+// file(s): public/js/ui/home/HomePage.js, src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_en['last_editor'] = '';
 // file(s): public/js/ui/data/EntityListPage.js
 $messages_en['List view class for type <em>%0%</em> not found.'] = '';
@@ -203,10 +205,10 @@ $messages_en['Locking <em>%0%</em>'] = '';
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/UserRDBMapper.php
-$messages_en['login'] = '';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_en['Login'] = '';
+// file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/UserRDBMapper.php
+$messages_en['login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -215,7 +217,7 @@ $messages_en['Manage Content'] = '';
 $messages_en['Media'] = '';
 // file(s): public/js/ui/home/template/HomePage.html, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Media Pool'] = '';
-// file(s): src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
+// file(s): public/js/ui/home/HomePage.js, src/model/AuthorRDBMapper.php, src/model/BookRDBMapper.php, src/model/ChapterRDBMapper.php, src/model/ImageRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_en['modified'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Moving'] = '';
@@ -305,16 +307,12 @@ $messages_en['Permissions for User'] = '';
 $messages_en['Permission [Pl.]'] = 'Permissions';
 // file(s): application/controller/SaveController.php, lib/io/FileUtil.php
 $messages_en['Possible file upload attack: filename %0%.'] = '';
-// file(s): application/controller/BatchController.php
-$messages_en['Processing'] = '';
 // file(s): src/model/BookRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_en['Publisher'] = '';
 // file(s): src/model/BookRDBMapper.php, src/model/NMPublisherAuthorRDBMapper.php, src/model/PublisherRDBMapper.php
 $messages_en['Publisher [Pl.]'] = 'Publishers';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Read'] = '';
-// file(s): application/controller/DisplayController.php
-$messages_en['read'] = '';
 // file(s): src/model/NMBookBookRDBMapper.php
 $messages_en['ReferencedBook'] = '';
 // file(s): src/model/NMBookBookRDBMapper.php
@@ -337,15 +335,15 @@ $messages_en['resource'] = '';
 $messages_en['Results for \'%0%\''] = '';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_en['Role'] = '';
-// file(s): src/model/wcmf/PermissionRDBMapper.php
-$messages_en['roles'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Roles'] = '';
+// file(s): src/model/wcmf/PermissionRDBMapper.php
+$messages_en['roles'] = '';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_en['Save'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
+// file(s): public/js/ui/data/widget/EntityFormWidget.js, public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
 $messages_en['Saving data'] = '';
 // file(s): public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Search'] = '';
@@ -397,8 +395,6 @@ $messages_en['The login \'%0%\' is not allowed'] = '';
 $messages_en['The object id of the object to which the translation belongs'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The object is currently locked by another user.'] = '';
-// file(s): application/controller/DisplayController.php
-$messages_en['The object with oid \'%0%\' does not exist.'] = '';
 // file(s): application/controller/UserController.php
 $messages_en['The old password is incorrect'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -493,8 +489,6 @@ $messages_en['User [Pl.]'] = 'Users';
 $messages_en['val'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
 $messages_en['Welcome'] = '';
-// file(s): public/js/ui/home/template/HomePage.html
-$messages_en['What do you want to do next?'] = '';
 // file(s): lib/util/GraphicsUtil.php
 $messages_en['Wrong image height. Image height must be %1% %2%px - actual image height is %3%px.'] = '';
 // file(s): lib/util/GraphicsUtil.php
@@ -505,10 +499,10 @@ $messages_en['Wrong value for %0% (%1%). '] = '';
 $messages_en['year'] = '';
 // file(s): public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Your session is lost. Please sign in.'] = '';
-// file(s): public/js/ui/search/SearchResult.js, public/js/ui/search/SearchResultPage.js
+// file(s): public/js/ui/home/HistoryEntry.js, public/js/ui/home/HomePage.js, public/js/ui/search/SearchResult.js, public/js/ui/search/SearchResultPage.js
 $messages_en['_displayValue'] = 'object';
-// file(s): public/js/ui/search/SearchResult.js
+// file(s): public/js/ui/home/HistoryEntry.js, public/js/ui/search/SearchResult.js
 $messages_en['_summary'] = 'summary';
-// file(s): public/js/ui/search/SearchResult.js
+// file(s): public/js/ui/home/HistoryEntry.js, public/js/ui/home/HomePage.js, public/js/ui/search/SearchResult.js, public/js/ui/search/SearchResultPage.js
 $messages_en['_type'] = 'type';
 ?>
