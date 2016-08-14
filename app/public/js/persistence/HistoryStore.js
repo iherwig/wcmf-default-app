@@ -21,13 +21,12 @@ define([
     });
 
     /**
-     * Get the store for a given search term
-     * @param searchterm The searchterm
+     * Get the store
      * @return Store instance
      */
-    Store.getStore = function(searchterm) {
+    Store.getStore = function() {
         return new Store({
-            target: appConfig.backendUrl+"?action=search&query="+searchterm
+            target: appConfig.backendUrl+"?action=history"
         });
     };
 

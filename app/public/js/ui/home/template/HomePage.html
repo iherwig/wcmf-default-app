@@ -6,9 +6,16 @@
   <div class="container">
     <div class="jumbotron">
       <h1 id="title">{translate:Welcome}</h1>
-      <p>{translate:What do you want to do next?}</p>
-      <p><a href="#" data-dojo-attach-event="onClick:_navigateContent">{translate:Manage Content} &raquo;</a></p>
-      <p><a href="#" data-dojo-attach-event="onClick:_navigateMedia">{translate:Media Pool} &raquo;</a></p>
+
+      <p>
+        <a href="#" data-dojo-attach-event="onClick:_navigateContent">{translate:Manage Content} &raquo;</a>
+        <a href="#" data-dojo-attach-event="onClick:_navigateMedia">{translate:Media Pool} &raquo;</a>
+      </p>
+
+      <p>{translate:Last Updates}</p>
+      <div data-dojo-attach-point="toolbarNode"></div>
+      <div data-dojo-attach-point="gridNode"></div>
+
     </div>
   </div>
   <!-- End page content -->

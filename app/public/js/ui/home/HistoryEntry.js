@@ -11,13 +11,13 @@ define([
 // Dict.translate('_displayValue')
 // Dict.translate('_summary')
 // Dict.translate('_type')
-    var SearchResult = declare([Node
+    var HistoryEntry = declare([Node
     ], {
-        typeName: "SearchResult",
+        typeName: "HistoryEntry",
         description: "",
         isSortable: false,
         displayValues: [
-            "_displayValue", "_summary", "_type"
+            "_displayValue", "_summary", "_type", "created", "creator", "modified", "last_editor"
         ],
         pkNames: [
             "id"
@@ -67,6 +67,54 @@ define([
             regexpDesc: '',
             tags: ['DATATYPE_ATTRIBUTE'],
             isReference: false
+        }, {
+            name: "created",
+            type: "Date",
+            description: "",
+            isEditable: false,
+            inputType: "text",
+            displayType: "text",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE", "GROUP_INTERNAL"],
+            defaultValue: null,
+            isReference: false
+        }, {
+            name: "creator",
+            type: "String",
+            description: "",
+            isEditable: false,
+            inputType: "text",
+            displayType: "text",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE", "GROUP_INTERNAL"],
+            defaultValue: null,
+            isReference: false
+        }, {
+            name: "modified",
+            type: "Date",
+            description: "",
+            isEditable: false,
+            inputType: "text",
+            displayType: "text",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE", "GROUP_INTERNAL"],
+            defaultValue: null,
+            isReference: false
+        }, {
+            name: "last_editor",
+            type: "String",
+            description: "",
+            isEditable: false,
+            inputType: "text",
+            displayType: "text",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE", "GROUP_INTERNAL"],
+            defaultValue: null,
+            isReference: false
         }],
 
         relations: []
@@ -81,5 +129,5 @@ define([
             return '';
         }
     });
-    return SearchResult;
+    return HistoryEntry;
 });
