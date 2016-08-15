@@ -1,12 +1,16 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/array",
   	"dojo/json",
     "dstore/Rest",
+    "../model/meta/Model",
     "../persistence/Entity"
 ], function (
     declare,
+    array,
     JSON,
     Rest,
+    Model,
     Entity
 ) {
     var Store = declare([Rest], {
@@ -16,7 +20,10 @@ define([
 
         parse: function(response) {
             var data = JSON.parse(response);
-            return data.list;
+            var result = array.filter(data.list, function(item){
+                return Model.isKnownType(item._type);
+            });
+            return result;
         }
     });
 
