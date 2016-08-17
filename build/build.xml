@@ -69,8 +69,8 @@
     <echo level="debug">${compile.log}</echo>
   </target>
 
-  <target name="dist-fe" depends="buildinfo,properties"
-    description="build the distribution without compile target" >
+  <target name="dist-fe" depends="properties,buildinfo"
+    description="build the distribution without clean and compile targets" >
     <mkdir dir="${dist.dir}"/>
     <copy todir="${dist.dir}/vendor">
       <fileset dir="${build.base}vendor/">
@@ -141,9 +141,8 @@
     <copy file="${build.info}" todir="${dist.dir}"/>
   </target>
 
-  <target name="dist" depends="buildinfo,properties,clean,compile"
+  <target name="dist" depends="properties,clean,compile,dist-fe"
     description="build the distribution" >
-    <antcall target="dist-fe" />
     <copy todir="${dist.dir}/${app.name}/public">
       <fileset dir="${build.base}${app.name}/release">
         <exclude name="js/"/>
