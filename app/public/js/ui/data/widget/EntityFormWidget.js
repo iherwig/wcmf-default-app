@@ -111,7 +111,7 @@ function(
             this.typeClass = Model.getType(this.type);
             this.formId = "entityForm_"+oid;
             this.fieldContainerId = "fieldContainer_"+oid;
-            this.headline = this.typeClass.getDisplayValue(this.entity);
+            this.headline = this.getHeadline();
             this.isNew = Model.isDummyOid(oid);
             this.isTranslation = this.language !== appConfig.defaultLanguage;
 
@@ -328,7 +328,11 @@ function(
          */
         getRelations: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.getRelations();
+            return typeClass.getRelations('all', this.entity);
+        },
+
+        getHeadline: function() {
+          return Dict.translate(Model.getSimpleTypeName(this.type))+" <em>"+this.typeClass.getDisplayValue(this.entity)+"</em>";
         },
 
         buildLanguageMenu: function() {
@@ -549,7 +553,7 @@ function(
                                 }
                             })
                         });
-                        this.set("headline", this.typeClass.getDisplayValue(this.entity));
+                        this.set("headline", this.getHeadline());
                         this.setModified(false);
                         this.acquireLock();
                     }

@@ -15,35 +15,46 @@ define([
 ) {
     var Node = declare(null, {
 
+        /**
+         * Attributes defined in subclasses
+         */
         typeName: '',
         isSortable: false,
         displayValues: [],
         attributes: [],
         relations: [],
+
+        /**
+         * Methods optionally implemented in subclasses
+         */
+        getSummary: null, // function(data) {}
+        getEntityRelations: null, // function(data) {}
+
+        allRelations: null,
         parentRelations: null,
         childRelations: null,
 
         /**
          * Get all relation definitions
-         * @param type Optional relation type, 'parent' or 'child'
+         * @param type Relation type, 'all', 'parent' or 'child'
+         * @param entity Entity to get the value for (optional)
          * @return Array
          */
-        getRelations: function(type) {
-            if (type === 'child' || type === 'parent') {
+        getRelations: function(type, entity) {
               var varname = type+'Relations';
-              if (!this[varname]) {
+            if (!this[varname] || entity) {
+                var relations = (entity && this.getEntityRelations instanceof Function) ?
+                    this.getEntityRelations(entity) : this.relations;
                 var rel = [];
-                for(var i=0, count=this.relations.length; i<count; i++) {
-                  var relation = this.relations[i];
-                  if (relation.relationType === type) {
+                for(var i=0, count=relations.length; i<count; i++) {
+                    var relation = relations[i];
+                    if (type === 'all' || relation.relationType === type) {
                     rel.push(relation);
                   }
                 }
                 this[varname] = rel;
               }
               return this[varname];
-            }
-            return this.relations;
         },
 
         /**
