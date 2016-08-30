@@ -31,12 +31,7 @@ function(
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);
-            try {
-                this.value = locale.parse(this.value, this.dateFormat);
-            }
-            catch (e) {
-                console.log("Illegal date instance: "+this.value);
-            }
+            this.value = this.convertToDate(this.value);
         },
 
         postCreate: function() {
@@ -46,7 +41,7 @@ function(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
                     if ((this.entity && this.entity.get('oid') === data.entity.get('oid')) &&
                             data.name === this.name) {
-                        this.set("value", locale.parse(data.newValue, this.dateFormat));
+                        this.set("value", this.convertToDate(data.newValue));
                     }
                 }))
             );
@@ -61,6 +56,11 @@ function(
                 };
             }
             return value;
+        },
+
+        convertToDate: function(value) {
+            return (typeof value === "string" || value instanceof String) ?
+                  locale.parse(value, this.dateFormat) : value;
         }
     });
 });

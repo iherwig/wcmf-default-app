@@ -4,6 +4,7 @@ define( [
     "dojo/_base/lang",
     "dojo/promise/all",
     "dojo/topic",
+    "dojo/dom-class",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -28,6 +29,7 @@ function(
     lang,
     all,
     topic,
+    domClass,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
@@ -104,6 +106,7 @@ function(
                     rowEnhancer: this.getRowEnhancer()
                 }, this.gridNode);
                 this.gridWidget.startup();
+                domClass.add(this.gridWidget.gridNode, "type-"+Model.getSimpleTypeName(this.type).toLowerCase());
 
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
 

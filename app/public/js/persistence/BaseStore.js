@@ -69,11 +69,12 @@ define([
 
             // do call
             var results = this.inherited(arguments, [entity, options]);
-            results.then(lang.hitch(this, function() {
+            results.then(lang.hitch(this, function(data) {
                 topic.publish("store-datachange", {
                     store: this,
                     oid: oid,
-                    action: options.overwrite ? "put" : "add"
+                    entity: data,
+                    action: isUpdate ? "update" : "add"
                 });
             }), function(error) {
                 topic.publish("store-error", error);
@@ -88,7 +89,7 @@ define([
                 topic.publish("store-datachange", {
                     store: this,
                     oid: Model.getOid(this.typeName, id),
-                    action: "remove"
+                    action: "delete"
                 });
             }), function(error) {
                 topic.publish("store-error", error);
@@ -113,6 +114,6 @@ define([
 
         // TODO:
         // implement DojoNodeSerializer on server that uses refs
-        // http://dojotoolkit.org/reference-guide/1.7/dojox/json/ref.html#dojox-json-ref
+        // http://dojotoolkit.org/reference-guide/1.10/dojox/json/ref.html#dojox-json-ref
     });
 });

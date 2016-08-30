@@ -181,7 +181,7 @@ define([
                             popup.close(this.summaryDialog);
                         }
                     })),
-                    topic.subscribe("store-datachange", lang.hitch(this, function(error) {
+                    topic.subscribe("store-datachange", lang.hitch(this, function(data) {
                         if (this.dndInProgress) {
                           topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
                           this.dndInProgress = false;

@@ -34,7 +34,7 @@ define([
         baseRoute: "entity",
         types: appConfig.rootTypes,
         type: null,
-        hasTree: true,
+        hasTree: false,
 
         constructor: function(params) {
             // allow to override type parameter by request

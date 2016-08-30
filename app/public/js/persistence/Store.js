@@ -1,12 +1,20 @@
 define([
+    "dojo/_base/lang",
     "dojo/_base/declare",
+    "dojo/topic",
     "dstore/Cache",
+    "dstore/Memory",
+    "dstore/Trackable",
     "./BaseStore",
     "./ChildrenStore",
     "../model/meta/Model"
 ], function (
+    lang,
     declare,
+    topic,
     Cache,
+    Memory,
+    Trackable,
     BaseStore,
     ChildrenStore,
     Model
@@ -14,6 +22,21 @@ define([
     var Store = declare([BaseStore], {
         language: '',
         canHaveChildren: null,
+        cache: null,
+
+        constructor: function(options) {
+            declare.safeMixin(this, options);
+
+            // subscribe to change events emitted by other store instances
+            topic.subscribe("store-datachange", lang.hitch(this, function(data) {
+                if (data.store.target !== this.target) {
+                    // check if the store contains the type of the changed entity
+                    if (this.cache && data.entity && Model.getTypeNameFromOid(data.oid) === this.typeName) {
+                        this.cache.evict(this.getIdentity(data.entity));
+                    }
+                }
+            }));
+        },
 
         getChildren: function(object) {
             return new ChildrenStore(object, this.typeName);
@@ -55,7 +78,10 @@ define([
                 language: language,
                 target: appConfig.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
             });
-            var cache = Cache.create(jsonRest);
+            var cache = Cache.create(jsonRest, {
+                cachingStore: new (Memory.createSubclass(Trackable))()
+            });
+            jsonRest.cache = cache;
             Store.storeInstances[fqTypeName][language] = {
                 jsonRest: jsonRest,
                 cache: cache
