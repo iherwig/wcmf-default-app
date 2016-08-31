@@ -183,8 +183,8 @@ define([
                     })),
                     topic.subscribe("store-datachange", lang.hitch(this, function(data) {
                         if (this.dndInProgress) {
-                          topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
-                          this.dndInProgress = false;
+                            topic.publish('ui/_include/widget/GridWidget/dnd-end', null);
+                            this.dndInProgress = false;
                         }
                     })),
                     topic.subscribe("/dnd/drop", lang.hitch(this, function(source, nodes, copy, target) {
