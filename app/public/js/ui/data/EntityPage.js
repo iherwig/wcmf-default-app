@@ -130,6 +130,7 @@ define([
                     message: Dict.translate("<em>%0%</em> has unsaved changes. Leaving the page will discard these. Do you want to proceed?",
                         [this.typeClass.getDisplayValue(this.entity)]),
                     okCallback: lang.hitch(this, function(dlg) {
+                        this.entity.setState('clean');
                         deferred.resolve(true);
                     }),
                     cancelCallback: lang.hitch(this, function(dlg) {
