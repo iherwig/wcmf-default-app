@@ -182,7 +182,8 @@ function(
 
         getValueArray: function(value) {
             value = this.multiValued ? ""+value : value;
-            return (typeof value === "string") ? value.split(",") : (value instanceof Array ? value : [value]);
+            return (typeof value === "string" || value instanceof String) ?
+                value.split(",") : (value instanceof Array ? value : [value]);
         }
     });
 });

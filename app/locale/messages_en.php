@@ -174,7 +174,7 @@ $messages_en['Image'] = '';
 // file(s): src/model/ImageRDBMapper.php
 $messages_en['Image [Pl.]'] = 'Images';
 // file(s): application/controller/SearchIndexController.php
-$messages_en['Indexing %0%'] = '';
+$messages_en['Indexing %0% %1% objects, starting from %2%., '] = '';
 // file(s): application/controller/CSVExportController.php, application/controller/XMLExportController.php
 $messages_en['Initialization'] = '';
 // file(s): src/model/wcmf/TranslationRDBMapper.php

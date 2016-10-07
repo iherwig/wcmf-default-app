@@ -68,8 +68,9 @@ function(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
                     if ((this.entity && this.entity.get('oid') === data.entity.get('oid')) &&
                             data.name === this.name) {
-                        this.set("value", data.newValue);
-                        this.editorInstance.setData(data.newValue);
+                        var newValue = this.sanitiseValue(data.newValue);
+                        this.set("value", newValue);
+                        this.editorInstance.setData(newValue);
                     }
                 }))
             );
@@ -85,7 +86,7 @@ function(
 
         editorValueChanged: function() {
             setTimeout(lang.hitch(this, function() {
-                this.set("value", this.editorInstance.getData());
+                this.set("value", this.sanitiseValue(this.editorInstance.getData()));
                 // send change event
                 this.emit("change", this);
             }, 0));
@@ -99,6 +100,11 @@ function(
         destroy: function() {
             this.editorInstance.removeAllListeners();
             this.inherited(arguments);
+        },
+
+        sanitiseValue: function(value) {
+            return (typeof value === "string" || value instanceof String) ?
+                value.trim() : value;
         }
     });
 });

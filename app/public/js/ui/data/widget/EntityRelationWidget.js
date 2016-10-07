@@ -69,7 +69,9 @@ function(
             declare.safeMixin(this, args);
 
             // labels
-            this.relationName = Dict.translate(this.relation.name+" [Pl.]");
+            var relationName = this.relation.name +
+                    (parseInt(this.relation.maxMultiplicity) !== 1 ? " [Pl.]" : '');
+            this.relationName = Dict.translate(relationName);
 
             this.type = Model.getFullyQualifiedTypeName(this.relation.type);
             this.typeClass = Model.getType(this.type);
