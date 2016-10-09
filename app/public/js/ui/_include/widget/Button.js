@@ -13,6 +13,7 @@ define([
 
         initialLabel: "",
         progressBar: null,
+        isProcessing: false,
 
         postCreate: function () {
             this.inherited(arguments);
@@ -33,11 +34,15 @@ define([
         },
 
         setProgress: function(value) {
+            if (!this.isProcessing) {
+                this.setProcessing();
+            }
             value = (value >= 0 && value < 1) ? value : 0;
             domStyle.set(this.progressBar, 'width', (value*100)+'%');
         },
 
         setProcessing: function() {
+            this.isProcessing = true;
             this.initialLabel = this.get("label");
             this.set("label", this.initialLabel+' <i class="fa fa-spinner fa-spin"></i>');
             this.set("disabled", true);
@@ -47,6 +52,7 @@ define([
             this.set("label", this.initialLabel);
             this.set("disabled", false);
             this.setProgress(0);
+            this.isProcessing = false;
         }
     });
 });

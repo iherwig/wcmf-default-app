@@ -12,8 +12,6 @@ define([
         name: 'index',
         iconClass: 'fa fa-search',
 
-        deferred: null,
-
         execute: function() {
             return new Process('index').run();
         }

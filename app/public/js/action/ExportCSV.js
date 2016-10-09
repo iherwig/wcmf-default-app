@@ -16,8 +16,6 @@ define([
         name: 'exportCSV',
         iconClass: 'fa fa-file-excel-o',
 
-        deferred: null,
-
         // action parameters
         type: null,
         filter: null,

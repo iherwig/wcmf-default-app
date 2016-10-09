@@ -12,8 +12,6 @@ define([
         name: 'exportXML',
         iconClass: 'fa fa-file-code-o',
 
-        deferred: null,
-
         execute: function() {
             return new Process('exportXML').run();
         }
