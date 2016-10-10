@@ -31,6 +31,11 @@ define([
                     borderRadius: "4px 0 0 4px"
                 }
             });
+            this.progressBar.on('click', function() {
+                if (!this.get("disabled")) {
+                    this.onClick();
+                }
+            });
             domConstruct.place(this.progressBar, this.domNode, 'first');
         },
 
