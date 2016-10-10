@@ -1,10 +1,12 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/dom-style",
     "dojo/dom-construct",
     "dijit/form/Button"
 ], function (
     declare,
+    lang,
     domStyle,
     domConstruct,
     Button
@@ -29,12 +31,12 @@ define([
                     height: "100%",
                     opacity: 0.3,
                     borderRadius: "4px 0 0 4px"
-                }
-            });
-            this.progressBar.on('click', function() {
-                if (!this.get("disabled")) {
-                    this.onClick();
-                }
+                },
+                onclick: lang.hitch(this, function(e) {
+                    if (!this.get("disabled")) {
+                        this.onClick(e);
+                    }
+                })
             });
             domConstruct.place(this.progressBar, this.domNode, 'first');
         },
