@@ -89,11 +89,13 @@ define([
                 // create widget when entity is loaded
                 var loadPromises = [];
                 var store = Store.getStore(this.type, this.language);
-                loadPromises.push(store.get(store.getIdentity(this.entity)));
+                var entityId = store.getIdentity(this.entity);
+                // make sure we have the latest version by invalidating the cache
+                loadPromises.push(store.getUncached(entityId));
                 if (this.isTranslation) {
                   // provide original entity for reference
                   var storeOrig = Store.getStore(this.type, appConfig.defaultLanguage);
-                  loadPromises.push(storeOrig.get(store.getIdentity(this.entity)));
+                  loadPromises.push(storeOrig.getUncached(entityId));
                 }
                 all(loadPromises).then(lang.hitch(this, function(loadResults) {
                     // allow to watch for changes of the object data

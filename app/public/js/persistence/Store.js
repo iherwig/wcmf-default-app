@@ -3,8 +3,6 @@ define([
     "dojo/_base/declare",
     "dojo/topic",
     "dstore/Cache",
-    "dstore/Memory",
-    "dstore/Trackable",
     "./BaseStore",
     "./ChildrenStore",
     "../model/meta/Model"
@@ -13,16 +11,13 @@ define([
     declare,
     topic,
     Cache,
-    Memory,
-    Trackable,
     BaseStore,
     ChildrenStore,
     Model
 ) {
-    var Store = declare([BaseStore], {
+    var Store = declare([BaseStore, Cache], {
         language: '',
         canHaveChildren: null,
-        cache: null,
 
         constructor: function(options) {
             declare.safeMixin(this, options);
@@ -31,15 +26,26 @@ define([
             topic.subscribe("store-datachange", lang.hitch(this, function(data) {
                 if (data.store.target !== this.target) {
                     // check if the store contains the type of the changed entity
-                    if (this.cache && data.entity && Model.getTypeNameFromOid(data.oid) === this.typeName) {
-                        this.cache.evict(this.getIdentity(data.entity));
+                    if (data.entity && Model.getTypeNameFromOid(data.oid) === this.typeName) {
+                        this.evict(this.getIdentity(data.entity));
                     }
                 }
             }));
         },
 
-        getChildren: function(object) {
-            return new ChildrenStore(object, this.typeName);
+        /**
+         * Get the given entity bypassing the cache (will refresh the cache as well)
+         * @param id
+         * @param options
+         * @returns Entity
+         */
+        getUncached: function(id, options) {
+            this.evict(id);
+            return this.get(id, options);
+        },
+
+        getChildren: function(parent) {
+            return new ChildrenStore(parent, this.typeName);
         },
 
         mayHaveChildren: function(object) {
@@ -73,21 +79,14 @@ define([
             Store.storeInstances[fqTypeName] = {};
         }
         if (!Store.storeInstances[fqTypeName][language]) {
-            var jsonRest = new Store({
+            var store = new Store({
                 typeName: fqTypeName,
                 language: language,
                 target: appConfig.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
             });
-            var cache = Cache.create(jsonRest, {
-                cachingStore: new (Memory.createSubclass(Trackable))()
-            });
-            jsonRest.cache = cache;
-            Store.storeInstances[fqTypeName][language] = {
-                jsonRest: jsonRest,
-                cache: cache
-            };
+            Store.storeInstances[fqTypeName][language] = store;
         }
-        return Store.storeInstances[fqTypeName][language].cache;
+        return Store.storeInstances[fqTypeName][language];
     };
 
     return Store;

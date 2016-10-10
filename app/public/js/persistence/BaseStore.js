@@ -3,6 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/topic",
     "dstore/Rest",
+    "dstore/SimpleQuery",
     "dstore/Trackable",
     "dojox/uuid/generateRandomUuid",
     "../persistence/Entity",
@@ -12,13 +13,13 @@ define([
     declare,
     topic,
     Rest,
+    SimpleQuery,
     Trackable,
     uuid,
     Entity,
     Model
 ) {
-    return declare([Rest, Trackable], {
-
+    return declare([Rest, SimpleQuery, Trackable], {
         idProperty: '_storeId', // see Entity class
         typeName: '',
         Model: Entity,

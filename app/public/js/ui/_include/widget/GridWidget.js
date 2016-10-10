@@ -145,9 +145,11 @@ define([
                               var row = this.grid.row(columnNode);
                               action.entity = row.data;
                               action.execute();
-                              // refresh the action cell
-                              var cell = this.grid.cell(columnNode);
-                              this.grid.refreshCell(cell);
+                              // refresh the action cell, if the grid is still present
+                              if (this.grid.collection) {
+                                var cell = this.grid.cell(columnNode);
+                                this.grid.refreshCell(cell);
+                              }
                           }
                         }
                     })),

@@ -37,20 +37,16 @@ define([
          * @return Deferred
          */
         run: function(params) {
-            return this.doCall(params);
+            this.deferred = new Deferred();
+            this.doCall(params);
+            return this.deferred;
         },
 
         /**
          * Make a backend call.
          * @param params Additional parameters to be passed with the initial call
-         * @return Deferred
          */
         doCall: function(params) {
-            // create deferred on first call
-            if (this.deferred === null) {
-                this.deferred = new Deferred();
-            }
-
             request.post(this.getBackendUrl(), {
                 data: params,
                 headers: {
@@ -67,7 +63,6 @@ define([
                 // error
                 this.deferred.reject(error);
             }));
-            return this.deferred;
         },
 
         /**
@@ -103,7 +98,9 @@ define([
             }
             else {
                 // do the proceeding calls
-                this.doCall();
+                if (!this.deferred.isCanceled()) {
+                    this.doCall();
+                }
             }
         },
 

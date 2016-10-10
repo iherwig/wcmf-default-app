@@ -14,23 +14,28 @@ define([
         initialLabel: "",
         progressBar: null,
         isProcessing: false,
+        isCancelable: false,
 
         postCreate: function () {
             this.inherited(arguments);
 
-            domStyle.set(this.domNode, 'position', 'relative');
-            this.progressBar = domConstruct.create('span', {
+            domStyle.set(this.domNode, "position", "relative");
+            this.progressBar = domConstruct.create("span", {
                 style: {
-                    backgroundColor: '#ddd',
-                    position: 'absolute',
+                    backgroundColor: "#ddd",
+                    position: "absolute",
                     left: 0,
                     width: 0,
-                    height: '100%',
-                    opacity: 0.9,
-                    borderRadius: '4px 0 0 4px'
+                    height: "100%",
+                    opacity: 0.3,
+                    borderRadius: "4px 0 0 4px"
                 }
             });
             domConstruct.place(this.progressBar, this.domNode, 'first');
+        },
+
+        setCancelable: function(isCancelable) {
+            this.isCancelable = isCancelable;
         },
 
         setProgress: function(value) {
@@ -45,12 +50,16 @@ define([
             this.isProcessing = true;
             this.initialLabel = this.get("label");
             this.set("label", this.initialLabel+' <i class="fa fa-spinner fa-spin"></i>');
-            this.set("disabled", true);
+            if (!this.isCancelable) {
+                this.set("disabled", true);
+            }
         },
 
         reset: function() {
             this.set("label", this.initialLabel);
-            this.set("disabled", false);
+            if (!this.isCancelable) {
+                this.set("disabled", false);
+            }
             this.setProgress(0);
             this.isProcessing = false;
         }

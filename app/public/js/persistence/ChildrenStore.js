@@ -54,7 +54,10 @@ define([
                     var child = result[i];
                     var childType = Model.getTypeFromOid(child.get('oid'));
                     for (var j=0, countJ=displayValues.length; j<countJ; j++) {
+                        // set display value on first parent attribute's name
                         child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
+                        // modify id to avoid conflicts with parent rows
+                        child.set('_storeId', childType+'-'+child.get('_storeId'));
                     }
                 }
                 return result;

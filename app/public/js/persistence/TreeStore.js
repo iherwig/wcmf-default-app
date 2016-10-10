@@ -80,14 +80,12 @@ define([
      */
     TreeStore.getStore = function(rootTypes) {
         if (!TreeStore.storeInstances[rootTypes]) {
-            var jsonRest = new TreeStore({
+            var store = new TreeStore({
                 target: appConfig.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
             });
-            TreeStore.storeInstances[rootTypes] = {
-                jsonRest: jsonRest
-            };
+            TreeStore.storeInstances[rootTypes] = store;
         }
-        return TreeStore.storeInstances[rootTypes].jsonRest;
+        return TreeStore.storeInstances[rootTypes];
     };
 
     return TreeStore;
