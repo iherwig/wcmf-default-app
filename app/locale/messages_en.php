@@ -79,7 +79,7 @@ $messages_en['code'] = '';
 $messages_en['Collect objects'] = '';
 // file(s): src/model/wcmf/UserRDBMapper.php
 $messages_en['config'] = '';
-// file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js
+// file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js, public/js/ui/_include/_PageMixin.js
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
@@ -181,10 +181,10 @@ $messages_en['Initialization'] = '';
 $messages_en['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
 // file(s): src/model/wcmf/UserConfigRDBMapper.php
 $messages_en['key'] = '';
-// file(s): src/model/wcmf/TranslationRDBMapper.php
-$messages_en['language'] = '';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_en['Language'] = '';
+// file(s): src/model/wcmf/TranslationRDBMapper.php
+$messages_en['language'] = '';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -205,10 +205,10 @@ $messages_en['Locking <em>%0%</em>'] = '';
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_en['Login'] = '';
 // file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/UserRDBMapper.php
 $messages_en['login'] = '';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_en['Login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -289,10 +289,10 @@ $messages_en['Page not found'] = '';
 $messages_en['ParentChapter'] = '';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_en['ParentChapter [Pl.]'] = 'ParentChapters';
-// file(s): src/model/wcmf/UserRDBMapper.php
-$messages_en['password'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Password'] = '';
+// file(s): src/model/wcmf/UserRDBMapper.php
+$messages_en['password'] = '';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_en['Permission'] = '';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
@@ -335,10 +335,10 @@ $messages_en['resource'] = '';
 $messages_en['Results for \'%0%\''] = '';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_en['Role'] = '';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Roles'] = '';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_en['roles'] = '';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_en['Roles'] = '';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
@@ -367,6 +367,8 @@ $messages_en['table'] = '';
 $messages_en['text_%0%_%1%'] = '';
 // file(s): public/js/locale/Dictionary.js
 $messages_en['text_to_translate'] = '';
+// file(s): public/js/ui/admin/AdminPage.js
+$messages_en['The <em>%0%</em> process is aborted.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The attribute name passed cannot be found in the selected class.'] = '';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
@@ -411,6 +413,8 @@ $messages_en['The passed sortFieldName is no valid attribute of the passed class
 $messages_en['The password can\'t be empty'] = '';
 // file(s): public/js/ui/settings/SettingsPage.js
 $messages_en['The password was successfully changed'] = '';
+// file(s): public/js/ui/_include/_PageMixin.js
+$messages_en['There are running processes. Leaving the page will abort these processes. Do you want to proceed?'] = '';
 // file(s): public/js/ui/data/input/widget/LinkBrowser.js
 $messages_en['There are unsaved changes. Leaving the page will discard these. Do you want to proceed?'] = '';
 // file(s): lib/presentation/ApplicationError.php

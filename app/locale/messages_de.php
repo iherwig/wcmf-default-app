@@ -79,7 +79,7 @@ $messages_de['code'] = 'Code';
 $messages_de['Collect objects'] = 'Sammle Objekte';
 // file(s): src/model/wcmf/UserRDBMapper.php
 $messages_de['config'] = 'Konfiguration';
-// file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js
+// file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js, public/js/ui/_include/_PageMixin.js
 $messages_de['Confirm Leave Page'] = 'Seitenwechsel bestätigen';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_de['Confirm Object Deletion'] = 'Löschen bestätigen';
@@ -181,10 +181,10 @@ $messages_de['Initialization'] = 'Initialisierung';
 $messages_de['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
 // file(s): src/model/wcmf/UserConfigRDBMapper.php
 $messages_de['key'] = 'Schlüssel';
-// file(s): src/model/wcmf/TranslationRDBMapper.php
-$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_de['Language'] = 'Sprache';
+// file(s): src/model/wcmf/TranslationRDBMapper.php
+$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/LanguageRDBMapper.php
 $messages_de['Language [Pl.]'] = 'Sprachen';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -205,10 +205,10 @@ $messages_de['Locking <em>%0%</em>'] = 'Sperre <em>%0%</em>';
 $messages_de['Lock [Pl.]'] = 'Sperren';
 // file(s): application/views/plugins/function.translate.php
 $messages_de['Logged in as %0% since %1%'] = '';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_de['Login'] = 'Anmeldename';
 // file(s): src/model/wcmf/LockRDBMapper.php, src/model/wcmf/UserRDBMapper.php
 $messages_de['login'] = 'Anmeldename';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_de['Login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Logout'] = 'Abmelden';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -289,10 +289,10 @@ $messages_de['Page not found'] = 'Seite nicht gefunden';
 $messages_de['ParentChapter'] = 'Überkapitel';
 // file(s): src/model/ChapterRDBMapper.php
 $messages_de['ParentChapter [Pl.]'] = 'Überkapitel';
-// file(s): src/model/wcmf/UserRDBMapper.php
-$messages_de['password'] = 'Passwort';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_de['Password'] = 'Passwort';
+// file(s): src/model/wcmf/UserRDBMapper.php
+$messages_de['password'] = 'Passwort';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['Permission'] = 'Recht';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
@@ -335,10 +335,10 @@ $messages_de['resource'] = 'Resource';
 $messages_de['Results for \'%0%\''] = 'Ergebnisse für \'%0%\'';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_de['Role'] = 'Rolle';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/PermissionRDBMapper.php
 $messages_de['roles'] = 'Rollen';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/NMUserRoleRDBMapper.php, src/model/wcmf/RoleRDBMapper.php
 $messages_de['Role [Pl.]'] = 'Rollen';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
@@ -367,6 +367,8 @@ $messages_de['table'] = '';
 $messages_de['text_%0%_%1%'] = '';
 // file(s): public/js/locale/Dictionary.js
 $messages_de['text_to_translate'] = '';
+// file(s): public/js/ui/admin/AdminPage.js
+$messages_de['The <em>%0%</em> process is aborted.'] = 'Der <em>%0%</em> Prozess wurde abgebrochen.';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['The attribute name passed cannot be found in the selected class.'] = '';
 // file(s): src/model/wcmf/TranslationRDBMapper.php
@@ -411,6 +413,8 @@ $messages_de['The passed sortFieldName is no valid attribute of the passed class
 $messages_de['The password can\'t be empty'] = 'Das Passwort darf nicht leer sein';
 // file(s): public/js/ui/settings/SettingsPage.js
 $messages_de['The password was successfully changed'] = 'Das Passwort wurde geändert';
+// file(s): public/js/ui/_include/_PageMixin.js
+$messages_de['There are running processes. Leaving the page will abort these processes. Do you want to proceed?'] = 'Momentan laufen noch ein oder mehrere Prozesse. Wenn Sie fortfahren und die Seite verlassen, werden diese Prozesse abgebrochen. Möchten Sie fortfahren?';
 // file(s): public/js/ui/data/input/widget/LinkBrowser.js
 $messages_de['There are unsaved changes. Leaving the page will discard these. Do you want to proceed?'] = 'Änderungen auf dieser Seite sind nicht gespeichert. Wenn Sie fortfahren und die Seite verlassen, werden die Änderungen verworfen. Möchten Sie fortfahren?';
 // file(s): lib/presentation/ApplicationError.php

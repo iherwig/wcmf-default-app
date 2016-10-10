@@ -41,7 +41,7 @@ define([
          * @return Array
          */
         getRelations: function(type, entity) {
-              var varname = type+'Relations';
+            var varname = type+'Relations';
             if (!this[varname] || entity) {
                 var relations = (entity && this.getEntityRelations instanceof Function) ?
                     this.getEntityRelations(entity) : this.relations;
@@ -49,12 +49,12 @@ define([
                 for(var i=0, count=relations.length; i<count; i++) {
                     var relation = relations[i];
                     if (type === 'all' || relation.relationType === type) {
-                    rel.push(relation);
-                  }
+                        rel.push(relation);
+                    }
                 }
                 this[varname] = rel;
-              }
-              return this[varname];
+            }
+            return this[varname];
         },
 
         /**

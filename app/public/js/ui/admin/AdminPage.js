@@ -2,13 +2,11 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/Deferred",
     "dojo/dom",
     "dojo/dom-construct",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
-    "../_include/widget/ConfirmDlgWidget",
     "../_include/FormLayout",
     "../_include/widget/Button",
     "../../action/Index",
@@ -19,13 +17,11 @@ define([
     require,
     declare,
     lang,
-    Deferred,
     dom,
     domConstruct,
     _Page,
     _Notification,
     NavigationWidget,
-    ConfirmDlg,
     FormLayout,
     Button,
     Index,
@@ -39,77 +35,41 @@ define([
         contextRequire: require,
         title: Dict.translate('Settings'),
 
-        indexProcess: null,
-        exportProcess: null,
-
-        postCreate: function() {
-            this.inherited(arguments);
-            this.indexBtn.setCancelable(true);
-            this.exportBtn.setCancelable(true);
-        },
-
-        confirmLeave: function(url) {
-            if (this.indexProcess && !this.indexProcess.isFulfilled() ||
-                    this.exportProcess && !this.exportProcess.isFulfilled()) {
-                var deferred = new Deferred();
-                new ConfirmDlg({
-                    title: Dict.translate("Confirm Leave Page"),
-                    message: Dict.translate("There are running processes. Leaving the page will abort these processes. Do you want to proceed?"),
-                    okCallback: lang.hitch(this, function(dlg) {
-                        if (this.indexProcess) {
-                            this.indexProcess.cancel();
-                        }
-                        if (this.exportProcess) {
-                            this.exportProcess.cancel();
-                        }
-                        deferred.resolve(true);
-                    }),
-                    cancelCallback: lang.hitch(this, function(dlg) {
-                        deferred.resolve(false);
-                    })
-                }).show();
-                return deferred.promise;
-            }
-            return this.inherited(arguments);
-        },
+        processes: {},
 
         _index: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-            this.hideNotification();
-
-            if (!this.indexProcess || this.indexProcess.isFulfilled()) {
-                this.indexProcess = new Index().execute();
-                this.indexProcess.then(
-                    lang.hitch(this, lang.partial(this.finishProcess, this.indexProcess, this.indexBtn,
-                        Dict.translate("The search index was successfully updated."))),
-                    lang.hitch(this, lang.partial(this.errorHandler, this.indexProcess, this.indexBtn)),
-                    lang.hitch(this, lang.partial(this.progressHandler, this.indexProcess, this.indexBtn))
-                );
-                this.indexBtn.setProcessing();
-            }
-            else {
-                this.indexProcess.cancel(Dict.translate("The index process is aborted."));
-            }
+            this.handleProcessBtnClick('index', this.indexBtn, Index,
+                Dict.translate("The search index was successfully updated."));
         },
 
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
+            this.handleProcessBtnClick('export', this.exportBtn, ExportXML,
+                Dict.translate("The content was successfully exported."));
+        },
+
+        handleProcessBtnClick: function(name, btn, action, successMessage) {
             this.hideNotification();
 
-            if (!this.exportProcess || this.exportProcess.isFulfilled()) {
-                this.exportProcess = new ExportXML().execute();
-                this.exportProcess.then(
-                    lang.hitch(this, lang.partial(this.finishProcess, this.exportProcess, this.exportBtn,
-                        Dict.translate("The content was successfully exported."))),
-                    lang.hitch(this, lang.partial(this.errorHandler, this.exportProcess, this.exportBtn)),
-                    lang.hitch(this, lang.partial(this.progressHandler, this.exportProcess, this.exportBtn))
+            btn.setCancelable(true);
+            var process = this.processes[name];
+            if (!process || process.isFulfilled()) {
+                process = new action().execute();
+                process.then(
+                    lang.hitch(this, lang.partial(this.finishProcess, process, btn,
+                        successMessage)),
+                    lang.hitch(this, lang.partial(this.errorHandler, process, btn)),
+                    lang.hitch(this, lang.partial(this.progressHandler, process, btn))
                 );
-                this.exportBtn.setProcessing();
+                btn.setProcessing();
+                this.processes[name] = process;
+                this.waitFor(process);
             }
             else {
-                this.exportProcess.cancel(Dict.translate("The export process is aborted."));
+                process.cancel(Dict.translate("The <em>%0%</em> process is aborted.", [name]));
             }
         },
 

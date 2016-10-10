@@ -16,6 +16,8 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
+    "./widget/ConfirmDlgWidget",
+    "../../locale/Dictionary",
     "../../User"
 ], function (
     declare,
@@ -35,6 +37,8 @@ define([
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
+    ConfirmDlg,
+    Dict,
     User
 ) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _AppAware, _StateAware], {
@@ -43,6 +47,9 @@ define([
         router: null,
         session: null,
         inConfirmLeave: false,
+
+        // Deferred instances to be waited when leaving the page
+        deferredList: [],
 
         // attributes to be overridden by subclasses
         title: '',
@@ -150,6 +157,7 @@ define([
 
         /**
          * Push with asking for confimation
+         * @param url The url to navigate to
          */
         pushConfirmed: function (url) {
             var deferred = new Deferred();
@@ -174,7 +182,55 @@ define([
          * @return Boolean or Promise that resolves to Boolean
          */
         confirmLeave: function(url) {
-            return true;
+            // check registered Deferred instances
+            var runningDeferredList = [];
+            for (var i=0, count=this.deferredList.length; i<count; i++) {
+                var curDeferred = this.deferredList[i];
+                if (curDeferred && !curDeferred.isFulfilled()) {
+                    runningDeferredList.push(curDeferred);
+                }
+            }
+            // let user confirm page leave, if at least one process is still running
+            if (runningDeferredList.length > 0) {
+                var deferred = new Deferred();
+                new ConfirmDlg({
+                    title: Dict.translate("Confirm Leave Page"),
+                    message: Dict.translate("There are running processes. Leaving the page will abort these processes. Do you want to proceed?"),
+                    okCallback: lang.hitch(this, function(dlg) {
+                        for (var i=0, count=runningDeferredList.length; i<count; i++) {
+                            var curDeferred = runningDeferredList[i];
+                            if (!curDeferred.isFulfilled()) {
+                                curDeferred.cancel();
+                            }
+                        }
+                        deferred.resolve(true);
+                    }),
+                    cancelCallback: lang.hitch(this, function(dlg) {
+                        deferred.resolve(false);
+                    })
+                }).show();
+                return deferred.promise;
+            }
+            else {
+                return true;
+            }
+        },
+
+        /**
+         * Register a Deferred instance to be waited for, when leaving the page.
+         * @param deferred
+         */
+        waitFor: function(deferred) {
+            // cleanup list
+            var deferredList = [];
+            for (var i=0, count=this.deferredList.length; i<count; i++) {
+                var curDeferred = this.deferredList[i];
+                if (curDeferred && !curDeferred.isFulfilled()) {
+                    deferredList.push(curDeferred);
+                }
+            }
+            this.deferredList = deferredList;
+            this.deferredList.push(deferred);
         },
 
         /**
