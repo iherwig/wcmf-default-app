@@ -111,7 +111,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_ASSm4LRBEeOQ5oJFa1i8cg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_G0LmkLRBEeOQ5oJFa1i8cg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_G0LmkbRBEeOQ5oJFa1i8cg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_G0M0sLRBEeOQ5oJFa1i8cg" value="wcmf\lib\core\impl\DefaultSession"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_G0M0sLRBEeOQ5oJFa1i8cg" value="wcmf\lib\core\impl\AuthTokenSession"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_h-uFQLRBEeOQ5oJFa1i8cg" name="TypeMapping"/>

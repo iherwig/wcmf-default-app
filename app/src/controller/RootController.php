@@ -73,10 +73,6 @@ class RootController extends Controller {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Methods/renderPage) ENABLED START
     $response = $this->getResponse();
 
-    // check for authenticated user
-    $session = $this->getSession();
-    $isLoggedIn = $session->getAuthUser() != AnonymousUser::USER_GROUP_NAME;
-
     // get configuration values
     $configuration = $this->getConfiguration();
     $appTitle = $configuration->getValue('title', 'application');
@@ -110,22 +106,9 @@ class RootController extends Controller {
       throw new ConfigurationException("No root types defined.");
     }
 
-    // check if the user should be redirected to the login page
-    // if yes, we do this and add the requested path as route parameter
+    // usefull path variables
     $pathPrefix = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
     $basePath = !preg_match('/\/$/', $pathPrefix) ? $pathPrefix.'/' : $pathPrefix;
-    $script = str_replace('\\', '/', basename($_SERVER['SCRIPT_NAME']));
-    $requestPath = $_SERVER['REQUEST_URI'];
-    // remove basepath & script from request path to get the requested resource
-    $requestedResource = strpos($requestPath, $basePath) === 0 ?
-            preg_replace('/^'.$script.'/', '', str_replace($basePath, '', $requestPath)) : '';
-    if (!$isLoggedIn && strlen($requestedResource) > 0 && !preg_match('/\?route=/', $requestPath)) {
-      if ($requestPath != 'logout') {
-        $redirectUrl = URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$basePath.'?route='.$requestedResource;
-        header("Location: ".$redirectUrl);
-        exit;
-      }
-    }
     $baseHref = str_replace('\\', '/', dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/');
     $mediaPathRelScript = URIUtil::makeRelative($mediaAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/');
     $mediaPathRelBase = URIUtil::makeRelative($mediaAbsPath, WCMF_BASE);

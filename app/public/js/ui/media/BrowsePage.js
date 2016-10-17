@@ -13,6 +13,7 @@ define([
     "elfinder/js/i18n/elfinder.de",
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
+    "../../AuthToken",
     "../../locale/Dictionary",
     "dojo/text!./template/BrowsePage.html",
     "dojo/domReady!"
@@ -29,6 +30,7 @@ define([
     i18n_elfinderDe,
     TabContainer,
     ContentPane,
+    AuthToken,
     Dict,
     template
 ) {
@@ -70,7 +72,10 @@ define([
                 resizable: false,
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);
-                })
+                }),
+                customHeaders: {
+                    "X-Auth-Token": AuthToken.get()
+                }
             });
 
             setTimeout(function() {

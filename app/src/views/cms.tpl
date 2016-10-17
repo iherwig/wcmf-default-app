@@ -34,6 +34,7 @@
           has: {
               "dijit": true
           },
+          requestProvider: "app/js/Xhr",
           baseUrl: '',
           locale: appConfig.uiLanguage,
           async: 1,

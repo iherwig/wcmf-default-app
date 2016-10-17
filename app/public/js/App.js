@@ -1,39 +1,50 @@
 define([
+    "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/query",
+    "dojo/dom-construct",
     "dijit/registry",
     "routed/Request",
     "dojomat/Application",
     "dojomat/populateRouter",
     "./routing-map",
-    "./Overrides",
     "./Startup",
-    "require",
-    "dojo/query",
-    "dojo/dom-construct",
+    "./AuthToken",
     "dojo/domReady!"
 ], function (
+    require,
     declare,
     lang,
+    query,
+    domConstruct,
     registry,
     Request,
     Application,
     populateRouter,
     routingMap,
-    Overrides,
     Startup,
-    require,
-    query,
-    domConstruct
+    AuthToken
 ) {
     return declare([Application], {
-
-        _location: '',
 
         constructor: function () {
             populateRouter(this, routingMap);
             Startup.run().then(lang.hitch(this, function(result) {
-                this.run();
+
+                // get initially requested route
+                var baseUrl = appConfig.backendUrl;
+                var request = new Request(window.location.href);
+                var route = request.getPathname().replace(baseUrl, '');
+
+                // redirect to login, if another route is requested and no
+                // authentication cookie is found
+                if (AuthToken.get() === undefined && route !== "") {
+                    window.location.assign(baseUrl+'?route='+route);
+                }
+                else {
+                    this.run();
+                }
             }), lang.hitch(this, function(error) {
                 // error
             }));
@@ -53,10 +64,7 @@ define([
         },
 
         handleState: function () {
-            if (window.location.href !== this._location) {
-                this.inherited(arguments);
-                this._location = window.location.href;
-            }
+            this.inherited(arguments);
         },
 
         makeNotFoundPage: function () {

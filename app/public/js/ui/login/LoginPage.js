@@ -96,11 +96,13 @@ define([
                       var redirectRoute = this.request.getQueryParam("route");
                       if (redirectRoute) {
                           // redirect to initially requested route if given
-                          window.location.assign(this.request.getPathname()+redirectRoute);
+                          this.pushState(this.request.getPathname()+redirectRoute);
                       }
                       else {
                           // redirect to default route
-                          window.location.assign(this.request.getPathname()+"home");
+                          var route = this.router.getRoute("home");
+                          var url = route.assemble();
+                          this.pushState(url);
                       }
                 }), lang.hitch(this, function(error) {
                       // error
