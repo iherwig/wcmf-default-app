@@ -13,9 +13,11 @@
  */
 var appSrc = [
     "app/js/App",
+    "app/js/AuthToken",
     "app/js/Cookie",
     "app/js/Startup",
     "app/js/User",
+    "app/js/Xhr",
     "app/js/routing-map",
     "app/js/action/ActionBase",
     "app/js/action/ChangePassword",
