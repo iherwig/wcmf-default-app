@@ -47,6 +47,12 @@ function(
             this.label = Dict.translate(this.name);
         },
 
+        create: function(){
+          this.inherited(arguments);
+          // only send change events, when content changes
+          this._onChangeActive = false;
+        },
+
         postCreate: function() {
             this.inherited(arguments);
 
@@ -95,9 +101,11 @@ function(
 
         editorValueChanged: function() {
             setTimeout(lang.hitch(this, function() {
+                this._onChangeActive = true;
                 this.set("value", this.sanitiseValue(this.editorInstance.getData()));
                 // send change event
                 this.emit("change", this);
+                this._onChangeActive = false;
             }, 0));
         },
 
