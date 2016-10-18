@@ -12,7 +12,7 @@ define([
          * @returns String|undefined
          */
         get: function() {
-            return cookie("auth-token");
+            return cookie(appConfig.cookiePrefix+"-token");
         }
     });
 

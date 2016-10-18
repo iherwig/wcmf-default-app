@@ -17,9 +17,9 @@ use wcmf\lib\io\FileUtil;
 use wcmf\lib\persistence\PersistenceFacade;
 use wcmf\lib\presentation\ActionMapper;
 use wcmf\lib\security\PermissionManager;
-use wcmf\lib\security\principal\impl\AnonymousUser;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\security\principal\PrincipalFactory;
+use wcmf\lib\util\StringUtil;
 use wcmf\lib\util\URIUtil;
 // PROTECTED REGION END
 
@@ -135,6 +135,7 @@ class RootController extends Controller {
       'color' => $appColor,
       'background' => $geopattern->toDataURL(),
       'backendUrl' => $basePath,
+      'cookiePrefix' => strtolower(StringUtil::slug($appTitle)),
       'rootTypes' => $rootTypes,
       'pathPrefix' => $basePath,
       'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPathRelScript, $baseHref),
