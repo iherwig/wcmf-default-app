@@ -61,7 +61,8 @@ function(
                 baseHref: mediaFileBasePath,
                 toolbar: this.getToolbarName(),
                 filebrowserWindowWidth: '800',
-                filebrowserWindowHeight: '700'
+                filebrowserWindowHeight: '700',
+                readOnly: this.disabled
             });
 
             this.own(
@@ -81,7 +82,15 @@ function(
                 win.withDoc(content, function() {
                   query(".cke_editable").style("padding", "5px");
                 }, this);
+                // fix edit state (editor instance is initially read only)
+                this.set("disabled", this.disabled);
             }));
+        },
+
+        _setDisabledAttr: function(value) {
+            if (this.editorInstance) {
+                this.editorInstance.setReadOnly(value);
+            }
         },
 
         editorValueChanged: function() {
