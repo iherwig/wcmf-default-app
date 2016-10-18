@@ -4,7 +4,7 @@ define( [
     "dijit/form/TextBox",
     "../../../_include/widget/Button",
     "../../../_include/widget/PopupDlgWidget",
-    "./_BrowserControl",
+    "./FileBrowser",
     "../../../../locale/Dictionary"
 ],
 function(
@@ -13,10 +13,10 @@ function(
     TextBox,
     Button,
     PopupDlg,
-    _BrowserControl,
+    FileBrowser,
     Dict
 ) {
-    return declare([_BrowserControl], {
+    return declare([FileBrowser], {
 
         browserUrl: appConfig.pathPrefix+'media',
 
