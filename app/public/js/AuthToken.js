@@ -12,7 +12,8 @@ define([
          * @returns String|undefined
          */
         get: function() {
-            return cookie(appConfig.cookiePrefix+"-token");
+            var token = cookie(appConfig.cookiePrefix+"-token");
+            return token && token.length ? token : undefined;
         }
     });
 
