@@ -289,6 +289,11 @@
             </packagedElement>
             <packagedElement xmi:type="uml:Package" xmi:id="_oVqA4LQ7EeOQ5oJFa1i8cg" name="admin.ini"/>
             <packagedElement xmi:type="uml:Package" xmi:id="_0wslELQWEeOIMOFxCilDfw" name="server.ini">
+              <packagedElement xmi:type="uml:Class" xmi:id="_Yc3tsJcSEeaXcdkD6-aM1A" name="Application">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_baCpcJcSEeaXcdkD6-aM1A" name="secret" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_eZ1bYJcSEeaXcdkD6-aM1A" value="changeme"/>
+                </ownedAttribute>
+              </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_sYqjILQWEeOIMOFxCilDfw" name="Database">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_8j7BELQnEeOULris00pHLg" name="dbType" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KPmcALQqEeOULris00pHLg" value="1"/>
@@ -2061,4 +2066,5 @@
   <Chronos:ChiSystem xmi:id="_E9vfkEpzEea8q88i0kauCw" plattform="wcmf" base_Class="_E9tDUEpzEea8q88i0kauCw"/>
   <Chronos:ChiController xmi:id="_OBqoIGIiEead5JLiLC2fdQ" base_Class="_N8yIIGIiEead5JLiLC2fdQ"/>
   <Chronos:ChiActionKey xmi:id="_hPWlAGIiEead5JLiLC2fdQ" action="history" base_Association="_ebmrAGIiEead5JLiLC2fdQ"/>
+  <Chronos:ChiSystem xmi:id="_lZfVIJcSEeaXcdkD6-aM1A" plattform="wcmf" config="server.ini" base_Class="_Yc3tsJcSEeaXcdkD6-aM1A"/>
 </xmi:XMI>
