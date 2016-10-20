@@ -16,9 +16,9 @@
             "type": "package",
             "package": {
                 "name": "olympos/chronos-generator",
-                "version": "1.0.1",
+                "version": "1.0.2",
                 "dist": {
-                    "url": "https://downloads.sourceforge.net/project/olympos/ChronosGenerator-wCMF/ChronosGenerator-wCMF-1.0.1.zip",
+                    "url": "https://downloads.sourceforge.net/project/olympos/ChronosGenerator-wCMF/ChronosGenerator-wCMF-1.0.2.zip",
                     "type": "zip"
                 }
             }
@@ -207,7 +207,8 @@
         "studio-42/elfinder": "~2.1",
         "smarty/smarty": "~3.1",
         "kriswallsmith/assetic": "~1.3",
-        "toopay/assetic-minifier": "~1.3"
+        "toopay/assetic-minifier": "~1.3",
+        "lcobucci/jwt": "~3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~5.6",
