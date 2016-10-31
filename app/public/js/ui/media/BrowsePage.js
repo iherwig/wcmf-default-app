@@ -40,6 +40,8 @@ define([
         contextRequire: require,
         title: Dict.translate('Media'),
 
+        elfinderInstance: null,
+
         constructor: function(params) {
             declare.safeMixin(this, params);
             // get package locations
@@ -70,6 +72,8 @@ define([
                 url: appConfig.backendUrl+'media/files?directory='+directory,
                 rememberLastDir: true,
                 resizable: false,
+                width: '100%',
+                height: $(window).height() - 40,
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);
                 }),
@@ -79,7 +83,7 @@ define([
             });
 
             setTimeout(function() {
-                $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
+                this.elfinderInstance = $("#elfinder").elfinder(elfinderConfig).elfinder('instance');
             }, 500);
         },
 

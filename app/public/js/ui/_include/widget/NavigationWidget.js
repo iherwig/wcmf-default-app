@@ -14,6 +14,7 @@ define([
     "dojo/dom-class",
     "dojo/dom-attr",
     "dojo/dom-style",
+    "./MediaBrowserDlgWidget",
     "../../../User",
     "../../../model/meta/Model",
     "../../../locale/Dictionary",
@@ -35,6 +36,7 @@ define([
     domClass,
     domAttr,
     domStyle,
+    MediaBrowserDlg,
     User,
     Model,
     Dict,
@@ -42,13 +44,10 @@ define([
 ) {
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
 
-        titleOnly: false,
         templateString: lang.replace(template, Dict.tplTranslate),
         selected: null,
 
         constructor: function (params) {
-            this.titleOnly = params.titleOnly;
-
             // template variables
             this.title = appConfig.title;
             this.userName = User.getLogin();
@@ -106,16 +105,10 @@ define([
                 }
             }));
 
-            // hide buttons, if titleOnly
-            if (this.titleOnly) {
-                query(".main-menu").style("display", "none");
-            }
-            else {
-                // set selected menu
-                query(".main-menu").removeClass("active");
-                if (this.selected) {
-                    query("#"+this.selected).addClass("active");
-                }
+            // set selected menu
+            query(".main-menu").removeClass("active");
+            if (this.selected) {
+                query("#"+this.selected).addClass("active");
             }
         },
 
@@ -132,7 +125,7 @@ define([
         _navigateMedia: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-            topic.publish('navigate', 'media', null, null, {name:'_blank', specs:'width=800,height=700'});
+            new MediaBrowserDlg().show();
         }
     });
 });

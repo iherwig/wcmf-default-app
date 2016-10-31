@@ -47,6 +47,7 @@ define([
         router: null,
         session: null,
         inConfirmLeave: false,
+        contentOnly: false,
 
         // Deferred instances to be waited when leaving the page
         deferredList: [],
@@ -58,6 +59,7 @@ define([
             this.request = params.request;
             this.router = params.router;
             this.session = params.session;
+            this.contentOnly = this.request.getQueryParam("contentOnly") === "1";
 
             // setup navigation routes even if an error occurs
             aspect.around(this, "startup", function(original) {
@@ -108,6 +110,12 @@ define([
                     }
                 }))
             );
+
+            // hide navigation and footer if requested
+            if (this.contentOnly) {
+                query(".main-menu").style("display", "none");
+                query("#footer").style("display", "none");
+            }
         },
 
         setTitle: function(title) {
