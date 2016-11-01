@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/when",
+    "dojo/dom-construct",
     "./Model",
     "../../locale/Dictionary",
     "../../ui/data/display/Renderer"
@@ -9,6 +10,7 @@ define([
     declare,
     array,
     when,
+    domConstruct,
     Model,
     Dict,
     Renderer
@@ -156,9 +158,13 @@ define([
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
                         when(Renderer.render(entity[curValue], curAttribute), function(value) {
-                            if (value && (value).toString().length > 0) {
+                            var length = (value).toString().length;
+                            if (value && length > 0) {
+                                if (curAttribute.displayType.toLowerCase() == 'text' && length > 20) {
+                                    value = domConstruct.create("div", { innerHTML: value }).textContent.substring(0, 20)+'…';
+                                }
                                 values.push(value);
-                        }
+                            }
                         });
                     }
                     result = values.join(" - ");

@@ -8,6 +8,17 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
    CKEDITOR.plugins.addExternal('mediaembed', basePath+'ckeditor-plugins/mediaembed/', 'plugin.js');
 })();
 
+// fix inserting spans in chrome
+// @see http://ckeditor.com/forums/CKEditor/ckeditor-4.01-inserting-span-elements-everywhere-with-a-line-height-of-1.6em
+(function() {
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    if (isChrome) {
+        CKEDITOR.on( 'instanceLoaded', function( e ){
+            this.addCss('.cke_editable { line-height: normal; }');
+        });
+    }
+})();
+
 CKEDITOR.editorConfig = function( config ) {
     config.language = appConfig.uiLanguage;
     config.stylesSet = 'default:'+appConfig.pathPrefix+'js/config/ckeditor_styles.js';
