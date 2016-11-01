@@ -4,6 +4,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/window",
     "dijit/registry",
     "../_include/_PageMixin",
     "jquery/jquery.min",
@@ -21,6 +22,7 @@ define([
     require,
     declare,
     lang,
+    win,
     registry,
     _Page,
     jQuery,
@@ -73,7 +75,7 @@ define([
                 rememberLastDir: true,
                 resizable: false,
                 width: '100%',
-                height: $(window).height() - 40,
+                height: win.getBox().h - 40,
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);
                 }),

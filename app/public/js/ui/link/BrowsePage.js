@@ -3,9 +3,9 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/dom",
-    "dojo/query",
+    "dojo/dom-geometry",
     "dojo/topic",
-    "dojo/_base/window",
+    "dojo/window",
     "dijit/registry",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
@@ -22,7 +22,7 @@ define([
     declare,
     lang,
     dom,
-    query,
+    domGeom,
     topic,
     win,
     registry,
@@ -71,6 +71,7 @@ define([
             }));
             tree.placeAt(dom.byId('resourcetree'));
             tree.startup();
+            domGeom.setContentSize(tree.domNode, { h: win.getBox().h-40 });
         },
 
         onItemClick: function(item) {

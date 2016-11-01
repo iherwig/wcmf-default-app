@@ -4,23 +4,32 @@ define([
     "dojo/when",
     "dojo/topic",
     "dojo/store/JsonRest",
-    "dojo/store/util/QueryResults"
+    "dojo/store/util/QueryResults",
+    "../AuthToken"
 ], function (
     declare,
     aspect,
     when,
     topic,
     JsonRest,
-    QueryResults
+    QueryResults,
+    AuthToken
 ) {
     var TreeStore = declare([JsonRest], {
 
         idProperty: 'oid',
+        headers: {
+            Accept: "application/json"
+        },
 
         constructor: function(options) {
-            options.headers = {
-                Accept: "application/json"
-            };
+            declare.safeMixin(this, options);
+
+            // add auth token header if available
+            var authTokenValue = AuthToken.get();
+            if (authTokenValue !== undefined) {
+                this.headers["X-Auth-Token"] = authTokenValue;
+            }
 
             aspect.after(this, 'query', function(QueryResults) {
                 when(QueryResults, function() {}, function(error) {
