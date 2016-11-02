@@ -2,7 +2,6 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/when",
-    "dojo/dom-construct",
     "./Model",
     "../../locale/Dictionary",
     "../../ui/data/display/Renderer"
@@ -10,7 +9,6 @@ define([
     declare,
     array,
     when,
-    domConstruct,
     Model,
     Dict,
     Renderer
@@ -45,7 +43,7 @@ define([
         getRelations: function(type, entity) {
             var varname = type+'Relations';
             if (!this[varname] || entity) {
-                var relations = (entity && this.getEntityRelations instanceof Function) ?
+                var relations = (entity && typeof this.getEntityRelations === 'function') ?
                     this.getEntityRelations(entity) : this.relations;
                 var rel = [];
                 for(var i=0, count=relations.length; i<count; i++) {
@@ -154,15 +152,13 @@ define([
                 }
                 else {
                     var values = [];
+                    var renderOptions = { truncate: 20 };
                     for (var i=0; i<type.displayValues.length; i++) {
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
-                        when(Renderer.render(entity[curValue], curAttribute), function(value) {
+                        when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
                             var length = (value).toString().length;
                             if (value && length > 0) {
-                                if (curAttribute.displayType.toLowerCase() == 'text' && length > 20) {
-                                    value = domConstruct.create("div", { innerHTML: value }).textContent.substring(0, 20)+'…';
-                                }
                                 values.push(value);
                             }
                         });

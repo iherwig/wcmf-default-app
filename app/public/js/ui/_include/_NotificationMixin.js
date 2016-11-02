@@ -100,7 +100,7 @@ define([
             }
 
             this.onHide = undefined;
-            if (options.onHide instanceof Function) {
+            if (typeof options.onHide === 'function') {
                 this.onHide = options.onHide;
             }
         },
@@ -109,7 +109,7 @@ define([
             if (this.widget) {
                 this.widget.destroyRecursive();
             }
-            if (this.onHide instanceof Function) {
+            if (typeof this.onHide === 'function') {
                 this.onHide();
             }
         },

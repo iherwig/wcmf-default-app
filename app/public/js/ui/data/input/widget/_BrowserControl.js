@@ -9,6 +9,7 @@ define( [
     "../../../_include/widget/Button",
     "dijit/layout/ContentPane",
     "../../../_include/_HelpMixin",
+    "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary"
 ],
@@ -23,6 +24,7 @@ function(
     Button,
     ContentPane,
     _HelpMixin,
+    MediaBrowserDlg,
     _AttributeWidgetMixin,
     Dict
 ) {
@@ -35,6 +37,7 @@ function(
         browserUrl: null,
         textbox: null,
         browseBtn: null,
+        browseDlg: null,
         downloadBtn: null,
         listenToWidgetChanges: true,
 
@@ -59,9 +62,10 @@ function(
 
             // create callback
             this.callbackName = "field_cb_"+this.textbox.id;
-            window[this.callbackName] = lang.hitch(this.textbox, function(value) {
-                this.set("value", value);
-            });
+            window[this.callbackName] = lang.hitch(this, lang.partial(function(textbox, value) {
+                textbox.set("value", value);
+                this.browseDlg.hide();
+            }), this.textbox);
 
             // create button / child
             if (this.browserUrl) {
@@ -70,7 +74,11 @@ function(
                     innerHTML: '<i class="fa fa-folder-open"></i>',
                     "class": "btn-mini",
                     onClick: lang.hitch(this, function() {
-                        window.open(this.browserUrl+'?callback='+this.callbackName+"&directory="+this.getDirectory(), '_blank', 'width=800,height=700');
+                        this.browseDlg = new MediaBrowserDlg({
+                            url: this.browserUrl+'?callback='+
+                                    this.callbackName+"&directory="+this.getDirectory()
+                        });
+                        this.browseDlg.show();
                     })
                 });
                 this.addChild(this.browseBtn);

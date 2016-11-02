@@ -159,7 +159,7 @@ define([
                             var column = this.grid.column(e.target);
                             var typeClass = Model.getType(this.type);
                             if (column && column.field === typeClass.displayValues[0]) {
-                                if (typeClass.getSummary instanceof Function) {
+                                if (typeof typeClass.getSummary === 'function') {
                                     when(typeClass.getSummary(row.data), lang.hitch(this, function(text) {
                                         if (text) {
                                             this.summaryDialog = new TooltipDialog({
@@ -229,6 +229,7 @@ define([
                 });
             }
             var typeClass = Model.getType(this.type);
+            var renderOptions = { truncate: 50 };
             for (var i=0, count=this.columns.length; i<count; i++) {
                 var columnDef = this.columns[i];
                 if (typeof(columnDef) === "string") {
@@ -260,7 +261,7 @@ define([
                             autoSave: true,
                             sortable: true,
                             renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
-                                when(Renderer.render(data, this), function(value) {
+                                when(Renderer.render(data, this, renderOptions), function(value) {
                                     td.innerHTML = value;
                                 });
                             })
@@ -324,7 +325,7 @@ define([
                 pagingMethod: 'throttleDelayed',
             }, this.gridNode);
 
-            if (this.rowEnhancer instanceof Function) {
+            if (typeof this.rowEnhancer === 'function') {
                 aspect.after(grid, 'renderRow', lang.hitch(this, function(row, args) {
                     return this.rowEnhancer(row, args[0]);
                 }));

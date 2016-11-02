@@ -52,7 +52,7 @@ define([
             }).execute().then(lang.hitch(this, function(response) {
                 // success
                 User.create(data.user, response.roles);
-                if (dlg.success instanceof Function) {
+                if (typeof dlg.success === 'function') {
                     dlg.success(this);
                 }
             }));

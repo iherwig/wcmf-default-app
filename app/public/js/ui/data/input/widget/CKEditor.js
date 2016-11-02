@@ -7,7 +7,6 @@ define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/window",
-    "dojo/on",
     "dojo/topic",
     "dojo/query",
     "dijit/form/TextBox",
@@ -15,6 +14,7 @@ define( [
     "../Factory",
     "../../../../locale/Dictionary",
     "../../../_include/_HelpMixin",
+    "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
     "dojo/text!./template/CKEditor.html"
 ],
@@ -22,7 +22,6 @@ function(
     declare,
     lang,
     win,
-    on,
     topic,
     query,
     TextBox,
@@ -30,6 +29,7 @@ function(
     ControlFactory,
     Dict,
     _HelpMixin,
+    MediaBrowserDlg,
     _AttributeWidgetMixin,
     template
 ) {
@@ -40,6 +40,7 @@ function(
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
         editorInstance: null,
+        mediaBrowser: null,
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -69,6 +70,34 @@ function(
                 filebrowserWindowWidth: '800',
                 filebrowserWindowHeight: '700',
                 readOnly: this.disabled
+            });
+
+            // custom filebrowser dialog instantiation
+            // @see https://github.com/simogeo/Filemanager/wiki/How-to-open-the-Filemanager-from-CKEditor-in-a-modal-window
+            var browseDlg = null;
+            CKEDITOR.on('dialogDefinition', function(event) {
+                var editor = event.editor;
+                var dialogDefinition = event.data.definition;
+                var tabCount = dialogDefinition.contents.length;
+                var cleanUpFunc = CKEDITOR.tools.addFunction(function () {
+                    browseDlg.hide();
+                });
+
+                for (var i=0; i<tabCount; i++) {
+                    var browseButton = dialogDefinition.contents[i].get('browse');
+                    if (browseButton !== null) {
+                        browseButton.hidden = false;
+                        browseButton.onClick = function(dialog, i) {
+                            editor._.filebrowserSe = this;
+                            browseDlg = new MediaBrowserDlg({
+                                url: this.filebrowser.url+'?CKEditorFuncNum='+
+                                        CKEDITOR.instances[event.editor.name]._.filebrowserFn+
+                                        '&CKEditorCleanUpFuncNum='+cleanUpFunc
+                            });
+                            browseDlg.show();
+                        };
+                    }
+                }
             });
 
             this.own(

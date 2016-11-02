@@ -70,6 +70,7 @@ define([
         },
 
         buildForm: function() {
+            var renderOptions = { truncate: 50 };
             new GridWidget({
                 type: "SearchResult",
                 store: SearchStore.getStore(this.searchterm),
@@ -84,7 +85,7 @@ define([
                         for (var i=0, count=displayValues.length; i<count; i++) {
                             var displayValue = displayValues[i];
                             when(Renderer.render(object[displayValue],
-                                typeClass.getAttribute(displayValue), false), function(value) {
+                                typeClass.getAttribute(displayValue), renderOptions), function(value) {
                                 if (value) {
                                     td.innerHTML += value+" ";
                                 }

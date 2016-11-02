@@ -3,6 +3,7 @@
 var requirements = [
     "dojo/_base/declare",
     "dojo/when",
+    "dojo/dom-construct",
     "dojo/Deferred"
 ];
 
@@ -21,6 +22,7 @@ function(
     var i=0;
     var declare = arguments[i++];
     var when = arguments[i++];
+    var domConstruct = arguments[i++];
     var Deferred = arguments[i++];
     var Renderer = declare(null, {
     });
@@ -29,13 +31,22 @@ function(
      * Render the given value according to the given attribute definition.
      * @param value The value
      * @param attribute The attribute definition
+     * @param options Object with attributes 'truncate' (integer)
      * @returns Deferred
      */
-    Renderer.render = function(value, attribute) {
+    Renderer.render = function(value, attribute, options) {
+        options = options === undefined ? {} : options;
         var deferred = new Deferred();
         var renderer = Renderer.getRenderer(attribute.displayType);
-        if (renderer instanceof Function) {
+        if (typeof renderer === 'function') {
             when(renderer(value, attribute), function(value) {
+                if (options.truncate) {
+                    var length = parseInt(options.truncate);
+                    if (attribute.displayType.toLowerCase() === 'text' && length > 0 &&
+                            value && (value).toString().length > length) {
+                        value = domConstruct.create("div", { innerHTML: value }).textContent.substring(0, length)+'…';
+                    }
+                }
                 deferred.resolve(value);
             });
         }

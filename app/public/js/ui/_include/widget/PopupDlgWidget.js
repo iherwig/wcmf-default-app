@@ -142,10 +142,10 @@ define([
 
         doCallback: function(e, callback) {
             this.hideNotification();
-            if (callback instanceof Function) {
+            if (typeof callback === 'function') {
                 e.preventDefault();
                 var result = lang.hitch(this, callback)(this);
-                if (result && result.then instanceof Function) {
+                if (result && typeof result.then === 'function') {
                     result.then(lang.hitch(this, function() {
                         // success
                         this.hide();

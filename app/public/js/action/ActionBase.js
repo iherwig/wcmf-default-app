@@ -39,12 +39,12 @@ define([
             aspect.around(this, "execute", function(original) {
                 return function() {
                     // call init before execution
-                    if (this.init instanceof Function) {
+                    if (typeof this.init === 'function') {
                         this.init();
                     }
                     var deferred = original.apply(this, arguments);
 
-                    if (deferred && deferred.then instanceof Function) {
+                    if (deferred && typeof deferred.then === 'function') {
                         // set spinner icon
                         this._event = null;
                         this._hasSpinner = false;

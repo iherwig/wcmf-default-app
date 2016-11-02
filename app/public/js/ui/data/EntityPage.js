@@ -146,7 +146,7 @@ define([
 
         buildForm: function() {
             require([this.typeClass.detailView || './widget/EntityFormWidget'], lang.hitch(this, function(View) {
-                if (View instanceof Function) {
+                if (typeof View === 'function') {
                     // create the tab panel
                     var panel = new View({
                         entity: this.entity,

@@ -56,7 +56,7 @@ function(
             var result = {};
             for (var key in inputTypeMap) {
                 var control = arguments[array.indexOf(controls, inputTypeMap[key])];
-                if (!(control instanceof Function)) {
+                if (!(typeof control === 'function')) {
                     deferred.reject({ message: "Control for input type '"+key+"' not found."});
                 }
                 result[key] = control;

@@ -123,7 +123,7 @@ define([
         , detailView: '../data/widget/EntityFormWidget'
         , getSummary: function(data) {
             var typeClass = Model.getType(data['_type']);
-            if (typeClass.getSummary instanceof Function) {
+            if (typeof typeClass.getSummary === 'function') {
                 return typeClass.getSummary(data);
             }
             return '';

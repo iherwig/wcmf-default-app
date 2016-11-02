@@ -1,10 +1,12 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "./PopupDlgWidget"
 ], function (
     declare,
+    lang,
     domConstruct,
     ContentPane,
     PopupDlg
@@ -28,13 +30,16 @@ define([
      */
     return declare([PopupDlg], {
 
+        url: appConfig.pathPrefix+'media',
+
         /**
          * @Override
          */
         getContentWidget: function() {
+            var url = this.url+(this.url.includes("?") ? "&" : "?")+"contentOnly=1";
             return new ContentPane({
                 content: domConstruct.create("iframe", {
-                    src: appConfig.pathPrefix+'media?contentOnly=1',
+                    src: url,
                     style: "border: 0; width: 800px; height: 500px",
                     scrolling: "no"
                 })
