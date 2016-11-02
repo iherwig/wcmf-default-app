@@ -42,9 +42,12 @@ function(
             when(renderer(value, attribute), function(value) {
                 if (options.truncate) {
                     var length = parseInt(options.truncate);
-                    if (attribute.displayType.toLowerCase() === 'text' && length > 0 &&
-                            value && (value).toString().length > length) {
-                        value = domConstruct.create("div", { innerHTML: value }).textContent.substring(0, length)+'…';
+                    if (attribute.displayType.toLowerCase() === 'text' && length > 0 && value) {
+                        // strip tags
+                        value = domConstruct.create("div", { innerHTML: value }).textContent;
+                        if (value.length > length) {
+                            value = value.substring(0, length)+'…';
+                        }
                     }
                 }
                 deferred.resolve(value);

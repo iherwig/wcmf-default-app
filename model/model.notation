@@ -9724,6 +9724,14 @@
       <element xsi:nil="true"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dtUFop7_EeaNJ8J8yRXL8g" x="689" y="43"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="_LRd8YKEjEeayJ5TNO5-Xyg" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_LRd8YaEjEeayJ5TNO5-Xyg" showTitle="true"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_LRd8Y6EjEeayJ5TNO5-Xyg" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LRd8YqEjEeayJ5TNO5-Xyg" x="689" y="43"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_WheIIfu5EeOmMdys2glKCA"/>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_yLdFZitFEeWoF5Z7Jotdrw" name="diagram_compatibility_version" stringValue="1.1.0"/>
     <element xmi:type="uml:Package" href="model.uml#_B7Q5IPu5EeOmMdys2glKCA"/>
@@ -10174,6 +10182,16 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dtUFpp7_EeaNJ8J8yRXL8g" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dtUFp57_EeaNJ8J8yRXL8g"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dtUFqJ7_EeaNJ8J8yRXL8g"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_LRd8ZKEjEeayJ5TNO5-Xyg" type="StereotypeCommentLink" source="_C0BfUHIBEeWqqJ8U6ttukA" target="_LRd8YKEjEeayJ5TNO5-Xyg">
+      <styles xmi:type="notation:FontStyle" xmi:id="_LRd8ZaEjEeayJ5TNO5-Xyg"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_LRd8aaEjEeayJ5TNO5-Xyg" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_LRd8ZqEjEeayJ5TNO5-Xyg" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_LRd8Z6EjEeayJ5TNO5-Xyg"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_LRd8aKEjEeayJ5TNO5-Xyg"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_8b7VcDRJEeSRmq5T8ey5JQ" type="PapyrusUMLClassDiagram" name="security.ini" measurementUnit="Pixel">
