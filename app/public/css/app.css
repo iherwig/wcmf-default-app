@@ -113,6 +113,10 @@ label {
   hyphens: auto;
 }
 
+.navbar-fixed-top {
+  z-index: 890;
+}
+
 /* input */
 .entity-page .dijitTextBox, .principal-page .dijitTextBox,
 .entity-page .dijitSliderH {
