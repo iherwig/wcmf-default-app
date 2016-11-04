@@ -115,7 +115,7 @@ class RootController extends Controller {
 
     // create background image
     $geopattern = new \RedeyeVentures\GeoPattern\GeoPattern();
-    $generators = array('hexagons', 'overlapping_rings', 'overlapping_circles');
+    $generators = array('hexagons', 'chevrons', 'overlapping_circles');
     $geopattern->setString('1234567890123456789012345678901234567890');
     $geopattern->setBaseColor('#2F2F2F');
     $geopattern->setColor($appColor);

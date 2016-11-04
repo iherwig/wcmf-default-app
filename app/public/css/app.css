@@ -66,10 +66,7 @@ body {
 }
 
 .login-page .jumbotron h1 {
-  font-size: 40px;
-  font-weight: normal;
-  letter-spacing: -1px;
-  line-height: 1;
+  font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
 .login-page {
