@@ -49,7 +49,6 @@ define([
             // template variables
             this.title = appConfig.title;
             this.userName = User.getLogin();
-            this.firstRootType = Model.getSimpleTypeName(appConfig.rootTypes[0]);
             this.userType = Model.getSimpleTypeName(appConfig.userType);
             this.permissionType = Model.getSimpleTypeName(appConfig.permissionType);
         },
