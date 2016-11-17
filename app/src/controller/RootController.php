@@ -6,7 +6,8 @@
  */
 namespace app\src\controller;
 
-use wcmf\lib\presentation\Controller;
+use app\src\controller\_base\RootControllerBase;
+
 // PROTECTED REGION ID(app/src/controller/RootController.php/Import) ENABLED START
 use wcmf\lib\config\Configuration;
 use wcmf\lib\config\ConfigurationException;
@@ -34,7 +35,7 @@ use wcmf\lib\util\URIUtil;
  * [views]
  * app\src\controller\RootController?? = app/src/views/cms.tpl
  */
-class RootController extends Controller {
+class RootController extends RootControllerBase {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Body) ENABLED START
   private $principalFactory = null;
 
@@ -61,8 +62,6 @@ class RootController extends Controller {
             $actionMapper, $localization, $message, $configuration);
     $this->principalFactory = $principalFactory;
   }
-
-  protected function doExecute() {}
 // PROTECTED REGION END
 
   /**
@@ -156,6 +155,14 @@ class RootController extends Controller {
     $response->setValue('uiLanguage', $uiLanguage);
     $response->setValue('clientConfig', json_encode($clientConfig));
     $response->setValue('version', $version);
+// PROTECTED REGION END
+  }
+
+  /**
+   * Fallback method to execute, if no concrete method is defined for the request
+   */
+  protected function executeFallback() {
+// PROTECTED REGION ID(app/src/controller/RootController.php/ExecuteFallback) ENABLED START
 // PROTECTED REGION END
   }
 }

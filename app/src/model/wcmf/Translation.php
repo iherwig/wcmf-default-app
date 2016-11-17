@@ -6,7 +6,8 @@
  */
 namespace app\src\model\wcmf;
 
-use app\src\model\wcmf\TranslationBase;
+use app\src\model\wcmf\_base\TranslationBase;
+
 // PROTECTED REGION ID(app/src/model/wcmf/Translation.php/Import) ENABLED START
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\persistence\ObjectId;

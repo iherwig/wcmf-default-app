@@ -6,7 +6,8 @@
  */
 namespace app\src\model;
 
-use app\src\model\EntityBaseBase;
+use wcmf\lib\model\Node;
+
 // PROTECTED REGION ID(app/src/model/EntityBase.php/Import) ENABLED START
 use wcmf\lib\core\ObjectFactory;
 // PROTECTED REGION END
@@ -14,7 +15,7 @@ use wcmf\lib\core\ObjectFactory;
 /**
  * EntityBase
  */
-class EntityBase extends EntityBaseBase {
+abstract class EntityBase extends Node {
 // PROTECTED REGION ID(app/src/model/EntityBase.php/Body) ENABLED START
 
   /**
