@@ -28,7 +28,7 @@ define([
             // add auth token header if available
             var authTokenValue = AuthToken.get();
             if (authTokenValue !== undefined) {
-                this.headers["X-Auth-Token"] = authTokenValue;
+                this.headers[AuthToken.name] = authTokenValue;
             }
 
             aspect.after(this, 'query', function(QueryResults) {

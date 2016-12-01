@@ -32,10 +32,12 @@ else {
   }
   catch (Exception $ex) {
     try {
-      $application->handleException($ex, isset($request) ? $request : null);
+      $application->handleException($ex);
     }
     catch (Exception $unhandledEx) {
-      echo("An unhandled exception occured. Please see log file for details.");
+      echo "Exception in request to ".$_SERVER["REQUEST_URI"]."\n".
+      $unhandledEx->getMessage()."\n".$unhandledEx->getTraceAsString()."\n".
+      file_get_contents(WCMF_BASE."app/log/".(new \DateTime())->format('Y-m-d').".log");
     }
   }
 }

@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <!-- see http://www.phpunit.de/wiki/Documentation -->
 <phpunit bootstrap="bootstrap.php"
-         verbose="true">
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         processIsolation="false"
+         verbose="true"
+         colors="true"
+>
   <testsuites>
     <testsuite name="App">
       <file>tests/app/InputTest.php</file>

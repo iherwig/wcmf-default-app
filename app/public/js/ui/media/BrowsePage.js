@@ -69,6 +69,8 @@ define([
             }));
 
             var directory = this.request.getQueryParam("directory");
+            var customHeaders = {};
+            customHeaders[AuthToken.name] = AuthToken.get();
             lang.mixin(elfinderConfig, {
                 lang: appConfig.uiLanguage,
                 url: appConfig.backendUrl+'media/files?directory='+directory,
@@ -79,9 +81,7 @@ define([
                 getFileCallback: lang.hitch(this, function(file) {
                     this.onItemClick(file);
                 }),
-                customHeaders: {
-                    "X-Auth-Token": AuthToken.get()
-                }
+                customHeaders: customHeaders
             });
 
             setTimeout(function() {

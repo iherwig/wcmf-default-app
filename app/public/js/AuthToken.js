@@ -7,6 +7,8 @@ define([
 ) {
     var AuthToken = declare(null, {
 
+        name: "X-Auth-Token",
+
         /**
          * Get the token value
          * @returns String|undefined

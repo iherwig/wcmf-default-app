@@ -3,13 +3,15 @@ define([
     "dojo/_base/lang",
     "dojo/request",
     "dojo/request/iframe",
-    "dojo/Deferred"
+    "dojo/Deferred",
+    "../AuthToken"
 ], function (
     declare,
     lang,
     request,
     iframe,
-    Deferred
+    Deferred,
+    AuthToken
 ) {
     /**
      * Process wrapper class. A process is typically executed
@@ -85,10 +87,13 @@ define([
             });
 
             if (response.status === 'download') {
+                var data = {};
+                data[AuthToken.name] = AuthToken.get();
                 iframe(this.getBackendUrl(), {
                     preventCache: true,
                     timeout: 1000,
-                    method: "POST"
+                    method: "POST",
+                    data: data
                 });
                 this.deferred.resolve(response);
             }

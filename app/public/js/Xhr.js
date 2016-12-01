@@ -12,7 +12,7 @@ define([
         var authTokenValue = AuthToken.get();
         if (authTokenValue !== undefined) {
             options.headers = options.headers || {};
-            options.headers["X-Auth-Token"] = authTokenValue;
+            options.headers[AuthToken.name] = authTokenValue;
         }
         return xhr(url, options);
     };
