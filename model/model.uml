@@ -419,11 +419,11 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_Mztt0bykEeaJqdbh3BIxsQ" value="$requiredValidator"/>
                 </ownedAttribute>
               </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_KwbK8LylEeaJqdbh3BIxsQ" name="DateValidator">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_KwbK8bylEeaJqdbh3BIxsQ" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KwbK8rylEeaJqdbh3BIxsQ" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KwbK87ylEeaJqdbh3BIxsQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_KwbK9LylEeaJqdbh3BIxsQ" value="wcmf\lib\validation\impl\Date"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_861EFaprEeaGbp23C_zkpg" name="RegExpValidator">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_861EFqprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EF6prEeaGbp23C_zkpg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EGKprEeaGbp23C_zkpg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\RegExp"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_861EGqprEeaGbp23C_zkpg" name="FilterValidator">
@@ -438,20 +438,6 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EIaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EIqprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EI6prEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\Image"/>
-                </ownedAttribute>
-              </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_861EFaprEeaGbp23C_zkpg" name="RegExpValidator">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_861EFqprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EF6prEeaGbp23C_zkpg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EGKprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\RegExp"/>
-                </ownedAttribute>
-              </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_X_gbYLylEeaJqdbh3BIxsQ" name="RequiredValidator">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_X_gbYbylEeaJqdbh3BIxsQ" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X_gbYrylEeaJqdbh3BIxsQ" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X_gbY7ylEeaJqdbh3BIxsQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_X_gbZLylEeaJqdbh3BIxsQ" value="wcmf\lib\validation\impl\Required"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
