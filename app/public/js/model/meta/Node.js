@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/when",
     "./Model",
@@ -7,6 +8,7 @@ define([
     "../../ui/data/display/Renderer"
 ], function(
     declare,
+    lang,
     array,
     when,
     Model,
@@ -19,8 +21,11 @@ define([
          * Attributes defined in subclasses
          */
         typeName: '',
+        description: '',
         isSortable: false,
         displayValues: [],
+        pkNames: [],
+        relationOrder: [],
         attributes: [],
         relations: [],
 
@@ -52,6 +57,10 @@ define([
                         rel.push(relation);
                     }
                 }
+                var sortingArr = this.relationOrder;
+                rel.sort(lang.hitch(this, function(a, b) {
+                    return sortingArr.indexOf(a.name) - sortingArr.indexOf(b.name);
+                }));
                 this[varname] = rel;
             }
             return this[varname];

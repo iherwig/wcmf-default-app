@@ -417,21 +417,21 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_861EFqprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EF6prEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EGKprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\persistence\validator\impl\RegExp"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\RegExp"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_861EGqprEeaGbp23C_zkpg" name="FilterValidator">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_861EG6prEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EHKprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EHaprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EHqprEeaGbp23C_zkpg" value="wcmf\lib\persistence\validator\impl\Filter"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EHqprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\Filter"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_861EH6prEeaGbp23C_zkpg" name="ImageValidator">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_861EIKprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EIaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EIqprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EI6prEeaGbp23C_zkpg" value="wcmf\lib\persistence\validator\impl\Image"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EI6prEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\Image"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
