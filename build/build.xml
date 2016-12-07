@@ -2,6 +2,7 @@
   <description>wCMF application build file</description>
 
   <property file="build.properties"/>
+  <property file="${generator.base}/build_wcmf.info" prefix="generator"/>
 
   <target name="init">
     <tstamp/>
@@ -29,6 +30,7 @@
           dir="${generator.workdir}" fork="true" >
       <sysproperty key="java.library.path" path="${generator.base}/lib"/>
       <arg value="${generator.base}/cartridge/Wcmf/workflow/wcmf.oaw"/>
+      <arg value="-generatorVersion=wcmf-${generator.version}.${generator.build}"/>
       <arg value="-basePath=${generator.base}/"/>
       <arg value="-propertyFile=${generator.workdir}/workflow.properties"/>
       <arg value="-targetDir=${generator.target}"/>
