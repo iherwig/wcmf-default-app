@@ -19,7 +19,6 @@ use wcmf\lib\core\impl\MonologFileLogger;
 use wcmf\lib\core\LogManager;
 use wcmf\lib\core\ObjectFactory;
 use wcmf\lib\io\FileUtil;
-use wcmf\lib\persistence\BuildDepth;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\util\DBUtil;
 
@@ -33,7 +32,7 @@ LogManager::configure($logger);
 
 // setup configuration
 $configuration = new InifileConfiguration($configPath);
-$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('backend.ini');
 $configuration->addConfiguration('../../tools/database/config.ini');
 
 // setup object factory

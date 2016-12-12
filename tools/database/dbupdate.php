@@ -32,7 +32,7 @@ LogManager::configure($logger);
 
 // setup configuration
 $configuration = new InifileConfiguration($configPath);
-$configuration->addConfiguration('config.ini');
+$configuration->addConfiguration('backend.ini');
 $configuration->addConfiguration('../../tools/database/config.ini');
 
 // setup object factory
