@@ -17,23 +17,30 @@ define([
         var fqTypeName = type.typeName;
         exports.types[fqTypeName] = type;
         // also register simple type name
-        var simpleTypeName = exports.getSimpleTypeName(fqTypeName);
-        if (exports.types[simpleTypeName] === undefined) {
+        var simpleTypeName = exports.calculateSimpleTypeName(fqTypeName);
+        if (exports.simpleToFqNames[simpleTypeName] === undefined) {
             exports.types[simpleTypeName] = type;
             exports.simpleToFqNames[simpleTypeName] = fqTypeName;
+        }
+        else {
+            // if the simple type name already exists, we remove
+            // it in order to prevent collisions with the new type
+            delete(exports.types[simpleTypeName]);
+            delete(exports.simpleToFqNames[simpleTypeName]);
         }
     };
 
     /**
-     * Get the known types
-     * @return Array of simple type names
+     * Calculate the simple type name for a given type name
+     * @param typeName Simple or fully qualified type name
+     * @return String
      */
-    exports.getKnownTypes = function() {
-        var result = [];
-        for (var typeName in simpleToFqNames) {
-            result.push(typeName);
+    exports.calculateSimpleTypeName = function(typeName) {
+        var pos = typeName.lastIndexOf('.');
+        if (pos !== -1) {
+            return typeName.substring(pos+1);
         }
-        return result;
+        return typeName;
     };
 
     /**
@@ -66,11 +73,11 @@ define([
      * @return String
      */
     exports.getSimpleTypeName = function(typeName) {
-        var pos = typeName.lastIndexOf('.');
-        if (pos !== -1) {
-            return typeName.substring(pos+1);
-        }
-        return typeName;
+        var simpleTypeName = exports.calculateSimpleTypeName(typeName);
+        // if there is a entry for the type name but not for the simple type name,
+        // the type is ambiquous and we return the type name
+        return (exports.types[typeName] !== undefined && exports.simpleToFqNames[typeName] === undefined) ?
+            typeName : simpleTypeName;
     };
 
     /**
