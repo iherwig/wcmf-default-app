@@ -76,7 +76,7 @@ define([
         var simpleTypeName = exports.calculateSimpleTypeName(typeName);
         // if there is a entry for the type name but not for the simple type name,
         // the type is ambiquous and we return the type name
-        return (exports.types[typeName] !== undefined && exports.simpleToFqNames[typeName] === undefined) ?
+        return (exports.types[typeName] !== undefined && exports.simpleToFqNames[simpleTypeName] === undefined) ?
             typeName : simpleTypeName;
     };
 

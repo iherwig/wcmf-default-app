@@ -6,6 +6,7 @@ define([
     "./ActionBase",
     "../ui/_include/widget/ObjectSelectDlgWidget",
     "../persistence/Entity",
+    "../persistence/Store",
     "../persistence/RelationStore",
     "../model/meta/Model",
     "../locale/Dictionary"
@@ -17,6 +18,7 @@ define([
     ActionBase,
     ObjectSelectDlg,
     Entity,
+    Store,
     RelationStore,
     Model,
     Dict
@@ -43,22 +45,30 @@ define([
                 message: Dict.translate("Select <em>%0%</em> objects, you want to link to <em>%1%</em>",
                     [Dict.translate(relationType), displayValue]),
                 okCallback: lang.hitch(this, function(dlg) {
-                    var store = RelationStore.getStore(oid, relationName);
+                    var entityStore = Store.getStore(relationType, appConfig.defaultLanguage);
+                    var relStore = RelationStore.getStore(oid, relationName);
 
                     var oids = dlg.getSelectedOids();
-                    var deferredList = [];
+                    var loadPromises = [];
                     for (var i=0, count=oids.length; i<count; i++) {
-                        var entity = new Entity({ oid:oids[i] });
-                        deferredList.push(store.put(entity, {overwrite: true}));
+                        var entityId = entityStore.getIdentity(new Entity({ oid:oids[i] }));
+                        loadPromises.push(entityStore.get(entityId));
                     }
-                    all(deferredList).then(lang.hitch(this, function(results) {
-                        // callback completes
-                        deferred.resolve(results);
-                    }), lang.hitch(this, function(error) {
-                        // error
-                        deferred.reject(error);
+                    var deferredList = [];
+                    all(loadPromises).then(lang.hitch(this, function(loadResults) {
+                        for (var i=0, count=loadResults.length; i<count; i++) {
+                            var entity = loadResults[i];
+                            deferredList.push(relStore.put(entity, {overwrite: true}));
+                        }
+                        all(deferredList).then(lang.hitch(this, function(results) {
+                            // callback completes
+                            deferred.resolve(results);
+                        }), lang.hitch(this, function(error) {
+                            // error
+                            deferred.reject(error);
+                        }));
                     }));
-                    return all(deferredList);
+                    return all(loadPromises);
                 })
             }).show();
             return deferred;

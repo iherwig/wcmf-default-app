@@ -166,7 +166,7 @@ define([
                         var curValue = type.displayValues[i];
                         var curAttribute = type.getAttribute(curValue);
                         when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
-                            var length = (value).toString().length;
+                            var length = value ? value.toString().length : 0;
                             if (value && length > 0) {
                                 values.push(value);
                             }
