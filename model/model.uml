@@ -1766,6 +1766,11 @@
                       <value xsi:nil="true"/>
                     </defaultValue>
                   </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_rFde0MMXEea5k_Ym6wDJUA" name="active" visibility="public" type="_dbezULQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rFeF4MMXEea5k_Ym6wDJUA" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rFeF4cMXEea5k_Ym6wDJUA" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_YCGtMMMYEea5k_Ym6wDJUA" value="1"/>
+                  </ownedAttribute>
                   <ownedAttribute xmi:type="uml:Property" xmi:id="_ZPt15LTSEeOYkOsR5IzpsA" name="" type="_tFTvALTMEeOYkOsR5IzpsA" aggregation="composite" association="_ZPt147TSEeOYkOsR5IzpsA">
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZPt15bTSEeOYkOsR5IzpsA"/>
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZPt15rTSEeOYkOsR5IzpsA" value="*"/>
@@ -2274,6 +2279,7 @@
   <Chronos:ChiSystem xmi:id="_876B8KprEeaGbp23C_zkpg" plattform="wcmf" config="persistence.ini" base_Class="_861EH6prEeaGbp23C_zkpg"/>
   <Chronos:ChiSystem xmi:id="_875a4KprEeaGbp23C_zkpg" plattform="wcmf" config="persistence.ini" base_Class="_861EFaprEeaGbp23C_zkpg"/>
   <Chronos:ChiActionKey xmi:id="_ttsKMKv-Eeaj6N1_K8Qzaw" action="cms" base_Association="_gQEHcKv-Eeaj6N1_K8Qzaw"/>
-  <Chronos:ChiSystem xmi:id="_Kwe1ULylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini" base_Class="_KwbK8LylEeaJqdbh3BIxsQ"/>
-  <Chronos:ChiSystem xmi:id="_X_hCcLylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini" base_Class="_X_gbYLylEeaJqdbh3BIxsQ"/>
+  <Chronos:ChiSystem xmi:id="_Kwe1ULylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini"/>
+  <Chronos:ChiSystem xmi:id="_X_hCcLylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini"/>
+  <Chronos:ChiValue xmi:id="_rLNhgMMXEea5k_Ym6wDJUA" db_data_type="INT(1)" is_editable="true" input_type="binarycheckbox" display_type="check" base_Property="_rFde0MMXEea5k_Ym6wDJUA"/>
 </xmi:XMI>
