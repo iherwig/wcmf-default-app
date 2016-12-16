@@ -419,11 +419,11 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_Mztt0bykEeaJqdbh3BIxsQ" value="$requiredValidator"/>
                 </ownedAttribute>
               </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_861EFaprEeaGbp23C_zkpg" name="RegExpValidator">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_861EFqprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EF6prEeaGbp23C_zkpg" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EGKprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\RegExp"/>
+              <packagedElement xmi:type="uml:Class" xmi:id="_KwbK8LylEeaJqdbh3BIxsQ" name="DateValidator">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_KwbK8bylEeaJqdbh3BIxsQ" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KwbK8rylEeaJqdbh3BIxsQ" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KwbK87ylEeaJqdbh3BIxsQ" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_KwbK9LylEeaJqdbh3BIxsQ" value="wcmf\lib\validation\impl\Date"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_861EGqprEeaGbp23C_zkpg" name="FilterValidator">
@@ -438,6 +438,20 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EIaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EIqprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EI6prEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\Image"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_861EFaprEeaGbp23C_zkpg" name="RegExpValidator">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_861EFqprEeaGbp23C_zkpg" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_861EF6prEeaGbp23C_zkpg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_861EGKprEeaGbp23C_zkpg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_861EGaprEeaGbp23C_zkpg" value="wcmf\lib\validation\impl\RegExp"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_X_gbYLylEeaJqdbh3BIxsQ" name="RequiredValidator">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_X_gbYbylEeaJqdbh3BIxsQ" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X_gbYrylEeaJqdbh3BIxsQ" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X_gbY7ylEeaJqdbh3BIxsQ" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_X_gbZLylEeaJqdbh3BIxsQ" value="wcmf\lib\validation\impl\Required"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -1759,17 +1773,22 @@
                       <value xsi:nil="true"/>
                     </defaultValue>
                   </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_KXBDUMNyEeabSe-F2MKJtA" name="active" visibility="public" type="_dbezULQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_KXBDUcNyEeabSe-F2MKJtA" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_KXBDUsNyEeabSe-F2MKJtA" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_UdWaIMNyEeabSe-F2MKJtA" value="1"/>
+                  </ownedAttribute>
+                  <ownedAttribute xmi:type="uml:Property" xmi:id="_bUR1sMNyEeabSe-F2MKJtA" name="super_user" visibility="public" type="_dbezULQwEeOLlbB2YLI0iw">
+                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bUR1scNyEeabSe-F2MKJtA" value="1"/>
+                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bUR1ssNyEeabSe-F2MKJtA" value="1"/>
+                    <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_bUR1s8NyEeabSe-F2MKJtA"/>
+                  </ownedAttribute>
                   <ownedAttribute xmi:type="uml:Property" xmi:id="_P_cZ0LTREeOYkOsR5IzpsA" name="config" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rE150LTREeOYkOsR5IzpsA" value="1"/>
                     <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rE150bTREeOYkOsR5IzpsA" value="1"/>
                     <defaultValue xmi:type="uml:LiteralString" xmi:id="_rE150rTREeOYkOsR5IzpsA">
                       <value xsi:nil="true"/>
                     </defaultValue>
-                  </ownedAttribute>
-                  <ownedAttribute xmi:type="uml:Property" xmi:id="_rFde0MMXEea5k_Ym6wDJUA" name="active" visibility="public" type="_dbezULQwEeOLlbB2YLI0iw">
-                    <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rFeF4MMXEea5k_Ym6wDJUA" value="1"/>
-                    <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rFeF4cMXEea5k_Ym6wDJUA" value="1"/>
-                    <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_YCGtMMMYEea5k_Ym6wDJUA" value="1"/>
                   </ownedAttribute>
                   <ownedAttribute xmi:type="uml:Property" xmi:id="_ZPt15LTSEeOYkOsR5IzpsA" name="" type="_tFTvALTMEeOYkOsR5IzpsA" aggregation="composite" association="_ZPt147TSEeOYkOsR5IzpsA">
                     <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZPt15bTSEeOYkOsR5IzpsA"/>
@@ -2086,7 +2105,7 @@
   <Chronos:ChiNode xmi:id="_dQEfMLTNEeOYkOsR5IzpsA" base_Class="_s73fILTMEeOYkOsR5IzpsA" display_value="objectid|login|created"/>
   <Chronos:ChiNode xmi:id="_fMz4sLTNEeOYkOsR5IzpsA" base_Class="_s5AYYLTMEeOYkOsR5IzpsA" display_value="name" orderby="name"/>
   <Chronos:ChiNode xmi:id="_haVgMLTNEeOYkOsR5IzpsA" base_Class="_tCKUYLTMEeOYkOsR5IzpsA" display_value="objectid|attribute|language"/>
-  <Chronos:ChiNode xmi:id="_jedUELTNEeOYkOsR5IzpsA" base_Class="_tJBxYLTMEeOYkOsR5IzpsA" display_value="login" orderby="name"/>
+  <Chronos:ChiNode xmi:id="_jedUELTNEeOYkOsR5IzpsA" base_Class="_tJBxYLTMEeOYkOsR5IzpsA" display_value="login,active,super_user" orderby="name"/>
   <Chronos:ChiNode xmi:id="_lbY60LTNEeOYkOsR5IzpsA" base_Class="_tFTvALTMEeOYkOsR5IzpsA" display_value="key"/>
   <Chronos:ChiNode xmi:id="_m1UiMLTNEeOYkOsR5IzpsA" base_Class="_s_A5wLTMEeOYkOsR5IzpsA" display_value="name" orderby="name"/>
   <Chronos:ChiManyToMany xmi:id="_oMlQELTNEeOYkOsR5IzpsA" base_Class="_tM8BALTMEeOYkOsR5IzpsA" pk_name="fk_user_id|fk_role_id"/>
@@ -2279,7 +2298,8 @@
   <Chronos:ChiSystem xmi:id="_876B8KprEeaGbp23C_zkpg" plattform="wcmf" config="persistence.ini" base_Class="_861EH6prEeaGbp23C_zkpg"/>
   <Chronos:ChiSystem xmi:id="_875a4KprEeaGbp23C_zkpg" plattform="wcmf" config="persistence.ini" base_Class="_861EFaprEeaGbp23C_zkpg"/>
   <Chronos:ChiActionKey xmi:id="_ttsKMKv-Eeaj6N1_K8Qzaw" action="cms" base_Association="_gQEHcKv-Eeaj6N1_K8Qzaw"/>
-  <Chronos:ChiSystem xmi:id="_Kwe1ULylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini"/>
-  <Chronos:ChiSystem xmi:id="_X_hCcLylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini"/>
-  <Chronos:ChiValue xmi:id="_rLNhgMMXEea5k_Ym6wDJUA" db_data_type="INT(1)" is_editable="true" input_type="binarycheckbox" display_type="check" base_Property="_rFde0MMXEea5k_Ym6wDJUA"/>
+  <Chronos:ChiSystem xmi:id="_Kwe1ULylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini" base_Class="_KwbK8LylEeaJqdbh3BIxsQ"/>
+  <Chronos:ChiSystem xmi:id="_X_hCcLylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini" base_Class="_X_gbYLylEeaJqdbh3BIxsQ"/>
+  <Chronos:ChiValue xmi:id="_KXEGoMNyEeabSe-F2MKJtA" db_data_type="INT(1)" is_editable="true" input_type="binarycheckbox" display_type="check" base_Property="_KXBDUMNyEeabSe-F2MKJtA"/>
+  <Chronos:ChiValue xmi:id="_bUTD0MNyEeabSe-F2MKJtA" db_data_type="INT(1)" input_type="binarycheckbox" display_type="check" base_Property="_bUR1sMNyEeabSe-F2MKJtA"/>
 </xmi:XMI>

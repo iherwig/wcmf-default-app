@@ -20,7 +20,7 @@ define([
         typeName: "app.src.model.wcmf.User",
         description: "",
         isSortable: false,
-        displayValues: ["login"],
+        displayValues: ["login", "active", "super_user"],
         pkNames: ["id"],
         relationOrder: [],
 
@@ -85,18 +85,6 @@ define([
             defaultValue: null,
             isReference: false
         }, {
-            name: "config",
-            type: "String",
-            description: "",
-            isEditable: true,
-            inputType: "select:{\"list\":{\"type\":\"file\",\"paths\":[\"../config\"],\"pattern\":\"\\\\.ini$\",\"emptyItem\":\"\"}}",
-            displayType: "text",
-            validateType: "",
-            validateDesc: "",
-            tags: ["DATATYPE_ATTRIBUTE"],
-            defaultValue: null,
-            isReference: false
-        }, {
             name: "active",
             type: "Integer",
             description: "",
@@ -107,6 +95,30 @@ define([
             validateDesc: "",
             tags: ["DATATYPE_ATTRIBUTE"],
             defaultValue: 1,
+            isReference: false
+        }, {
+            name: "super_user",
+            type: "Integer",
+            description: "",
+            isEditable: false,
+            inputType: "binarycheckbox",
+            displayType: "check",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE"],
+            defaultValue: 0,
+            isReference: false
+        }, {
+            name: "config",
+            type: "String",
+            description: "",
+            isEditable: true,
+            inputType: "select:{\"list\":{\"type\":\"file\",\"paths\":[\"../config\"],\"pattern\":\"\\\\.ini$\",\"emptyItem\":\"\"}}",
+            displayType: "text",
+            validateType: "",
+            validateDesc: "",
+            tags: ["DATATYPE_ATTRIBUTE"],
+            defaultValue: null,
             isReference: false
         }],
 
