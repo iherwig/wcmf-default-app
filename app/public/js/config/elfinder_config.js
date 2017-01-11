@@ -2,24 +2,17 @@
  * Configuration for elFinder
  */
 elfinderConfig = {
-    width: '782',
-    height: '609',
     cssClass: 'wcmfFinder',
     rememberLastDir: true,
     resizable: false,
-    commands: [
-        'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook',
-        'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy',
-        'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help',
-        'resize', 'crop', 'sort'
-    ],
+    commands: ['*'],
     ui: ['toolbar'/*, 'places'*/, 'tree', 'path', 'stat'],
     uiOptions: {
         toolbar: [
-          ['back', 'forward'], /* ['reload'],*//* ['home', 'up'],*/['mkdir', 'mkfile', 'upload'],
-          ['open', 'download', 'getfile'], ['info'], ['quicklook'], ['copy', 'cut', 'paste'],
-          ['rm'], ['duplicate', 'rename', 'edit', 'resize', 'crop'], ['extract', 'archive'],
-          ['search'], ['view'], ['help']
+          ['back', 'forward'], /*['netmount'],*/ ['reload'],/* ['home', 'up'],*/['mkdir', 'mkfile', 'upload'],
+          ['open', 'download', 'getfile'], ['info', 'chmod'], ['quicklook'], ['copy', 'cut', 'paste'],
+          ['rm'], ['duplicate', 'rename', 'edit', 'resize'], ['extract', 'archive'],
+          ['search'], ['view', 'sort'], ['help']/*, ['fullscreen']*/
         ],
         tree: {
             openRootOnLoad: true,
