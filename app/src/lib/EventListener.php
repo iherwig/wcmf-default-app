@@ -15,19 +15,22 @@ class EventListener {
 
   private $_eventManager = null;
   private $_view = null;
-  private $_cache = null;
+  private $_dynamicCache = null;
+  private $_frontendCache = null;
 
   /**
    * Constructor
    * @param $eventManager
    * @param $view
    * @param $dynamicCache
+   * @param $frontendCache
    */
   public function __construct(EventManager $eventManager,
-          View $view, Cache $dynamicCache) {
+          View $view, Cache $dynamicCache, Cache $frontendCache) {
     $this->_eventManager = $eventManager;
     $this->_view = $view;
-    $this->_cache = $dynamicCache;
+    $this->_dynamicCache = $dynamicCache;
+    $this->_frontendCache = $frontendCache;
     $this->_eventManager->addListener(PersistenceEvent::NAME,
       array($this, 'persisted'));
   }
@@ -47,6 +50,7 @@ class EventListener {
   public function persisted(PersistenceEvent $event) {
     $this->invalidateCachedViews();
     $this->invalidateDynamicCache();
+    $this->invalidateFrontendCache();
   }
 
   /**
@@ -60,7 +64,14 @@ class EventListener {
    * Invalidate the dynamic cache.
    */
   protected function invalidateDynamicCache() {
-    $this->_cache->clearAll();
+    $this->_dynamicCache->clearAll();
+  }
+
+  /**
+   * Invalidate the frontend cache.
+   */
+  protected function invalidateFrontendCache() {
+    $this->_frontendCache->clearAll();
   }
 }
 ?>
