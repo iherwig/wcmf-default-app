@@ -229,7 +229,7 @@ define([
                 });
             }
             var typeClass = Model.getType(this.type);
-            var renderOptions = { truncate: 50 };
+            var renderOptions = {};
             for (var i=0, count=this.columns.length; i<count; i++) {
                 var columnDef = this.columns[i];
                 if (typeof(columnDef) === "string") {
