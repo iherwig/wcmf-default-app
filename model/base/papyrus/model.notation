@@ -1535,6 +1535,22 @@
       <element xsi:nil="true"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_s9rNEtzTEea-U5dAR-tZ-g" x="689" y="43"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="_C--v5OGwEeazX7XNPeLRaA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_C--v5eGwEeazX7XNPeLRaA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_C--v5-GwEeazX7XNPeLRaA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_C--v5uGwEeazX7XNPeLRaA" x="689" y="43"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_RQuXP-GwEeazX7XNPeLRaA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_RQuXQOGwEeazX7XNPeLRaA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_RQuXQuGwEeazX7XNPeLRaA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RQuXQeGwEeazX7XNPeLRaA" x="689" y="43"/>
+    </children>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_WheIIfu5EeOmMdys2glKCA"/>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_yLdFZitFEeWoF5Z7Jotdrw" name="diagram_compatibility_version" stringValue="1.2.0"/>
     <element xmi:type="uml:Package" href="model.uml#_B7Q5IPu5EeOmMdys2glKCA"/>
@@ -2093,6 +2109,26 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_s9rNF9zTEea-U5dAR-tZ-g"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_s9rNGNzTEea-U5dAR-tZ-g"/>
     </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_C--v6OGwEeazX7XNPeLRaA" type="StereotypeCommentLink" source="_C0BfUHIBEeWqqJ8U6ttukA" target="_C--v5OGwEeazX7XNPeLRaA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_C--v6eGwEeazX7XNPeLRaA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_C--v7eGwEeazX7XNPeLRaA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_C--v6uGwEeazX7XNPeLRaA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_C--v6-GwEeazX7XNPeLRaA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_C--v7OGwEeazX7XNPeLRaA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_RQuXQ-GwEeazX7XNPeLRaA" type="StereotypeCommentLink" source="_C0BfUHIBEeWqqJ8U6ttukA" target="_RQuXP-GwEeazX7XNPeLRaA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_RQuXROGwEeazX7XNPeLRaA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_RQuXSOGwEeazX7XNPeLRaA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="model.uml#_gLuoYLRnEeOfbtYsPp7Oyg"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_RQuXReGwEeazX7XNPeLRaA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RQuXRuGwEeazX7XNPeLRaA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_RQuXR-GwEeazX7XNPeLRaA"/>
+    </edges>
   </notation:Diagram>
   <css:ModelStyleSheets xmi:id="_E8YBsE5jEeSEGaIVag_Y7g"/>
   <notation:Diagram xmi:id="__-HggKvxEeaQUopA1XIUeQ" type="PapyrusUMLClassDiagram" name="backend.ini" measurementUnit="Pixel">
@@ -2229,7 +2265,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_S4FBALRnEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_S4FBAbRnEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_9PGvELQGEeOIMOFxCilDfw"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_9PGvELQGEeOIMOFxCilDfw"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S4FBArRnEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_S4FBA7RnEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2264,7 +2300,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_S2yyILRoEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_S2yyIbRoEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_jYGdwLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_jYGdwLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S2yyIrRoEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_S2yyI7RoEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2299,7 +2335,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_2Msd0LRqEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_2Msd0bRqEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_o-9_oLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_o-9_oLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2Msd0rRqEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_2Msd07RqEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2334,7 +2370,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_fdzOkLRrEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_fdzOkbRrEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_qbMGALRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_qbMGALRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fdzOkrRrEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_fdzOk7RrEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2369,7 +2405,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_ScCzALRsEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_ScCzAbRsEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_sLuPgLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_sLuPgLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ScCzArRsEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_ScCzA7RsEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2404,7 +2440,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_fPWGYLRsEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_fPWGYbRsEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_tzSqQLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_tzSqQLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fPWGYrRsEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_fPWGY7RsEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2439,7 +2475,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_wwY7QLRsEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_wwY7QbRsEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_zlstwLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_zlstwLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wwY7QrRsEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_wwY7Q7RsEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2474,7 +2510,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_77dFgLRsEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_77dFgbRsEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_05DMALRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_05DMALRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_77dFgrRsEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_77dFg7RsEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2509,7 +2545,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_EtvagLRtEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_EtvagbRtEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_2VvzgLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_2VvzgLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_EtvagrRtEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_Etvag7RtEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2544,7 +2580,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_duxPALRtEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_duxPAbRtEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_3mhe4LRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_3mhe4LRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_duxPArRtEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_duxPA7RtEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2579,7 +2615,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_qW7CULRtEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_qW7CUbRtEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_5Rt1YLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_5Rt1YLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qW7CUrRtEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_qW7CU7RtEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2614,7 +2650,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_40dp8LRtEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_40dp8bRtEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_68t-oLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_68t-oLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_40dp8rRtEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_40dp87RtEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2691,7 +2727,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_Elyi8LRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_Elyi8bRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_8yBTYLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_8yBTYLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Elyi8rRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_El4pkLRuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2726,7 +2762,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_N7XLMLRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_N7XLMbRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_-KtkoLRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_-KtkoLRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_N7XLMrRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_N7XLM7RuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2761,7 +2797,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_dKr1ILRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_dKr1IbRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#__psrILRnEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#__psrILRnEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dKr1IrRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_dKr1I7RuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2796,7 +2832,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_mHXcQLRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_mHXcQbRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_B3_HoLRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_B3_HoLRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mHXcQrRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_mHXcQ7RuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2831,7 +2867,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_2DCOsLRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_2DCOsbRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_E0PdYLRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_E0PdYLRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2DCOsrRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_2DCOs7RuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2866,7 +2902,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_-chpMLRuEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_-chpMbRuEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_GfuHwLRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_GfuHwLRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-chpMrRuEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_-chpM7RuEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2911,7 +2947,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_OzGPALRvEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_OzGPAbRvEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_HxvJQLRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_HxvJQLRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_OzGPArRvEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_OzGPA7RvEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2946,7 +2982,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_VkKTILRvEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_VkKTIbRvEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_JevdoLRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_JevdoLRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VkKTIrRvEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_VkKTI7RvEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -2981,7 +3017,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_pCCoILRvEeOfbtYsPp7Oyg" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_pCCoIbRvEeOfbtYsPp7Oyg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_PbESILRoEeOfbtYsPp7Oyg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_PbESILRoEeOfbtYsPp7Oyg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pCCoIrRvEeOfbtYsPp7Oyg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_pCCoI7RvEeOfbtYsPp7Oyg" visible="false" type="compartment_shape_display">
@@ -3022,7 +3058,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_GyYrMPvcEeO7oqnkSuo0Ew" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_GyYrMfvcEeO7oqnkSuo0Ew" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_Cju5cvvcEeO7oqnkSuo0Ew"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_Cju5cvvcEeO7oqnkSuo0Ew"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GyYrMvvcEeO7oqnkSuo0Ew"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_GyYrM_vcEeO7oqnkSuo0Ew" visible="false" type="compartment_shape_display">
@@ -3067,7 +3103,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_1YEAkC03EeSZcOHv2Y7Ocg" visible="false" type="AppliedStereotypeCompartment">
         <styles xmi:type="notation:TitleStyle" xmi:id="_1YEAkS03EeSZcOHv2Y7Ocg" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_w6fpEC03EeSZcOHv2Y7Ocg"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_w6fpEC03EeSZcOHv2Y7Ocg"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1YEAki03EeSZcOHv2Y7Ocg"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_1YEnoC03EeSZcOHv2Y7Ocg" visible="false" type="compartment_shape_display">
@@ -3582,7 +3618,7 @@
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_DFAT8QvLEeaBb42pasDyug" visible="false" type="AppliedStereotypeCompartement">
         <styles xmi:type="notation:TitleStyle" xmi:id="_DFAT8gvLEeaBb42pasDyug" showTitle="true"/>
-        <element xmi:type="Chronos:ChiController" href="model.uml#_DFA68AvLEeaBb42pasDyug"/>
+        <element xmi:type="Chronos:ChiController" href="wcmf.uml#_DFA68AvLEeaBb42pasDyug"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DFAT8wvLEeaBb42pasDyug"/>
       </children>
       <children xmi:type="notation:BasicCompartment" xmi:id="_DFAT9AvLEeaBb42pasDyug" visible="false" type="compartment_shape_display">
@@ -5861,6 +5897,10 @@
           <element xmi:type="uml:Property" href="model.uml#_D3NqYKpwEeaGbp23C_zkpg"/>
           <layoutConstraint xmi:type="notation:Location" xmi:id="_mSvDYapwEeaGbp23C_zkpg"/>
         </children>
+        <children xmi:type="notation:Shape" xmi:id="_mBH5YOGvEeazX7XNPeLRaA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="model.uml#_hSfAAOGvEeazX7XNPeLRaA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_mBH5YeGvEeazX7XNPeLRaA"/>
+        </children>
         <styles xmi:type="notation:TitleStyle" xmi:id="_866jwaprEeaGbp23C_zkpg"/>
         <styles xmi:type="notation:SortingStyle" xmi:id="_866jwqprEeaGbp23C_zkpg"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_866jw6prEeaGbp23C_zkpg"/>
@@ -5890,7 +5930,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_866j1qprEeaGbp23C_zkpg" y="5"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xZhqprEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_866j6qprEeaGbp23C_zkpg" x="15" y="90" width="226" height="136"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_866j6qprEeaGbp23C_zkpg" x="15" y="90" width="226" height="151"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_866j66prEeaGbp23C_zkpg" type="Class_Shape" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_866j7KprEeaGbp23C_zkpg" source="ShadowFigure">
@@ -5944,7 +5984,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_866kDqprEeaGbp23C_zkpg" y="5"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xZmaprEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_866kIqprEeaGbp23C_zkpg" x="15" y="240" width="226" height="61"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_866kIqprEeaGbp23C_zkpg" x="15" y="255" width="226" height="61"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_866kI6prEeaGbp23C_zkpg" type="Class_Shape" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_866kJKprEeaGbp23C_zkpg" source="ShadowFigure">
@@ -6015,7 +6055,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_867KoKprEeaGbp23C_zkpg" y="5"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xZoqprEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867KtKprEeaGbp23C_zkpg" x="15" y="315" width="226" height="106"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867KtKprEeaGbp23C_zkpg" x="15" y="330" width="226" height="106"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_867KtaprEeaGbp23C_zkpg" type="Class_Shape" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_867KtqprEeaGbp23C_zkpg" source="ShadowFigure">
@@ -6082,7 +6122,7 @@
         <layoutConstraint xmi:type="notation:Location" xmi:id="_867K3KprEeaGbp23C_zkpg" y="5"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xZvKprEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867K8KprEeaGbp23C_zkpg" x="15" y="630" width="226" height="91"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867K8KprEeaGbp23C_zkpg" x="15" y="645" width="226" height="91"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_867K8aprEeaGbp23C_zkpg" type="Class_Shape" lineColor="0">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_867K8qprEeaGbp23C_zkpg" source="ShadowFigure">
@@ -6838,7 +6878,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OAKprEeaGbp23C_zkpg"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xZr6prEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OF6prEeaGbp23C_zkpg" x="15" y="525" width="226" height="91"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OF6prEeaGbp23C_zkpg" x="15" y="540" width="226" height="91"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_867OGKprEeaGbp23C_zkpg" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_867OGaprEeaGbp23C_zkpg" showTitle="true"/>
@@ -6876,7 +6916,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OOKprEeaGbp23C_zkpg"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_86xaPqprEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OT6prEeaGbp23C_zkpg" x="15" y="735" width="226" height="61"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_867OT6prEeaGbp23C_zkpg" x="15" y="750" width="226" height="61"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_867OUKprEeaGbp23C_zkpg" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_867OUaprEeaGbp23C_zkpg" showTitle="true"/>
@@ -6960,7 +7000,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WKZ4g6pxEeaGbp23C_zkpg"/>
       </children>
       <element xmi:type="uml:Class" href="model.uml#_05_AoKpwEeaGbp23C_zkpg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WKZ4capxEeaGbp23C_zkpg" x="15" y="435" width="226" height="76"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WKZ4capxEeaGbp23C_zkpg" x="15" y="450" width="226" height="76"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_WKc7x6pxEeaGbp23C_zkpg" type="StereotypeComment">
       <styles xmi:type="notation:TitleStyle" xmi:id="_WKc7yKpxEeaGbp23C_zkpg"/>
