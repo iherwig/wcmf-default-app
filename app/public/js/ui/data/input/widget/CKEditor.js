@@ -59,13 +59,13 @@ function(
 
             var mediaBrowserRoute = appConfig.pathPrefix+'media';
             var linkBrowserRoute = appConfig.pathPrefix+'link';
-            var mediaFileBasePath = appConfig.pathPrefix+'media';
+            var mediaBaseHref = appConfig.wcmfBaseHref;
 
             this.editorInstance = CKEDITOR.replace(this.textbox, {
                 customConfig: appConfig.pathPrefix+'js/config/ckeditor_config.js',
                 filebrowserBrowseUrl: mediaBrowserRoute,
                 filebrowserLinkBrowseUrl: linkBrowserRoute,
-                baseHref: mediaFileBasePath,
+                baseHref: mediaBaseHref,
                 toolbar: this.getToolbarName(),
                 filebrowserWindowWidth: '800',
                 filebrowserWindowHeight: '700',

@@ -108,6 +108,8 @@ class RootController extends RootControllerBase {
     $pathPrefix = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
     $basePath = !preg_match('/\/$/', $pathPrefix) ? $pathPrefix.'/' : $pathPrefix;
     $baseHref = str_replace('\\', '/', dirname(URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']).'/');
+    $wcmfBaseHref = URIUtil::getProtocolStr().$_SERVER['HTTP_HOST'].
+            str_replace(FileUtil::realpath($_SERVER['DOCUMENT_ROOT']), '', FileUtil::realpath(WCMF_BASE)).'/';
     $mediaPathRelScript = URIUtil::makeRelative($mediaAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/');
     $mediaPathRelBase = URIUtil::makeRelative($mediaAbsPath, WCMF_BASE);
 
@@ -132,6 +134,7 @@ class RootController extends RootControllerBase {
       'title' => $appTitle,
       'color' => $appColor,
       'background' => $geopattern->toDataURL(),
+      'wcmfBaseHref' => $wcmfBaseHref,
       'backendUrl' => $basePath,
       'cookiePrefix' => strtolower(StringUtil::slug($appTitle)),
       'rootTypes' => $rootTypes,

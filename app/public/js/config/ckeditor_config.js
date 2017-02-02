@@ -40,5 +40,5 @@ CKEDITOR.editorConfig = function( config ) {
         ['Bold','Italic','RemoveFormat'],['Table','BulletedList','HorizontalRule','SpecialChar'],['Format','Styles'],['About']
     ];
     config.toolbar = 'wcmf';
-    config.contentsCss = 'css/app.css';
+    config.contentsCss = appConfig.pathPrefix+'css/app.css';
 };
