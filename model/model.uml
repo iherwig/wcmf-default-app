@@ -508,16 +508,6 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_862SGKprEeaGbp23C_zkpg" name="Formats">
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_XyZewOjfEeaJLM6lYHrCpQ" name="generic" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XyZewejfEeaJLM6lYHrCpQ" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XyZewujfEeaJLM6lYHrCpQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_XyZew-jfEeaJLM6lYHrCpQ" value="$genericFormat"/>
-                </ownedAttribute>
-                <ownedAttribute xmi:type="uml:Property" xmi:id="_X00goOjfEeaJLM6lYHrCpQ" name="download" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
-                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X00goejfEeaJLM6lYHrCpQ" value="1"/>
-                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X00goujfEeaJLM6lYHrCpQ" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_X00go-jfEeaJLM6lYHrCpQ" value="$downloadFormat"/>
-                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_862SGaprEeaGbp23C_zkpg" name="html" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_862SGqprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SG6prEeaGbp23C_zkpg" value="1"/>
@@ -532,6 +522,16 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_862SIqprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SI6prEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_862SJKprEeaGbp23C_zkpg" value="$soapFormat"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_XyZewOjfEeaJLM6lYHrCpQ" name="generic" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XyZewejfEeaJLM6lYHrCpQ" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XyZewujfEeaJLM6lYHrCpQ" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_XyZew-jfEeaJLM6lYHrCpQ" value="$genericFormat"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_X00goOjfEeaJLM6lYHrCpQ" name="download" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X00goejfEeaJLM6lYHrCpQ" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X00goujfEeaJLM6lYHrCpQ" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_X00go-jfEeaJLM6lYHrCpQ" value="$downloadFormat"/>
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_862SJaprEeaGbp23C_zkpg" name="null" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_862SJqprEeaGbp23C_zkpg" value="1"/>
