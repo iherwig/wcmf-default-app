@@ -31,16 +31,14 @@ class EventListener {
     $this->_view = $view;
     $this->_dynamicCache = $dynamicCache;
     $this->_frontendCache = $frontendCache;
-    $this->_eventManager->addListener(PersistenceEvent::NAME,
-      array($this, 'persisted'));
+    $this->_eventManager->addListener(PersistenceEvent::NAME, [$this, 'persisted']);
   }
 
   /**
    * Destructor
    */
   public function __destruct() {
-    $this->_eventManager->removeListener(PersistenceEvent::NAME,
-      array($this, 'persisted'));
+    $this->_eventManager->removeListener(PersistenceEvent::NAME, [$this, 'persisted']);
   }
 
   /**
