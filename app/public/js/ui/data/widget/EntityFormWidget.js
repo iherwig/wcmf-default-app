@@ -263,11 +263,13 @@ function(
                 on(dojo.body(), "keydown", lang.hitch(this, function (e) {
                     if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                         e.stopPropagation();
-                        this.showNotification({
-                            type: "process",
-                            message: Dict.translate("Saving data")
-                        });
-                        this._save(e, true);
+                        if (this.isModified) {
+                            this.showNotification({
+                                type: "process",
+                                message: Dict.translate("Saving data")
+                            });
+                            this._save(e, true);
+                        }
                         return false;
                     };
                 }))
