@@ -317,12 +317,12 @@ define([
                 },
                 loadingMessage: Dict.translate("Loading"),
                 noDataMessage: Dict.translate("No data"),
-                minRowsPerPage: 25,
-                maxRowsPerPage: 25,
+                minRowsPerPage: 30,
+                maxRowsPerPage: 30,
                 bufferRows: 0,
                 pagingDelay: 0,
                 farOffRemoval: Infinity,
-                pagingMethod: 'throttleDelayed',
+                pagingMethod: 'throttleDelayed'
             }, this.gridNode);
 
             if (typeof this.rowEnhancer === 'function') {
