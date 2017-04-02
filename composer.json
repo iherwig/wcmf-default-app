@@ -184,7 +184,7 @@
     "require": {
         "php": ">=5.3.0",
         "wcmf/asset-installer": "~1.0",
-        "wcmf/wcmf": "~4.1",
+        "wcmf/wcmf": "dev-master",
         "dojo/dojo": "~1.11",
         "dojo/dijit": "~1.11",
         "dojo/dojox": "~1.11",
