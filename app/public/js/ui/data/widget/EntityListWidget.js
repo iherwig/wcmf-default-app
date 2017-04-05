@@ -214,7 +214,10 @@ function(
 
         getGridColumns: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.displayValues;
+            var columns = typeClass.getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+                return attribute.name;
+            });
+            return columns;
         },
 
         /**

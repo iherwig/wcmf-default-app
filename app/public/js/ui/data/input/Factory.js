@@ -113,7 +113,8 @@ function(
     Factory.translateValue = function(inputType, value) {
         var deferred = new Deferred();
         when(Factory.getItem(inputType, value), function(item) {
-            var value = item !== null && item.hasOwnProperty('displayText') ? item.displayText : item;
+            var value = item && item.hasOwnProperty('displayText') ? item.displayText :
+                    item === undefined ? null : item;
             deferred.resolve(value);
         });
         return deferred;

@@ -44,7 +44,9 @@ define([
             this.grid = new GridWidget({
                 type: this.type,
                 store: Store.getStore(this.type, appConfig.defaultLanguage),
-                columns: Model.getType(this.type).displayValues,
+                columns: Model.getType(this.type).getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+                    return attribute.name;
+                }),
                 actions: [],
                 canEdit: false,
                 height: 198
