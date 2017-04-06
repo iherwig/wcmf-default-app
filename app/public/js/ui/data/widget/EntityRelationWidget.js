@@ -105,7 +105,9 @@ function(
                 this.gridWidget = new GridWidget({
                     type: this.relation.type,
                     store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
-                    columns: Model.getType(this.relation.type).displayValues,
+                    columns: Model.getType(this.type).getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+                        return attribute.name;
+                    }),
                     actions: this.getGridActions(),
                     enabledFeatures: enabledFeatures
                 }, this.gridNode);

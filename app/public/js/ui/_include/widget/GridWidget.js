@@ -260,6 +260,7 @@ define([
                             },
                             autoSave: true,
                             sortable: true,
+                            hidden: typeClass.displayValues.indexOf(curValue) === -1,
                             renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
                                 when(Renderer.render(data, this, renderOptions), function(value) {
                                     td.innerHTML = value;
@@ -334,7 +335,7 @@ define([
             grid.on("dgrid-editor-show", function(evt) {
                 // set the entity property on the input control
                 evt.editor.entity = evt.cell.row.data;
-            })
+            });
 
             grid.on("dgrid-error", function(evt) {
                 topic.publish('ui/_include/widget/GridWidget/error', evt.error);
@@ -343,6 +344,16 @@ define([
             grid.on("dgrid-refresh-complete", lang.hitch(this, function(evt) {
                 topic.publish('ui/_include/widget/GridWidget/refresh-complete', evt.grid);
                 grid.resize();
+            }));
+
+            grid.on("dgrid-columnstatechange", lang.hitch(this, function(evt) {
+                var displayValues = columns.filter(function(column) {
+                    return typeClass.getAttribute(column.field) && !grid.isColumnHidden(column.id);
+                }).map(function(column) {
+                    return column.field;
+                });
+                console.log(displayValues);
+                this.refresh();
             }));
 
             return grid;
