@@ -153,7 +153,7 @@ function ensureDatabases() {
 }
 
 /**
- * Ensure the existance of the update table 'dbupdate'
+ * Ensure the existence of the update table 'dbupdate'
  * @param connection The database connection
  * @return True/False
  */

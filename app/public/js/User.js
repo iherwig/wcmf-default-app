@@ -33,6 +33,7 @@ define([
 
     /**
      * Check if the user has the given role
+     * @param name The role name
      * @return Boolean
      */
     User.hasRole = function(name) {
