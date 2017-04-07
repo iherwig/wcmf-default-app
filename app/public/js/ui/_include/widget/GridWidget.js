@@ -6,6 +6,7 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/TooltipDialog",
+    "dijit/form/TextBox",
     "dijit/popup",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
@@ -43,6 +44,7 @@ define([
     _WidgetBase,
     _TemplatedMixin,
     TooltipDialog,
+    TextBox,
     popup,
     OnDemandGrid,
     Selection,
@@ -248,7 +250,7 @@ define([
                     var curAttributeDef = typeClass.getAttribute(curValue);
                     if (curAttributeDef !== null) {
                         var controlClass = controls[curAttributeDef.inputType];
-                        var column = {
+                        var columnDef = {
                             label: Dict.translate(curValue),
                             field: curValue,
                             editor: controlClass,
@@ -278,15 +280,26 @@ define([
                             })
                         };
                         if (array.indexOf(featureNames, 'Tree') !== -1) {
-                            column.renderExpando = true;
+                            columnDef.renderExpando = true;
                         }
-                        columns.push(column);
                     }
                 }
-                else {
-                    // custom column
-                    columns.push(columnDef);
-                }
+
+                // add column filter
+//                columnDef['renderHeaderCell'] = lang.hitch(this, function(node) {
+//                    var filter = new TextBox({
+//                        intermediateChanges: true,
+//                        placeHolder: 'filter by name'
+//                    });
+//                    filter.watch('value', function (prop, oldValue, newValue) {
+//                        grid.set('query', {
+//                            'name': new RegExp('\\b' + newValue)
+//                        });
+//                    });
+//                    return filter.domNode;
+//                });
+
+                columns.push(columnDef);
             }
 
             // add actions column
