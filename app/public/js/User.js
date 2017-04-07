@@ -1,13 +1,25 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
-    "./Cookie"
+    "dojo/promise/all",
+    "dojo/Deferred",
+    "dojo/json",
+    "./Cookie",
+    "./action/GetUserConfig",
+    "./action/SetUserConfig"
 ], function (
     declare,
     array,
-    Cookie
+    all,
+    Deferred,
+    JSON,
+    Cookie,
+    GetUserConfig,
+    SetUserConfig
 ) {
     var User = declare(null, {
+        config: {
+        }
     });
 
     /**
@@ -51,6 +63,47 @@ define([
     User.isLoggedIn = function() {
         var user = Cookie.get("user");
         return user !== undefined;
+    };
+
+    /**
+     * Initialize the user configuration
+     * @return Deferred
+     */
+    User.initializeConfig = function() {
+        var deferred = new Deferred();
+        var deferredList = {};
+        deferredList["gridConfig"] = new GetUserConfig({
+            key: "grid"
+        }).execute();
+        all(deferredList).then(function(results) {
+            this.config = results;
+            deferred.resolve({});
+        }, function(error) {
+            deferred.reject(error);
+        });
+        return deferred;
+    };
+
+    /**
+     * Set a user configuration
+     * @param name The configuration name
+     * @param value The configuration value
+     */
+    User.setConfig = function(name, value) {
+        this.config[name] = value;
+        new SetUserConfig({
+            key: name,
+            value: JSON.stringify(value)
+        });
+    };
+
+    /**
+     * Get a user configuration
+     * @param name The configuration name
+     * @return Object
+     */
+    User.getConfig = function(name) {
+        return this.config[name];
     };
 
     return User;

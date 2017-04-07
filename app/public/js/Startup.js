@@ -39,6 +39,7 @@ define([
         }).execute();
 
         // check for read access to root types for the current user
+        // and get the user's configuration
         if (User.isLoggedIn()) {
             var requiredPermissions = [];
             for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
@@ -48,6 +49,7 @@ define([
             deferredList["rootTypePermissions"] = new CheckPermissions({
                 operations: requiredPermissions
             }).execute();
+            deferredList["userConfig"] = User.initializeConfig();
         }
 
         // wait for all operations
@@ -55,8 +57,8 @@ define([
             // initialize dictionary
             Dictionary.setContent(results["messages"]);
 
-            // restrict root types to those visible to the current user
             if (User.isLoggedIn()) {
+                // restrict root types to those visible to the current user
                 var permissionsResponse = results["rootTypePermissions"];
                 var permissions = permissionsResponse.result ? permissionsResponse.result : {};
                 var visibleRootTypes = [];
