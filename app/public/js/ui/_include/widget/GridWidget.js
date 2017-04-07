@@ -223,7 +223,9 @@ define([
             var gridConfig = User.getConfig('grid') || {};
             var displayColumns = gridConfig[this.type] ?
                 gridConfig[this.type]['columns'] : typeClass.displayValues;
-            this.store.setExtraParam('values', displayColumns.join(','));
+            if (this.store.setExtraParam instanceof Function) {
+                this.store.setExtraParam('values', displayColumns.join(','));
+            }
 
             // create columns
             var columns = [];
@@ -369,7 +371,9 @@ define([
                 gridConfig[this.type]['columns'] = displayColumns;
                 User.setConfig('grid', gridConfig);
                 // update grid content
-                this.store.setExtraParam('values', displayColumns.join(','));
+                if (this.store.setExtraParam instanceof Function) {
+                    this.store.setExtraParam('values', displayColumns.join(','));
+                }
                 this.refresh();
             }));
 
