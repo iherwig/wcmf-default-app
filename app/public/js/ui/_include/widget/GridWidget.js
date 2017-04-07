@@ -33,6 +33,7 @@ define([
     "../../../locale/Dictionary",
     "../../data/input/Factory",
     "../../data/display/Renderer",
+    "../../../User",
     "dojo/text!./template/GridWidget.html"
 ], function (
     declare,
@@ -69,6 +70,7 @@ define([
     Dict,
     ControlFactory,
     Renderer,
+    User,
     template
 ) {
     return declare([_WidgetBase, _TemplatedMixin], {
@@ -79,7 +81,7 @@ define([
         actions: [],
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
-        initialFilter: null,
+        initialFilter: {},
         rowEnhancer: null,
 
         actionsByName: {},
@@ -216,6 +218,13 @@ define([
                 }
             }
 
+            // get display columns from user config
+            var typeClass = Model.getType(this.type);
+            var gridConfig = User.getConfig('grid') || {};
+            var displayColumns = gridConfig[this.type] ?
+                gridConfig[this.type]['columns'] : typeClass.displayValues;
+            this.store.setExtraParam('values', displayColumns.join(','));
+
             // create columns
             var columns = [];
             if (array.indexOf(featureNames, 'Selector') !== -1) {
@@ -228,7 +237,6 @@ define([
                     resizable: false
                 });
             }
-            var typeClass = Model.getType(this.type);
             var renderOptions = {};
             for (var i=0, count=this.columns.length; i<count; i++) {
                 var columnDef = this.columns[i];
@@ -260,7 +268,7 @@ define([
                             },
                             autoSave: true,
                             sortable: true,
-                            hidden: typeClass.displayValues.indexOf(curValue) === -1,
+                            hidden: displayColumns.indexOf(curValue) === -1,
                             renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
                                 when(Renderer.render(data, this, renderOptions), function(value) {
                                     td.innerHTML = value;
@@ -347,12 +355,21 @@ define([
             }));
 
             grid.on("dgrid-columnstatechange", lang.hitch(this, function(evt) {
-                var displayValues = columns.filter(function(column) {
+                // get display columns
+                var displayColumns = columns.filter(function(column) {
                     return typeClass.getAttribute(column.field) && !grid.isColumnHidden(column.id);
                 }).map(function(column) {
                     return column.field;
                 });
-                console.log(displayValues);
+                // store display values
+                var gridConfig = User.getConfig('grid') || {};
+                if (!gridConfig[this.type]) {
+                    gridConfig[this.type] = {};
+                }
+                gridConfig[this.type]['columns'] = displayColumns;
+                User.setConfig('grid', gridConfig);
+                // update grid content
+                this.store.setExtraParam('values', displayColumns.join(','));
                 this.refresh();
             }));
 

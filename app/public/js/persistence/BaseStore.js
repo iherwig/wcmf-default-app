@@ -24,8 +24,20 @@ define([
         typeName: '',
         Model: Entity,
 
+        extraParams: {
+        },
+
         headers: {
             Accept: "application/json"
+        },
+
+        /**
+         * Add an additional parameter to the request url
+         * @param name The name of the parameter
+         * @param value The value as string
+         */
+        setExtraParam: function(name, value) {
+            this.extraParams[name] = value;
         },
 
         get: function(id, options) {
@@ -98,15 +110,28 @@ define([
             return results;
         },
 
-        // put query into 'query' parameter
+        // put query into 'query' parameter and render extra params
         _renderQueryParams: function () {
             var result = this.inherited(arguments);
+            // query
             for (var i=0, count=result.length; i<count; i++) {
                 var curResult = result[i];
                 result[i] = !curResult.match(/^sort\(|^limit\(/) ?
                     'query='+encodeURIComponent(curResult) : curResult;
             }
-            return result;
+            // extra params
+            for (var key in this.extraParams) {
+                result.push(key+'='+this.extraParams[key]);
+            }
+            // remove duplicates
+            var unique = [];
+            for (var i=0, count=result.length; i<count; i++) {
+                var current = result[i];
+                if (unique.indexOf(current) < 0) {
+                    unique.push(current);
+                }
+            }
+            return unique;
         },
 
         createBackEndDummyId: function() {

@@ -18,8 +18,6 @@ define([
     SetUserConfig
 ) {
     var User = declare(null, {
-        config: {
-        }
     });
 
     /**
@@ -76,7 +74,7 @@ define([
             key: "grid"
         }).execute();
         all(deferredList).then(function(results) {
-            this.config = results;
+            User._config["grid"] = JSON.parse(results["gridConfig"].value, true);
             deferred.resolve({});
         }, function(error) {
             deferred.reject(error);
@@ -90,11 +88,11 @@ define([
      * @param value The configuration value
      */
     User.setConfig = function(name, value) {
-        this.config[name] = value;
+        User._config[name] = value;
         new SetUserConfig({
             key: name,
             value: JSON.stringify(value)
-        });
+        }).execute();
     };
 
     /**
@@ -103,8 +101,10 @@ define([
      * @return Object
      */
     User.getConfig = function(name) {
-        return this.config[name];
+        return User._config[name];
     };
+
+    User._config = {};
 
     return User;
 });
