@@ -286,10 +286,13 @@ define([
                 }
 
                 // add column filter
-//                columnDef['renderHeaderCell'] = lang.hitch(this, function(node) {
+//                columnDef['renderHeaderCell'] = lang.hitch(this, lang.partial(function(columnDef, node) {
+//                    if ('label' in columnDef || columnDef.field) {
+//                        var text = 'label' in columnDef ? columnDef.label : columnDef.field;
+//                        domConstruct.place('<div>'+text+'</div>', node, 'first');
+//                    }
 //                    var filter = new TextBox({
-//                        intermediateChanges: true,
-//                        placeHolder: 'filter by name'
+//                        intermediateChanges: true
 //                    });
 //                    filter.watch('value', function (prop, oldValue, newValue) {
 //                        grid.set('query', {
@@ -297,7 +300,7 @@ define([
 //                        });
 //                    });
 //                    return filter.domNode;
-//                });
+//                }, columnDef));
 
                 columns.push(columnDef);
             }
