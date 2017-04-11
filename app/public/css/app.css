@@ -216,6 +216,7 @@ th.field-actions-6, td.field-actions-6 {
 
 .dgrid-cell .btn-mini {
   padding: 0 5px;
+  cursor: pointer;
 }
 
 .dgrid-cell.dgrid-cell-editing div {

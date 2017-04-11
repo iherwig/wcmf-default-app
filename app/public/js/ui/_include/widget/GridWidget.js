@@ -6,7 +6,6 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/TooltipDialog",
-    "dijit/form/TextBox",
     "dijit/popup",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
@@ -44,7 +43,6 @@ define([
     _WidgetBase,
     _TemplatedMixin,
     TooltipDialog,
-    TextBox,
     popup,
     OnDemandGrid,
     Selection,
@@ -286,21 +284,27 @@ define([
                 }
 
                 // add column filter
-//                columnDef['renderHeaderCell'] = lang.hitch(this, lang.partial(function(columnDef, node) {
-//                    if ('label' in columnDef || columnDef.field) {
-//                        var text = 'label' in columnDef ? columnDef.label : columnDef.field;
-//                        domConstruct.place('<div>'+text+'</div>', node, 'first');
-//                    }
-//                    var filter = new TextBox({
-//                        intermediateChanges: true
-//                    });
-//                    filter.watch('value', function (prop, oldValue, newValue) {
-//                        grid.set('query', {
-//                            'name': new RegExp('\\b' + newValue)
-//                        });
-//                    });
-//                    return filter.domNode;
-//                }, columnDef));
+                columnDef['renderHeaderCell'] = lang.hitch(this, lang.partial(function(columnDef, node) {
+                    if ('label' in columnDef || columnDef.field) {
+                        var text = 'label' in columnDef ? columnDef.label : columnDef.field;
+                        domConstruct.place('<div>'+text+'</div>', node, 'first');
+                    }
+                    var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
+                    var filter = new columnDef.editor;
+                    this.own(
+                        on(filter, "click", function(e) {
+                            e.stopPropagation();
+                        })
+                    );
+                    filter.watch('value', function (prop, oldValue, newValue) {
+                        grid.set('query', {
+                            'name': new RegExp('\\b' + newValue)
+                        });
+                    });
+                    domStyle.set(filter.domNode, "width", "100%");
+                    domConstruct.place(filter.domNode, filterNode);
+                    return filterNode;
+                }, columnDef));
 
                 columns.push(columnDef);
             }
@@ -323,6 +327,18 @@ define([
                         }
                         html += '</div>';
                         return html;
+                    }),
+                    renderHeaderCell: lang.hitch(this, function(node) {
+                        var html = '<a class="btn-mini"><i class="fa fa-filter"></i></a>';
+                        var filterBtn = domConstruct.place(html, node, 'first');
+                        this.own(
+                            on(filterBtn, "click", lang.hitch(this, function(e) {
+                                query(".header-filter", this.domNode).toggleClass("hidden");
+                                this.grid.resize();
+                                e.stopPropagation();
+                            }))
+                        );
+                        return filterBtn;
                     })
                 });
             }
