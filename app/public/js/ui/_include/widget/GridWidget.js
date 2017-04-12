@@ -7,6 +7,7 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/TooltipDialog",
     "dijit/popup",
+    "dijit/form/TextBox",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -44,6 +45,7 @@ define([
     _TemplatedMixin,
     TooltipDialog,
     popup,
+    TextBox,
     OnDemandGrid,
     Selection,
     Keyboard,
@@ -290,7 +292,7 @@ define([
                         domConstruct.place('<div>'+text+'</div>', node, 'first');
                     }
                     var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
-                    var filter = new columnDef.editor;
+                    var filter = new (columnDef.editor || TextBox);
                     this.own(
                         on(filter, "click", function(e) {
                             e.stopPropagation();
