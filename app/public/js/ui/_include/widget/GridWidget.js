@@ -249,19 +249,19 @@ define([
                     var curValue = columnDef;
                     var curAttributeDef = typeClass.getAttribute(curValue);
                     if (curAttributeDef !== null) {
-                        var controlClass = controls[curAttributeDef.inputType];
+                        var controlArgs = {
+                            name: curAttributeDef.name,
+                            helpText: Dict.translate(curAttributeDef.description),
+                            inputType: curAttributeDef.inputType,
+                            entity: null, // will be set in dgrid-editor-show event
+                            style: 'height:20px; padding:0;',
+                            isInlineEditor: true
+                        };
                         var columnDef = {
                             label: Dict.translate(curValue),
                             field: curValue,
-                            editor: controlClass,
-                            editorArgs: {
-                                name: curAttributeDef.name,
-                                helpText: Dict.translate(curAttributeDef.description),
-                                inputType: curAttributeDef.inputType,
-                                entity: null, // will be set in dgrid-editor-show event
-                                style: 'height:20px; padding:0;',
-                                isInlineEditor: true
-                            },
+                            editor: controls[this.getEditor(curAttributeDef.inputType)],
+                            editorArgs: controlArgs,
                             editOn: "dblclick",
                             canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
                                 // only allow to edit editable objects of grid's own type
@@ -277,7 +277,9 @@ define([
                                 when(Renderer.render(data, this, renderOptions), function(value) {
                                     td.innerHTML = value;
                                 });
-                            })
+                            }),
+                            filter: controls[this.getFilter(curAttributeDef.inputType)],
+                            filterArgs: controlArgs
                         };
                         if (array.indexOf(featureNames, 'Tree') !== -1) {
                             columnDef.renderExpando = true;
@@ -292,7 +294,7 @@ define([
                         domConstruct.place('<div>'+text+'</div>', node, 'first');
                     }
                     var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
-                    var filter = new (columnDef.editor || TextBox);
+                    var filter = new (columnDef.filter || TextBox)(columnDef.filterArgs);
                     this.own(
                         on(filter, "click", function(e) {
                             e.stopPropagation();
@@ -412,6 +414,30 @@ define([
             }));
 
             return grid;
+        },
+
+        getEditor: function(inputType) {
+            var baseType = inputType.match(/^[^:]+/)[0];
+            switch(baseType) {
+                case 'ckeditor':
+                    return 'textarea';
+            }
+            return inputType;
+        },
+
+        getFilter: function(inputType) {
+            var baseType = inputType.match(/^[^:]+/)[0];
+            switch(baseType) {
+                case 'ckeditor':
+                case 'filebrowser':
+                case 'linkbrowser':
+                case 'textarea':
+                case 'media':
+                    return 'text';
+                case 'date':
+                    return 'text';
+            }
+            return inputType;
         },
 
         isSameType: function(entity) {
