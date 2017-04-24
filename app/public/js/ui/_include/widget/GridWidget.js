@@ -89,7 +89,7 @@ define([
         actionsByName: {},
         templateString: lang.replace(template, Dict.tplTranslate),
         grid: null,
-        gridFilter: {},
+        filters: {},
 
         defaultFeatures: {
             'Selection': Selection,
@@ -260,7 +260,7 @@ define([
                         var columnDef = {
                             label: Dict.translate(curValue),
                             field: curValue,
-                            editor: controls[this.getEditor(curAttributeDef.inputType)],
+                            editor: controls[this.getEditorControl(curAttributeDef.inputType)],
                             editorArgs: controlArgs,
                             editOn: "dblclick",
                             canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
@@ -278,7 +278,7 @@ define([
                                     td.innerHTML = value;
                                 });
                             }),
-                            filter: controls[this.getFilter(curAttributeDef.inputType)],
+                            filter: controls[this.getFilterControl(curAttributeDef.inputType)],
                             filterArgs: controlArgs
                         };
                         if (array.indexOf(featureNames, 'Tree') !== -1) {
@@ -294,18 +294,18 @@ define([
                         domConstruct.place('<div>'+text+'</div>', node, 'first');
                     }
                     var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
-                    var filter = new (columnDef.filter || TextBox)(columnDef.filterArgs);
+                    var filterArgs = lang.mixin(columnDef.filterArgs, {'intermediateChanges': true});
+                    var filter = new (columnDef.filter || TextBox)(filterArgs);
                     this.own(
                         on(filter, "click", function(e) {
                             e.stopPropagation();
                         })
                     );
-                    filter.watch('value', function (prop, oldValue, newValue) {
-                        grid.set('query', {
-                            'name': new RegExp('\\b' + newValue)
-                        });
-                    });
-                    domStyle.set(filter.domNode, "width", "100%");
+                    filter.watch('value', lang.hitch(this, function (prop, oldValue, newValue) {
+                        this.filter(this.getFilter());
+                    }));
+                    this.filters[columnDef.field] = filter;
+                    domStyle.set(filter.domNode, 'width', '100%');
                     domConstruct.place(filter.domNode, filterNode);
                     return filterNode;
                 }, columnDef));
@@ -416,7 +416,12 @@ define([
             return grid;
         },
 
-        getEditor: function(inputType) {
+        /**
+         * Get the editor control name for an input type
+         * @param inputType
+         * @returns String
+         */
+        getEditorControl: function(inputType) {
             var baseType = inputType.match(/^[^:]+/)[0];
             switch(baseType) {
                 case 'ckeditor':
@@ -425,7 +430,12 @@ define([
             return inputType;
         },
 
-        getFilter: function(inputType) {
+        /**
+         * Get the filter control name for an input type
+         * @param inputType
+         * @returns String
+         */
+        getFilterControl: function(inputType) {
             var baseType = inputType.match(/^[^:]+/)[0];
             switch(baseType) {
                 case 'ckeditor':
@@ -438,6 +448,29 @@ define([
                     return 'text';
             }
             return inputType;
+        },
+
+        /**
+         * Get the current grid filter
+         * @returns Filter
+         */
+        getFilter: function() {
+            var mainFilter;
+            for (var field in this.filters) {
+                var filterCtrl = this.filters[field];
+                var value = filterCtrl.get('value');
+                if (value !== undefined && value !== null && value !== '') {
+                    console.log(field+" "+value);
+                    var filter = this.store.Filter().match(field, new RegExp(value, 'i'));
+                    if (mainFilter) {
+                        mainFilter = this.store.Filter().or(mainFilter, filter);
+                    }
+                    else {
+                        mainFilter = filter;
+                    }
+                }
+            }
+            return mainFilter;
         },
 
         isSameType: function(entity) {
@@ -471,9 +504,8 @@ define([
             }
             this.lastFiltered = now;
 
-            this.gridFilter = filter;
             if (this.grid) {
-                this.grid.set('collection', this.store.filter(this.gridFilter));
+                this.grid.set('collection', this.store.filter(filter));
             }
         },
 
