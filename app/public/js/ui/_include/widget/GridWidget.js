@@ -203,8 +203,6 @@ define([
         },
 
         buildGrid: function (controls) {
-            var _this = this;
-
             // select features
             var features = [];
             var featureNames = [];
@@ -241,6 +239,7 @@ define([
                     resizable: false
                 });
             }
+            this.filters = {};
             var renderOptions = {};
             for (var i=0, count=this.columns.length; i<count; i++) {
                 var columnDef = this.columns[i];
@@ -263,11 +262,11 @@ define([
                             editor: controls[this.getEditorControl(curAttributeDef.inputType)],
                             editorArgs: controlArgs,
                             editOn: "dblclick",
-                            canEdit: this.canEdit ? lang.hitch(curAttributeDef, function(obj, value) {
+                            canEdit: this.canEdit ? lang.partial(lang.hitch(this, function(attr, obj, value) {
                                 // only allow to edit editable objects of grid's own type
-                                var sameType = _this.isSameType(obj);
-                                return sameType && typeClass.isEditable(this, obj);
-                            }) : function(obj, value) {
+                                var sameType = this.isSameType(obj);
+                                return sameType && typeClass.isEditable(attr, obj);
+                            }), curAttributeDef) : function(obj, value) {
                                 return false;
                             },
                             autoSave: true,
