@@ -112,7 +112,9 @@ define([
 
         // put query into 'query' parameter and render extra params
         _renderQueryParams: function () {
-            var result = this.inherited(arguments);
+            var result = this.inherited(arguments).filter(function(item) {
+                return item !== undefined && item !== null && item !== "";
+            });
             // query
             for (var i=0, count=result.length; i<count; i++) {
                 var curResult = result[i];

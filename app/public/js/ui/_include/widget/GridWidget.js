@@ -455,14 +455,15 @@ define([
          */
         getFilter: function() {
             var mainFilter;
+            var simpleType = Model.getSimpleTypeName(this.type);
             for (var field in this.filters) {
                 var filterCtrl = this.filters[field];
                 var value = filterCtrl.get('value');
                 if (value !== undefined && value !== null && value !== '') {
                     console.log(field+" "+value);
-                    var filter = this.store.Filter().match(field, new RegExp(value, 'i'));
+                    var filter = this.store.Filter().match(simpleType+"."+field, new RegExp('.*'+value+'.*', 'i'));
                     if (mainFilter) {
-                        mainFilter = this.store.Filter().or(mainFilter, filter);
+                        mainFilter = this.store.Filter().and(mainFilter, filter);
                     }
                     else {
                         mainFilter = filter;
