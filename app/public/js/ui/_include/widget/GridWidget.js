@@ -7,7 +7,6 @@ define([
     "dijit/_TemplatedMixin",
     "dijit/TooltipDialog",
     "dijit/popup",
-    "dijit/form/TextBox",
     "dgrid/OnDemandGrid",
     "dgrid/Selection",
     "dgrid/Keyboard",
@@ -24,16 +23,16 @@ define([
     "dojo/dom-style",
     "dojo/dom-geometry",
     "dojo/query",
-    "dojo/NodeList-traverse",
     "dojo/window",
     "dojo/topic",
     "dojo/on",
     "dojo/when",
-    "dojo/has",
     "../../../model/meta/Model",
     "../../../locale/Dictionary",
     "../../data/input/Factory",
     "../../data/display/Renderer",
+    "../../data/filter/widget/TextBox",
+    "../../data/filter/widget/SelectBox",
     "../../../User",
     "dojo/text!./template/GridWidget.html"
 ], function (
@@ -45,7 +44,6 @@ define([
     _TemplatedMixin,
     TooltipDialog,
     popup,
-    TextBox,
     OnDemandGrid,
     Selection,
     Keyboard,
@@ -62,16 +60,16 @@ define([
     domStyle,
     domGeom,
     query,
-    traverse,
     win,
     topic,
     on,
     when,
-    has,
     Model,
     Dict,
     ControlFactory,
     Renderer,
+    FilterTextBox,
+    FilterSelectBox,
     User,
     template
 ) {
@@ -203,7 +201,9 @@ define([
         },
 
         buildGrid: function (controls) {
-            // select features
+            var simpleType = Model.getSimpleTypeName(this.type);
+
+          // select features
             var features = [];
             var featureNames = [];
             for (var idx in this.defaultFeatures) {
@@ -277,7 +277,7 @@ define([
                                     td.innerHTML = value;
                                 });
                             }),
-                            filter: controls[this.getFilterControl(curAttributeDef.inputType)],
+                            filter: this.getFilterControl(curAttributeDef.inputType),
                             filterArgs: controlArgs
                         };
                         if (array.indexOf(featureNames, 'Tree') !== -1) {
@@ -293,16 +293,19 @@ define([
                         domConstruct.place('<div>'+text+'</div>', node, 'first');
                     }
                     var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
-                    var filterArgs = lang.mixin(columnDef.filterArgs, {'intermediateChanges': true});
-                    var filter = new (columnDef.filter || TextBox)(filterArgs);
+                    var filterArgs = lang.mixin(columnDef.filterArgs, {
+                        field: simpleType+'.'+columnDef.field,
+                        filterCtr: this.store.Filter
+                    });
+                    var filter = new (columnDef.filter)(filterArgs);
                     this.own(
                         on(filter, "click", function(e) {
                             e.stopPropagation();
-                        })
+                        }),
+                        filter.watch('value', lang.hitch(this, function (prop, oldValue, newValue) {
+                            this.filter(this.getFilter());
+                        }))
                     );
-                    filter.watch('value', lang.hitch(this, function (prop, oldValue, newValue) {
-                        this.filter(this.getFilter());
-                    }));
                     this.filters[columnDef.field] = filter;
                     domStyle.set(filter.domNode, 'width', '100%');
                     domConstruct.place(filter.domNode, filterNode);
@@ -430,23 +433,20 @@ define([
         },
 
         /**
-         * Get the filter control name for an input type
+         * Get the filter control for an input type
          * @param inputType
          * @returns String
          */
         getFilterControl: function(inputType) {
             var baseType = inputType.match(/^[^:]+/)[0];
             switch(baseType) {
-                case 'ckeditor':
-                case 'filebrowser':
-                case 'linkbrowser':
-                case 'textarea':
-                case 'media':
-                    return 'text';
+                case 'radio':
+                case 'select':
+                    return FilterSelectBox;
                 case 'date':
-                    return 'text';
+                    return FilterTextBox;
             }
-            return inputType;
+            return FilterTextBox;
         },
 
         /**
@@ -455,13 +455,10 @@ define([
          */
         getFilter: function() {
             var mainFilter;
-            var simpleType = Model.getSimpleTypeName(this.type);
             for (var field in this.filters) {
                 var filterCtrl = this.filters[field];
-                var value = filterCtrl.get('value');
-                if (value !== undefined && value !== null && value !== '') {
-                    console.log(field+" "+value);
-                    var filter = this.store.Filter().match(simpleType+"."+field, new RegExp('.*'+value+'.*', 'i'));
+                var filter = filterCtrl.getFilter();
+                if (filter) {
                     if (mainFilter) {
                         mainFilter = this.store.Filter().and(mainFilter, filter);
                     }
