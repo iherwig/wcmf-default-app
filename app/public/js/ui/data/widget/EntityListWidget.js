@@ -231,33 +231,46 @@ function(
         },
 
         getGridFilter: function() {
+            var store = Store.getStore(this.type, appConfig.defaultLanguage);
+            var gridFilter = this.gridWidget ? this.gridWidget.getFilter() : undefined;
+
             // check if the type might have parents of the same type,
             // and set the filter to retrieve only root nodes, if yes
-            var filter = {};
             var simpleType = Model.getSimpleTypeName(this.type);
             var relations = this.typeClass.getRelations('parent');
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 if (relation.type === simpleType) {
-                    filter[this.type+'.'+relation.fkName] = null;
+                    var filter = new store.Filter().eq(simpleType+'.'+relation.fkName, null);
+                    if (gridFilter) {
+                        gridFilter = store.Filter().and(gridFilter, filter);
+                    }
+                    else {
+                        gridFilter = filter;
+                    }
                 }
             }
-            return filter;
+            return gridFilter;
         },
 
         getGridStore: function() {
             var store = Store.getStore(this.type, appConfig.defaultLanguage);
-            return store.filter(this.getGridFilter());
+            var filter = this.getGridFilter();
+            return filter ? store.filter(filter) : store;
         },
 
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
 
+            // get filter query
+            var gridFilter = this.getGridFilter();
+            var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
+
             this.exportBtn.setProcessing();
             new ExportCSV({
                 type: this.type,
-                filter: this.getGridStore()._renderFilterParams(this.getGridFilter())[0]
+                query: query
             }).execute().then(
                 lang.hitch(this, function() {
                     this.exportBtn.reset();
