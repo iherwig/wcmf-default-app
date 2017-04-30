@@ -2,20 +2,21 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/on",
+    "dojo/topic",
     "dijit/layout/ContentPane",
     "dojo/dom-construct"
 ], function (
     declare,
     lang,
     on,
+    topic,
     ContentPane,
     domConstruct
 ) {
     /**
-     * Filter widget mixin. Manages value propagation and reset.
+     * Filter widget mixin. Manages filter change propagation and reset.
      */
     return declare([ContentPane], {
-        value: null,
 
         postCreate: function() {
             this.inherited(arguments);
@@ -29,13 +30,29 @@ define([
             this.own(
                 on(resetBtn, "click", lang.hitch(this, function(e) {
                     this.value = null;
-                    this.control.set('value', this.value);
+                    this.control.reset();
                     e.stopPropagation();
                 })),
-                control.watch('value', lang.hitch(this, function (prop, oldValue, newValue) {
-                    this.set('value', newValue);
+                on(control, "change", lang.hitch(this, function (e) {
+                    topic.publish('entity-filterchange');
                 }))
             );
+        },
+
+        /**
+         * Get the control to be watched for filter changes
+         * @returns Widget
+         */
+        getControl: function() {
+            throw new Error('Method getControl not implemented');
+        },
+
+        /**
+         * Get the current filter
+         * @returns dstore/Filter
+         */
+        getFilter: function() {
+            throw new Error('Method getFilter not implemented');
         }
     });
 });

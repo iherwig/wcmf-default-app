@@ -20,7 +20,6 @@ define([
     "dojo/dom",
     "dojo/dom-attr",
     "dojo/dom-construct",
-    "dojo/dom-style",
     "dojo/dom-geometry",
     "dojo/query",
     "dojo/window",
@@ -57,7 +56,6 @@ define([
     dom,
     domAttr,
     domConstruct,
-    domStyle,
     domGeom,
     query,
     win,
@@ -87,7 +85,7 @@ define([
         actionsByName: {},
         templateString: lang.replace(template, Dict.tplTranslate),
         grid: null,
-        filters: {},
+        filters: [],
 
         defaultFeatures: {
             'Selection': Selection,
@@ -194,6 +192,9 @@ define([
                     topic.subscribe("/dnd/drop", lang.hitch(this, function(source, nodes, copy, target) {
                         this.dndInProgress = true;
                         topic.publish('ui/_include/widget/GridWidget/dnd-start', null);
+                    })),
+                    topic.subscribe("entity-filterchange", lang.hitch(this, function(data) {
+                        this.filter(this.getFilter());
                     }))
                 );
                 this.onResize();
@@ -229,6 +230,7 @@ define([
 
             // create columns
             var columns = [];
+            this.filters = [];
             if (array.indexOf(featureNames, 'Selector') !== -1) {
                 columns.push({
                     label: " ",
@@ -239,7 +241,6 @@ define([
                     resizable: false
                 });
             }
-            this.filters = {};
             var renderOptions = {};
             for (var i=0, count=this.columns.length; i<count; i++) {
                 var columnDef = this.columns[i];
@@ -287,12 +288,7 @@ define([
                 }
 
                 // add column filter
-                columnDef['renderHeaderCell'] = lang.hitch(this, lang.partial(function(columnDef, node) {
-                    if ('label' in columnDef || columnDef.field) {
-                        var text = 'label' in columnDef ? columnDef.label : columnDef.field;
-                        domConstruct.place('<div>'+text+'</div>', node, 'first');
-                    }
-                    var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
+                if (columnDef.filter) {
                     var filterArgs = lang.mixin(columnDef.filterArgs, {
                         field: simpleType+'.'+columnDef.field,
                         filterCtr: this.store.Filter
@@ -301,23 +297,27 @@ define([
                     this.own(
                         on(filter, "click", function(e) {
                             e.stopPropagation();
-                        }),
-                        filter.watch('value', lang.hitch(this, function (prop, oldValue, newValue) {
-                            this.filter(this.getFilter());
-                        }))
+                        })
                     );
-                    this.filters[columnDef.field] = filter;
-                    domStyle.set(filter.domNode, 'width', '100%');
-                    domConstruct.place(filter.domNode, filterNode);
-                    return filterNode;
-                }, columnDef));
+                    this.filters.push(filter);
+
+                    columnDef['renderHeaderCell'] = lang.hitch(this, lang.partial(function(columnDef, filter, node) {
+                        if ('label' in columnDef || columnDef.field) {
+                            var text = 'label' in columnDef ? columnDef.label : columnDef.field;
+                            domConstruct.place('<div>'+text+'</div>', node, 'first');
+                        }
+                        var filterNode = domConstruct.place('<div class="header-filter hidden"></div>', node);
+                        domConstruct.place(filter.domNode, filterNode);
+                        return filterNode;
+                    }, columnDef, filter));
+                }
 
                 columns.push(columnDef);
             }
 
             // add actions column
-            if (this.actions.length > 0) {
-                columns.push({
+            if (this.actions.length > 0 || this.filters.length > 0) {
+                var columnDef = {
                     label: " ",
                     field: "actions-"+this.actions.length,
                     unhidable: true,
@@ -333,8 +333,11 @@ define([
                         }
                         html += '</div>';
                         return html;
-                    }),
-                    renderHeaderCell: lang.hitch(this, function(node) {
+                    })
+                };
+
+                if (this.filters.length > 0) {
+                    columnDef['renderHeaderCell'] = lang.hitch(this, function(node) {
                         var html = '<a class="btn-mini"><i class="fa fa-filter"></i></a>';
                         var filterBtn = domConstruct.place(html, node, 'first');
                         this.own(
@@ -345,8 +348,10 @@ define([
                             }))
                         );
                         return filterBtn;
-                    })
-                });
+                    });
+                }
+
+                columns.push(columnDef);
             }
 
             // create widget
@@ -455,8 +460,8 @@ define([
          */
         getFilter: function() {
             var mainFilter;
-            for (var field in this.filters) {
-                var filterCtrl = this.filters[field];
+            for (var i=0, count=this.filters.length; i<count; i++) {
+                var filterCtrl = this.filters[i];
                 var filter = filterCtrl.getFilter();
                 if (filter) {
                     if (mainFilter) {
