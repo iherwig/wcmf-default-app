@@ -3,6 +3,7 @@ define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/promise/all",
+    "dojo/on",
     "dojo/topic",
     "dojo/dom-class",
     "dijit/_WidgetBase",
@@ -14,6 +15,7 @@ define( [
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
+    "../../../action/ImportCSV",
     "../../../action/ExportCSV",
     "../../../action/Create",
     "../../../action/Edit",
@@ -28,6 +30,7 @@ function(
     declare,
     lang,
     all,
+    on,
     topic,
     domClass,
     _WidgetBase,
@@ -39,6 +42,7 @@ function(
     CheckPermissions,
     Model,
     Store,
+    ImportCSV,
     ExportCSV,
     Create,
     Edit,
@@ -86,7 +90,9 @@ function(
                 this.type+'??create',
                 this.type+'??copy',
                 this.type+'??delete',
-                '??setPermissions'
+                '??setPermissions',
+                '??exportCSV',
+                '??importCSV'
             ];
             deferredList.push(new CheckPermissions({
                 operations: requiredPermissions
@@ -257,6 +263,34 @@ function(
             var store = Store.getStore(this.type, appConfig.defaultLanguage);
             var filter = this.getGridFilter();
             return filter ? store.filter(filter) : store;
+        },
+
+        _import: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+
+            this.fileSelect.click();
+            on.once(this.fileSelect, "change", lang.hitch(this, function() {
+                this.importBtn.setProcessing();
+                new ImportCSV({
+                    type: this.type,
+                    file: this.fileSelect.files[0]
+                }).execute().then(
+                    lang.hitch(this, function() {
+                        this.importBtn.reset();
+                        this.gridWidget.refresh();
+                    }),
+                    lang.hitch(this, function(error) {
+                        this.showBackendError(error);
+                        this.importBtn.reset();
+                    }),
+                    lang.hitch(this, function(status) {
+                        var progress = status.stepNumber/status.numberOfSteps;
+                        this.importBtn.setProgress(progress);
+                    })
+                );
+                this.fileSelect.value = null;
+            }));
         },
 
         _export: function(e) {

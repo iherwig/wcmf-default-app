@@ -9,19 +9,18 @@ define([
 ) {
     return declare([ActionBase], {
 
-        name: 'exportCSV',
+        name: 'importCSV',
         iconClass: 'fa fa-file-excel-o',
 
         // action parameters
         type: null,
-        query: null,
+        file: null,
 
         execute: function() {
-            var params = {
-                className: this.type,
-                query: this.query
-            };
-            return new Process('exportCSV').run(params);
+            var params = new FormData();
+            params.set('className', this.type);
+            params.append('docFile', this.file);
+            return new Process('importCSV').run(params);
         }
     });
 });
