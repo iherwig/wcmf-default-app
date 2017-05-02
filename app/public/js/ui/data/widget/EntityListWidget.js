@@ -6,12 +6,15 @@ define( [
     "dojo/on",
     "dojo/topic",
     "dojo/dom-class",
+    "dojo/dom-construct",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
     "../../_include/_NotificationMixin",
     "../../_include/widget/GridWidget",
     "../../_include/widget/Button",
+    "../../_include/widget/PopupDlgWidget",
+    "../../_include/widget/ConfirmDlgWidget",
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
@@ -33,12 +36,15 @@ function(
     on,
     topic,
     domClass,
+    domConstruct,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
     _Notification,
     GridWidget,
     Button,
+    PopupDlg,
+    ConfirmDlg,
     CheckPermissions,
     Model,
     Store,
@@ -91,8 +97,8 @@ function(
                 this.type+'??copy',
                 this.type+'??delete',
                 '??setPermissions',
-                '??exportCSV',
-                '??importCSV'
+                this.type+'??exportCSV',
+                this.type+'??importCSV'
             ];
             deferredList.push(new CheckPermissions({
                 operations: requiredPermissions
@@ -115,6 +121,8 @@ function(
                 domClass.add(this.gridWidget.gridNode, "type-"+Model.getSimpleTypeName(this.type).toLowerCase());
 
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
+                this.importBtn.set("disabled", this.permissions[this.type+'??importCSV'] !== true);
+                this.exportBtn.set("disabled", this.permissions[this.type+'??exportCSV'] !== true);
 
                 // notify listeners
                 topic.publish("entity-list-widget-created", this);
@@ -269,28 +277,52 @@ function(
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            this.fileSelect.click();
-            on.once(this.fileSelect, "change", lang.hitch(this, function() {
-                this.importBtn.setProcessing();
-                new ImportCSV({
-                    type: this.type,
-                    file: this.fileSelect.files[0]
-                }).execute().then(
-                    lang.hitch(this, function() {
-                        this.importBtn.reset();
-                        this.gridWidget.refresh();
-                    }),
-                    lang.hitch(this, function(error) {
-                        this.showBackendError(error);
-                        this.importBtn.reset();
-                    }),
-                    lang.hitch(this, function(status) {
-                        var progress = status.stepNumber/status.numberOfSteps;
-                        this.importBtn.setProgress(progress);
-                    })
-                );
-                this.fileSelect.value = null;
+            var fileSelect = domConstruct.create("input", {
+                type: "file",
+                style: {
+                    display: "none"
+                }
+            }, this.fileSelect);
+            on.once(fileSelect, "change", lang.hitch(this, function() {
+                new ConfirmDlg({
+                     title: Dict.translate("Confirm Import"),
+                     message: Dict.translate("Do you really want to import <em>%0%</em> ?", [fileSelect.files[0].name]),
+                     okCallback: lang.hitch(this, function() {
+                          this.importBtn.setProcessing();
+                          new ImportCSV({
+                              type: this.type,
+                              file: fileSelect.files[0]
+                          }).execute().then(
+                              lang.hitch(this, function(result) {
+                                  this.importBtn.reset();
+                                  var stats = result.stats;
+                                  new PopupDlg({
+                                      title: Dict.translate("Import result"),
+                                      message: Dict.translate("The import process finished with the following result")+":<br>"+
+                                          "<br><strong>"+Dict.translate("Processed rows")+":</strong> "+stats.processed+
+                                          "<br><strong>"+Dict.translate("Skipped rows")+":</strong> "+stats.skipped+
+                                          "<br>"+
+                                          "<br><strong>"+Dict.translate("Updated objects")+":</strong> "+stats.updated+
+                                          "<br><strong>"+Dict.translate("Inserted objects")+":</strong> "+stats.created,
+                                      okCallback: function() {},
+                                      cancelCallback: null
+                                  }).show();
+                                  this.gridWidget.refresh();
+                              }),
+                              lang.hitch(this, function(error) {
+                                  this.showBackendError(error);
+                                  this.importBtn.reset();
+                              }),
+                              lang.hitch(this, function(status) {
+                                  var progress = status.stepNumber/status.numberOfSteps;
+                                  this.importBtn.setProgress(progress);
+                              })
+                          );
+                          domConstruct.destroy(fileSelect);
+                     })
+                }).show();
             }));
+            fileSelect.click();
         },
 
         _export: function(e) {
