@@ -44,6 +44,11 @@ function(
             );
         },
 
+        setColor: function(value) {
+            value = !value ? '#FFFFFF' : value;
+            this.inherited(arguments);
+        },
+
         startup: function() {
             this.inherited(arguments);
             this.setColor(this.value);
