@@ -50,8 +50,8 @@ define([
             declare.safeMixin(this, params);
             // get package locations
             var packageLocations = {};
-            for(var i=0, count=dojoConfig.packages.length; i<count; i++) {
-                var curPackage = dojoConfig.packages[i];
+            for(var i=0, count=config.packages.length; i<count; i++) {
+                var curPackage = config.packages[i];
                 packageLocations[curPackage.name] = curPackage.location;
             }
             // add elfinder css
