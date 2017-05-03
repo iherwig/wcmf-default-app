@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'messages',
         iconClass: 'fa fa-book',
 
-        path: appConfig.backendUrl+'messages',
+        path: config.app.backendUrl+'messages',
 
         // action parameters
         language: '',

@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/_base/array",
     "dojo/promise/all",
     "dojo/on",
@@ -38,6 +39,7 @@ function(
     require,
     declare,
     lang,
+    config,
     array,
     all,
     on,
@@ -94,7 +96,7 @@ function(
         isLockOwner: true,
         permissions: {},
 
-        language: appConfig.defaultLanguage,
+        language: config.app.defaultLanguage,
         isTranslation: false,
         original: null, // untranslated entity
 
@@ -113,9 +115,9 @@ function(
             this.fieldContainerId = "fieldContainer_"+oid;
             this.headline = this.getHeadline();
             this.isNew = Model.isDummyOid(oid);
-            this.isTranslation = this.language !== appConfig.defaultLanguage;
+            this.isTranslation = this.language !== config.app.defaultLanguage;
 
-            this.languageName = appConfig.languages[this.language];
+            this.languageName = config.app.languages[this.language];
         },
 
         _setHeadlineAttr: function (val) {
@@ -344,13 +346,13 @@ function(
             var languageCount = 0;
             var menu = registry.byId(this.languageMenuPopupNode.get("id"));
             var form = this;
-            for (var langKey in appConfig.languages) {
+            for (var langKey in config.app.languages) {
                 var menuItem = new MenuItem({
-                    label: appConfig.languages[langKey],
+                    label: config.app.languages[langKey],
                     langKey: langKey,
                     onClick: function() {
                         var route = form.page.getRoute("entity");
-                        var queryParams = this.langKey !== appConfig.defaultLanguage ? {lang: this.langKey} : undefined;
+                        var queryParams = this.langKey !== config.app.defaultLanguage ? {lang: this.langKey} : undefined;
                         var url = route.assemble({
                             type: Model.getSimpleTypeName(form.type),
                             id: Model.getIdFromOid(form.entity.get('oid'))

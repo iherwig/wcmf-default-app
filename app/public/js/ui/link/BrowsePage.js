@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/dom",
     "dojo/dom-geometry",
     "dojo/topic",
@@ -21,6 +22,7 @@ define([
     require,
     declare,
     lang,
+    config,
     dom,
     domGeom,
     topic,
@@ -48,7 +50,7 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "mediaTab") {
-                    window.location.assign(appConfig.pathPrefix+'media?'+this.request.getQueryString());
+                    window.location.assign(config.app.pathPrefix+'media?'+this.request.getQueryString());
                 }
             }));
 

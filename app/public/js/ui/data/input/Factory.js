@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/_base/array",
     "dojo/json",
     "dojo/Deferred",
@@ -13,6 +14,7 @@ function(
     require,
     declare,
     lang,
+    config,
     array,
     JSON,
     Deferred,
@@ -71,7 +73,7 @@ function(
 
     Factory.getControlClass = function(inputType) {
         if (inputType) {
-            var inputTypes = appConfig.inputTypes;
+            var inputTypes = config.app.inputTypes;
 
             // get best matching control
             var bestMatch = '';
@@ -100,7 +102,7 @@ function(
         if (!options['list']) {
             throw new Error("Input type '"+inputType+"' does not contain a list definition");
         }
-        return ListStore.getStore(options['list'], appConfig.defaultLanguage);
+        return ListStore.getStore(options['list'], config.app.defaultLanguage);
     };
 
     /**
@@ -155,7 +157,7 @@ function(
                 // NOTE loading all items once and caching the result
                 // is faster than resolving the value on each request
                 // store promise in cache and resolve later
-                var store = ListStore.getStore(options['list'], appConfig.defaultLanguage);
+                var store = ListStore.getStore(options['list'], config.app.defaultLanguage);
                 Factory._listCache[listKey] = store.fetch();
                 return Factory.getItem(inputType, value);
             }

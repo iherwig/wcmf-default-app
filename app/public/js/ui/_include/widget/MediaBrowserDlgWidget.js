@@ -1,12 +1,14 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/dom-construct",
     "dijit/layout/ContentPane",
     "./PopupDlgWidget"
 ], function (
     declare,
     lang,
+    config,
     domConstruct,
     ContentPane,
     PopupDlg
@@ -30,7 +32,7 @@ define([
      */
     return declare([PopupDlg], {
 
-        url: appConfig.pathPrefix+'media',
+        url: config.app.pathPrefix+'media',
 
         /**
          * @Override

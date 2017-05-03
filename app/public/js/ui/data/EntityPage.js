@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/promise/all",
     "dojo/topic",
     "dojo/ready",
@@ -20,6 +21,7 @@ define([
     require,
     declare,
     lang,
+    config,
     all,
     topic,
     ready,
@@ -42,7 +44,7 @@ define([
         title: Dict.translate('Content'),
 
         baseRoute: "entity",
-        types: appConfig.rootTypes,
+        types: config.app.rootTypes,
         type: null,
         typeClass: null,
         oid: null, // object id of the object to edit
@@ -54,7 +56,7 @@ define([
                         // related to sourceOid (ignored if isNew == false)
         entity: null, // entity to edit
 
-        language: appConfig.defaultLanguage,
+        language: config.app.defaultLanguage,
         isTranslation: false,
         original: null, // untranslated entity
 
@@ -76,8 +78,8 @@ define([
             this.sourceOid = this.request.getQueryParam("oid");
             this.relation = this.request.getQueryParam("relation");
 
-            this.language = this.request.getQueryParam("lang") || appConfig.defaultLanguage;
-            this.isTranslation = this.language !== appConfig.defaultLanguage;
+            this.language = this.request.getQueryParam("lang") || config.app.defaultLanguage;
+            this.isTranslation = this.language !== config.app.defaultLanguage;
         },
 
         postCreate: function() {
@@ -94,7 +96,7 @@ define([
                 loadPromises.push(store.getUncached(entityId));
                 if (this.isTranslation) {
                   // provide original entity for reference
-                  var storeOrig = Store.getStore(this.type, appConfig.defaultLanguage);
+                  var storeOrig = Store.getStore(this.type, config.app.defaultLanguage);
                   loadPromises.push(storeOrig.getUncached(entityId));
                 }
                 all(loadPromises).then(lang.hitch(this, function(loadResults) {

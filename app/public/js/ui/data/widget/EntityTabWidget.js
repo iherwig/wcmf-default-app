@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/when",
     "dojo/topic",
     "dijit/registry",
@@ -14,6 +15,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     when,
     topic,
     registry,
@@ -48,7 +50,7 @@ define([
      * @code
      * new EntityTabWidget({
      *     route: 'entity',
-     *     types: appConfig.rootTypes,
+     *     types: config.app.rootTypes,
      *     page: this,
      *     selectedTab: {
      *         oid: 'Author'
@@ -219,7 +221,7 @@ define([
                     this.setInstanceTabName(entity, tabItem);
                 }
                 else {
-                    var store = Store.getStore(typeName, appConfig.defaultLanguage);
+                    var store = Store.getStore(typeName, config.app.defaultLanguage);
                     when(store.get(store.getIdentity(entity)), lang.hitch(this, function(entity) {
                             this.setInstanceTabName(entity, tabItem);
                         }), lang.hitch(this, function(error) {

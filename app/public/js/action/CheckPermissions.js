@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'checkPermissions',
         iconClass: 'fa fa-check',
 
-        path: appConfig.backendUrl+'permissions/check',
+        path: config.app.backendUrl+'permissions/check',
 
         // action parameters
         operations: [],

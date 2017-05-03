@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/on",
     "../../../_include/widget/Button",
     "./_BrowserControl"
@@ -8,13 +9,14 @@ define( [
 function(
     declare,
     lang,
+    config,
     on,
     Button,
     _BrowserControl
 ) {
     return declare([_BrowserControl], {
 
-        browserUrl: appConfig.pathPrefix+'media',
+        browserUrl: config.app.pathPrefix+'media',
 
         postCreate: function() {
             this.inherited(arguments);

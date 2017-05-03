@@ -6,7 +6,7 @@ RewriteRule ^[\/]?$ public/ [R,QSA,L]
 
 # forbid non public resources
 # NOTE: deactivate this rule for development only
-RewriteRule !^public/? - [NC,F]
+RewriteRule !(^public/?|^media/?) - [NC,F]
 
 # remove index.php
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.php($|\ |\?)

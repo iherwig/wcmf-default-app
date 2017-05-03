@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "../data/EntityPage",
     "../../model/meta/Model",
     "../../locale/Dictionary",
@@ -10,6 +11,7 @@ define([
     require,
     declare,
     lang,
+    config,
     EntityPage,
     Model,
     Dict,
@@ -20,11 +22,11 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Permission Management'),
-        type: Model.getSimpleTypeName(appConfig.permissionType),
+        type: Model.getSimpleTypeName(config.app.permissionType),
 
         baseRoute: "permission",
         types: [
-          Model.getSimpleTypeName(appConfig.permissionType)
+          Model.getSimpleTypeName(config.app.permissionType)
         ]
     });
 });

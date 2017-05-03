@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/aspect",
     "dojo/when",
     "dojo/topic",
@@ -8,6 +9,7 @@ define([
     "../AuthToken"
 ], function (
     declare,
+    config,
     aspect,
     when,
     topic,
@@ -90,7 +92,7 @@ define([
     TreeStore.getStore = function(rootTypes) {
         if (!TreeStore.storeInstances[rootTypes]) {
             var store = new TreeStore({
-                target: appConfig.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
+                target: config.app.backendUrl+"?action=browseTree&rootTypes=linkableTypes"
             });
             TreeStore.storeInstances[rootTypes] = store;
         }

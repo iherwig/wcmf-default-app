@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "dijit/form/HorizontalSlider",
     "../Factory",
@@ -11,6 +12,7 @@ define( [
 function(
     declare,
     lang,
+    config,
     topic,
     HorizontalSlider,
     ControlFactory,
@@ -25,7 +27,7 @@ function(
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
 
-        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd HH:mm:ss', locale: appConfig.uiLanguage},
+        dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd HH:mm:ss', locale: config.app.uiLanguage},
 
         constructor: function(args) {
             declare.safeMixin(this, args);

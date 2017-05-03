@@ -1,8 +1,8 @@
 define([
-    "../_TypeList",
+    "../../config/types",
     "exports"
 ], function(
-    TypeList,
+    types,
     exports
 ) {
     // use exports object to resolve circular dependencies
@@ -184,7 +184,7 @@ define([
     // register types
     exports.types = {};
     exports.simpleToFqNames = {};
-    for (var i=0, count=TypeList.length; i<count; i++) {
-        exports.registerType(TypeList[i]);
+    for (var i=0, count=types.length; i<count; i++) {
+        exports.registerType(types[i]);
     }
 });

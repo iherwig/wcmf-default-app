@@ -1,15 +1,17 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/cookie",
     "dojo/json"
 ], function(
     declare,
+    config,
     cookie,
     JSON
 ) {
     var Cookie = declare(null, {
 
-        name: appConfig.title.replace(/\s/g, '_'),
+        name: config.app.title.replace(/\s/g, '_'),
 
         /**
          * Set a value in a cookie

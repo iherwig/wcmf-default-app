@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "dojo/on",
     "dojo/dom-construct",
@@ -16,6 +17,7 @@ define( [
 function(
     declare,
     lang,
+    config,
     topic,
     on,
     domConstruct,
@@ -110,13 +112,13 @@ function(
 
         isFile: function() {
             var value = this.get("value");
-            return value && value.indexOf(appConfig.mediaSavePath) === 0;
+            return value && value.indexOf(config.app.mediaSavePath) === 0;
         },
 
         getFile: function() {
             var value = this.get("value");
             // replace base path
-            return this.isFile() ? value.replace(appConfig.mediaSavePath, appConfig.mediaBasePath) : '';
+            return this.isFile() ? value.replace(config.app.mediaSavePath, config.app.mediaBasePath) : '';
         },
 
         getDirectory: function() {

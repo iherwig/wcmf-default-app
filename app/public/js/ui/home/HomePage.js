@@ -1,7 +1,8 @@
 define([
     "require",
-    "dojo/_base/lang",
     "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/when",
     "dojo/topic",
     "../_include/_PageMixin",
@@ -17,8 +18,9 @@ define([
     "dojo/text!./template/HomePage.html"
 ], function (
     require,
-    lang,
     declare,
+    lang,
+    config,
     when,
     topic,
     _Page,
@@ -116,7 +118,7 @@ define([
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            var type = Model.getSimpleTypeName(appConfig.rootTypes[0]);
+            var type = Model.getSimpleTypeName(config.app.rootTypes[0]);
             var route = this.router.getRoute("entityList");
             var pathParams = { type:type };
             var url = route.assemble(pathParams);

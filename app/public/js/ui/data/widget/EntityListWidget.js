@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/promise/all",
     "dojo/on",
     "dojo/topic",
@@ -32,6 +33,7 @@ function(
     require,
     declare,
     lang,
+    config,
     all,
     on,
     topic,
@@ -245,7 +247,7 @@ function(
         },
 
         getGridFilter: function() {
-            var store = Store.getStore(this.type, appConfig.defaultLanguage);
+            var store = Store.getStore(this.type, config.app.defaultLanguage);
             var gridFilter = this.gridWidget ? this.gridWidget.getFilter() : undefined;
 
             // check if the type might have parents of the same type,
@@ -268,7 +270,7 @@ function(
         },
 
         getGridStore: function() {
-            var store = Store.getStore(this.type, appConfig.defaultLanguage);
+            var store = Store.getStore(this.type, config.app.defaultLanguage);
             var filter = this.getGridFilter();
             return filter ? store.filter(filter) : store;
         },

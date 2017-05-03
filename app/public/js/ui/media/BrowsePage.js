@@ -4,6 +4,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/window",
     "dijit/registry",
     "../_include/_PageMixin",
@@ -22,6 +23,7 @@ define([
     require,
     declare,
     lang,
+    config,
     win,
     registry,
     _Page,
@@ -64,7 +66,7 @@ define([
             // tab navigation
             registry.byId("tabContainer").watch("selectedChildWidget", lang.hitch(this, function(name, oval, nval){
                 if (nval.id === "contentTab") {
-                    window.location.assign(appConfig.pathPrefix+'link?'+this.request.getQueryString());
+                    window.location.assign(config.app.pathPrefix+'link?'+this.request.getQueryString());
                 }
             }));
 
@@ -72,8 +74,8 @@ define([
             var customHeaders = {};
             customHeaders[AuthToken.name] = AuthToken.get();
             lang.mixin(elfinderConfig, {
-                lang: appConfig.uiLanguage,
-                url: appConfig.backendUrl+'media/files?directory='+directory,
+                lang: config.app.uiLanguage,
+                url: config.app.backendUrl+'media/files?directory='+directory,
                 rememberLastDir: true,
                 resizable: false,
                 width: '100%',
@@ -119,7 +121,7 @@ define([
 
         getItemUrl: function(item) {
             item = decodeURIComponent(item.url);
-            return appConfig.mediaSavePath+item.replace(appConfig.mediaBaseUrl, '');
+            return config.app.mediaSavePath+item.replace(config.app.mediaBaseUrl, '');
         }
     });
 });

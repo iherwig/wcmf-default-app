@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/promise/all",
     "dstore/Memory",
     "dijit/_WidgetBase",
@@ -21,6 +22,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     all,
     Memory,
     _WidgetBase,
@@ -65,8 +67,8 @@ define([
             var deferredList = {};
 
             // query roles
-            var store = Store.getStore(Model.getSimpleTypeName(appConfig.roleType),
-                appConfig.defaultLanguage);
+            var store = Store.getStore(Model.getSimpleTypeName(config.app.roleType),
+                config.app.defaultLanguage);
             deferredList['roles'] = store.fetch();
 
             // get permissions
@@ -90,7 +92,7 @@ define([
 
             this.userSelectCtrl = new Select({
                 name: 'userSelectCtrl',
-                inputType: 'select:{"list":{"type":"node","types":["'+appConfig.userType+'"]}}'
+                inputType: 'select:{"list":{"type":"node","types":["'+config.app.userType+'"]}}'
             }, this.permissionsWidget.userSelectCtrl);
             this.userSelectCtrl.on('change', lang.hitch(this, function(id) {
                 var login = this.userSelectCtrl.get('displayedValue');

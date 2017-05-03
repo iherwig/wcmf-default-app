@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dijit/form/TextBox",
     "../../../_include/widget/Button",
     "../../../_include/widget/PopupDlgWidget",
@@ -10,6 +11,7 @@ define( [
 function(
     declare,
     lang,
+    config,
     TextBox,
     Button,
     PopupDlg,
@@ -18,7 +20,7 @@ function(
 ) {
     return declare([FileBrowser], {
 
-        browserUrl: appConfig.pathPrefix+'media',
+        browserUrl: config.app.pathPrefix+'media',
 
         postCreate: function() {
             this.inherited(arguments);

@@ -1,6 +1,7 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "../../../_include/widget/Button",
     "../../../_include/widget/ConfirmDlgWidget",
@@ -11,6 +12,7 @@ define( [
 function(
     declare,
     lang,
+    config,
     topic,
     Button,
     ConfirmDlg,
@@ -20,7 +22,7 @@ function(
 ) {
     return declare([_BrowserControl], {
 
-        browserUrl: appConfig.pathPrefix+'link',
+        browserUrl: config.app.pathPrefix+'link',
 
         postCreate: function() {
             this.inherited(arguments);

@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/Deferred",
     "dojo/json",
     "dstore/Rest",
@@ -9,6 +10,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     Deferred,
     JSON,
     Rest,
@@ -41,7 +43,7 @@ define([
             }
 
             // set target for xhr requests
-            this.target = appConfig.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
+            this.target = config.app.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
         },
 
         get: function(id) {

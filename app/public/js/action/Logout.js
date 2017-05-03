@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'login',
         iconClass: 'fa fa-sign-out',
 
-        path: appConfig.backendUrl+'session',
+        path: config.app.backendUrl+'session',
 
         execute: function() {
             return request.del(this.path, {

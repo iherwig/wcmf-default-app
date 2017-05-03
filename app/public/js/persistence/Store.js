@@ -1,14 +1,16 @@
 define([
-    "dojo/_base/lang",
     "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/topic",
     "dstore/Cache",
     "./BaseStore",
     "./ChildrenStore",
     "../model/meta/Model"
 ], function (
-    lang,
     declare,
+    lang,
+    config,
     topic,
     Cache,
     BaseStore,
@@ -82,7 +84,7 @@ define([
             var store = new Store({
                 typeName: fqTypeName,
                 language: language,
-                target: appConfig.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
+                target: config.app.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
             });
             Store.storeInstances[fqTypeName][language] = store;
         }

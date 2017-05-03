@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
@@ -13,6 +14,7 @@ define([
     require,
     declare,
     lang,
+    config,
     _Page,
     _Notification,
     NavigationWidget,
@@ -36,7 +38,7 @@ define([
             new Logout().execute().then(lang.hitch(this, function(response) {
                 // redirect to login
                 Cookie.destroyAll();
-                window.location.assign(appConfig.backendUrl);
+                window.location.assign(config.app.backendUrl);
             }), lang.hitch(this, function(error) {
                 // error
                 this.showBackendError(error);

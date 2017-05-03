@@ -2,6 +2,7 @@ define( [
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "../../../model/meta/Model",
     "../../data/widget/EntityFormWidget",
     "../../../locale/Dictionary",
@@ -11,6 +12,7 @@ function(
     require,
     declare,
     lang,
+    config,
     Model,
     EntityFormWidget,
     Dict,
@@ -29,7 +31,7 @@ function(
          */
         getRelations: function() {
             var typeClass = Model.getType(this.type);
-            return [typeClass.getRelation(Model.getSimpleTypeName(appConfig.userType))];
+            return [typeClass.getRelation(Model.getSimpleTypeName(config.app.userType))];
         }
     });
 });

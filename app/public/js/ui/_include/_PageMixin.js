@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/aspect",
     "dojo/_base/window",
     "dojo/dom-attr",
@@ -22,6 +23,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     aspect,
     win,
     domAttr,
@@ -119,8 +121,8 @@ define([
         },
 
         setTitle: function(title) {
-            if (title !== appConfig.title) {
-                this.inherited(arguments, [appConfig.title+' - '+title]);
+            if (title !== config.app.title) {
+                this.inherited(arguments, [config.app.title+' - '+title]);
             }
         },
 

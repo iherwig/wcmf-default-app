@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/request",
     "dojo/request/iframe",
     "dojo/Deferred",
@@ -8,6 +9,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     request,
     iframe,
     Deferred,
@@ -110,7 +112,7 @@ define([
         },
 
         getBackendUrl: function() {
-            var url = appConfig.backendUrl+'process/'+this.name;
+            var url = config.app.backendUrl+'process/'+this.name;
             if (this.started) {
                 url += '/continue';
             }

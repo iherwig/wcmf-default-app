@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'changePassword',
         iconClass: 'fa fa-user-secret',
 
-        path: appConfig.backendUrl+'user/password',
+        path: config.app.backendUrl+'user/password',
 
         // action paramenters
         oldpassword: '',

@@ -42,6 +42,11 @@ function(
                     }
                 }))
             );
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+            this.setColor(this.value);
         }
     });
 });

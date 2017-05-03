@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'lock',
         iconClass: 'fa fa-unlock',
 
-        path: appConfig.backendUrl+'lock',
+        path: config.app.backendUrl+'lock',
 
         // action parameters
         entity: null, /* Entity */

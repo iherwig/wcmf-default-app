@@ -20,8 +20,8 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
 })();
 
 CKEDITOR.editorConfig = function( config ) {
-    config.language = appConfig.uiLanguage;
-    config.stylesSet = 'default:'+appConfig.pathPrefix+'js/config/ckeditor_styles.js';
+    config.language = dojoConfig.app.uiLanguage;
+    config.stylesSet = 'default:'+dojoConfig.app.pathPrefix+'js/config/ckeditor_styles.js';
     config.baseFloatZIndex = 900;
     config.forcePasteAsPlainText = true;
     config.resize_dir = 'vertical';
@@ -40,5 +40,5 @@ CKEDITOR.editorConfig = function( config ) {
         ['Bold','Italic','RemoveFormat'],['Table','BulletedList','HorizontalRule','SpecialChar'],['Format','Styles'],['About']
     ];
     config.toolbar = 'wcmf';
-    config.contentsCss = appConfig.pathPrefix+'css/app.css';
+    config.contentsCss = dojoConfig.app.pathPrefix+'css/app.css';
 };

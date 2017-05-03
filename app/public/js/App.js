@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/query",
     "dojo/dom-construct",
     "dijit/registry",
@@ -16,6 +17,7 @@ define([
     require,
     declare,
     lang,
+    config,
     query,
     domConstruct,
     registry,
@@ -33,7 +35,7 @@ define([
             Startup.run().then(lang.hitch(this, function(result) {
 
                 // get initially requested route
-                var baseUrl = appConfig.backendUrl;
+                var baseUrl = config.app.backendUrl;
                 var request = new Request(window.location.href);
                 var route = request.getPathname().replace(baseUrl, '');
 

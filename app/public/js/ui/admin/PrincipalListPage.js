@@ -2,6 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "../data/EntityListPage",
     "../../model/meta/Model",
     "../../locale/Dictionary",
@@ -10,6 +11,7 @@ define([
     require,
     declare,
     lang,
+    config,
     EntityListPage,
     Model,
     Dict,
@@ -23,8 +25,8 @@ define([
 
         baseRoute: "principal",
         types: [
-          Model.getSimpleTypeName(appConfig.userType),
-          Model.getSimpleTypeName(appConfig.roleType)
+          Model.getSimpleTypeName(config.app.userType),
+          Model.getSimpleTypeName(config.app.roleType)
         ],
         hasTree: false
     });

@@ -1,8 +1,10 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request"
 ], function (
     declare,
+    config,
     request
 ) {
     var Log = declare(null, {
@@ -39,7 +41,7 @@ define([
      * @return Deferred instance
      */
     Log.log = function(message, level) {
-      return request.post(appConfig.backendUrl+'log', {
+      return request.post(config.app.backendUrl+'log', {
           data: {
               message: message,
               type: level

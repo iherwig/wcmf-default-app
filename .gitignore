@@ -4,13 +4,13 @@ app/cache
 app/log
 app/searchIndex
 app/release
-app/public/media
+app/media
 app/config/*.ini
 app/public/soap-interface.php
 app/public/js/app/
 !app/public/js/app/src/model/wcmf/RoleClass.js
 !app/public/js/app/src/model/wcmf/UserClass.js
-app/public/js/model/_TypeList.js
+app/public/js/config/types.js
 app/src/controller
 !app/src/controller/RootController.php
 app/src/model

@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "./BaseStore",
     "../model/meta/Model"
 ], function (
     declare,
+    config,
     BaseStore,
     Model
 ) {
@@ -28,7 +30,7 @@ define([
             oid: oid,
             relationName: relationName,
             typeName: relationTypeName,
-            target: appConfig.pathPrefix+"rest/"+appConfig.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
+            target: config.app.pathPrefix+"rest/"+config.app.defaultLanguage+"/"+fqTypeName+"/"+id+"/"+relationName+"/"
         });
         return jsonRest;
     };

@@ -1,12 +1,21 @@
-define(["dojo/_base/config", "require"], function (config, require) {
-
+define([
+    "require",
+    "dojo/_base/lang",
+    "dojo/_base/config",
+    "./config/custom_routes"
+], function (
+    require,
+    lang,
+    config,
+    customRoutes
+) {
     var p = config['routing-map'].pathPrefix,
         l = config['routing-map'].layers || {},
         mid = require.toAbsMid
     ;
     p = ''+p.slice(-1) !== '/' ? p+'/' : p;
 
-    return {
+    var defaultRoutes = {
         login: {
             schema: p + '',
             widget: mid('./ui/login/LoginPage'),
@@ -78,4 +87,7 @@ define(["dojo/_base/config", "require"], function (config, require) {
             layers: l.admin || []
         }
     };
+
+    // merge custom routers
+    return lang.mixin(defaultRoutes, customRoutes);
 });

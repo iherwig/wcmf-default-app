@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/config",
     "dojo/Deferred",
     "dojo/promise/all",
     "./ActionBase",
@@ -13,6 +14,7 @@ define([
 ], function (
     declare,
     lang,
+    config,
     Deferred,
     all,
     ActionBase,
@@ -45,7 +47,7 @@ define([
                 message: Dict.translate("Select <em>%0%</em> objects, you want to link to <em>%1%</em>",
                     [Dict.translate(relationType), displayValue]),
                 okCallback: lang.hitch(this, function(dlg) {
-                    var entityStore = Store.getStore(relationType, appConfig.defaultLanguage);
+                    var entityStore = Store.getStore(relationType, config.app.defaultLanguage);
                     var relStore = RelationStore.getStore(oid, relationName);
 
                     var oids = dlg.getSelectedOids();

@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/_base/array",
   	"dojo/json",
     "dstore/Rest",
@@ -7,6 +8,7 @@ define([
     "../persistence/Entity"
 ], function (
     declare,
+    config,
     array,
     JSON,
     Rest,
@@ -33,7 +35,7 @@ define([
      */
     Store.getStore = function() {
         return new Store({
-            target: appConfig.backendUrl+"?action=history"
+            target: config.app.backendUrl+"?action=history"
         });
     };
 

@@ -1,5 +1,6 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/promise/all",
     "dojo/Deferred",
     "./User",
@@ -9,6 +10,7 @@ define([
     "./model/meta/Model"
 ], function (
     declare,
+    config,
     all,
     Deferred,
     User,
@@ -35,15 +37,15 @@ define([
 
         // load localized ui text
         deferredList["messages"] = new Messages({
-            language: appConfig.uiLanguage
+            language: config.app.uiLanguage
         }).execute();
 
         // check for read access to root types for the current user
         // and get the user's configuration
         if (User.isLoggedIn()) {
             var requiredPermissions = [];
-            for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
-                var rootType = appConfig.rootTypes[i];
+            for (var i=0, count=config.app.rootTypes.length; i<count; i++) {
+                var rootType = config.app.rootTypes[i];
                 requiredPermissions.push(Model.getFullyQualifiedTypeName(rootType)+'??read');
             }
             deferredList["rootTypePermissions"] = new CheckPermissions({
@@ -62,13 +64,13 @@ define([
                 var permissionsResponse = results["rootTypePermissions"];
                 var permissions = permissionsResponse.result ? permissionsResponse.result : {};
                 var visibleRootTypes = [];
-                for (var i=0, count=appConfig.rootTypes.length; i<count; i++) {
-                    var rootType = appConfig.rootTypes[i];
+                for (var i=0, count=config.app.rootTypes.length; i<count; i++) {
+                    var rootType = config.app.rootTypes[i];
                     if (permissions[Model.getFullyQualifiedTypeName(rootType)+'??read'] === true) {
                         visibleRootTypes.push(rootType);
                     }
                 }
-                appConfig.rootTypes = visibleRootTypes;
+                config.app.rootTypes = visibleRootTypes;
             }
 
             deferred.resolve({});

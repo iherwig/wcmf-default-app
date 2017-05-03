@@ -1,11 +1,13 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "./PopupDlgWidget",
     "./GridWidget",
     "../../../persistence/Store",
     "../../../model/meta/Model"
 ], function (
     declare,
+    config,
     PopupDlg,
     GridWidget,
     Store,
@@ -43,7 +45,7 @@ define([
         getContentWidget: function() {
             this.grid = new GridWidget({
                 type: this.type,
-                store: Store.getStore(this.type, appConfig.defaultLanguage),
+                store: Store.getStore(this.type, config.app.defaultLanguage),
                 columns: Model.getType(this.type).getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
                     return attribute.name;
                 }),

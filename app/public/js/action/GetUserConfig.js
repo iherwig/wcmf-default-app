@@ -1,9 +1,11 @@
 define([
     "dojo/_base/declare",
+    "dojo/_base/config",
     "dojo/request",
     "./ActionBase"
 ], function (
     declare,
+    config,
     request,
     ActionBase
 ) {
@@ -12,7 +14,7 @@ define([
         name: 'setUserConfig',
         iconClass: 'fa fa-wrench',
 
-        path: appConfig.backendUrl+'user/config',
+        path: config.app.backendUrl+'user/config',
 
         // action paramenters
         key: '',

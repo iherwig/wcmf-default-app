@@ -54,7 +54,7 @@
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_86xZmqprEeaGbp23C_zkpg" name="uploadDir" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_86xZm6prEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_86xZnKprEeaGbp23C_zkpg" value="1"/>
-                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_86xZnaprEeaGbp23C_zkpg" value="app/public/media/"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_86xZnaprEeaGbp23C_zkpg" value="app/media/"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_86xZoqprEeaGbp23C_zkpg" name="Localization">
