@@ -15,7 +15,7 @@ define([
         /*
         'myRoute': {
             schema: p + 'my-route',
-            widget: mid('./app/ui/MyPage'),
+            widget: mid('../app/ui/MyPage'),
             layers: l.app || []
         }
         */
