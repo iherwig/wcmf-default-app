@@ -85,10 +85,10 @@ $messages_en['Confirm Import'] = '';
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
-// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Content'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['content'] = '';
+// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -97,7 +97,7 @@ $messages_en['Copying'] = '';
 $messages_en['Copying <em>%0%</em>'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Copying tree: continue with %0%'] = '';
-// file(s): public/js/ui/data/widget/template/EntityListWidget.html
+// file(s): public/js/locale/Dictionary.js, public/js/ui/data/widget/template/EntityListWidget.html
 $messages_en['Create %0%'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/wcmf/_base/LockRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['created'] = '';
@@ -221,10 +221,10 @@ $messages_en['Locking <em>%0%</em>'] = '';
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_en['Login'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['login'] = '';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_en['Login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html

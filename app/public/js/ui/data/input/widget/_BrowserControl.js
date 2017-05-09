@@ -12,6 +12,7 @@ define( [
     "../../../_include/_HelpMixin",
     "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
+    "../../../../model/meta/Model",
     "../../../../locale/Dictionary"
 ],
 function(
@@ -28,6 +29,7 @@ function(
     _HelpMixin,
     MediaBrowserDlg,
     _AttributeWidgetMixin,
+    Model,
     Dict
 ) {
     return declare([ContentPane, _HelpMixin, _AttributeWidgetMixin], {
@@ -122,6 +124,12 @@ function(
         },
 
         getDirectory: function() {
+            if (this.entity) {
+                var typeClass = Model.getTypeFromOid(this.entity.oid);
+                if (typeClass.getUploadDirectory instanceof Function) {
+                    return appConfig.mediaBasePath+typeClass.getUploadDirectory(this.entity);
+                }
+            }
             return this.getFile().replace(/[^\/]*$/, '');
         },
 

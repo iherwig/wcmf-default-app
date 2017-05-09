@@ -20,7 +20,9 @@ function(
     /**
      * Translate templates to the ui language.
      * It will translate text_to_translate in occurences of {translate:text_to_translate}
-     * or {translate:text_%0%_%1%|r0,r1} in the given template. Usage:
+     * or {translate:text_%0%_%1%|r0,r1} in the given template. Template variables
+     * that should be replaced by dojo's lang.replace function must be written
+     * without brackets e.g. {translate:Create %0%|$typeName}. Usage:
      *
      * lang.replace(template, Dict.tplReplace)
      *
@@ -38,7 +40,10 @@ function(
                 key = splitKey[0];
                 params = splitKey[1].split(",");
             }
-            return Dictionary.translate(key, params);
+            var result = Dictionary.translate(key, params);
+            // replace template variables for further processing ($var -> ${var})
+            result = result.replace(/\$([a-z0-9]+)/ig, "${$1}");
+            return result;
         }
         else {
             return _;

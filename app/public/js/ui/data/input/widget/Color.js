@@ -1,57 +1,53 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/topic",
-    "dojox/widget/ColorPicker",
-    "../../../_include/_HelpMixin",
-    "./_AttributeWidgetMixin",
-    "../../../../locale/Dictionary"
+    "dojo/on",
+    "dojo/dom-style",
+    "./TextBox"
 ],
 function(
     declare,
     lang,
-    topic,
-    ColorPicker,
-    _HelpMixin,
-    _AttributeWidgetMixin,
-    Dict
+    on,
+    domStyle,
+    TextBox
 ) {
-    return declare([ColorPicker, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([TextBox], {
 
-        intermediateChanges: true,
-        liveUpdate: true,
-        animatePoint: false,
-        inputType: null, // control description as string as used in Factory.getControlClass()
-        entity: null,
-
-        constructor: function(args) {
-            declare.safeMixin(this, args);
-
-            this.label = Dict.translate(this.name);
-            this.value = this.value ? (this.value.match(/#[0-9a-f]{6}/i) ? this.value : '#FFFFFF') : '#FFFFFF';
-        },
+        placeHolder: '#FFFFFF',
 
         postCreate: function() {
             this.inherited(arguments);
 
             this.own(
-                topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
-                    if ((this.entity && this.entity.get('oid') === data.entity.get('oid')) &&
-                            data.name === this.name) {
-                        this.set("value", data.newValue);
-                    }
-                }))
+                  on(this, "change", lang.hitch(this, function() {
+                      this.setColors();
+                  }))
             );
+            this.setColors();
         },
 
-        setColor: function(value) {
-            value = !value ? '#FFFFFF' : value;
-            this.inherited(arguments);
-        },
+        setColors: function() {
+            // get background color
+            var bgColor = this.get('value');
+            if (!bgColor || !bgColor.match(/^#[0-9a-f]{3,}$/i)) {
+                bgColor = '#FFFFFF';
+            }
 
-        startup: function() {
-            this.inherited(arguments);
-            this.setColor(this.value);
+            // calculate luminance
+            var colorValue = bgColor.substring(1);
+            var rgb = parseInt(colorValue, 16);
+            var r = (rgb >> 16) & 0xff;
+            var g = (rgb >>  8) & 0xff;
+            var b = (rgb >>  0) & 0xff;
+            var luminance = (r + g + b)/3;
+
+            // get font color
+            var fontColor = luminance < 128 ? '#FFFFFF' : '#000000';
+
+            // set colors
+            domStyle.set(this.domNode, "background-color", bgColor);
+            domStyle.set(this.domNode, "color", fontColor);
         }
     });
 });
