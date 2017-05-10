@@ -102,11 +102,6 @@ define([
 
         dndInProgress: false,
 
-        // too many filter calls make the rows disapear sometimes
-        // so we define a minimal time span that has to be passed until the next filter is set
-        lastFiltered: null,
-        filterLifetime: 1000,
-
         constructor: function (params) {
             if (params && params.actions) {
                 params.actionsByName = {};
@@ -429,12 +424,15 @@ define([
          * @returns String
          */
         getEditorControl: function(inputType) {
-            var baseType = inputType.match(/^[^:]+/)[0];
-            switch(baseType) {
-                case 'ckeditor':
-                    return 'textarea';
+            if (inputType) {
+                var baseType = inputType.match(/^[^:]+/)[0];
+                switch(baseType) {
+                    case 'ckeditor':
+                        return 'textarea';
+                }
+                return inputType;
             }
-            return inputType;
+            return null;
         },
 
         /**
@@ -443,13 +441,15 @@ define([
          * @returns String
          */
         getFilterControl: function(inputType) {
-            var baseType = inputType.match(/^[^:]+/)[0];
-            switch(baseType) {
-                case 'radio':
-                case 'select':
-                    return FilterSelectBox;
-                case 'date':
-                    return FilterTextBox;
+            if (inputType) {
+                var baseType = inputType.match(/^[^:]+/)[0];
+                switch(baseType) {
+                    case 'radio':
+                    case 'select':
+                        return FilterSelectBox;
+                    case 'date':
+                        return FilterTextBox;
+                }
             }
             return FilterTextBox;
         },
@@ -499,13 +499,6 @@ define([
         },
 
         filter: function(filter) {
-            // prevent too many filter calls
-            var now = (new Date()).getTime();
-            if (this.lastFiltered !== null && now-this.lastFiltered < this.filterLifetime) {
-                return;
-            }
-            this.lastFiltered = now;
-
             if (this.grid) {
                 this.grid.set('collection', this.store.filter(filter));
             }
