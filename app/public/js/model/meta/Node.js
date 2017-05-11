@@ -116,14 +116,25 @@ define([
 
         /**
          * Get the attribute definitions
-         * @param tag Optional tag that the attributes should have
+         * @param filter Optional filter with properties:
+         *        - include: Array of tags to include
+         *        - exclude: Array of tags to exclude
          * @return Array
          */
-        getAttributes: function(tag) {
+        getAttributes: function(filter) {
             var result = [];
+            var include = filter ? filter.include : undefined;
+            var exclude = filter ? filter.exclude : undefined;
             for (var i=0, count=this.attributes.length; i<count; i++) {
                 var attribute = this.attributes[i];
-                if (!tag || array.indexOf(attribute.tags, tag) !== -1) {
+                var tags = attribute.tags;
+                var includeOk = !include || (tags && tags.filter(function(n) {
+                    return include.indexOf(n) !== -1;
+                }).length === include.length);
+                var excludeOk = !exclude || (!tags || tags.filter(function(n) {
+                    return exclude.indexOf(n) !== -1;
+                }).length === 0);
+                if (includeOk && excludeOk) {
                     result.push(attribute);
                 }
             }

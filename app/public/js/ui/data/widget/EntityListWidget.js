@@ -230,7 +230,7 @@ function(
 
         getGridColumns: function() {
             var typeClass = Model.getType(this.type);
-            var columns = typeClass.getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+            var columns = typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
                 return attribute.name;
             });
             return columns;

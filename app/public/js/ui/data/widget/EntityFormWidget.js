@@ -31,6 +31,7 @@ define( [
     "../../../action/Delete",
     "../../../locale/Dictionary",
     "../input/Factory",
+    "../input/widget/TextBox",
     "./EntityRelationWidget",
     "./PermissionDlgWidget",
     "dojo/text!./template/EntityFormWidget.html"
@@ -68,6 +69,7 @@ function(
     Delete,
     Dict,
     ControlFactory,
+    TextBox,
     EntityRelationWidget,
     PermissionDlg,
     template
@@ -181,10 +183,10 @@ function(
                             if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
                                 disabled = true;
                             }
-                            var controlClass = controls[attribute.inputType];
+                            var controlClass = controls[attribute.inputType] || TextBox;
                             var attributeWidget = new controlClass({
                                 name: attribute.name,
-                                'class': attribute.tags.join(' ').toLowerCase(),
+                                'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() : '',
                                 value: this.entity[attribute.name],
                                 disabled: disabled,
                                 helpText: Dict.translate(attribute.description),
@@ -294,7 +296,7 @@ function(
          */
         getAttributes: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+            return typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']});
         },
 
         /**
@@ -304,8 +306,7 @@ function(
          * an array of the group's attributes as value
          */
         getAttributeGroups: function() {
-            var typeClass = Model.getType(this.type);
-            var attributes = typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+            var attributes = this.getAttributes();
             var groups = {
                 'default': []
             };

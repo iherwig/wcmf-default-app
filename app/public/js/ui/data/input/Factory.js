@@ -36,7 +36,7 @@ function(
 
         var inputTypeMap = {};
         var typeClass = Model.getType(type);
-        var attributes = typeClass.getAttributes('DATATYPE_ATTRIBUTE');
+        var attributes = typeClass.getAttributes({include: ['DATATYPE_ATTRIBUTE']});
 
         // collect all control classes
         for (var i=0, count=attributes.length; i<count; i++) {

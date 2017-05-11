@@ -46,7 +46,7 @@ define([
             this.grid = new GridWidget({
                 type: this.type,
                 store: Store.getStore(this.type, config.app.defaultLanguage),
-                columns: Model.getType(this.type).getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+                columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
                     return attribute.name;
                 }),
                 actions: [],

@@ -105,7 +105,7 @@ function(
                 this.gridWidget = new GridWidget({
                     type: this.relation.type,
                     store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
-                    columns: Model.getType(this.type).getAttributes('DATATYPE_ATTRIBUTE').map(function(attribute) {
+                    columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
                         return attribute.name;
                     }),
                     actions: this.getGridActions(),
