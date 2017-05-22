@@ -171,7 +171,7 @@ function(
     /**
      * Get the options from the given input type
      * @param inputType The input type
-     * @returns String or null, if no list input type
+     * @returns Object
      */
     Factory.getOptions = function(inputType) {
         if (inputType) {
@@ -180,6 +180,24 @@ function(
             return options;
         }
         return {};
+    };
+
+    /**
+     * Add an empty item to a list definition
+     * @param inputType The input type
+     * @param emptyItem
+     * @returns String
+     */
+    Factory.addEmptyItem = function(inputType, emptyItem) {
+        if (inputType) {
+            var controlStr = inputType.match(/(.+?):/);
+            if (controlStr) {
+                var options = Factory.getOptions(inputType);
+                options['list']['emptyItem'] = emptyItem;
+                return controlStr[1]+':'+JSON.stringify(options);
+            }
+        }
+        return inputType;
     };
 
     /**

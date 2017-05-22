@@ -249,7 +249,6 @@ define([
                             helpText: Dict.translate(curAttributeDef.description),
                             inputType: curAttributeDef.inputType,
                             entity: null, // will be set in dgrid-editor-show event
-                            style: 'height:20px; padding:0;',
                             isInlineEditor: true
                         };
                         var columnDef = {

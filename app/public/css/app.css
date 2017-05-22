@@ -146,6 +146,11 @@ label {
   background-color: #08c;
 }
 
+.dgrid .header-filter .dijitContentPane {
+  height: 35px;
+  font-weight: normal;
+}
+
 .dgrid-selected, .dgrid-selected .dgrid-cell {
   background-color: #08c;
 }

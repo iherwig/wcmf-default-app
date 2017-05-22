@@ -29,14 +29,18 @@ define([
             var resetBtn = domConstruct.place(btn, this.domNode, 'last');
             this.own(
                 on(resetBtn, "click", lang.hitch(this, function(e) {
-                    this.value = null;
-                    this.control.reset();
+                    this.reset();
+                    topic.publish('entity-filterchange');
                     e.stopPropagation();
                 })),
                 on(control, "change", lang.hitch(this, function (e) {
                     topic.publish('entity-filterchange');
                 }))
             );
+        },
+
+        reset: function() {
+            this.getControl().reset();
         },
 
         /**
