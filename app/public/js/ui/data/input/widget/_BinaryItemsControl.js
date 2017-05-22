@@ -47,6 +47,10 @@ function(
         spinnerNode: null,
 
         constructor: function(args) {
+            // convert store from DstoreAdapter
+            if (args.store && args.store.store) {
+                args.store = args.store.store;
+            }
             declare.safeMixin(this, args);
 
             this.label = Dict.translate(this.name);

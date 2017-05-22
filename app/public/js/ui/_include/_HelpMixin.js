@@ -21,6 +21,7 @@ define([
         labelNode: null,
 
         startup: function() {
+            this.inherited(arguments);
             var text = this.helpText;
             if (text && text.length > 0) {
                 this.dialog = new TooltipDialog({
