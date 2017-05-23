@@ -229,10 +229,6 @@ th.field-actions-6, td.field-actions-6 {
   overflow: hidden;
 }
 
-.dgrid-cell .dijitInputField {
-  margin-top: -8px;
-}
-
 .dbootstrap .dijitCheckBox, .dbootstrap .dijitRadio {
   color: #999;
   padding: 0;
