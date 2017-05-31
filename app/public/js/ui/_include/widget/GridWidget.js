@@ -273,7 +273,7 @@ define([
                                 });
                             }),
                             filter: this.getFilterControl(curAttributeDef.inputType),
-                            filterArgs: controlArgs
+                            filterArgs: lang.clone(controlArgs)
                         };
                         if (array.indexOf(featureNames, 'Tree') !== -1) {
                             columnDef.renderExpando = true;

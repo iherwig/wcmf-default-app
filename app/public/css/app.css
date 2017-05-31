@@ -151,6 +151,11 @@ label {
   font-weight: normal;
 }
 
+.dgrid .dijitTextBox {
+  width: calc(100% - 22px);
+  display: inline-block;
+}
+
 .dgrid-selected, .dgrid-selected .dgrid-cell {
   background-color: #08c;
 }
