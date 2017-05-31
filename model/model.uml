@@ -1000,6 +1000,20 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_864Hx6prEeaGbp23C_zkpg" value="$principalFactory"/>
                 </ownedAttribute>
               </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_XVX_wEZOEeeLZa5OKBzA3A" name="DynamicRoles">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_XVX_wUZOEeeLZa5OKBzA3A" name="creator" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XVX_wkZOEeeLZa5OKBzA3A" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XVX_w0ZOEeeLZa5OKBzA3A" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_XVX_xEZOEeeLZa5OKBzA3A" value="$creatorRole"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_dVhkUEZOEeeLZa5OKBzA3A" name="CreatorRole">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_dVhkUUZOEeeLZa5OKBzA3A" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dVhkUkZOEeeLZa5OKBzA3A" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dVhkU0ZOEeeLZa5OKBzA3A" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_dVhkVEZOEeeLZa5OKBzA3A" value="wcmf\lib\security\principal\impl\CreatorRole"/>
+                </ownedAttribute>
+              </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Package" xmi:id="_8658YKprEeaGbp23C_zkpg" name="log.ini">
               <packagedElement xmi:type="uml:Class" xmi:id="_8658YaprEeaGbp23C_zkpg" name="Root">
@@ -2393,4 +2407,6 @@
   <Chronos:ChiController xmi:id="_xpsLoC3lEeeXlbGiPETVvw" base_Class="_xjVsAC3lEeeXlbGiPETVvw"/>
   <Chronos:ChiActionKey xmi:id="__zqVAC37EeeXlbGiPETVvw" action="importCSV" base_Association="_6TVgAC37EeeXlbGiPETVvw"/>
   <Chronos:ChiActionKey xmi:id="_M0REkC38EeeXlbGiPETVvw" action="continue" base_Association="_ER4z0C38EeeXlbGiPETVvw"/>
+  <Chronos:ChiSystem xmi:id="_XayrQEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_XVX_wEZOEeeLZa5OKBzA3A"/>
+  <Chronos:ChiSystem xmi:id="_dVkAkEZOEeeLZa5OKBzA3A" plattform="wcmf" config="security.ini" base_Class="_dVhkUEZOEeeLZa5OKBzA3A"/>
 </xmi:XMI>
