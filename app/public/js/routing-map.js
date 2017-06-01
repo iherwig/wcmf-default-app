@@ -66,6 +66,16 @@ define([
             widget: mid('./ui/admin/AdminPage'),
             layers: l.admin || []
         },
+        lockList: {
+            schema: p + 'admin/Lock',
+            widget: mid('./ui/admin/LockListPage'),
+            layers: l.admin || []
+        },
+        lock: {
+            schema: p + 'admin/Lock/:id',
+            widget: mid('./ui/admin/LockPage'),
+            layers: l.admin || []
+        },
         permissionList: {
             schema: p + 'admin/Permission',
             widget: mid('./ui/admin/PermissionListPage'),

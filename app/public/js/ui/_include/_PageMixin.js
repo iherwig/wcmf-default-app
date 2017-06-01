@@ -146,7 +146,7 @@ define([
                   pathParams = eval("({ "+pathParamsStr+" })");
                 }
                 var url = route.assemble(pathParams);
-                node.href = url;
+                query('a', node).attr('href', url);
 
                 var queryStr = domAttr.get(node, 'data-wcmf-queryparams');
                 if (queryStr) {

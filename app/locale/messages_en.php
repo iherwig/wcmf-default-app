@@ -40,11 +40,11 @@ $messages_en['A language for which a translation of the model can be created. Th
 // file(s): public/js/ui/data/widget/PermissionDlgWidget.js
 $messages_en['allow'] = '';
 // file(s): lib/presentation/ApplicationError.php
-$messages_en['An unspecified error occured.'] = '';
+$messages_en['An unspecified error occurred.'] = '';
 // file(s): lib/presentation/ApplicationError.php
-$messages_en['An unspecified fatal error occured.'] = '';
+$messages_en['An unspecified fatal error occurred.'] = '';
 // file(s): lib/presentation/ApplicationError.php
-$messages_en['An unspecified warning occured.'] = '';
+$messages_en['An unspecified warning occurred.'] = '';
 // file(s): src/model/_base/PublisherRDBMapper.php
 $messages_en['A publisher publishes books.'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
@@ -197,10 +197,10 @@ $messages_en['Initialization'] = '';
 $messages_en['Inserted objects'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language'] = '';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -217,14 +217,18 @@ $messages_en['Loading tree: continue with %0%'] = '';
 $messages_en['Lock'] = '';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
 $messages_en['Locking <em>%0%</em>'] = '';
+// file(s): public/js/ui/admin/LockListPage.js, public/js/ui/admin/LockPage.js
+$messages_en['Lock Management'] = '';
+// file(s): public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Locks'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
-$messages_en['login'] = '';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_en['Login'] = '';
+// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
+$messages_en['login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html

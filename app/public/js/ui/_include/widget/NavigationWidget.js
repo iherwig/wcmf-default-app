@@ -53,6 +53,7 @@ define([
             this.userName = User.getLogin();
             this.userType = Model.getSimpleTypeName(config.app.userType);
             this.permissionType = Model.getSimpleTypeName(config.app.permissionType);
+            this.lockType = Model.getSimpleTypeName(config.app.lockType);
         },
 
         postCreate: function() {

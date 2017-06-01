@@ -68,6 +68,8 @@ var appSrc = [
     "app/js/ui/_include/widget/ObjectSelectDlgWidget",
     "app/js/ui/_include/widget/PopupDlgWidget",
     "app/js/ui/admin/AdminPage",
+    "app/js/ui/admin/LockListPage",
+    "app/js/ui/admin/LockPage",
     "app/js/ui/admin/PermissionListPage",
     "app/js/ui/admin/PermissionPage",
     "app/js/ui/admin/PrincipalListPage",

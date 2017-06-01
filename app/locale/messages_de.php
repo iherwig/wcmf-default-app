@@ -40,11 +40,11 @@ $messages_de['A language for which a translation of the model can be created. Th
 // file(s): public/js/ui/data/widget/PermissionDlgWidget.js
 $messages_de['allow'] = 'Erlaubt';
 // file(s): lib/presentation/ApplicationError.php
-$messages_de['An unspecified error occured.'] = '';
+$messages_de['An unspecified error occurred.'] = 'Es ist ein Fehler aufgetreten.';
 // file(s): lib/presentation/ApplicationError.php
-$messages_de['An unspecified fatal error occured.'] = '';
+$messages_de['An unspecified fatal error occurred.'] = 'Es ist ein schwerer Fehler aufgetreten.';
 // file(s): lib/presentation/ApplicationError.php
-$messages_de['An unspecified warning occured.'] = '';
+$messages_de['An unspecified warning occurred.'] = 'Es ist eine Warnung aufgetreten.';
 // file(s): src/model/_base/PublisherRDBMapper.php
 $messages_de['A publisher publishes books.'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
@@ -197,10 +197,10 @@ $messages_de['Initialization'] = 'Initialisierung';
 $messages_de['Inserted objects'] = 'Erstellte Objekte';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_de['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_de['Language'] = 'Sprache';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_de['Language [Pl.]'] = 'Sprachen';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -217,14 +217,18 @@ $messages_de['Loading tree: continue with %0%'] = 'Lade Baum: weiter mit %0%';
 $messages_de['Lock'] = 'Sperre';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
 $messages_de['Locking <em>%0%</em>'] = 'Sperre <em>%0%</em>';
+// file(s): public/js/ui/admin/LockListPage.js, public/js/ui/admin/LockPage.js
+$messages_de['Lock Management'] = 'Sperrmanagement';
+// file(s): public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_de['Locks'] = 'Sperren';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php
 $messages_de['Lock [Pl.]'] = 'Sperren';
 // file(s): application/views/plugins/function.translate.php
 $messages_de['Logged in as %0% since %1%'] = 'Angemeldet als %0% seit %1%';
-// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
-$messages_de['login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_de['Login'] = 'Anmeldename';
+// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
+$messages_de['login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Logout'] = 'Abmelden';
 // file(s): public/js/ui/home/template/HomePage.html
