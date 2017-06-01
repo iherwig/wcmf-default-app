@@ -137,6 +137,7 @@ function(
             deferredList.push(ControlFactory.loadControlClasses(this.type));
             // check instance permissions
             var requiredPermissions = [
+                cleanOid+'??create',
                 cleanOid+'??update',
                 cleanOid+'??delete',
                 '??setPermissions'
@@ -193,8 +194,10 @@ function(
                                 inputType: attribute.inputType,
                                 entity: this.entity
                             });
-                            if (this.permissions[cleanOid+'??update'] === true &&
-                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true) {
+                            var canCreate = this.permissions[cleanOid+'??create'] === true;
+                            var canUpdate = this.permissions[cleanOid+'??update'] === true &&
+                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true;
+                            if ((this.isNew && canCreate || !this.isNew && canUpdate)) {
                                 this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
                                     var widgetValue = widget.get("value");
                                     var entityValue = this.entity.get(widget.name);
