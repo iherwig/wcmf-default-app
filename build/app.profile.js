@@ -137,7 +137,9 @@ var profile = {
     layerOptimize: "closure",
     optimize: "closure",
     optimizeOptions: {
-        languageIn: Packages.com.google.javascript.jscomp.CompilerOptions.LanguageMode.ECMASCRIPT5
+        languageIn: typeof Packages !== 'undefined' ?
+            Packages.com.google.javascript.jscomp.CompilerOptions.LanguageMode.ECMASCRIPT5 :
+            'ECMASCRIPT5'
     },
     cssOptimize: "comments",
     maxOptimizationProcesses: 1,

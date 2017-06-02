@@ -55,20 +55,41 @@
     <property name="package.file" value="${build.base}${app.name}_${version}.${build}.zip"/>
   </target>
 
-  <target name="compile" description="build the frontend" >
-    <condition property="dojo.build.script" value="${dojo.build.script_windows}"
-               else="${dojo.build.script_unix}">
-       <os family="windows"/>
-    </condition>
-    <condition property="dojo.build.args" value="profile=${dojo.build.profile}"
-               else="--bin java --profile ${dojo.build.profile}">
-       <os family="windows"/>
-    </condition>
-    <exec dir="${dojo.build.base}" executable="${dojo.build.script}" output="${dojo.build.log}">
-      <arg line="${dojo.build.args}"/>
-    </exec>
+  <target name="compile" depends="compile-node, compile-java"
+    description="build the frontend">
     <loadfile property="compile.log" srcFile="${dojo.build.log}"/>
     <echo level="debug">${compile.log}</echo>
+  </target>
+
+  <target name="compile-node" if="${dojo.build.node}">
+    <echo level="info" message="Building the frontend using node"/>
+    <exec executable="node"
+        dir="${dojo.build.base}/util/buildscripts"
+        output="${dojo.build.log}"
+    >
+      <arg value="${dojo.build.base}/dojo/dojo.js"/>
+      <arg value="load=build"/>
+      <arg value="profile=${dojo.build.profile}"/>
+    </exec>
+  </target>
+  <target name="compile-java" unless="${dojo.build.node}">
+    <echo level="info" message="Building the frontend using java"/>
+    <java classname="org.mozilla.javascript.tools.shell.Main"
+        fork="true"
+        maxmemory="1024m"
+        dir="${dojo.build.base}/util/buildscripts"
+        output="${dojo.build.log}"
+    >
+      <arg value="${dojo.build.base}/dojo/dojo.js"/>
+      <arg value="baseUrl=${dojo.build.base}/dojo"/>
+      <arg value="load=build"/>
+      <arg value="profile=${dojo.build.profile}"/>
+      <classpath>
+        <pathelement location="${dojo.build.base}/util/shrinksafe/js.jar"/>
+        <pathelement location="${dojo.build.base}/util/closureCompiler/compiler.jar"/>
+        <pathelement location="${dojo.build.base}/util/shrinksafe/shrinksafe.jar"/>
+      </classpath>
+    </java>
   </target>
 
   <target name="dist-fe" depends="properties,buildinfo"
