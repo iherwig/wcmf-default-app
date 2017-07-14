@@ -267,6 +267,9 @@ function(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error, this.isModified);
                 })),
+                topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
+                    this.showBackendError(error, this.isModified);
+                })),
                 on(dojo.body(), "keydown", lang.hitch(this, function (e) {
                     if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                         e.stopPropagation();

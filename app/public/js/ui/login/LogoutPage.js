@@ -6,7 +6,7 @@ define([
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
-    "../../Cookie",
+    "../../User",
     "../../locale/Dictionary",
     "../../action/Logout",
     "dojo/text!./template/LogoutPage.html"
@@ -18,7 +18,7 @@ define([
     _Page,
     _Notification,
     NavigationWidget,
-    Cookie,
+    User,
     Dict,
     Logout,
     template
@@ -36,8 +36,9 @@ define([
 
         _logout: function() {
             new Logout().execute().then(lang.hitch(this, function(response) {
+                // end session
+                User.destroy();
                 // redirect to login
-                Cookie.destroyAll();
                 window.location.assign(config.app.backendUrl);
             }), lang.hitch(this, function(error) {
                 // error

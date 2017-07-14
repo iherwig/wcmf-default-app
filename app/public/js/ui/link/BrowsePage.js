@@ -71,6 +71,9 @@ define([
             topic.subscribe("store-error", lang.hitch(this, function(error) {
                 this.showBackendError(error);
             }));
+            topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
+                this.showBackendError(error);
+            }));
             tree.placeAt(dom.byId('resourcetree'));
             tree.startup();
             domGeom.setContentSize(tree.domNode, { h: win.getBox().h-40 });

@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/promise/all",
+    "dojo/topic",
     "dojo/Deferred",
     "dojo/json",
     "./Cookie",
@@ -11,6 +12,7 @@ define([
     declare,
     array,
     all,
+    topic,
     Deferred,
     JSON,
     Cookie,
@@ -21,7 +23,7 @@ define([
     });
 
     /**
-     * Create the user instance
+     * Create the user instance. Called, when the session is started
      * @param login The login name
      * @param roles Array of role names
      */
@@ -30,6 +32,47 @@ define([
             login: login,
             roles: roles
         });
+    };
+
+    /**
+     * Initialize the user
+     * @return Deferred
+     */
+    User.initialize = function() {
+        // initialize session check
+        User._sessionCheckInterval = setInterval(function() {
+            new GetUserConfig({
+                key: "check"
+            }).execute().then(function(results) {
+            }, function(error) {
+                // error
+                topic.publish('backend-error', error, true);
+            });
+        }, 10000);
+
+        // load config
+        var deferred = new Deferred();
+        var deferredList = {};
+        deferredList["gridConfig"] = new GetUserConfig({
+            key: "grid"
+        }).execute();
+        all(deferredList).then(function(results) {
+            User._config["grid"] = JSON.parse(results["gridConfig"].value, true);
+            deferred.resolve({});
+        }, function(error) {
+            deferred.reject(error);
+        });
+        return deferred;
+    };
+
+    /**
+     * Destroy the user instance. Called, when the session is ended
+     * @param login The login name
+     * @param roles Array of role names
+     */
+    User.destroy = function() {
+        Cookie.destroyAll();
+        clearInterval(User._sessionCheckInterval);
     };
 
     /**
@@ -64,25 +107,6 @@ define([
     };
 
     /**
-     * Initialize the user configuration
-     * @return Deferred
-     */
-    User.initializeConfig = function() {
-        var deferred = new Deferred();
-        var deferredList = {};
-        deferredList["gridConfig"] = new GetUserConfig({
-            key: "grid"
-        }).execute();
-        all(deferredList).then(function(results) {
-            User._config["grid"] = JSON.parse(results["gridConfig"].value, true);
-            deferred.resolve({});
-        }, function(error) {
-            deferred.reject(error);
-        });
-        return deferred;
-    };
-
-    /**
      * Set a user configuration
      * @param name The configuration name
      * @param value The configuration value
@@ -105,6 +129,7 @@ define([
     };
 
     User._config = {};
+    User._sessionCheckInterval = null;
 
     return User;
 });

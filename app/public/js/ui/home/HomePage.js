@@ -57,6 +57,9 @@ define([
             this.own(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error);
+                })),
+                topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
+                    this.showBackendError(error);
                 }))
             );
         },

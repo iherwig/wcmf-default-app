@@ -51,6 +51,7 @@ define([
                 password: data.password
             }).execute().then(lang.hitch(this, function(response) {
                 // success
+                // start session
                 User.create(data.user, response.roles);
                 if (typeof dlg.success === 'function') {
                     dlg.success(this);

@@ -36,6 +36,14 @@ define([
     return declare([], {
         node: null,
         widget: null,
+        loginDlg: null,
+
+        constructor: function(params) {
+            // subscribe to backend error notifications
+            topic.subscribe("backend-error", lang.hitch(this, function(errorData, noRefresh) {
+                this.showBackendError(errorData, noRefresh);
+            }));
+        },
 
         showNotification: function (options) {
             var alertClass = 'alert-info';
@@ -118,21 +126,33 @@ define([
             var error = BackendError.parseResponse(errorData);
             if (error.code === 'SESSION_INVALID') {
                 // prevent circular dependency
-                require(['./widget/LoginDlgWidget'], function(LoginDlg) {
-                    new LoginDlg({
-                        success: function() {
-                            topic.publish('refresh', function(request) {
-                                return !noRefresh;
-                            });
-                        }
-                    }).show();
-                });
+                if (!this.loginDlg) {
+                    require(['./widget/LoginDlgWidget'], lang.hitch(this, function(LoginDlg) {
+                        this.loginDlg = LoginDlg;
+                        this.showLoginDlg(noRefresh);
+                    }));
+                }
+                else {
+                    this.showLoginDlg(noRefresh);
+                }
             }
             else {
                 this.showNotification({
                     type: "error",
                     message: error.message
                 });
+            }
+        },
+        
+        showLoginDlg: function (noRefresh) {
+            if (this.loginDlg && !this.loginDlg.isShowing) {
+                new this.loginDlg({
+                    success: lang.hitch(this, function() {
+                        topic.publish('refresh', function(request) {
+                            return !noRefresh;
+                        });
+                    })
+                }).show();
             }
         }
     });

@@ -51,7 +51,7 @@ define([
             deferredList["rootTypePermissions"] = new CheckPermissions({
                 operations: requiredPermissions
             }).execute();
-            deferredList["userConfig"] = User.initializeConfig();
+            deferredList["userInit"] = User.initialize();
         }
 
         // wait for all operations

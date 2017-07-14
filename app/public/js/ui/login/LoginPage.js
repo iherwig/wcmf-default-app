@@ -91,6 +91,7 @@ define([
             }).execute().then(lang.hitch(this, function(response) {
                 // success
                 this.loginBtn.reset();
+                // start session
                 User.create(data.user, response.roles);
 
                 // run startup code

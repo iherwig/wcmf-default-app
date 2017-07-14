@@ -12,6 +12,7 @@ define([
     "./routing-map",
     "./Startup",
     "./AuthToken",
+    "./User",
     "dojo/domReady!"
 ], function (
     require,
@@ -26,7 +27,8 @@ define([
     populateRouter,
     routingMap,
     Startup,
-    AuthToken
+    AuthToken,
+    User
 ) {
     return declare([Application], {
 
@@ -38,6 +40,13 @@ define([
                 var baseUrl = config.app.backendUrl;
                 var request = new Request(window.location.href);
                 var route = request.getPathname().replace(baseUrl, '');
+
+                // redirect to home page, if user is logged in already
+                if (window.location.pathname === baseUrl && User.isLoggedIn()) {
+                    var route = this.router.getRoute("home");
+                    var url = route.assemble();
+                    window.location.assign(url);
+                }
 
                 // redirect to login, if another route is requested and no
                 // authentication cookie is found
