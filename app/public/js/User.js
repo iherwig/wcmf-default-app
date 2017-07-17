@@ -1,6 +1,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
+    "dojo/_base/config",
     "dojo/promise/all",
     "dojo/topic",
     "dojo/Deferred",
@@ -11,6 +12,7 @@ define([
 ], function (
     declare,
     array,
+    config,
     all,
     topic,
     Deferred,
@@ -40,15 +42,18 @@ define([
      */
     User.initialize = function() {
         // initialize session check
-        User._sessionCheckInterval = setInterval(function() {
-            new GetUserConfig({
-                key: "check"
-            }).execute().then(function(results) {
-            }, function(error) {
-                // error
-                topic.publish('backend-error', error, true);
-            });
-        }, 10000);
+        var sessionCheck = parseInt(config.app.sessionCheck);
+        if (sessionCheck > 0) {
+            User._sessionCheckInterval = setInterval(function() {
+                new GetUserConfig({
+                    key: "check"
+                }).execute().then(function(results) {
+                }, function(error) {
+                    // error
+                    topic.publish('backend-error', error, true);
+                });
+            }, sessionCheck);
+        }
 
         // load config
         var deferred = new Deferred();
@@ -72,7 +77,9 @@ define([
      */
     User.destroy = function() {
         Cookie.destroyAll();
-        clearInterval(User._sessionCheckInterval);
+        if (User._sessionCheckInterval) {
+            clearInterval(User._sessionCheckInterval);
+        }
     };
 
     /**

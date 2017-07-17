@@ -80,7 +80,8 @@ class RootController extends RootControllerBase {
     $mediaAbsPath = $configuration->getDirectoryValue('uploadDir', 'media');
     $inputTypes = $configuration->getSection('inputTypes');
     $displayTypes = $configuration->getSection('displayTypes');
-
+    $sessionCheck = $configuration->getValue('sessionCheck', 'application');
+    
     if ($this->principalFactory instanceof DefaultPrincipalFactory) {
       $roleType = $configuration->getValue('roleType', 'principalFactory');
       $userType = $configuration->getValue('userType', 'principalFactory');
@@ -148,6 +149,7 @@ class RootController extends RootControllerBase {
       'roleType' => $roleType,
       'permissionType' => $permissionType,
       'lockType' => $lockType,
+      'sessionCheck' => $sessionCheck,
     ];
 
     $response->setValue('appTitle', $appTitle);
