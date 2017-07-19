@@ -149,10 +149,10 @@ function(
             if (this.permissions[this.type+'??copy'] === true) {
                 var copyAction = new Copy({
                     targetoid: this.entity.get('oid'),
-                    init: lang.hitch(this, function(data) {
+                    init: lang.hitch(this, function() {
                         this.showNotification({
                             type: "process",
-                            message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(data)])
+                            message: Dict.translate("Copying <em>%0%</em>", [this.typeClass.getDisplayValue(copyAction.entity)])
                         });
                     }),
                     callback: lang.hitch(this, function(response) {
