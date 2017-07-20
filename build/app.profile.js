@@ -204,8 +204,8 @@ var profile = {
               [".", ".", /(\/\.)|(~$)|(samples)/]
           ]
       },
-      { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery' },
-      { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui' },
+      { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery', main: 'jquery.min' },
+      { name: 'jquery-ui', location: 'vendor/jquery-ui', destLocation: 'vendor/jquery-ui', main: 'jquery-ui.min' },
       { name: 'elfinder', location: 'vendor/studio-42/elfinder-js', destLocation: 'vendor/studio-42/elfinder-js' },
 
       { name: 'app', location: '.', destLocation: '.',
