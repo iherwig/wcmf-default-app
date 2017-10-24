@@ -65,9 +65,6 @@ define([
                 })),
                 topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
                     this.showBackendError(error);
-                })),
-                topic.subscribe("ui/_include/widget/GridWidget/refresh-complete", lang.hitch(this, function(grid) {
-                    this.statusNode.innerHTML = Dict.translate("%0% item(s)", [grid._total]);
                 }))
             );
         },

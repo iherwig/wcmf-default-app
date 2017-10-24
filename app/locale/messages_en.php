@@ -1,7 +1,7 @@
 <?php
 $messages_en = [];
 $messages_en[''] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js, public/js/ui/search/SearchResultPage.js
+// file(s): public/js/ui/_include/widget/GridWidget.js
 $messages_en['%0% item(s)'] = '';
 // file(s): public/js/ui/data/input/widget/MultiSelectBox.js
 $messages_en['%0% selected'] = '';
@@ -25,10 +25,10 @@ $messages_en['<em>%0%</em> was successfully updated'] = '';
 $messages_en['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
 $messages_en['A book is published by a publisher and consists of chapters.'] = '';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Action'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['action'] = '';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_en['Action'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Active'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
@@ -85,10 +85,10 @@ $messages_en['Confirm Import'] = '';
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
-// file(s): src/model/_base/ChapterRDBMapper.php
-$messages_en['content'] = '';
 // file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Content'] = '';
+// file(s): src/model/_base/ChapterRDBMapper.php
+$messages_en['content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -197,16 +197,18 @@ $messages_en['Initialization'] = '';
 $messages_en['Inserted objects'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
-// file(s): src/model/wcmf/_base/LanguageRDBMapper.php
-$messages_en['Language'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['language'] = '';
+// file(s): src/model/wcmf/_base/LanguageRDBMapper.php
+$messages_en['Language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
 // file(s): public/js/ui/home/template/HomePage.html
 $messages_en['Last Updates'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['last_editor'] = '';
+// file(s): public/js/ui/data/widget/EntityRelationWidget.js
+$messages_en['Linking objects'] = '';
 // file(s): public/js/ui/data/EntityListPage.js
 $messages_en['List view class for type <em>%0%</em> not found.'] = '';
 // file(s): application/controller/BatchDisplayController.php, public/js/ui/_include/widget/GridWidget.js
@@ -225,10 +227,10 @@ $messages_en['Locks'] = '';
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): public/js/ui/login/LoginPage.js
-$messages_en['Login'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['login'] = '';
+// file(s): public/js/ui/login/LoginPage.js
+$messages_en['Login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -281,6 +283,8 @@ $messages_en['No route matching the request path can be found.'] = '';
 $messages_en['NULLType'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['objectid'] = '';
+// file(s): public/js/ui/data/widget/EntityRelationWidget.js
+$messages_en['Objects were successfully linked'] = '';
 // file(s): public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['OK'] = '';
 // file(s): public/js/ui/settings/template/SettingsPage.html
@@ -303,10 +307,10 @@ $messages_en['Page not found'] = '';
 $messages_en['ParentChapter'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['ParentChapter [Pl.]'] = 'ParentChapters';
-// file(s): src/model/wcmf/_base/UserRDBMapper.php
-$messages_en['password'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Password'] = '';
+// file(s): src/model/wcmf/_base/UserRDBMapper.php
+$messages_en['password'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['Permission'] = '';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js

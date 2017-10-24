@@ -109,7 +109,8 @@ function(
                         return attribute.name;
                     }),
                     actions: this.getGridActions(),
-                    enabledFeatures: enabledFeatures
+                    enabledFeatures: enabledFeatures,
+                    autoHeight: true
                 }, this.gridNode);
                 this.gridWidget.startup();
                 domClass.add(this.gridWidget.gridNode, "multiplicity-"+this.relation.maxMultiplicity);
@@ -245,8 +246,20 @@ function(
                 relation: this.relation,
                 init: lang.hitch(this, function() {
                     this.hideNotification();
+                }),
+                callback: lang.hitch(this, function(oids) {
+                    this.showNotification({
+                        type: "process",
+                        message: Dict.translate("Linking objects")
+                    });
                 })
             }).execute().then(lang.hitch(this, function(response) {
+              var message = Dict.translate("Objects were successfully linked");
+                this.showNotification({
+                    type: "ok",
+                    message: message,
+                    fadeOut: true
+                });
                 // success
                 this.gridWidget.refresh();
             }), lang.hitch(this, function(error) {

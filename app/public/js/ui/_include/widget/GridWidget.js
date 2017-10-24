@@ -17,12 +17,11 @@ define([
     "dgrid/Editor",
     "dgrid/Selector",
     "dgrid/Tree",
-    "dojo/dom",
     "dojo/dom-attr",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/query",
-    "dojo/window",
     "dojo/topic",
     "dojo/on",
     "dojo/when",
@@ -53,12 +52,11 @@ define([
     Editor,
     Selector,
     Tree,
-    dom,
     domAttr,
+    domClass,
     domConstruct,
     domGeom,
     query,
-    win,
     topic,
     on,
     when,
@@ -100,7 +98,11 @@ define([
             'Tree': Tree
         },
 
+        authoHeight: false,
+        maxAutoHeightRows: 10,
+
         dndInProgress: false,
+        height: null,
 
         constructor: function (params) {
             if (params && params.actions) {
@@ -120,8 +122,10 @@ define([
 
                 this.grid = this.buildGrid(controls);
                 this.grid.startup();
+                if (this.height !== null) {
+                  this.setHeight(this.height);
+                }
                 this.own(
-                    on(window, "resize", lang.hitch(this, this.onResize)),
                     on(this.grid, "click", lang.hitch(this, function(e) {
                         // close summary tooltip
                         if (this.summaryDialog) {
@@ -192,7 +196,6 @@ define([
                         this.filter(this.getFilter());
                     }))
                 );
-                this.onResize();
             }));
         },
 
@@ -389,8 +392,10 @@ define([
             });
 
             grid.on("dgrid-refresh-complete", lang.hitch(this, function(evt) {
-                topic.publish('ui/_include/widget/GridWidget/refresh-complete', evt.grid);
+                this.gridStatus.innerHTML = Dict.translate("%0% item(s)", [grid.get('total')]);
                 grid.resize();
+                this.resize();
+                topic.publish('ui/_include/widget/GridWidget/refresh-complete', evt.grid);
             }));
 
             grid.on("dgrid-columnstatechange", lang.hitch(this, function(evt) {
@@ -503,31 +508,50 @@ define([
             }
         },
 
-        onResize: function() {
-            if (window.innerWidth > 640) {
-                // TODO: remove magic number
-                var vs = win.getBox();
+        setHeight: function(height) {
+            if (this.grid) {
+                // set directly, if already created
+                domAttr.set(this.grid.domNode, "style", {height: height+"px"});
+            }
+            else {
+              // set later
+              this.height = height;
+            }
+        },
+        
+        getHeight: function(numRows) {
+          var headerHeight = 0;
+          var rowHeight = 0;
+          
+          var header = query(".dgrid-header", this.grid.domNode);
+          if (header.length > 0) {
+            headerHeight = domGeom.getMarginBox(header[0]).h;
+          }
+          var row = query(".dgrid-row", this.grid.domNode);
+          if (row.length > 0) {
+            rowHeight = domGeom.getMarginBox(row[0]).h;
+          }
+          return headerHeight + numRows*rowHeight;
+        },
 
-                // calculate height of dynamic elements
-                var navbarHeight = 0;
-                var toolbarHeight = 0;
-                var footerHeight = 0;
-
-                var navbar = query(".navbar");
-                if (navbar.length > 0) {
-                  navbarHeight = domGeom.getMarginBox(navbar[0]).h;
+        resize: function() {
+            if (this.autoHeight) {
+                var numRows = this.grid.get('total');
+                if (numRows == 0) {
+                    // empty display
+                    this.setHeight(0);
                 }
-                var toolbar = query('[data-dojo-attach-point$=\"toolbarNode\"]');
-                if (toolbar.length > 0) {
-                  toolbarHeight = domGeom.getMarginBox(toolbar[0]).h;
+                else if (this.maxAutoHeightRows > numRows) {
+                    // display all rows
+                    domClass.add(this.grid.domNode, 'dgrid-autoheight');
+                    var height = this.getHeight(numRows);
+                    this.setHeight(height);
                 }
-                var footer = dom.byId("footer");
-                if (footer) {
-                  footerHeight = domGeom.getMarginBox(footer).h;
-                }
-                var h = this.height ? this.height : vs.h-navbarHeight-toolbarHeight-footerHeight-210;
-                if (h >= 0) {
-                    domAttr.set(this.grid.domNode, "style", {height: h+"px"});
+                else {
+                  // display only maxAutoHeightRows
+                  domClass.remove(this.grid.domNode, 'dgrid-autoheight');
+                  var height = this.getHeight(this.maxAutoHeightRows);
+                  this.setHeight(height);
                 }
             }
         }

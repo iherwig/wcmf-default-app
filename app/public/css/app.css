@@ -134,14 +134,6 @@ label {
 }
 
 /* dgrid */
-.relation-container .dgrid {
-  height: 500px !important;
-}
-
-.relation-container .dgrid.multiplicity-1 {
-  height: 55px !important;
-}
-
 .dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
   background-color: #08c;
 }

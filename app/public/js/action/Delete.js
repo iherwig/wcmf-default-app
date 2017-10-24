@@ -26,6 +26,7 @@ define([
 
         // action parameters
         entity: null,
+        callback: null, /* Optional function, that will be called before actual execution */
 
         execute: function() {
             var deferred = new Deferred();
@@ -43,6 +44,9 @@ define([
                         // error
                         deferred.reject(error);
                     }));
+                    if (this.callback) {
+                        this.callback();
+                    }
                     return storeDeferred;
                 })
             }).show();

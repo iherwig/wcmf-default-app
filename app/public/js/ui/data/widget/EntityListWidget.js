@@ -6,8 +6,12 @@ define( [
     "dojo/promise/all",
     "dojo/on",
     "dojo/topic",
+    "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/dom-geometry",
+    "dojo/query",
+    "dojo/window",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
@@ -37,8 +41,12 @@ function(
     all,
     on,
     topic,
+    dom,
     domClass,
     domConstruct,
+    domGeom,
+    query,
+    win,
     _WidgetBase,
     _TemplatedMixin,
     _WidgetsInTemplateMixin,
@@ -125,12 +133,14 @@ function(
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
                 this.importBtn.set("disabled", this.permissions[this.type+'??importCSV'] !== true);
                 this.exportBtn.set("disabled", this.permissions[this.type+'??exportCSV'] !== true);
+                this.onResize();
 
                 // notify listeners
                 topic.publish("entity-list-widget-created", this);
             }));
 
             this.own(
+                on(window, "resize", lang.hitch(this, this.onResize)),
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
                     this.showBackendError(error);
                 })),
@@ -149,11 +159,34 @@ function(
                         message: Dict.translate("Finished"),
                         fadeOut: true
                     });
-                })),
-                topic.subscribe("ui/_include/widget/GridWidget/refresh-complete", lang.hitch(this, function(grid) {
-                    this.statusNode.innerHTML = Dict.translate("%0% item(s)", [grid._total]);
                 }))
             );
+        },
+
+        onResize: function() {
+            var vs = win.getBox();
+
+            // calculate height of dynamic elements
+            var navbarHeight = 0;
+            var toolbarHeight = 0;
+            var footerHeight = 0;
+
+            var navbar = query(".navbar");
+            if (navbar.length > 0) {
+              navbarHeight = domGeom.getMarginBox(navbar[0]).h;
+            }
+            var toolbar = query('[data-dojo-attach-point$=\"toolbarNode\"]');
+            if (toolbar.length > 0) {
+              toolbarHeight = domGeom.getMarginBox(toolbar[0]).h;
+            }
+            var footer = dom.byId("footer");
+            if (footer) {
+              footerHeight = domGeom.getMarginBox(footer).h;
+            }
+            var h = this.height ? this.height : vs.h-navbarHeight-toolbarHeight-footerHeight-210;
+            if (h >= 0) {
+                this.gridWidget.setHeight(h);
+            }
         },
 
         getGridFeatures: function() {
