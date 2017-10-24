@@ -21,8 +21,8 @@ env:
 before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
-  - "wget http://selenium-release.storage.googleapis.com/3.6/selenium-server-standalone-3.6.0.jar"
-  - "java -jar selenium-server-standalone-3.6.0.jar &"
+  - "wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar"
+  - "java -jar selenium-server-standalone-2.53.1.jar &"
   - sleep 5
 
   - mysql -e 'CREATE DATABASE wcmf_testapp;'
