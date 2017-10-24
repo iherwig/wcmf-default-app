@@ -20,7 +20,7 @@ env:
 
 before_script:
   - sudo apt-get install -y dbus
-  - dbus-uuidgen > /etc/machine-id
+  - sudo dbus-uuidgen > /etc/machine-id
 
   - "sh -e /etc/init.d/xvfb start"
   - "export DISPLAY=:99.0"
