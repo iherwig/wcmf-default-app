@@ -26,13 +26,14 @@ use wcmf\lib\presentation\Application;
 new ClassLoader(WCMF_BASE);
 
 $configPath = WCMF_BASE.'app/config/';
+$cachePath = dirname($configPath).'/cache/static/config/';
 
 // setup logging
 $logger = new MonologFileLogger('main', $configPath.'log.ini');
 LogManager::configure($logger);
 
 // setup configuration
-$configuration = new InifileConfiguration($configPath);
+$configuration = new InifileConfiguration($configPath, $cachePath);
 $configuration->addConfiguration('backend.ini');
 
 // setup object factory
