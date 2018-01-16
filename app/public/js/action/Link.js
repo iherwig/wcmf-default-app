@@ -33,7 +33,7 @@ define([
         // action parameters
         source: null, /* Entity */
         relation: null,
-        callback: null, /* Optional function, that will be called before actual execution */
+        beforeCallback: null, /* Optional function, that will be called before actual execution */
 
         execute: function() {
             var relationType = this.relation.type;
@@ -63,15 +63,15 @@ define([
                             deferredList.push(relStore.put(entity, {overwrite: true}));
                         }
                         all(deferredList).then(lang.hitch(this, function(results) {
-                            // callback completes
+                            // success
                             deferred.resolve(results);
                         }), lang.hitch(this, function(error) {
                             // error
                             deferred.reject(error);
                         }));
                     }));
-                    if (this.callback) {
-                        this.callback(oids);
+                    if (this.beforeCallback) {
+                        this.beforeCallback(oids);
                     }
                     return all(loadPromises);
                 })

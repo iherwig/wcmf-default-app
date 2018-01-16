@@ -25,7 +25,7 @@ define([
             var store = RelationStore.getStore(this.source.get('oid'), this.relation.name);
             var deferred = new Deferred();
             store.remove(store.getIdentity(this.entity)).then(lang.hitch(this, function(results) {
-                // callback completes
+                // success
                 deferred.resolve(this.entity);
             }), lang.hitch(this, function(error) {
                 // error

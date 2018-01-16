@@ -220,12 +220,12 @@ function(
                     }, copyAction)),
                     callback: lang.hitch(this, function(response) {
                         // success
+                        this.gridWidget.refresh();
                         this.showNotification({
                             type: "ok",
                             message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
-                        this.gridWidget.refresh();
                     }),
                     errback: lang.hitch(this, function(error) {
                         // error

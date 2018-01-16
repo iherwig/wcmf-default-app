@@ -532,9 +532,12 @@ function(
                     else {
                         // success
 
-                        // update entity
+                        // update entity and display
                         this.updateEntity(result);
                         this.entity.set('oid', result.get('oid'));
+                        this.set("headline", this.getHeadline());
+                        this.setModified(false);
+                        this.acquireLock();
 
                         var message = this.isNew ? Dict.translate("<em>%0%</em> was successfully created", [this.typeClass.getDisplayValue(this.entity)]) :
                                 Dict.translate("<em>%0%</em> was successfully updated", [this.typeClass.getDisplayValue(this.entity)]);
@@ -564,9 +567,6 @@ function(
                                 }
                             })
                         });
-                        this.set("headline", this.getHeadline());
-                        this.setModified(false);
-                        this.acquireLock();
                     }
                 }), lang.hitch(this, function(error) {
                     // error
@@ -646,15 +646,15 @@ function(
             }).execute().then(
                 lang.hitch(this, function(response) {
                     // success
+                    this.setLockState(!this.isLocked, true);
+                    // update optimistic lock
+                    this.acquireLock();
                     this.showNotification({
                         type: "ok",
                         message: this.isLocked ? Dict.translate("<em>%0%</em> was successfully unlocked", [displayValue]) :
                                 Dict.translate("<em>%0%</em> was successfully locked", [displayValue]),
                         fadeOut: true
                     });
-                    this.setLockState(!this.isLocked, true);
-                    // update optimistic lock
-                    this.acquireLock();
                 }),
                 lang.hitch(this, function(error) {
                     // check for existing lock

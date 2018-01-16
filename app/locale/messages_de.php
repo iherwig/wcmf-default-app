@@ -281,6 +281,8 @@ $messages_de['NormalImage [Pl.]'] = 'Kapitel';
 $messages_de['No route matching the request path can be found.'] = 'Es wurde keine zur Anfrage passende Route gefunden.';
 // file(s): lib/persistence/impl/NullMapper.php
 $messages_de['NULLType'] = '';
+// file(s): public/js/model/meta/Node.js
+$messages_de['Object'] = 'Objekt';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_de['objectid'] = 'Objekt ID';
 // file(s): public/js/ui/data/widget/EntityRelationWidget.js

@@ -163,31 +163,36 @@ define([
          */
         getDisplayValue: function(entity) {
             var result = '';
-            var oid = entity.get('oid');
-            var type = Model.getTypeFromOid(oid);
-            if (type) {
-                if (Model.isDummyOid(oid)) {
-                    result = Dict.translate("New <em>%0%</em>",
-                        [Dict.translate(Model.getSimpleTypeName(type.typeName))]);
+            if (entity) {
+                var oid = entity.get('oid');
+                var type = Model.getTypeFromOid(oid);
+                if (type) {
+                    if (Model.isDummyOid(oid)) {
+                        result = Dict.translate("New <em>%0%</em>",
+                            [Dict.translate(Model.getSimpleTypeName(type.typeName))]);
+                    }
+                    else {
+                        var values = [];
+                        var renderOptions = { truncate: 20 };
+                        for (var i=0; i<type.displayValues.length; i++) {
+                            var curValue = type.displayValues[i];
+                            var curAttribute = type.getAttribute(curValue);
+                            when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
+                                var length = value ? value.toString().length : 0;
+                                if (value && length > 0) {
+                                    values.push(value);
+                                }
+                            });
+                        }
+                        result = values.join(" - ");
+                    }
                 }
                 else {
-                    var values = [];
-                    var renderOptions = { truncate: 20 };
-                    for (var i=0; i<type.displayValues.length; i++) {
-                        var curValue = type.displayValues[i];
-                        var curAttribute = type.getAttribute(curValue);
-                        when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
-                            var length = value ? value.toString().length : 0;
-                            if (value && length > 0) {
-                                values.push(value);
-                            }
-                        });
-                    }
-                    result = values.join(" - ");
+                    result = oid || Dict.translate("Object");
                 }
             }
             else {
-                result = oid || "unknown";
+                result = Dict.translate("Object")
             }
             return result;
         },

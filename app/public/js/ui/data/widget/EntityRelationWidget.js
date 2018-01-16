@@ -158,12 +158,12 @@ function(
                     }),
                     callback: lang.hitch(this, function(response) {
                         // success
+                        this.gridWidget.refresh();
                         this.showNotification({
                             type: "ok",
                             message: Dict.translate("<em>%0%</em> was successfully copied", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
-                        this.gridWidget.refresh();
                     }),
                     errback: lang.hitch(this, function(error) {
                         // error
@@ -178,12 +178,12 @@ function(
                     var deleteAction = new Delete({
                         callback: lang.hitch(this, function(response) {
                             // success
+                            this.gridWidget.refresh();
                             this.showNotification({
                                 type: "ok",
                                 message: Dict.translate("<em>%0%</em> was successfully deleted", [this.typeClass.getDisplayValue(response)]),
                                 fadeOut: true
                             });
-                            this.gridWidget.refresh();
                         }),
                         errback: lang.hitch(this, function(error) {
                             // error
@@ -199,12 +199,12 @@ function(
                     relation: this.relation,
                     callback: lang.hitch(this, function(response) {
                         // success
+                        this.gridWidget.refresh();
                         this.showNotification({
                             type: "ok",
                             message: Dict.translate("<em>%0%</em> was successfully unlinked", [this.typeClass.getDisplayValue(response)]),
                             fadeOut: true
                         });
-                        this.gridWidget.refresh();
                     }),
                     errback: lang.hitch(this, function(error) {
                         // error
@@ -247,7 +247,7 @@ function(
                 init: lang.hitch(this, function() {
                     this.hideNotification();
                 }),
-                callback: lang.hitch(this, function(oids) {
+                beforeCallback: lang.hitch(this, function(oids) {
                     this.showNotification({
                         type: "process",
                         message: Dict.translate("Linking objects")

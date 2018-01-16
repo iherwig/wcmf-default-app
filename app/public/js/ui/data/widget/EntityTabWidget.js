@@ -93,9 +93,17 @@ define([
                     }
                 })),
                 topic.subscribe("entity-statechange", lang.hitch(this, function(data) {
-                    var tab = this.getTabByOid(data.entity.get('oid'));
+                    var oid = data.entity.get('oid');
+                    var tab = this.getTabByOid(oid);
                     if (tab !== null) {
-                        this.setInstanceTabName(data.entity, tab);
+                        var state = data.entity.getState();
+                        if (state == 'deleted') {
+                            this.closeTab(tab);
+                            this.unpersistTab(oid);
+                        }
+                        else {
+                            this.setInstanceTabName(data.entity, tab);
+                        }
                     }
                 })),
                 // allow to close tabs by sending tab-closed event

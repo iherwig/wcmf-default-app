@@ -281,6 +281,8 @@ $messages_en['NormalImage [Pl.]'] = 'NormalImages';
 $messages_en['No route matching the request path can be found.'] = '';
 // file(s): lib/persistence/impl/NullMapper.php
 $messages_en['NULLType'] = '';
+// file(s): public/js/model/meta/Node.js
+$messages_de['Object'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['objectid'] = '';
 // file(s): public/js/ui/data/widget/EntityRelationWidget.js

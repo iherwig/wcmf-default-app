@@ -32,7 +32,7 @@ function(
                 when(renderer(value, attribute), function(value) {
                     if (options.truncate) {
                         var length = parseInt(options.truncate);
-                        if (attribute.displayType.toLowerCase() === 'text' && length > 0 && value) {
+                        if (attribute.displayType && attribute.displayType.toLowerCase() === 'text' && length > 0 && value) {
                             // strip tags
                             value = domConstruct.create("div", { innerHTML: value }).textContent;
                             if (value.length > length) {

@@ -121,6 +121,10 @@ label {
   display: block;
 }
 
+.dijitTextBoxDisabled input {
+  color: #555 !important;
+}
+
 .entity-page .attribute_group {
   padding: 8px;
   margin: 2px;
@@ -129,7 +133,6 @@ label {
           border-radius: 5px;
 }
 
-/* input groups */
 .entity-page .group_default {
 }
 
