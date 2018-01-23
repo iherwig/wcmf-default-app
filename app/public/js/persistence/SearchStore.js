@@ -21,11 +21,14 @@ define([
         Model: Entity,
 
         parse: function(response) {
-            var data = JSON.parse(response);
-            var result = array.filter(data.list, function(item){
-                return Model.isKnownType(item._type);
-            });
-            return result;
+            if (response) {
+                var data = JSON.parse(response);
+                var result = array.filter(data.list, function(item) {
+                    return Model.isKnownType(item._type);
+                });
+                return result;
+            }
+            return [];
         }
     });
 

@@ -118,6 +118,9 @@ define([
                     this.deferred.resolve();
                 })),
                 on(dojo.body(), "keyup", lang.hitch(this, function (e) {
+                    if (!this.open) {
+                        return;
+                    }
                     switch(e.keyCode) {
                         case keys.ENTER:
                             this.okBtn.setProcessing();
