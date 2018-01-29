@@ -14,6 +14,7 @@ define([
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/dom-attr",
+    "dojo/dom-style",
     "./MediaBrowserDlgWidget",
     "../../../User",
     "../../../model/meta/Model",
@@ -36,6 +37,7 @@ define([
     domConstruct,
     domClass,
     domAttr,
+    domStyle,
     MediaBrowserDlg,
     User,
     Model,
@@ -105,6 +107,11 @@ define([
                     }
                 }
             }));
+
+            // hide content menu, if no root types
+            if (config.app.rootTypes.length == 0) {
+                query("#navContent").style("display", "none");
+            }
 
             // set selected menu
             query(".main-menu").removeClass("active");
