@@ -75,7 +75,6 @@ function(
 
             this.type = Model.getFullyQualifiedTypeName(this.relation.type);
             this.typeClass = Model.getType(this.type);
-            this.multiplicity = this.relation.maxMultiplicity;
         },
 
         postCreate: function() {
@@ -115,10 +114,7 @@ function(
                 this.gridWidget.startup();
                 domClass.add(this.gridWidget.gridNode, "multiplicity-"+this.relation.maxMultiplicity);
                 domClass.add(this.gridWidget.gridNode, "relation-"+this.relation.thisEndName+"-"+this.relation.name);
-
-                this.createBtn.set("disabled", this.relation.aggregationKind === "none" ||
-                        this.permissions[this.type+'??create'] !== true);
-                this.linkBtn.set("disabled", this.relation.aggregationKind === "composite");
+                this.setDefaultButtonStates();
             }));
 
             this.own(
@@ -134,6 +130,17 @@ function(
                         message: Dict.translate("Finished"),
                         fadeOut: true
                     });
+                })),
+                topic.subscribe('ui/_include/widget/GridWidget/refresh-complete', lang.hitch(this, function(grid) {
+                    if (this.gridWidget && grid == this.gridWidget.grid) {
+                        if (this.gridWidget.grid && this.gridWidget.grid.get('total') >= this.relation.maxMultiplicity) {
+                            this.createBtn.set("disabled", true);
+                            this.linkBtn.set("disabled", true);
+                        }
+                        else {
+                            this.setDefaultButtonStates();
+                        }
+                    }
                 }))
             );
         },
@@ -220,6 +227,12 @@ function(
             }
 
             return actions;
+        },
+
+        setDefaultButtonStates: function() {
+            this.createBtn.set("disabled", this.relation.aggregationKind === "none" ||
+                this.permissions[this.type+'??create'] !== true);
+            this.linkBtn.set("disabled", this.relation.aggregationKind === "composite");
         },
 
         _create: function(e) {
