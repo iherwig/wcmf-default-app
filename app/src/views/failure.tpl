@@ -29,7 +29,7 @@
       <div class="container">
         <p class="pull-right muted">created with
           <a href="http://wcmf.wemove.com" target="_blank">wCMF</a></p>
-        <p class="muted">&copy; 2015</p>
+        <p class="muted"></p>
       </div>
     </div>
 

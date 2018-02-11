@@ -13,6 +13,7 @@ app/public/js/app/
 app/public/js/config/types.js
 app/src/controller
 !app/src/controller/RootController.php
+!app/src/controller/ImageController.php
 app/src/model
 !app/src/model/EntityBase.php
 !app/src/model/wcmf/Translation.php
