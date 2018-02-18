@@ -26,13 +26,14 @@ function(
      */
     Renderer.render = function(value, attribute, options) {
         options = options === undefined ? {} : options;
+        attribute.displayType = attribute.displayType === undefined ? 'text' : attribute.displayType;
         var deferred = new Deferred();
         Renderer.getRenderer(attribute.displayType).then(function(renderer) {
             if (typeof renderer === 'function') {
                 when(renderer(value, attribute), function(value) {
                     if (options.truncate) {
                         var length = parseInt(options.truncate);
-                        if (attribute.displayType && attribute.displayType.toLowerCase() === 'text' && length > 0 && value) {
+                        if (attribute.displayType.toLowerCase() === 'text' && length > 0 && value) {
                             // strip tags
                             value = domConstruct.create("div", { innerHTML: value }).textContent;
                             if (value.length > length) {
