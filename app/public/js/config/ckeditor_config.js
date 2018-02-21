@@ -19,21 +19,22 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
     }
 })();
 
+// @see https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
 CKEDITOR.editorConfig = function( config ) {
     config.language = dojoConfig.app.uiLanguage;
-    config.stylesSet = 'default:'+dojoConfig.app.pathPrefix+'js/config/ckeditor_styles.js';
     config.baseFloatZIndex = 900;
     config.forcePasteAsPlainText = true;
     config.resize_dir = 'vertical';
-    config.stylesSet = [
-        { name: 'Strong Emphasis', element: 'strong' },
-        { name: 'Emphasis', element: 'em' }
-    ];
     config.theme = 'default';
-    config.extraPlugins = 'find,mediaembed';
     config.toolbarStartupExpanded = false;
     config.toolbarCanCollapse = true;
     config.uiColor = "#E0E0D6";
+    config.extraPlugins = 'find,mediaembed';
+    config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre;address;div';
+    config.stylesSet = [
+      { name: 'Strong Emphasis', element: 'strong' },
+      { name: 'Emphasis', element: 'em' }
+    ];
     config.toolbar_wcmf = [
         ['Maximize'],['Source'],['Cut','Copy','Paste'],['Undo','Redo','Find'],
         ['Image','MediaEmbed','Link','Unlink','Anchor'],
