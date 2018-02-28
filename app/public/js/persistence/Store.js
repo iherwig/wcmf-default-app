@@ -86,6 +86,8 @@ define([
                 language: language,
                 target: config.app.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
             });
+            // don't load default values in translations
+            store.setExtraParam('useDefaults', false);
             Store.storeInstances[fqTypeName][language] = store;
         }
         return Store.storeInstances[fqTypeName][language];

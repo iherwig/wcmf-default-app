@@ -15,6 +15,7 @@ define( [
     "../Factory",
     "../../../../locale/Dictionary",
     "../../../_include/_HelpMixin",
+    "../../../_include/_TranslateMixin",
     "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
     "dojo/text!./template/CKEditor.html"
@@ -31,11 +32,12 @@ function(
     ControlFactory,
     Dict,
     _HelpMixin,
+    _TranslateMixin,
     MediaBrowserDlg,
     _AttributeWidgetMixin,
     template
 ) {
-    return declare([TextBox, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([TextBox, _HelpMixin, _TranslateMixin, _AttributeWidgetMixin], {
 
         templateString: template,
         intermediateChanges: true,
@@ -118,7 +120,7 @@ function(
                 // set padding on editor content
                 var content = query("iframe", this.domNode)[0].contentWindow.document;
                 win.withDoc(content, function() {
-                  query(".cke_editable").style("padding", "5px");
+                    query(".cke_editable").style("padding", "5px");
                 }, this);
                 // fix edit state (editor instance is initially read only)
                 this.set("disabled", this.disabled);
@@ -131,12 +133,33 @@ function(
             }
         },
 
+        _setValueAttr: function(value) {
+            if (this.editorInstance && value != this.sanitiseValue(this.editorInstance.getData())) {
+                this.editorInstance.setData(value);
+            }
+            else {
+                this.inherited(arguments);
+          }
+        },
+
+        _getValueAttr: function() {
+            if (this.editorInstance) {
+                return this.sanitiseValue(this.editorInstance.getData());
+            }
+            else {
+                return this.inherited(arguments);
+            }
+        },
+
         editorValueChanged: function() {
             setTimeout(lang.hitch(this, function() {
                 this._onChangeActive = true;
-                this.set("value", this.sanitiseValue(this.editorInstance.getData()));
-                // send change event
-                this.emit("change", this);
+                var value = this.sanitiseValue(this.editorInstance.getData());
+                if (value !== this.get("value")) {
+                    this.set("value", value);
+                    // send change event
+                    this.emit("change", this);
+                }
                 this._onChangeActive = false;
             }, 0));
         },

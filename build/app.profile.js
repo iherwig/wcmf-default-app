@@ -58,6 +58,7 @@ var appSrc = [
     "app/js/ui/_include/_HelpMixin",
     "app/js/ui/_include/_NotificationMixin",
     "app/js/ui/_include/_PageMixin",
+    "app/js/ui/_include/_TranslateMixin",
     "app/js/ui/_include/widget/Button",
     "app/js/ui/_include/widget/ConfirmDlgWidget",
     "app/js/ui/_include/widget/GridWidget",

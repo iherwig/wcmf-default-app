@@ -2,6 +2,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/query",
+    "dojo/dom-construct",
     "dijit/TooltipDialog",
     "dijit/popup",
     "dojo/on",
@@ -10,6 +11,7 @@ define([
     declare,
     lang,
     query,
+    domConstruct,
     TooltipDialog,
     popup,
     on,
@@ -17,52 +19,52 @@ define([
 ) {
     return declare([], {
 
-        dialog: null,
         labelNode: null,
+        helpDialog: null,
+        helpIconNode: null,
 
         startup: function() {
             this.inherited(arguments);
             var text = this.helpText;
-            if (text && text.length > 0) {
-                this.dialog = new TooltipDialog({
+            if (text) {
+                this.helpDialog = new TooltipDialog({
                     content: text,
                     onMouseLeave: lang.hitch(this, function() {
-                        popup.close(this.dialog);
+                        this.hideHelpTooltip();
                     })
                 });
-                var _this = this;
-                ready(function() {
-                    _this.attachTooltip();
-                });
+                ready(lang.hitch(this, function() {
+                    this.attachHelpTooltip();
+                }));
             }
         },
 
-        attachTooltip: function() {
+        attachHelpTooltip: function() {
             var labelNodes = query("label[for="+this.get("id")+"]");
             if (labelNodes.length > 0) {
                 this.labelNode = labelNodes[0];
-                this.labelNode.innerHTML += ' <i class="fa fa-info-circle"></i>';
+                this.helpIconNode = domConstruct.place('<i class="fa fa-info-circle"></i>', this.labelNode, "after");
                 this.own(
-                    on(this.labelNode, 'mouseover', lang.hitch(this, function() {
-                        this.showTooltip();
+                    on(this.helpIconNode, 'mouseover', lang.hitch(this, function() {
+                        this.showHelpTooltip();
                     })),
                     on(this.labelNode, 'mouseleave', lang.hitch(this, function() {
-                        this.hideTooltip();
+                        this.hideHelpTooltip();
                     }))
                 );
             }
         },
 
-        showTooltip: function() {
+        showHelpTooltip: function() {
             popup.open({
-                popup: this.dialog,
-                orient: ["above", "above-alt", "below", "below-alt"],
-                around: this.labelNode
+                popup: this.helpDialog,
+                orient: ["above-centered", "below-centered"],
+                around: this.helpIconNode
             });
         },
 
-        hideTooltip: function() {
-            popup.close(this.dialog);
+        hideHelpTooltip: function() {
+            popup.close(this.helpDialog);
         }
     });
 });

@@ -4,6 +4,7 @@ define( [
     "dojo/topic",
     "dijit/form/SimpleTextarea",
     "../../../_include/_HelpMixin",
+    "../../../_include/_TranslateMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary"
 ],
@@ -13,10 +14,11 @@ function(
     topic,
     TextArea,
     _HelpMixin,
+    _TranslateMixin,
     _AttributeWidgetMixin,
     Dict
 ) {
-    return declare([TextArea, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([TextArea, _HelpMixin, _TranslateMixin, _AttributeWidgetMixin], {
 
         intermediateChanges: true,
         inputType: null, // control description as string as used in Factory.getControlClass()

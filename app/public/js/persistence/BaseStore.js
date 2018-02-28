@@ -110,6 +110,17 @@ define([
             return results;
         },
 
+        _getTarget: function(id) {
+            var result = this.inherited(arguments);
+            // extra params
+            var index = 0;
+            for (var key in this.extraParams) {
+                result += (index == 0 ? '?' : '&')+(key+'='+this.extraParams[key]);
+                index++;
+            }
+            return result;
+        },
+
         // put query into 'query' parameter and render extra params
         _renderQueryParams: function () {
             var result = this.inherited(arguments).filter(function(item) {

@@ -10,6 +10,7 @@ define( [
     "../../../_include/widget/Button",
     "dijit/layout/ContentPane",
     "../../../_include/_HelpMixin",
+    "../../../_include/_TranslateMixin",
     "../../../_include/widget/MediaBrowserDlgWidget",
     "./_AttributeWidgetMixin",
     "../../../../model/meta/Model",
@@ -27,12 +28,13 @@ function(
     Button,
     ContentPane,
     _HelpMixin,
+    _TranslateMixin,
     MediaBrowserDlg,
     _AttributeWidgetMixin,
     Model,
     Dict
 ) {
-    return declare([ContentPane, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([ContentPane, _HelpMixin, _TranslateMixin, _AttributeWidgetMixin], {
 
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
