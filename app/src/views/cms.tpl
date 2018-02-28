@@ -45,9 +45,9 @@
               { name: 'dstore', location: 'vendor/sitepen/dstore' },
               { name: 'dgrid', location: 'vendor/sitepen/dgrid' },
               { name: 'ckeditor', location: 'vendor/ckeditor/ckeditor' },
-              { name: 'jquery', location: 'vendor/jquery', main: 'jquery.min', main: 'jquery.min' },
-              { name: 'jquery-ui', location: 'vendor/jquery-ui', main: 'jquery-ui.min', main: 'jquery-ui.min' },
-              { name: 'elfinder', location: 'vendor/studio-42/elfinder-js' },
+              { name: 'jquery', location: 'vendor/jquery', main: 'jquery.min' },
+              { name: 'jquery-ui', location: 'vendor/jquery-ui', main: 'jquery-ui.min' },
+              { name: 'elfinder', location: 'vendor/studio-42/elfinder-js', main: 'js/elfinder.full' },
 
               { name: 'app', location: '.' }
           ],

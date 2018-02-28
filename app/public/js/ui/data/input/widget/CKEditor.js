@@ -52,12 +52,6 @@ function(
             this.label = Dict.translate(this.name);
         },
 
-        create: function(){
-          this.inherited(arguments);
-          // only send change events, when content changes
-          this._onChangeActive = false;
-        },
-
         postCreate: function() {
             this.inherited(arguments);
 
@@ -111,12 +105,15 @@ function(
                             data.name === this.name) {
                         var newValue = this.sanitiseValue(data.newValue);
                         this.set("value", newValue);
-                        this.editorInstance.setData(newValue);
                     }
                 }))
             );
             this.editorInstance.on("instanceReady", lang.hitch(this, function() {
-                this.editorInstance.on("change", lang.hitch(this, this.editorValueChanged));
+                this.editorInstance.on("change", lang.hitch(this, function() {
+                    this.set("value", this.sanitiseValue(this.editorInstance.getData()));
+                    // send change event
+                    this.emit("change", this);
+                }));
                 // set padding on editor content
                 var content = query("iframe", this.domNode)[0].contentWindow.document;
                 win.withDoc(content, function() {
@@ -137,9 +134,7 @@ function(
             if (this.editorInstance && value != this.sanitiseValue(this.editorInstance.getData())) {
                 this.editorInstance.setData(value);
             }
-            else {
-                this.inherited(arguments);
-          }
+            this.inherited(arguments);
         },
 
         _getValueAttr: function() {
@@ -149,19 +144,6 @@ function(
             else {
                 return this.inherited(arguments);
             }
-        },
-
-        editorValueChanged: function() {
-            setTimeout(lang.hitch(this, function() {
-                this._onChangeActive = true;
-                var value = this.sanitiseValue(this.editorInstance.getData());
-                if (value !== this.get("value")) {
-                    this.set("value", value);
-                    // send change event
-                    this.emit("change", this);
-                }
-                this._onChangeActive = false;
-            }, 0));
         },
 
         getToolbarName: function() {

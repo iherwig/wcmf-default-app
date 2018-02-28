@@ -32,9 +32,9 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.11.4",
+                "version": "1.11.5",
                 "dist": {
-                    "url": "https://github.com/dojo/dojo/archive/1.11.4.zip",
+                    "url": "https://github.com/dojo/dojo/archive/1.11.5.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -47,9 +47,9 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.11.4",
+                "version": "1.11.5",
                 "dist": {
-                    "url": "https://github.com/dojo/dijit/archive/1.11.4.zip",
+                    "url": "https://github.com/dojo/dijit/archive/1.11.5.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -62,9 +62,9 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.11.4",
+                "version": "1.11.5",
                 "dist": {
-                    "url": "https://github.com/dojo/dojox/archive/1.11.4.zip",
+                    "url": "https://github.com/dojo/dojox/archive/1.11.5.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -77,9 +77,9 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.11.4",
+                "version": "1.11.5",
                 "dist": {
-                    "url": "https://github.com/dojo/util/archive/1.11.4.zip",
+                    "url": "https://github.com/dojo/util/archive/1.11.5.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -92,9 +92,9 @@
             "package": {
                 "name": "sitepen/dstore",
                 "type": "wcmf-asset",
-                "version": "1.1.1",
+                "version": "1.1.2",
                 "dist": {
-                    "url": "https://github.com/SitePen/dstore/archive/v1.1.1.zip",
+                    "url": "https://github.com/SitePen/dstore/archive/v1.1.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -122,9 +122,9 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.5.11",
+                "version": "4.8.0",
                 "dist": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.5.11.zip",
+                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.8.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -137,9 +137,9 @@
             "package": {
                 "name": "studio-42/elfinder-js",
                 "type": "wcmf-asset",
-                "version": "2.1.20",
+                "version": "2.1.32",
                 "dist": {
-                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.20.zip",
+                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.32.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -194,7 +194,7 @@
         "robloach/component-installer": "*",
         "components/bootstrap": "~3.3",
         "components/font-awesome": "~4.3",
-        "ckeditor/ckeditor": "~4.5",
+        "ckeditor/ckeditor": "~4.8",
         "components/jquery": "~1.12",
         "components/jqueryui": "~1.12",
         "studio-42/elfinder-js": "~2.1",
@@ -208,9 +208,9 @@
         "toopay/assetic-minifier": "~1.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.7",
-        "phpunit/dbunit": "~1.4",
-        "phpunit/phpunit-selenium": "~3.0"
+        "phpunit/phpunit": "~6.5",
+        "phpunit/dbunit": "~3.0",
+        "phpunit/phpunit-selenium": "~4.1"
     },
     "config": {
         "component-dir": "app/public/vendor/"
