@@ -255,6 +255,12 @@ function(
 
                 if (!this.isNew) {
                     this.buildLanguageMenu();
+                    if (!this.isTranslation) {
+                        query(this.translateNode).style("display", "none");
+                    }
+                }
+                else {
+                    query(this.translateNode).style("display", "none");
                 }
 
                 // notify listeners
@@ -381,9 +387,6 @@ function(
             else {
                 // show menu
                 query(this.languageMenuNode).style("display", "inline");
-            }
-            if (!this.isTranslation) {
-              query(this.translateNode).style("display", "none");
             }
         },
 
