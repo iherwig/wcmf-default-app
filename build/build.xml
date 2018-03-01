@@ -202,7 +202,7 @@
         <include name="vendor/jquery-ui/jquery-ui.min.js"/>
         <include name="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
         <!-- ckeditor -->
-        <include name="vendor/ckeditor/ckeditor/skins/moono/**/*.*"/>
+        <include name="vendor/ckeditor/ckeditor/skins/moono-lisa/**/*.*"/>
         <include name="vendor/ckeditor/ckeditor/plugins/**/*.*"/>
         <include name="vendor/ckeditor/ckeditor/lang/de.js"/>
         <include name="vendor/ckeditor/ckeditor/lang/en.js"/>
