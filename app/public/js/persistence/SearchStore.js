@@ -16,7 +16,6 @@ define([
     Entity
 ) {
     var Store = declare([Rest], {
-
         idProperty: 'oid',
         Model: Entity,
 

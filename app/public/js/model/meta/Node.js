@@ -28,11 +28,14 @@ define([
         relationOrder: [],
         attributes: [],
         relations: [],
+        listView: '',
+        detailView: '',
 
         /**
          * Methods optionally implemented in subclasses
          */
         getSummary: null, // function(data) {}
+        getEntityAttributes: null, // function(data) {}
         getEntityRelations: null, // function(data) {}
 
         allRelations: null,
@@ -119,14 +122,17 @@ define([
          * @param filter Optional filter with properties:
          *        - include: Array of tags to include
          *        - exclude: Array of tags to exclude
+         * @param entity Entity to get the value for (optional)
          * @return Array
          */
-        getAttributes: function(filter) {
+        getAttributes: function(filter, entity) {
             var result = [];
             var include = filter ? filter.include : undefined;
             var exclude = filter ? filter.exclude : undefined;
-            for (var i=0, count=this.attributes.length; i<count; i++) {
-                var attribute = this.attributes[i];
+            var attributes = (entity && typeof this.getEntityAttributes === 'function') ?
+                this.getEntityAttributes(entity) : this.attributes;
+            for (var i=0, count=attributes.length; i<count; i++) {
+                var attribute = attributes[i];
                 var tags = attribute.tags;
                 var includeOk = !include || (tags && tags.filter(function(n) {
                     return include.indexOf(n) !== -1;

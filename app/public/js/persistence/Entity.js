@@ -110,7 +110,7 @@ define([
 
         setDefaults: function() {
             var typeClass = Model.getTypeFromOid(this.get('oid'));
-            var attributes = typeClass.getAttributes();
+            var attributes = typeClass.getAttributes(undefined, this);
             for (var i=0, count=attributes.length; i<count; i++) {
                 var attribute = attributes[i];
                 this.set(attribute.name, attribute.defaultValue);

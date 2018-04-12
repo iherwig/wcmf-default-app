@@ -309,7 +309,7 @@ function(
          */
         getAttributes: function() {
             var typeClass = Model.getType(this.type);
-            return typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']});
+            return typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']}, this.entity);
         },
 
         /**

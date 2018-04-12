@@ -18,7 +18,6 @@ define([
     AuthToken
 ) {
     var TreeStore = declare([JsonRest], {
-
         idProperty: 'oid',
         headers: {
             Accept: "application/json"

@@ -84,10 +84,10 @@ define([
             var store = new Store({
                 typeName: fqTypeName,
                 language: language,
-                target: config.app.pathPrefix+"rest/"+language+"/"+fqTypeName+"/"
+                target: config.app.pathPrefix+"rest/"+language+"/"+fqTypeName+"/",
+                // don't load default values in translations
+                extraParams: {'useDefaults': false}
             });
-            // don't load default values in translations
-            store.setExtraParam('useDefaults', false);
             Store.storeInstances[fqTypeName][language] = store;
         }
         return Store.storeInstances[fqTypeName][language];
