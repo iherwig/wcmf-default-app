@@ -5,9 +5,7 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
 // load external plugins
 (function() {
    CKEDITOR.plugins.addExternal('find', basePath+'ckeditor-plugins/find/', 'plugin.js');
-   CKEDITOR.plugins.addExternal('mediaembed', basePath+'ckeditor-plugins/mediaembed/', 'plugin.js');
-   CKEDITOR.plugins.addExternal('video', basePath+'ckeditor-plugins/video/', 'plugin.js');
-   CKEDITOR.plugins.addExternal('html5audio', basePath+'ckeditor-plugins/html5audio/', 'plugin.js');
+   CKEDITOR.plugins.addExternal('oembed', basePath+'ckeditor-plugins/oembed/', 'plugin.js');
 })();
 
 // fix inserting spans in chrome
@@ -31,7 +29,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.toolbarStartupExpanded = false;
     config.toolbarCanCollapse = true;
     config.uiColor = "#E0E0D6";
-    config.extraPlugins = 'find,mediaembed,video,html5audio';
+    config.extraPlugins = 'find,oembed';
     config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre;address;div';
     config.stylesSet = [
       { name: 'Strong Emphasis', element: 'strong' },
@@ -39,7 +37,7 @@ CKEDITOR.editorConfig = function( config ) {
     ];
     config.toolbar_wcmf = [
         ['Maximize'],['Source'],['Cut','Copy','Paste'],['Undo','Redo','Find'],
-        ['Image','MediaEmbed','Video','Html5audio','Link','Unlink','Anchor'],
+        ['Image','oembed','Link','Unlink','Anchor'],
         ['Bold','Italic','RemoveFormat'],['Table','BulletedList','HorizontalRule','SpecialChar'],['Format','Styles'],['About']
     ];
     config.toolbar = 'wcmf';
