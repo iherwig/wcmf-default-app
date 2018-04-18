@@ -14,6 +14,7 @@
     <base href="{$baseHref}">
 
     <link href="css/app.css" rel="stylesheet" media="screen">
+    <link href="css/custom.css" rel="stylesheet" media="screen">
 
     <script>
       document.write('<style media="all">#no-js { display: none; }</style>');
