@@ -9,15 +9,15 @@ define([
 ) {
     var AuthToken = declare(null, {
 
-        name: "X-Auth-Token",
+        name: config.app.authTokenHeaderName,
 
         /**
          * Get the token value
          * @returns String|undefined
          */
         get: function() {
-            var token = cookie(config.app.cookiePrefix+"-token");
-            return token && token.length ? token : undefined;
+            var token = cookie(config.app.authTokenCookieName);
+            return token && token.length ? (this.name == 'Authorization' ? 'Bearer ' : '')+token : undefined;
         }
     });
 

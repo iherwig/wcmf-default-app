@@ -10,6 +10,7 @@ use app\src\controller\_base\RootControllerBase;
 use wcmf\lib\config\Configuration;
 use wcmf\lib\config\ConfigurationException;
 use wcmf\lib\core\Session;
+use wcmf\lib\core\TokenBasedSession;
 use wcmf\lib\i18n\Localization;
 use wcmf\lib\i18n\Message;
 use wcmf\lib\io\FileUtil;
@@ -18,7 +19,6 @@ use wcmf\lib\presentation\ActionMapper;
 use wcmf\lib\security\PermissionManager;
 use wcmf\lib\security\principal\impl\DefaultPrincipalFactory;
 use wcmf\lib\security\principal\PrincipalFactory;
-use wcmf\lib\util\StringUtil;
 use wcmf\lib\util\URIUtil;
 // PROTECTED REGION END
 
@@ -68,6 +68,7 @@ class RootController extends RootControllerBase {
   protected function renderPage() {
 // PROTECTED REGION ID(app/src/controller/RootController.php/Methods/renderPage) ENABLED START
     $response = $this->getResponse();
+    $session = $this->getSession();
 
     // get configuration values
     $configuration = $this->getConfiguration();
@@ -134,7 +135,6 @@ class RootController extends RootControllerBase {
       'background' => $geopattern->toDataURL(),
       'wcmfBaseHref' => $wcmfBaseHref,
       'backendUrl' => $basePath,
-      'cookiePrefix' => strtolower(StringUtil::slug($appTitle)),
       'rootTypes' => $rootTypes,
       'pathPrefix' => $basePath,
       'mediaBaseUrl' => URIUtil::makeAbsolute($mediaPathRelScript, $baseHref),
@@ -150,6 +150,8 @@ class RootController extends RootControllerBase {
       'permissionType' => $permissionType,
       'lockType' => $lockType,
       'sessionCheck' => $sessionCheck,
+      'authTokenHeaderName' => $session instanceof TokenBasedSession ? $session->getHeaderName() : '',
+      'authTokenCookieName' => $session instanceof TokenBasedSession ? $session->getCookieName() : '',
     ];
 
     $response->setValue('appTitle', $appTitle);
