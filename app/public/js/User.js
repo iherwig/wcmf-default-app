@@ -62,7 +62,7 @@ define([
             key: "grid"
         }).execute();
         all(deferredList).then(function(results) {
-            User._config["grid"] = JSON.parse(results["gridConfig"].value, true);
+            User._config["grid"] = results["gridConfig"] ? JSON.parse(results["gridConfig"].value, true) : {};
             deferred.resolve({});
         }, function(error) {
             deferred.reject(error);
