@@ -3,7 +3,7 @@
     "type": "project",
     "description": "Default application for the wCMF web application framework",
     "keywords": ["application", "app", "cms", "template", "wcmf"],
-    "homepage": "http://wcmf.wemove.com",
+    "homepage": "https://wcmf.wemove.com",
     "license": "MIT",
     "authors": [
         {
