@@ -26,6 +26,7 @@ before_script:
   - cd $WCMF_BASE_DIR/build && ant generate && ant dist
   - chmod +x ../dist/vendor/phpunit/phpunit/phpunit
 
+  - phantomjs --webdriver=8001 &
+
 script:
-  - travis_wait phantomjs --webdriver=8001
   - cd $TEST_DIR &&  ../dist/vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php -c configuration.xml
