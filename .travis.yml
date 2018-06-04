@@ -27,5 +27,5 @@ before_script:
   - chmod +x ../dist/vendor/phpunit/phpunit/phpunit
 
 script:
-  - phantomjs --webdriver=8001
+  - travis_wait phantomjs --webdriver=8001
   - cd $TEST_DIR &&  ../dist/vendor/phpunit/phpunit/phpunit --bootstrap bootstrap.php -c configuration.xml
