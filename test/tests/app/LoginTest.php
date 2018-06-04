@@ -13,6 +13,9 @@ namespace test\tests\app;
 use wcmf\test\lib\ArrayDataSet;
 use wcmf\test\lib\SeleniumTestCase;
 
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+
 class LoginTest extends SeleniumTestCase {
 
   protected function getDataSet() {
@@ -33,63 +36,81 @@ class LoginTest extends SeleniumTestCase {
   }
 
   public function testTitle() {
-    $this->setDisplay('large');
-
-    $this->url(self::getAppUrl());
-    $this->assertEquals('WCMF TEST MODEL', $this->title());
+    $this->driver->get(self::getAppUrl());
+    $this->assertEquals("WCMF TEST MODEL", $this->driver->getTitle());
   }
 
   public function testLoginOk() {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
-    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::urlContains('home')
+    );
+    $this->takeScreenShot('LoginTest_loginOk');
+    $this->assertEquals(self::getAppUrl().'/home', $this->driver->getCurrentURL());
     $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
-    $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
+    $this->assertEquals('WCMF TEST MODEL - Home', $this->driver->getTitle());
   }
 
   public function testLoginFailed() {
     $this->setDisplay('large');
 
     $this->login('admin', '');
-    $this->assertEquals(self::getAppUrl().'/', $this->url());
-    $this->assertEquals('WCMF TEST MODEL', $this->title());
-    $this->assertRegExp('/Authentication failed/i', $this->source());
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('notification'))
+    );
+    $this->takeScreenShot('LoginTest_loginFailed');
+    $this->assertEquals(self::getAppUrl().'/', $this->driver->getCurrentURL());
+    $this->assertEquals('WCMF TEST MODEL', $this->driver->getTitle());
+    $this->assertRegExp('/Authentication failed/i', $this->driver->getPageSource());
   }
 
   public function testLogout() {
-    $this->setDisplay('large');
+    $this->setDisplay('xlarge');
 
     $this->login('admin', 'admin');
-    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::urlContains('home')
+    );
+    $this->assertEquals(self::getAppUrl().'/home', $this->driver->getCurrentURL());
     $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
-    $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
+    $this->assertEquals('WCMF TEST MODEL - Home', $this->driver->getTitle());
+    $this->takeScreenShot('LoginTest_logout1');
     // open navigation
     $this->byXPath("//*[@id='navSettings']/a")->click();
     // click logout
-    $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
-    $btn->click();
-    $this->timeouts()->implicitWait(5000);
-    $this->assertEquals(self::getAppUrl().'/', $this->url());
-    $this->assertEquals('WCMF TEST MODEL', $this->title());
+    $this->byXPath("//*[@data-wcmf-route='logout']")->click();
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::name('user'))
+    );
+    $this->takeScreenShot('LoginTest_logout2');
+    $this->assertEquals(self::getAppUrl().'/', $this->driver->getCurrentURL());
+    $this->assertEquals('WCMF TEST MODEL', $this->driver->getTitle());
   }
 
   public function testLogoutSmall() {
     $this->setDisplay('small');
 
     $this->login('admin', 'admin');
-    $this->assertEquals(self::getAppUrl().'/home', $this->url());
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::urlContains('home')
+    );
+    $this->assertEquals(self::getAppUrl().'/home', $this->driver->getCurrentURL());
     $this->assertNotNull($this->byXPath("//*[@class='home-page']"));
-    $this->assertEquals('WCMF TEST MODEL - Home', $this->title());
+    $this->assertEquals('WCMF TEST MODEL - Home', $this->driver->getTitle());
+    $this->takeScreenShot('LoginTest_logoutSmall1');
     // open navigation
     $this->byXPath("//nav/div/div[1]/button")->click();
     $this->byXPath("//*[@id='navSettings']/a")->click();
     // click logout
-    $btn = $this->byXPath("//*[@data-wcmf-route='logout']");
-    $btn->click();
-    $this->timeouts()->implicitWait(5000);
-    $this->assertEquals(self::getAppUrl().'/', $this->url());
-    $this->assertEquals('WCMF TEST MODEL', $this->title());
+    $btn = $this->byXPath("//*[@data-wcmf-route='logout']")->click();
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::name('user'))
+    );
+    $this->takeScreenShot('LoginTest_logoutSmall2');
+    $this->assertEquals(self::getAppUrl().'/', $this->driver->getCurrentURL());
+    $this->assertEquals('WCMF TEST MODEL', $this->driver->getTitle());
   }
 }
 ?>

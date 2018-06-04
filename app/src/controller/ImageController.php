@@ -16,7 +16,6 @@ use wcmf\lib\io\ImageUtil;
  * The following configuration settings are defined for this controller:
  *
  * [actionmapping]
- * ?image? = app\src\controller\ImageController::createImage
  *
  * [views]
  */
@@ -28,7 +27,7 @@ class ImageController extends ImageControllerBase {
    * Create the resized and cached image.
    * @param [in] location The target location pointing into the cache directory
    */
-  public function createImage($location) {
+  protected function createImage($location) {
 // PROTECTED REGION ID(app/src/controller/ImageController.php/Methods/createImage) ENABLED START
     $file = ImageUtil::getCachedImage($location, true);
     $this->getResponse()->setFile($file, false);

@@ -30,3 +30,4 @@ composer.lock
 /build/build-report.txt
 /test/test-db.sq3
 /test/log/testdox.txt
+/test/log

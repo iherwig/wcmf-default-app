@@ -13,6 +13,9 @@ namespace test\tests\app;
 use wcmf\test\lib\ArrayDataSet;
 use wcmf\test\lib\SeleniumTestCase;
 
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+
 class InputTest extends SeleniumTestCase {
 
   protected function getDataSet() {
@@ -36,12 +39,19 @@ class InputTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
-    $this->timeouts()->implicitWait(5000);
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::urlContains('home')
+    );
+    $this->takeScreenShot('InputTest_ckEditor1');
     // navigate to new chapter
-    $this->url(self::getAppUrl().'/data/Chapter/~');
-    $editor = $this->waitForXpath('//*[starts-with(@id,"cke_uniqName_")]');
+    $this->driver->get(self::getAppUrl().'/data/Chapter/~');
+    $this->driver->wait(10, 500)->until(
+      WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::className('cke'))
+    );
+    $this->takeScreenShot('InputTest_ckEditor2');
+    $editor = $this->byXpath('//*[starts-with(@id,"cke_uniqName_")]');
     $this->assertTrue($editor !== false);
-    $this->assertRegExp('/New <em>Chapter<\/em>/i', $this->source());
+    $this->assertRegExp('/New <em>Chapter<\/em>/i', $this->driver->getPageSource());
   }
 }
 ?>

@@ -7,4 +7,6 @@
   $distDir = $buildConfig['dist.dir'];
 
   define('WCMF_BASE', realpath($distDir).'/');
+  define('TEST_SERVER', 'localhost:8500');
+  define('SELENIUM_SERVER', 'localhost:8001');
 ?>
