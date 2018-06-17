@@ -25,10 +25,10 @@ $messages_en['<em>%0%</em> was successfully updated'] = '';
 $messages_en['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
 $messages_en['A book is published by a publisher and consists of chapters.'] = '';
-// file(s): src/model/wcmf/_base/PermissionRDBMapper.php
-$messages_en['action'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Action'] = '';
+// file(s): src/model/wcmf/_base/PermissionRDBMapper.php
+$messages_en['action'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Active'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
@@ -45,10 +45,18 @@ $messages_en['An unspecified error occurred.'] = '';
 $messages_en['An unspecified fatal error occurred.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['An unspecified warning occurred.'] = '';
+// file(s): public/js/ui/_include/_TranslateMixin.js
+$messages_en['Apply'] = '';
+// file(s): public/js/ui/data/widget/template/EntityFormWidget.html
+$messages_en['Apply defaults'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['April'] = '';
 // file(s): src/model/_base/PublisherRDBMapper.php
 $messages_en['A publisher publishes books.'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['attribute'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['August'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['Authentication failed.'] = '';
 // file(s): src/model/_base/AuthorRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/NMPublisherAuthorRDBMapper.php
@@ -73,6 +81,8 @@ $messages_en['Chapter'] = '';
 $messages_en['Chapter [Pl.]'] = 'Chapters';
 // file(s): public/js/action/Link.js
 $messages_en['Choose Objects'] = '';
+// file(s): public/js/ui/admin/template/AdminPage.html
+$messages_en['Clear Caches'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['code'] = '';
 // file(s): application/controller/SearchIndexController.php
@@ -85,10 +95,10 @@ $messages_en['Confirm Import'] = '';
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
-// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Content'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['content'] = '';
+// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -105,16 +115,12 @@ $messages_en['created'] = '';
 $messages_en['Create Search Index'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['creator'] = '';
-// file(s): application/views/plugins/function.daterange.php
-$messages_en['d.'] = '';
-// file(s): application/views/plugins/function.daterange.php
-$messages_en['d.m.'] = '';
-// file(s): application/views/plugins/function.daterange.php
-$messages_en['d.m.Y'] = '';
 // file(s): src/model/wcmf/_base/DBSequenceRDBMapper.php
 $messages_en['DBSequence'] = '';
 // file(s): src/model/wcmf/_base/DBSequenceRDBMapper.php
 $messages_en['DBSequence [Pl.]'] = 'DBSequences';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['December'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Default'] = '';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/data/widget/template/PermissionDlgWidget.html
@@ -147,6 +153,8 @@ $messages_en['Export XML'] = '';
 $messages_en['External source'] = '';
 // file(s): lib/io/FileUtil.php
 $messages_en['Failed to move %0% to %1%.'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['February'] = '';
 // file(s): lib/io/FileUtil.php
 $messages_en['File \'%0%\' has wrong mime type: %1%. Allowed types: %2%.'] = '';
 // file(s): src/model/_base/ImageRDBMapper.php
@@ -175,6 +183,8 @@ $messages_en['fk_role_id'] = '';
 $messages_en['fk_titlechapter_id'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php
 $messages_en['fk_user_id'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Friday'] = '';
 // file(s): public/js/ui/home/HomePage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Home'] = '';
 // file(s): src/model/wcmf/_base/DBSequenceRDBMapper.php, src/model/wcmf/_base/LanguageRDBMapper.php, src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/PermissionRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/NMBookBookRDBMapper.php, src/model/_base/NMPublisherAuthorRDBMapper.php, src/model/_base/PublisherRDBMapper.php
@@ -197,6 +207,12 @@ $messages_en['Initialization'] = '';
 $messages_en['Inserted objects'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['January'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['July'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['June'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
@@ -235,12 +251,18 @@ $messages_en['Login'] = '';
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
 $messages_en['Manage Content'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['March'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['May'] = '';
 // file(s): public/js/ui/media/BrowsePage.js
 $messages_en['Media'] = '';
 // file(s): public/js/ui/home/template/HomePage.html, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Media Pool'] = '';
 // file(s): public/js/ui/home/HomePage.js, src/model/_base/AuthorRDBMapper.php, src/model/_base/BookRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/ImageRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['modified'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Monday'] = '';
 // file(s): application/controller/CopyController.php
 $messages_en['Moving'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php, src/model/wcmf/_base/UserConfigRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php, src/model/_base/AuthorRDBMapper.php, src/model/_base/ChapterRDBMapper.php, src/model/_base/PublisherRDBMapper.php
@@ -279,14 +301,18 @@ $messages_en['NormalImage'] = '';
 $messages_en['NormalImage [Pl.]'] = 'NormalImages';
 // file(s): lib/presentation/impl/DefaultRequest.php
 $messages_en['No route matching the request path can be found.'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['November'] = '';
 // file(s): lib/persistence/impl/NullMapper.php
 $messages_en['NULLType'] = '';
 // file(s): public/js/model/meta/Node.js
-$messages_de['Object'] = '';
+$messages_en['Object'] = '';
 // file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['objectid'] = '';
 // file(s): public/js/ui/data/widget/EntityRelationWidget.js
 $messages_en['Objects were successfully linked'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['October'] = '';
 // file(s): public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['OK'] = '';
 // file(s): public/js/ui/settings/template/SettingsPage.html
@@ -299,8 +325,6 @@ $messages_en['One or more object ids are invalid.'] = '';
 $messages_en['One or more parameters are invalid.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['One or more parameters are missing.'] = '';
-// file(s): lib/model/AbstractQuery.php
-$messages_en['Only PersistenceMappers of type RDBMapper are supported.'] = '';
 // file(s): application/controller/SearchIndexController.php
 $messages_en['Optimizing index'] = '';
 // file(s): public/js/ui/error/NotFoundPage.js
@@ -309,10 +333,10 @@ $messages_en['Page not found'] = '';
 $messages_en['ParentChapter'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['ParentChapter [Pl.]'] = 'ParentChapters';
-// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
-$messages_en['Password'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['password'] = '';
+// file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
+$messages_en['Password'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['Permission'] = '';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
@@ -363,6 +387,8 @@ $messages_en['roles'] = '';
 $messages_en['Roles'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Saturday'] = '';
 // file(s): public/js/ui/admin/widget/template/PrincipalFormWidget.html, public/js/ui/data/widget/PermissionDlgWidget.js, public/js/ui/data/widget/template/EntityFormWidget.html, public/js/ui/settings/template/SettingsPage.html
 $messages_en['Save'] = '';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js, public/js/ui/data/widget/EntityListWidget.js, public/js/ui/data/widget/EntityRelationWidget.js
@@ -373,6 +399,8 @@ $messages_en['Search'] = '';
 $messages_en['Searchresult'] = '';
 // file(s): public/js/action/Link.js
 $messages_en['Select <em>%0%</em> objects, you want to link to <em>%1%</em>'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['September'] = '';
 // file(s): public/js/ui/admin/AdminPage.js, public/js/ui/settings/SettingsPage.js, public/js/ui/settings/template/SettingsPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Settings'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/LoginDlgWidget.js
@@ -383,6 +411,8 @@ $messages_en['Skipped rows'] = '';
 $messages_en['SubChapter'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['SubChapter [Pl.]'] = 'SubChapters';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Sunday'] = '';
 // file(s): lib/security/principal/impl/AbstractUser.php
 $messages_en['Super users cannot be deleted'] = '';
 // file(s): lib/security/principal/impl/AbstractUser.php
@@ -403,6 +433,8 @@ $messages_en['The attribute name passed cannot be found in the selected class.']
 $messages_en['The attribute of the object that is translated'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The attribute value passed is invalid for the attribute.'] = '';
+// file(s): public/js/ui/admin/AdminPage.js
+$messages_en['The caches were cleared successfully.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The classes of insertOid and referenceOid do not match.'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -485,6 +517,8 @@ $messages_en['The user does not have the permission to perform this action.'] = 
 $messages_en['The user requires a login name'] = '';
 // file(s): lib/persistence/impl/DefaultPersistentObject.php, lib/presentation/impl/AbstractControllerMessage.php
 $messages_en['The value of \'%0%\' (%1%) is invalid.'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Thursday'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
 $messages_en['title'] = '';
 // file(s): src/model/_base/ImageRDBMapper.php
@@ -501,6 +535,8 @@ $messages_en['Translation'] = '';
 $messages_en['translation'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Translation [Pl.]'] = 'Translations';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Tuesday'] = '';
 // file(s): public/js/ui/data/widget/EntityFormWidget.js
 $messages_en['Unlocking <em>%0%</em>'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
@@ -525,6 +561,8 @@ $messages_en['Users'] = '';
 $messages_en['User [Pl.]'] = 'Users';
 // file(s): src/model/wcmf/_base/UserConfigRDBMapper.php
 $messages_en['value'] = '';
+// file(s): application/views/plugins/modifier.localize_date.php
+$messages_en['Wednesday'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
 $messages_en['Welcome'] = '';
 // file(s): src/model/_base/BookRDBMapper.php

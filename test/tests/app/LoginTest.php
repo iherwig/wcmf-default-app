@@ -44,7 +44,7 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::urlContains('home')
     );
     $this->takeScreenShot('LoginTest_loginOk');
@@ -57,7 +57,7 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', '');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('notification'))
     );
     $this->takeScreenShot('LoginTest_loginFailed');
@@ -70,7 +70,7 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('xlarge');
 
     $this->login('admin', 'admin');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::urlContains('home')
     );
     $this->assertEquals(self::getAppUrl().'/home', $this->driver->getCurrentURL());
@@ -81,7 +81,7 @@ class LoginTest extends SeleniumTestCase {
     $this->byXPath("//*[@id='navSettings']/a")->click();
     // click logout
     $this->byXPath("//*[@data-wcmf-route='logout']")->click();
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::name('user'))
     );
     $this->takeScreenShot('LoginTest_logout2');
@@ -93,7 +93,7 @@ class LoginTest extends SeleniumTestCase {
     $this->setDisplay('small');
 
     $this->login('admin', 'admin');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::urlContains('home')
     );
     $this->assertEquals(self::getAppUrl().'/home', $this->driver->getCurrentURL());
@@ -105,7 +105,7 @@ class LoginTest extends SeleniumTestCase {
     $this->byXPath("//*[@id='navSettings']/a")->click();
     // click logout
     $btn = $this->byXPath("//*[@data-wcmf-route='logout']")->click();
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::name('user'))
     );
     $this->takeScreenShot('LoginTest_logoutSmall2');

@@ -39,13 +39,13 @@ class InputTest extends SeleniumTestCase {
     $this->setDisplay('large');
 
     $this->login('admin', 'admin');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::urlContains('home')
     );
     $this->takeScreenShot('InputTest_ckEditor1');
     // navigate to new chapter
     $this->driver->get(self::getAppUrl().'/data/Chapter/~');
-    $this->driver->wait(10, 500)->until(
+    $this->driver->wait()->until(
       WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::className('cke'))
     );
     $this->takeScreenShot('InputTest_ckEditor2');

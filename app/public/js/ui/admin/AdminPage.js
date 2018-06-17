@@ -11,6 +11,7 @@ define([
     "../_include/widget/Button",
     "../../action/Index",
     "../../action/ExportXML",
+    "../../action/ClearCaches",
     "../../locale/Dictionary",
     "dojo/text!./template/AdminPage.html"
 ], function (
@@ -26,6 +27,7 @@ define([
     Button,
     Index,
     ExportXML,
+    ClearCaches,
     Dict,
     template
 ) {
@@ -49,6 +51,30 @@ define([
             e.preventDefault();
             this.handleProcessBtnClick('export', this.exportBtn, ExportXML,
                 Dict.translate("The content was successfully exported."));
+        },
+
+        _clearCaches: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+
+            this.clearCachesBtn.setProcessing();
+            new ClearCaches({
+                init: lang.hitch(this, function() {
+                    this.hideNotification();
+                })
+            }).execute().then(lang.hitch(this, function(response) {
+                // success
+                this.showNotification({
+                    type: "ok",
+                    message: Dict.translate("The caches were cleared successfully."),
+                    fadeOut: true
+                });
+                this.clearCachesBtn.reset();
+            }), lang.hitch(this, function(error) {
+                // error
+                this.showBackendError(error);
+                this.clearCachesBtn.reset();
+            }));
         },
 
         handleProcessBtnClick: function(name, btn, action, successMessage) {

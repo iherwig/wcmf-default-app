@@ -22,6 +22,7 @@ var appSrc = [
     "app/js/action/ActionBase",
     "app/js/action/ChangePassword",
     "app/js/action/CheckPermissions",
+    "app/js/action/ClearCaches",
     "app/js/action/Copy",
     "app/js/action/Create",
     "app/js/action/CreateInRelation",
