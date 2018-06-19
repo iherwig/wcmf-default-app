@@ -115,6 +115,14 @@ label {
 }
 
 /* input */
+.entity-page .attribute_group {
+  padding: 8px;
+  margin: 2px;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+}
+
 .entity-page .dijitTextBox, .principal-page .dijitTextBox,
 .entity-page .dijitSliderH {
   width: 350px;
@@ -125,12 +133,11 @@ label {
   color: #555 !important;
 }
 
-.entity-page .attribute_group {
-  padding: 8px;
-  margin: 2px;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
+.dojoxCheckedMultiSelectMenuItemChecked {
+  font-weight: bold !important;
+}
+.dojoxCheckedMultiSelectCheckBoxInput {
+    opacity: 1.0;
 }
 
 .entity-page .group_default {

@@ -1,8 +1,10 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/_base/array",
     "dojo/on",
     "dojo/topic",
+    "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/dom-style",
     "dojo/html",
@@ -18,8 +20,10 @@ define( [
 function(
     declare,
     lang,
+    array,
     on,
     topic,
+    domConstruct,
     domGeom,
     domStyle,
     html,
@@ -45,6 +49,7 @@ function(
         searchAttr: "displayText",
         dropDown: true,
         multiple: true,
+        sortByLabel: false,
 
         emptyText: Dict.translate("None selected"),
 
@@ -90,11 +95,10 @@ function(
             this.inherited(arguments);
             this.own(
                 on(this.dropDownMenu, "open", lang.hitch(this, function() {
-                    var pos = domGeom.position(this.domNode);
-                    domStyle.set(this.dropDownMenu.domNode.parentNode, {
-                        left: pos.x + "px",
-                        top: pos.y + pos.h + "px"
-                    });
+                    this.positionDropdown();
+                })),
+                on(window, 'scroll', lang.hitch(this, function(evt) {
+                    this.close();
                 }))
             );
         },
@@ -104,15 +108,23 @@ function(
             this.setText(newValue);
         },
 
+        _getValueAttr: function() {
+            return typeof this.value === 'object' ? this.value.join(',') : this.value;
+        },
+
         _setDisabledAttr: function(value) {
-            this.inherited(arguments);
+            if (this.dropDown && this.dropDownButton) {
+              this.inherited(arguments);
+            }
             if (value) {
                 this.close();
             }
         },
 
         close: function() {
-            this.dropDownButton.closeDropDown();
+            if (this.dropDownButton) {
+                this.dropDownButton.closeDropDown();
+            }
         },
 
         destroy: function() {
@@ -123,8 +135,26 @@ function(
         setText: function(values) {
             var numValues = values.length;
             var text = (numValues === 0) ? this.emptyText :
-                  ((numValues <= 3) ? values.join(", ") : Dict.translate("%0% selected", [numValues]));
+                  ((numValues <= 3) ? this.translateValuesToOptions(values).join(", ") : Dict.translate("%0% selected", [numValues]));
             html.set(this.textbox, text+' <b class="caret"></b>');
+        },
+
+        translateValuesToOptions(values) {
+            var options = [];
+            array.forEach(values, lang.hitch(this, function(value) {
+                options.push(this.getOptions(value).label);
+            }));
+            return options;
+        },
+
+        positionDropdown() {
+            if (this.dropDownMenu && this.dropDownMenu.domNode.parentNode) {
+                var pos = domGeom.position(this.domNode);
+                domStyle.set(this.dropDownMenu.domNode.parentNode, {
+                    left: pos.x + "px",
+                    top: pos.y + pos.h + window.scrollY + "px"
+                });
+            }
         }
     });
 });

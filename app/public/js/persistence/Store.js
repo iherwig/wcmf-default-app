@@ -3,7 +3,6 @@ define([
     "dojo/_base/lang",
     "dojo/_base/config",
     "dojo/topic",
-    "dstore/Cache",
     "./BaseStore",
     "./ChildrenStore",
     "../model/meta/Model"
@@ -12,12 +11,11 @@ define([
     lang,
     config,
     topic,
-    Cache,
     BaseStore,
     ChildrenStore,
     Model
 ) {
-    var Store = declare([BaseStore, Cache], {
+    var Store = declare([BaseStore], {
         language: '',
         canHaveChildren: null,
 
@@ -42,7 +40,7 @@ define([
          * @returns Entity
          */
         getUncached: function(id, options) {
-            this.evict(id);
+            //this.evict(id);
             return this.get(id, options);
         },
 
