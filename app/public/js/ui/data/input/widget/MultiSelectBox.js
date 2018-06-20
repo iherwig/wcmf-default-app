@@ -4,6 +4,8 @@ define( [
     "dojo/_base/array",
     "dojo/on",
     "dojo/topic",
+    "dojo/Deferred",
+    "dojo/promise/all",
     "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/dom-style",
@@ -23,6 +25,8 @@ function(
     array,
     on,
     topic,
+    Deferred,
+    all,
     domConstruct,
     domGeom,
     domStyle,
@@ -108,6 +112,11 @@ function(
             this.setText(newValue);
         },
 
+        _setValueAttr: function(value) {
+            arguments[0] = value && typeof value === 'string' ? value.split(',') : value;
+            this.inherited(arguments);
+        },
+
         _getValueAttr: function() {
             return typeof this.value === 'object' ? this.value.join(',') : this.value;
         },
@@ -133,18 +142,24 @@ function(
         },
 
         setText: function(values) {
-            var numValues = values.length;
-            var text = (numValues === 0) ? this.emptyText :
-                  ((numValues <= 3) ? this.translateValuesToOptions(values).join(", ") : Dict.translate("%0% selected", [numValues]));
-            html.set(this.textbox, text+' <b class="caret"></b>');
+            this.translateValuesToOptions(values).then(lang.hitch(this, function(options) {
+                var numOptions = options.length;
+                var text = (numOptions === 0) ? this.emptyText :
+                      ((numOptions <= 3) ? options.join(", ") : Dict.translate("%0% selected", [numOptions]));
+                html.set(this.textbox, text+' <b class="caret"></b>');
+            }));
         },
 
         translateValuesToOptions(values) {
-            var options = [];
+            var deferred = new Deferred();
+            var deferredList = [];
             array.forEach(values, lang.hitch(this, function(value) {
-                options.push(this.getOptions(value).label);
+              deferredList.push(ControlFactory.translateValue(this.inputType, value));
             }));
-            return options;
+            all(deferredList).then(function(results) {
+                deferred.resolve(results);
+            });
+            return deferred;
         },
 
         positionDropdown() {
