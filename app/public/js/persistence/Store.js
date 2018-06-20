@@ -40,8 +40,16 @@ define([
          * @returns Entity
          */
         getUncached: function(id, options) {
-            //this.evict(id);
+            this.evict(id);
             return this.get(id, options);
+        },
+
+        /**
+         * Remove the given entity from the cache
+         * @param id
+         */
+        evict: function(id) {
+            // do nothing, since we don't cache
         },
 
         getChildren: function(parent) {
