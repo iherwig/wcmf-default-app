@@ -47,6 +47,8 @@ function(
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
 
+        valueSeparator: ',', // char that is used to separate values, set to null, to use arrays in getters and setters
+
         spinnerNode: null,
 
         labelAttr: "displayText",
@@ -113,12 +115,15 @@ function(
         },
 
         _setValueAttr: function(value) {
-            arguments[0] = value && typeof value === 'string' ? value.split(',') : value;
+            if (this.valueSeparator != null) {
+                arguments[0] = value && typeof value === 'string' ? value.split(this.valueSeparator) : value;
+            }
             this.inherited(arguments);
         },
 
         _getValueAttr: function() {
-            return typeof this.value === 'object' ? this.value.join(',') : this.value;
+            var valueType = typeof this.value;
+            return (this.valueSeparator != null && (valueType === 'array' || valueType === 'object')) ? this.value.join(this.valueSeparator) : this.value;
         },
 
         _setDisabledAttr: function(value) {

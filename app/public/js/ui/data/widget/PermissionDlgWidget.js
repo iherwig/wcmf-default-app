@@ -182,7 +182,8 @@ define([
             this[name] = new MultiSelect({
                 name: name,
                 store: roleStore,
-                value: this.permissionsToInput(permissions)
+                value: this.permissionsToInput(permissions),
+                valueSeparator: null // handle values as arrays
             }, this.permissionsWidget[name]);
             this[name].startup();
 
