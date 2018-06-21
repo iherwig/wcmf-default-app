@@ -155,7 +155,7 @@ function(
             }));
         },
 
-        translateValuesToOptions(values) {
+        translateValuesToOptions: function(values) {
             var deferred = new Deferred();
             var deferredList = [];
             array.forEach(values, lang.hitch(this, function(value) {
@@ -167,7 +167,7 @@ function(
             return deferred;
         },
 
-        positionDropdown() {
+        positionDropdown: function() {
             if (this.dropDownMenu && this.dropDownMenu.domNode.parentNode) {
                 var pos = domGeom.position(this.domNode);
                 domStyle.set(this.dropDownMenu.domNode.parentNode, {
