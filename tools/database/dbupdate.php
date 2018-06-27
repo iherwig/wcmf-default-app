@@ -166,7 +166,7 @@ function ensureUpdateTable($connection) {
     try {
       // the update table does not exist
       $connection->query('CREATE TABLE `dbupdate` (`table_id` VARCHAR(50) NOT NULL, `column_id` VARCHAR(50) NOT NULL, `type` VARCHAR(20) NOT NULL, '.
-                                '`table` VARCHAR(255), `column` VARCHAR(255), `updated` DATETIME, PRIMARY KEY (`table_id`, `column_id`, `type`)) ENGINE=MyISAM');
+                                '`table` VARCHAR(255), `column` VARCHAR(255), `updated` DATETIME, PRIMARY KEY (`table_id`, `column_id`, `type`)) ENGINE=InnoDb');
     }
     catch (\Exception $e) {
       $logger->error('Error creating update table '.$e->getMessage());
