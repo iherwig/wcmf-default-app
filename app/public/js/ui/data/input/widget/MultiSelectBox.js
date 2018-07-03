@@ -9,6 +9,7 @@ define( [
     "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/dom-style",
+    "dojo/dom-attr",
     "dojo/html",
     "dijit/registry",
     "dojox/form/CheckedMultiSelect",
@@ -30,6 +31,7 @@ function(
     domConstruct,
     domGeom,
     domStyle,
+    domAttr,
     html,
     registry,
     CheckedMultiSelect,
@@ -88,9 +90,11 @@ function(
                     }
                 })),
                 on(this.textbox, "click", lang.hitch(this, function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.dropDownButton.toggleDropDown();
+                    if (!this.get('disabled')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.dropDownButton.toggleDropDown();
+                    }
                 }))
             );
 
@@ -128,10 +132,14 @@ function(
 
         _setDisabledAttr: function(value) {
             if (this.dropDown && this.dropDownButton) {
-              this.inherited(arguments);
+                this.inherited(arguments);
             }
             if (value) {
                 this.close();
+                domAttr.set(this.textbox, 'disabled', 'disabled');
+            }
+            else {
+                domAttr.remove(this.textbox, 'disabled');
             }
         },
 
