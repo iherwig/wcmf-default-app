@@ -197,7 +197,6 @@
         <!-- elfinder -->
         <include name="vendor/studio-42/elfinder-js/css/*.*"/>
         <include name="vendor/studio-42/elfinder-js/img/*.*"/>
-        <include name="vendor/studio-42/elfinder-js/js/i18n/elfinder.de.js"/>
         <include name="vendor/jquery/jquery.min.js"/>
         <include name="vendor/jquery-ui/jquery-ui.min.js"/>
         <include name="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
