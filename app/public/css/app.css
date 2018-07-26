@@ -129,6 +129,11 @@ label {
   display: block;
 }
 
+.entity-page .dijitCheckBox, .principal-page .dijitCheckBox {
+  margin-left: 0;
+  margin-right: 335px;
+}
+
 .dijitTextBoxDisabled input {
   color: #555 !important;
 }
