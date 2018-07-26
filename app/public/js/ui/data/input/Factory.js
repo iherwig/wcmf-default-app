@@ -131,6 +131,11 @@ function(
      */
     Factory.getItem = function(inputType, value) {
         var translateKey = inputType+'.'+value;
+        // serve from cache
+        if (Factory._resolvedValues.hasOwnProperty(translateKey)) {
+            return Factory._resolvedValues[translateKey];
+        }
+        // create promise
         if (!Factory._translatePromises.hasOwnProperty(translateKey)) {
             Factory._translatePromises[translateKey] = new Deferred();
         }
@@ -139,26 +144,26 @@ function(
         if (options['list'] && value !== null) {
             // check list cache
             var listKey = inputType;
-            if (Factory._listCache.hasOwnProperty(listKey)) {
-                // if a cache value exists, it might be a promise for the load result
-                // or an already resolved list
-                when(Factory._listCache[listKey], lang.partial(function(listKey, result) {
-                    // cache result and return requested value
-                    Factory._listCache[listKey] = result;
-                    result.forEach(function(object) {
-                        var translateKey = listKey+'.'+object.value;
-                        if (Factory._translatePromises.hasOwnProperty(translateKey)) {
-                            Factory._translatePromises[translateKey].resolve(object);
-                        }
-                    });
-                }, listKey));
-            }
-            else {
+            if (!Factory._listCache.hasOwnProperty(listKey)) {
                 // NOTE loading all items once and caching the result
                 // is faster than resolving the value on each request
                 // store promise in cache and resolve later
                 var store = ListStore.getStore(options['list'], config.app.defaultLanguage);
                 Factory._listCache[listKey] = store.fetch();
+                when(Factory._listCache[listKey], lang.partial(function(listKey, result) {
+                    // cache result and return requested value
+                    Factory._listCache[listKey] = result;
+                    result.forEach(function(object) {
+                        // convert all to strings, to avoid wrong 0/null handling of dijit controls
+                        object.oid = ""+object.oid;
+                        object.value = ""+object.value;
+                        var translateKey = listKey+'.'+object.value;
+                        if (Factory._translatePromises.hasOwnProperty(translateKey)) {
+                            Factory._translatePromises[translateKey].resolve(object);
+                        }
+                        Factory._resolvedValues[translateKey] = object;
+                    });
+                }, listKey));
                 return Factory.getItem(inputType, value);
             }
         }
@@ -205,6 +210,7 @@ function(
      */
     Factory._listCache = {};
     Factory._translatePromises = {};
+    Factory._resolvedValues = {};
 
     return Factory;
 });

@@ -55,6 +55,7 @@ function(
 
         labelAttr: "displayText",
         searchAttr: "displayText",
+        listItems: [], // the selected items from the ListStore
         dropDown: true,
         multiple: true,
         sortByLabel: false,
@@ -114,20 +115,68 @@ function(
         },
 
         onChange: function(newValue) {
-            this.inherited(arguments);
+            newValue = this.translateOptionsToValues(newValue);
             this.setText(newValue);
-        },
-
-        _setValueAttr: function(value) {
-            if (this.valueSeparator != null) {
-                arguments[0] = value && typeof value === 'string' ? value.split(this.valueSeparator) : value;
-            }
-            this.inherited(arguments);
+            this.setValue(newValue);
         },
 
         _getValueAttr: function() {
-            var valueType = typeof this.value;
-            return (this.valueSeparator != null && (valueType === 'array' || valueType === 'object')) ? this.value.join(this.valueSeparator) : this.value;
+            var value = this.listItems.map(function(item) {
+                return item.value;
+            });
+            return (this.valueSeparator != null) ? value.join(this.valueSeparator) : value;
+        },
+
+        _setValueAttr: function(value, priorityChange, displayedValue, items) {
+            // if the parent class calls setValue with the store ids,
+            // we need to translate them to the real item values first
+            if (value == this._pendingValue) {
+                value = this.translateOptionsToValues(value);
+            }
+
+            // split string into list value
+            if (this.valueSeparator != null) {
+                arguments[0] = value = (value && typeof value === 'string' ? value.split(this.valueSeparator) : value)
+            }
+
+            // since the value of the items in the ListStore is stored in
+            // their value property and not in the id property, we need to
+            // change the behaviour of the parent class, which uses the id
+            // property as value
+            if (items) {
+                // if an item is given, we can fall back to the
+                // parent class' behaviour
+                this.listItems = items;
+                this.inherited(arguments);
+                return;
+            }
+            // find the items with the value property equal to value
+            var args = arguments;
+
+            var setItems = lang.hitch(this, function(items) {
+                this.listItems = [];
+                var ids = [];
+                var displayTexts = [];
+                array.forEach(items, lang.hitch(this, function(item) {
+                    ids.push(item.oid);
+                    displayTexts.push(item.displayText);
+                    this.listItems.push(item);
+                }));
+                this.inherited(args, [ids, priorityChange, displayTexts, items]);
+            });
+
+            if (this.inputType) {
+                this.translateValuesToItems(value).then(lang.hitch(this, function(object) {
+                    setItems(object);
+                }));
+            }
+            else {
+                // TODO use this.store, if FilteringSelect uses store api
+                var store = !this.store.filter ? this.store.store : this.store;
+                store.filter({value: 'eq='+value}).forEach(lang.hitch(this, function (object) {
+                    setItems(object);
+                }));
+            }
         },
 
         _setDisabledAttr: function(value) {
@@ -155,24 +204,42 @@ function(
         },
 
         setText: function(values) {
-            this.translateValuesToOptions(values).then(lang.hitch(this, function(options) {
-                var numOptions = options.length;
-                var text = (numOptions === 0) ? this.emptyText :
-                      ((numOptions <= 3) ? options.join(", ") : Dict.translate("%0% selected", [numOptions]));
+            this.translateValuesToDisplayTexts(values).then(lang.hitch(this, function(displayTexts) {
+                var numTexts = displayTexts.length;
+                var text = (numTexts === 0) ? this.emptyText :
+                      ((numTexts <= 3) ? displayTexts.join(", ") : Dict.translate("%0% selected", [numTexts]));
                 html.set(this.textbox, text+' <b class="caret"></b>');
             }));
         },
 
-        translateValuesToOptions: function(values) {
+        translateValuesToDisplayTexts: function(values) {
             var deferred = new Deferred();
             var deferredList = [];
             array.forEach(values, lang.hitch(this, function(value) {
-              deferredList.push(ControlFactory.translateValue(this.inputType, value));
+                deferredList.push(ControlFactory.translateValue(this.inputType, value));
             }));
             all(deferredList).then(function(results) {
                 deferred.resolve(results);
             });
             return deferred;
+        },
+
+        translateValuesToItems: function(values) {
+            var deferred = new Deferred();
+            var deferredList = [];
+            array.forEach(values, lang.hitch(this, function(value) {
+                deferredList.push(ControlFactory.getItem(this.inputType, value));
+            }));
+            all(deferredList).then(function(results) {
+                deferred.resolve(results);
+            });
+            return deferred;
+        },
+
+        translateOptionsToValues: function(options) {
+            return options ? options.map(lang.hitch(this, function(val) {
+                return this.options[val].item.value;
+            })) : options;
         },
 
         positionDropdown: function() {
