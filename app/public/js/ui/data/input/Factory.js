@@ -110,11 +110,12 @@ function(
      * might be contained in the input type
      * @param inputType The input type (contains the list definition after '#' char)
      * @param value The value
+     * @param convertValuesToStrings Boolean whether to convert all item values to strings (optional, default: false)
      * @returns Deferred
      */
-    Factory.translateValue = function(inputType, value) {
+    Factory.translateValue = function(inputType, value, convertValuesToStrings) {
         var deferred = new Deferred();
-        when(Factory.getItem(inputType, value), function(item) {
+        when(Factory.getItem(inputType, value, convertValuesToStrings), function(item) {
             var value = item && item.hasOwnProperty('displayText') ? item.displayText :
                     item === undefined ? null : item;
             deferred.resolve(value);
@@ -127,9 +128,10 @@ function(
      * might be contained in the input type
      * @param inputType The input type (contains the list definition after '#' char)
      * @param value The value
+     * @param convertValuesToStrings Boolean whether to convert all item values to strings (optional, default: false)
      * @returns Deferred
      */
-    Factory.getItem = function(inputType, value) {
+    Factory.getItem = function(inputType, value, convertValuesToStrings) {
         var translateKey = inputType+'.'+value;
         // serve from cache
         if (Factory._resolvedValues.hasOwnProperty(translateKey)) {
@@ -154,12 +156,14 @@ function(
                     // cache result and return requested value
                     Factory._listCache[listKey] = result;
                     result.forEach(function(object) {
-                        // convert all to strings, to avoid wrong 0/null handling of dijit controls
-                        object.oid = ""+object.oid;
-                        object.value = ""+object.value;
+                        if (convertValuesToStrings) {
+                            object.oid = ""+object.oid;
+                            object.value = ""+object.value;
+                        }
                         var translateKey = listKey+'.'+object.value;
                         if (Factory._translatePromises.hasOwnProperty(translateKey)) {
                             Factory._translatePromises[translateKey].resolve(object);
+                            delete Factory._translatePromises[translateKey];
                         }
                         Factory._resolvedValues[translateKey] = object;
                     });

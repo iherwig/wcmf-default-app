@@ -216,7 +216,7 @@ function(
             var deferred = new Deferred();
             var deferredList = [];
             array.forEach(values, lang.hitch(this, function(value) {
-                deferredList.push(ControlFactory.translateValue(this.inputType, value));
+                deferredList.push(ControlFactory.translateValue(this.inputType, value, true));
             }));
             all(deferredList).then(function(results) {
                 deferred.resolve(results);
@@ -228,7 +228,7 @@ function(
             var deferred = new Deferred();
             var deferredList = [];
             array.forEach(values, lang.hitch(this, function(value) {
-                deferredList.push(ControlFactory.getItem(this.inputType, value));
+                deferredList.push(ControlFactory.getItem(this.inputType, value, true));
             }));
             all(deferredList).then(function(results) {
                 deferred.resolve(results);
