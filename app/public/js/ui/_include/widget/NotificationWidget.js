@@ -20,7 +20,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
 
         _setContentAttr: function (val) {
-            this.contentNode.innerHTML = '<i class="fa fa-exclamation-circle"></i> '+val;
+            this.contentNode.innerHTML = val;
         },
 
         _setClassAttr: function (val) {

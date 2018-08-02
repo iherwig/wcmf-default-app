@@ -50,9 +50,11 @@ define([
 
             if (options.type === 'ok') {
                 alertClass = 'alert-success';
-            } else if (options.type === 'error') {
+            }
+            else if (options.type === 'error') {
                 alertClass = 'alert-error';
-            } else if (options.type === 'process') {
+            }
+            else if (options.type === 'process') {
                 alertClass = 'alert-info';
             }
 
@@ -78,7 +80,7 @@ define([
 
             this.widget = new Notification({
                 'class': alertClass,
-                content: content
+                content: content ? content.replace(/\n/, '<br>') : ''
             }, this.node);
 
             this.widget.startup();
@@ -134,7 +136,7 @@ define([
                 });
             }
         },
-        
+
         showLoginDlg: function (noRefresh) {
             if (this.loginDlg && !this.loginDlg.isShowing) {
                 new this.loginDlg({
