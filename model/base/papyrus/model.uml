@@ -140,6 +140,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_86xZx6prEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_86xZyKprEeaGbp23C_zkpg" value="true"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_ElzEMKCZEei7lb2-f1ttTQ" name="defaultLanguageFallback" visibility="public" type="_R96HULQxEeOQkO_jUVpBAw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ElzEMaCZEei7lb2-f1ttTQ" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ElzEMqCZEei7lb2-f1ttTQ" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralBoolean" xmi:id="_ElzEM6CZEei7lb2-f1ttTQ" value="true"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_H4XloFuLEeeJNLUV4A8xUw" name="IndexStrategy">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_H4XloVuLEeeJNLUV4A8xUw" name="__class" type="_agg3ALQwEeOLlbB2YLI0iw">
