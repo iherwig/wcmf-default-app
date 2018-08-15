@@ -55,7 +55,7 @@ function(
 
         labelAttr: "displayText",
         searchAttr: "displayText",
-        listItems: [], // the selected items from the ListStore
+        selectedOptions: [], // the selected items from the ListStore
         dropDown: true,
         multiple: true,
         sortByLabel: false,
@@ -99,7 +99,7 @@ function(
                 }))
             );
 
-            this.setText(this.value);
+            this.setText();
         },
 
         startup: function(){
@@ -115,23 +115,22 @@ function(
         },
 
         onChange: function(newValue) {
-            newValue = this.translateOptionsToValues(newValue);
-            this.setText(newValue);
-            this.setValue(newValue);
+            this.selectedOptions = this.translateValuesToOptions(newValue, false);
+            this.setText();
         },
 
         _getValueAttr: function() {
-            var value = this.listItems.map(function(item) {
-                return item.value;
-            });
+            var value = this.options.length ? this.selectedOptions.map(function(option) {
+                return option.item.value;
+            }) : this.value;
             return (this.valueSeparator != null) ? value.join(this.valueSeparator) : value;
         },
 
-        _setValueAttr: function(value, priorityChange, displayedValue, items) {
+        _setValueAttr: function(value, priorityChange, displayedValue, options) {
             // if the parent class calls setValue with the store ids,
             // we need to translate them to the real item values first
             if (value == this._pendingValue) {
-                value = this.translateOptionsToValues(value);
+                value = this.translateOptionsToValues(value, true);
             }
 
             // split string into list value
@@ -139,42 +138,40 @@ function(
                 arguments[0] = value = (value && typeof value === 'string' ? value.split(this.valueSeparator) : value)
             }
 
-            // since the value of the items in the ListStore is stored in
+            // since the value of the options in the ListStore is stored in
             // their value property and not in the id property, we need to
             // change the behaviour of the parent class, which uses the id
             // property as value
-            if (items) {
+            if (options) {
                 // if an item is given, we can fall back to the
                 // parent class' behaviour
-                this.listItems = items;
+                this.selectedOptions = options;
                 this.inherited(arguments);
                 return;
             }
-            // find the items with the value property equal to value
+            // find the options with the value property equal to value
             var args = arguments;
 
-            var setItems = lang.hitch(this, function(items) {
-                this.listItems = [];
+            var setSelectedOptions = lang.hitch(this, function(options) {
+                this.selectedOptions = [];
                 var ids = [];
-                var displayTexts = [];
-                array.forEach(items, lang.hitch(this, function(item) {
-                    ids.push(item.oid);
-                    displayTexts.push(item.displayText);
-                    this.listItems.push(item);
+                var labels = [];
+                array.forEach(options, lang.hitch(this, function(option) {
+                    ids.push(option.item ? option.item.oid : option);
+                    labels.push(option.item ? option.item.displayText : option);
+                    this.selectedOptions.push(option);
                 }));
-                this.inherited(args, [ids, priorityChange, displayTexts, items]);
+                this.inherited(args, [ids, priorityChange, labels, options]);
             });
 
             if (this.inputType) {
-                this.translateValuesToItems(value).then(lang.hitch(this, function(object) {
-                    setItems(object);
-                }));
+                setSelectedOptions(this.translateValuesToOptions(value, true));
             }
             else {
                 // TODO use this.store, if FilteringSelect uses store api
                 var store = !this.store.filter ? this.store.store : this.store;
                 store.filter({value: 'eq='+value}).forEach(lang.hitch(this, function (object) {
-                    setItems(object);
+                    setSelectedOptions(object);
                 }));
             }
         },
@@ -203,43 +200,37 @@ function(
             this.inherited(arguments);
         },
 
-        setText: function(values) {
-            this.translateValuesToDisplayTexts(values).then(lang.hitch(this, function(displayTexts) {
-                var numTexts = displayTexts.length;
-                var text = (numTexts === 0) ? this.emptyText :
-                      ((numTexts <= 3) ? displayTexts.join(", ") : Dict.translate("%0% selected", [numTexts]));
-                html.set(this.textbox, text+' <b class="caret"></b>');
-            }));
+        setText: function() {
+            var labels = this.options.length ? this.selectedOptions.map(function(option) {
+                return option.label;
+            }) : [];
+            var numTexts = labels.length;
+            var text = (numTexts === 0) ? this.emptyText :
+                  ((numTexts <= 3) ? labels.join(", ") : Dict.translate("%0% selected", [numTexts]));
+            html.set(this.textbox, text+' <b class="caret"></b>');
         },
 
-        translateValuesToDisplayTexts: function(values) {
-            var deferred = new Deferred();
-            var deferredList = [];
-            array.forEach(values, lang.hitch(this, function(value) {
-                deferredList.push(ControlFactory.translateValue(this.inputType, value, true));
-            }));
-            all(deferredList).then(function(results) {
-                deferred.resolve(results);
-            });
-            return deferred;
+        translateValuesToOptions: function(values, useItemValue) {
+            values = values && !(values instanceof Array) ? [values] : values;
+            return values && this.options.length ? values.map(lang.hitch(this, function(val) {
+                return this.findOptionByValue(val, useItemValue);
+            })) : values;
         },
 
-        translateValuesToItems: function(values) {
-            var deferred = new Deferred();
-            var deferredList = [];
-            array.forEach(values, lang.hitch(this, function(value) {
-                deferredList.push(ControlFactory.getItem(this.inputType, value, true));
-            }));
-            all(deferredList).then(function(results) {
-                deferred.resolve(results);
-            });
-            return deferred;
-        },
-
-        translateOptionsToValues: function(options) {
+        translateOptionsToValues: function(options, useItemValue) {
             return options ? options.map(lang.hitch(this, function(val) {
-                return this.options[val].item.value;
+                return useItemValue ? this.options[val].item.value : this.options[val].value;
             })) : options;
+        },
+
+        findOptionByValue: function(value, useItemValue) {
+            for (var i=0, count=this.options.length; i<count; i++) {
+                var optionValue = useItemValue ? this.options[i].item.value : this.options[i].value;
+                if (optionValue == value) {
+                    return this.options[i];
+                }
+            }
+            return value;
         },
 
         positionDropdown: function() {
