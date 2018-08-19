@@ -153,6 +153,7 @@ function(
             for (var i=0, count=relations.length; i<count; i++) {
                 var relation = relations[i];
                 requiredPermissions.push(Model.getFullyQualifiedTypeName(relation.type)+'??read');
+                requiredPermissions.push(cleanOid+'.'+relation.name+'??read');
             }
             deferredList.push(new CheckPermissions({
                 operations: requiredPermissions
@@ -223,7 +224,8 @@ function(
                     for (var i=0, count=relations.length; i<count; i++) {
                         var relation = relations[i];
                         // only show relations with read permission
-                        if (this.permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true) {
+                        if (this.permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true &&
+                            this.permissions[cleanOid+'.'+relation.name+'??read'] === true) {
                             var relationWidget = new EntityRelationWidget({
                                 route: this.baseRoute,
                                 entity: this.entity,

@@ -15,6 +15,8 @@ define( [
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/RelationStore",
+    "../../../action/ImportCSV",
+    "../../../action/ExportCSV",
     "../../../action/Edit",
     "../../../action/Copy",
     "../../../action/Link",
@@ -42,6 +44,8 @@ function(
     CheckPermissions,
     Model,
     RelationStore,
+    ImportCSV,
+    ExportCSV,
     Edit,
     Copy,
     Link,
@@ -83,11 +87,16 @@ function(
             var deferredList = [];
 
             // check permissions
+            var oid = this.entity.get('oid');
             var requiredPermissions = [
+                oid+'.'+this.relation.name+'??create',
+                oid+'.'+this.relation.name+'??delete',
                 this.type+'??create',
                 this.type+'??copy',
                 this.type+'??delete',
-                '??setPermissions'
+                '??setPermissions',
+                this.type+'??exportCSV',
+                this.type+'??importCSV'
             ];
             deferredList.push(new CheckPermissions({
                 operations: requiredPermissions
@@ -103,7 +112,7 @@ function(
 
                 this.gridWidget = new GridWidget({
                     type: this.relation.type,
-                    store: RelationStore.getStore(this.entity.get('oid'), this.relation.name),
+                    store: this.getGridStore(),
                     columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
                         return attribute.name;
                     }),
@@ -154,7 +163,9 @@ function(
             });
             actions.push(editAction);
 
-            if (this.permissions[this.type+'??copy'] === true) {
+            var oid = this.entity.get('oid');
+
+            if (this.permissions[this.type+'??copy'] === true && this.permissions[oid+'.'+this.relation.name+'??create'] === true) {
                 var copyAction = new Copy({
                     targetoid: this.entity.get('oid'),
                     init: lang.hitch(this, function() {
@@ -181,7 +192,7 @@ function(
             }
 
             if (this.relation.aggregationKind === "composite") {
-                if (this.permissions[this.type+'??delete'] === true) {
+                if (this.permissions[this.type+'??delete'] === true && this.permissions[oid+'.'+this.relation.name+'??delete'] === true) {
                     var deleteAction = new Delete({
                         callback: lang.hitch(this, function(response) {
                             // success
@@ -201,24 +212,26 @@ function(
                 }
             }
             else {
-                var unlinkAction = new Unlink({
-                    source: this.entity,
-                    relation: this.relation,
-                    callback: lang.hitch(this, function(response) {
-                        // success
-                        this.gridWidget.refresh();
-                        this.showNotification({
-                            type: "ok",
-                            message: Dict.translate("<em>%0%</em> was successfully unlinked", [this.typeClass.getDisplayValue(response)]),
-                            fadeOut: true
-                        });
-                    }),
-                    errback: lang.hitch(this, function(error) {
-                        // error
-                        this.showBackendError(error);
-                    })
-                });
-                actions.push(unlinkAction);
+                if (this.permissions[oid+'.'+this.relation.name+'??delete'] === true) {
+                    var unlinkAction = new Unlink({
+                        source: this.entity,
+                        relation: this.relation,
+                        callback: lang.hitch(this, function(response) {
+                            // success
+                            this.gridWidget.refresh();
+                            this.showNotification({
+                                type: "ok",
+                                message: Dict.translate("<em>%0%</em> was successfully unlinked", [this.typeClass.getDisplayValue(response)]),
+                                fadeOut: true
+                            });
+                        }),
+                        errback: lang.hitch(this, function(error) {
+                            // error
+                            this.showBackendError(error);
+                        })
+                    });
+                    actions.push(unlinkAction);
+                }
             }
 
             if (this.permissions['??setPermissions'] === true) {
@@ -229,10 +242,75 @@ function(
             return actions;
         },
 
+        getGridStore: function() {
+            return RelationStore.getStore(this.entity.get('oid'), this.relation.name);
+        },
+        
+        setBtnState: function(btnName, isEnabled) {
+            var btn = this[btnName+"Btn"];
+            if (btn) {
+                btn.set("disabled", !isEnabled);
+            }
+        },
+
+        
         setDefaultButtonStates: function() {
-            this.createBtn.set("disabled", this.relation.aggregationKind === "none" ||
-                this.permissions[this.type+'??create'] !== true);
-            this.linkBtn.set("disabled", this.relation.aggregationKind === "composite");
+            var oid = this.entity.get('oid');
+            var type = Model.getTypeFromOid(oid);
+
+            this.setBtnState("create", this.relation.aggregationKind !== "none" && this.permissions[this.type+'??create'] === true && 
+                this.permissions[oid+'.'+this.relation.name+'??create'] === true);
+            this.setBtnState("link", this.relation.aggregationKind !== "composite" && 
+                this.permissions[oid+'.'+this.relation.name+'??create'] === true);
+            this.setBtnState("import", this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) && 
+                this.permissions[this.type+'??importCSV'] === true);
+            this.setBtnState("export", this.permissions[this.type+'??exportCSV'] === true);
+            
+        },
+
+        _import: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+  
+            new CreateInRelation({
+                page: this.page,
+                route: this.route,
+                source: this.entity,
+                relation: this.relation,
+                init: lang.hitch(this, function() {
+                    this.hideNotification();
+                })
+            }).execute();
+        },
+  
+        _export: function(e) {
+            // prevent the page from navigating after submit
+            e.preventDefault();
+    
+            // get filter query
+            var gridFilter = this.gridWidget ? this.gridWidget.getFilter() : undefined;
+            var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
+            var oid = this.entity.get('oid');
+    
+            this.exportBtn.setProcessing();
+            new ExportCSV({
+                type: Model.getTypeNameFromOid(oid),
+                query: query,
+                id: Model.getIdFromOid(oid),
+                relation: this.relation.name
+            }).execute().then(
+                lang.hitch(this, function() {
+                    this.exportBtn.reset();
+                }),
+                lang.hitch(this, function(error) {
+                    this.showBackendError(error);
+                    this.exportBtn.reset();
+                }),
+                lang.hitch(this, function(status) {
+                    var progress = status.stepNumber/status.numberOfSteps;
+                    this.exportBtn.setProgress(progress);
+                })
+            );
         },
 
         _create: function(e) {
@@ -267,7 +345,7 @@ function(
                     });
                 })
             }).execute().then(lang.hitch(this, function(response) {
-              var message = Dict.translate("Objects were successfully linked");
+                var message = Dict.translate("Objects were successfully linked");
                 this.showNotification({
                     type: "ok",
                     message: message,

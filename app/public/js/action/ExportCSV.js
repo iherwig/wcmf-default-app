@@ -15,12 +15,18 @@ define([
         // action parameters
         type: null,
         query: null,
+        id: null,
+        relation: null,
 
         execute: function() {
             var params = {
                 className: this.type,
-                query: this.query
+                query: this.query,
             };
+            if (this.id && this.relation) {
+              params.sourceId = this.id;
+              params.relation = this.relation;
+            }
             return new Process('exportCSV').run(params);
         }
     });
