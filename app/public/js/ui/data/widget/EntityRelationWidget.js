@@ -89,8 +89,7 @@ function(
             // check permissions
             var oid = this.entity.get('oid');
             var requiredPermissions = [
-                oid+'.'+this.relation.name+'??create',
-                oid+'.'+this.relation.name+'??delete',
+                oid+'.'+this.relation.name+'??update',
                 this.type+'??create',
                 this.type+'??copy',
                 this.type+'??delete',
@@ -165,7 +164,7 @@ function(
 
             var oid = this.entity.get('oid');
 
-            if (this.permissions[this.type+'??copy'] === true && this.permissions[oid+'.'+this.relation.name+'??create'] === true) {
+            if (this.permissions[this.type+'??copy'] === true && this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
                 var copyAction = new Copy({
                     targetoid: this.entity.get('oid'),
                     init: lang.hitch(this, function() {
@@ -192,7 +191,7 @@ function(
             }
 
             if (this.relation.aggregationKind === "composite") {
-                if (this.permissions[this.type+'??delete'] === true && this.permissions[oid+'.'+this.relation.name+'??delete'] === true) {
+                if (this.permissions[this.type+'??delete'] === true && this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
                     var deleteAction = new Delete({
                         callback: lang.hitch(this, function(response) {
                             // success
@@ -212,7 +211,7 @@ function(
                 }
             }
             else {
-                if (this.permissions[oid+'.'+this.relation.name+'??delete'] === true) {
+                if (this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
                     var unlinkAction = new Unlink({
                         source: this.entity,
                         relation: this.relation,
@@ -245,7 +244,7 @@ function(
         getGridStore: function() {
             return RelationStore.getStore(this.entity.get('oid'), this.relation.name);
         },
-        
+
         setBtnState: function(btnName, isEnabled) {
             var btn = this[btnName+"Btn"];
             if (btn) {
@@ -253,25 +252,25 @@ function(
             }
         },
 
-        
+
         setDefaultButtonStates: function() {
             var oid = this.entity.get('oid');
             var type = Model.getTypeFromOid(oid);
 
-            this.setBtnState("create", this.relation.aggregationKind !== "none" && this.permissions[this.type+'??create'] === true && 
-                this.permissions[oid+'.'+this.relation.name+'??create'] === true);
-            this.setBtnState("link", this.relation.aggregationKind !== "composite" && 
-                this.permissions[oid+'.'+this.relation.name+'??create'] === true);
-            this.setBtnState("import", this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) && 
-                this.permissions[this.type+'??importCSV'] === true);
+            this.setBtnState("create", this.relation.aggregationKind !== "none" && this.permissions[this.type+'??create'] === true &&
+                this.permissions[oid+'.'+this.relation.name+'??update'] === true);
+            this.setBtnState("link", this.relation.aggregationKind !== "composite" &&
+                this.permissions[oid+'.'+this.relation.name+'??update'] === true);
+            this.setBtnState("import", this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) &&
+                this.permissions[oid+'.'+this.relation.name+'??update'] === true && this.permissions[this.type+'??importCSV'] === true);
             this.setBtnState("export", this.permissions[this.type+'??exportCSV'] === true);
-            
+
         },
 
         _import: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-  
+
             new CreateInRelation({
                 page: this.page,
                 route: this.route,
@@ -282,16 +281,16 @@ function(
                 })
             }).execute();
         },
-  
+
         _export: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
-    
+
             // get filter query
             var gridFilter = this.gridWidget ? this.gridWidget.getFilter() : undefined;
             var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
             var oid = this.entity.get('oid');
-    
+
             this.exportBtn.setProcessing();
             new ExportCSV({
                 type: Model.getTypeNameFromOid(oid),

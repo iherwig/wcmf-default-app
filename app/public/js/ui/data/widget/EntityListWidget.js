@@ -20,6 +20,7 @@ define( [
     "../../_include/widget/Button",
     "../../_include/widget/PopupDlgWidget",
     "../../_include/widget/ConfirmDlgWidget",
+    "../input/widget/BinaryCheckBox",
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
@@ -55,6 +56,7 @@ function(
     Button,
     PopupDlg,
     ConfirmDlg,
+    BinaryCheckBox,
     CheckPermissions,
     Model,
     Store,
@@ -371,23 +373,39 @@ function(
             var gridFilter = this.getGridFilter();
             var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
 
-            this.exportBtn.setProcessing();
-            new ExportCSV({
-                type: this.type,
-                query: query
-            }).execute().then(
-                lang.hitch(this, function() {
-                    this.exportBtn.reset();
-                }),
-                lang.hitch(this, function(error) {
-                    this.showBackendError(error);
-                    this.exportBtn.reset();
-                }),
-                lang.hitch(this, function(status) {
-                    var progress = status.stepNumber/status.numberOfSteps;
-                    this.exportBtn.setProgress(progress);
+            var options = new BinaryCheckBox({
+                label: Dict.translate("Translate list values into display values?"),
+                name: 'translateListValues',
+                value: "0"
+            });
+            options.startup();
+
+            new PopupDlg({
+                title: Dict.translate("Export"),
+                message: Dict.translate("Options"),
+                contentWidget: options,
+                okCallback: lang.hitch(this, function() {
+                    var deferred = new Deferred();
+                    this.exportBtn.setProcessing();
+                    new ExportCSV({
+                        type: this.type,
+                        query: query
+                    }).execute().then(
+                        lang.hitch(this, function() {
+                            this.exportBtn.reset();
+                        }),
+                        lang.hitch(this, function(error) {
+                            this.showBackendError(error);
+                            this.exportBtn.reset();
+                        }),
+                        lang.hitch(this, function(status) {
+                            var progress = status.stepNumber/status.numberOfSteps;
+                            this.exportBtn.setProgress(progress);
+                        })
+                    );
+                    return deferred;
                 })
-            );
+            }).show();
         },
 
         _create: function(e) {
