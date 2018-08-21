@@ -3,6 +3,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/topic",
+    "dojo/Deferred",
     "dojo/_base/fx",
     "dojo/query",
     "dojo/dom-construct",
@@ -14,6 +15,7 @@ define([
     declare,
     lang,
     topic,
+    Deferred,
     fx,
     query,
     domConstruct,
@@ -28,8 +30,9 @@ define([
      * showNotification({
      *      type: "error",
      *      message: "Backend error",
-     *      fadeOut: false,
-     *      onHide: function () {}
+     *      fadeOut: false
+     * }).then(function () {
+     *      ...
      * });
      * @endcode
      */
@@ -37,6 +40,7 @@ define([
         node: null,
         widget: null,
         loginDlg: null,
+        hideDeferred: null,
 
         constructor: function(params) {
             // subscribe to backend error notifications
@@ -100,18 +104,16 @@ define([
                 }).play();
             }
 
-            this.onHide = undefined;
-            if (typeof options.onHide === 'function') {
-                this.onHide = options.onHide;
-            }
+            this.hideDeferred = new Deferred();
+            return this.hideDeferred;
         },
 
         hideNotification: function () {
             if (this.widget) {
                 this.widget.destroyRecursive();
             }
-            if (typeof this.onHide === 'function') {
-                this.onHide();
+            if (this.hideDeferred) {
+              this.hideDeferred.resolve();
             }
         },
 

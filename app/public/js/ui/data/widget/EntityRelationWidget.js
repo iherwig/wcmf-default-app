@@ -12,11 +12,11 @@ define( [
     "../../_include/_NotificationMixin",
     "../../_include/widget/GridWidget",
     "../../_include/widget/Button",
+    "./ExportWidget",
+    "./ImportWidget",
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/RelationStore",
-    "../../../action/ImportCSV",
-    "../../../action/ExportCSV",
     "../../../action/Edit",
     "../../../action/Copy",
     "../../../action/Link",
@@ -41,11 +41,11 @@ function(
     _NotificationMixin,
     GridWidget,
     Button,
+    Export,
+    Import,
     CheckPermissions,
     Model,
     RelationStore,
-    ImportCSV,
-    ExportCSV,
     Edit,
     Copy,
     Link,
@@ -261,25 +261,40 @@ function(
                 this.permissions[oid+'.'+this.relation.name+'??update'] === true);
             this.setBtnState("link", this.relation.aggregationKind !== "composite" &&
                 this.permissions[oid+'.'+this.relation.name+'??update'] === true);
-            this.setBtnState("import", this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) &&
-                this.permissions[oid+'.'+this.relation.name+'??update'] === true && this.permissions[this.type+'??importCSV'] === true);
-            this.setBtnState("export", this.permissions[this.type+'??exportCSV'] === true);
 
+            var canImport = this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) &&
+                this.permissions[oid+'.'+this.relation.name+'??update'] === true && this.permissions[this.type+'??importCSV'] === true;
+            if (!canImport) {
+                domClass.add(this.importBtn.domNode, "hidden");
+            }
+
+            var canExport = this.permissions[this.type+'??exportCSV'] === true;
+            if (!canExport) {
+                domClass.add(this.exportBtn.domNode, "hidden");
+            }
         },
 
         _import: function(e) {
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            new CreateInRelation({
-                page: this.page,
-                route: this.route,
-                source: this.entity,
-                relation: this.relation,
-                init: lang.hitch(this, function() {
-                    this.hideNotification();
+            new Import({
+                type: this.type
+            }).execute().then(
+                lang.hitch(this, function(result) {
+                    this.gridWidget.refresh();
+                    this.importBtn.reset();
+                }),
+                lang.hitch(this, function(error) {
+                    this.showBackendError(error);
+                    this.importBtn.reset();
+                }),
+                lang.hitch(this, function(status) {
+                    this.importBtn.setProcessing();
+                    var progress = status.stepNumber/status.numberOfSteps;
+                    this.importBtn.setProgress(progress);
                 })
-            }).execute();
+            );
         },
 
         _export: function(e) {
@@ -291,25 +306,12 @@ function(
             var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
             var oid = this.entity.get('oid');
 
-            this.exportBtn.setProcessing();
-            new ExportCSV({
+            new Export({
                 type: Model.getTypeNameFromOid(oid),
                 query: query,
-                id: Model.getIdFromOid(oid),
+                parentId: Model.getIdFromOid(oid),
                 relation: this.relation.name
-            }).execute().then(
-                lang.hitch(this, function() {
-                    this.exportBtn.reset();
-                }),
-                lang.hitch(this, function(error) {
-                    this.showBackendError(error);
-                    this.exportBtn.reset();
-                }),
-                lang.hitch(this, function(status) {
-                    var progress = status.stepNumber/status.numberOfSteps;
-                    this.exportBtn.setProgress(progress);
-                })
-            );
+            }).execute();
         },
 
         _create: function(e) {

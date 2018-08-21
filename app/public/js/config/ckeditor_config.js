@@ -27,6 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.language = dojoConfig.app.uiLanguage;
     config.baseFloatZIndex = 900;
     config.disallowedContent = '*{*}'
+    //config.extraAllowedContent = 'iframe[*]';
     config.resize_dir = 'vertical';
     config.theme = 'default';
     config.toolbarStartupExpanded = false;

@@ -8,7 +8,6 @@ define( [
     "dojo/topic",
     "dojo/dom",
     "dojo/dom-class",
-    "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/query",
     "dojo/window",
@@ -20,12 +19,11 @@ define( [
     "../../_include/widget/Button",
     "../../_include/widget/PopupDlgWidget",
     "../../_include/widget/ConfirmDlgWidget",
-    "../input/widget/BinaryCheckBox",
+    "./ExportWidget",
+    "./ImportWidget",
     "../../../action/CheckPermissions",
     "../../../model/meta/Model",
     "../../../persistence/Store",
-    "../../../action/ImportCSV",
-    "../../../action/ExportCSV",
     "../../../action/Create",
     "../../../action/Edit",
     "../../../action/Copy",
@@ -44,7 +42,6 @@ function(
     topic,
     dom,
     domClass,
-    domConstruct,
     domGeom,
     query,
     win,
@@ -56,12 +53,11 @@ function(
     Button,
     PopupDlg,
     ConfirmDlg,
-    BinaryCheckBox,
+    Export,
+    Import,
     CheckPermissions,
     Model,
     Store,
-    ImportCSV,
-    ExportCSV,
     Create,
     Edit,
     Copy,
@@ -133,8 +129,12 @@ function(
                 domClass.add(this.gridWidget.gridNode, "type-"+Model.getSimpleTypeName(this.type).toLowerCase());
 
                 this.createBtn.set("disabled", this.permissions[this.type+'??create'] !== true);
-                this.importBtn.set("disabled", this.permissions[this.type+'??importCSV'] !== true);
-                this.exportBtn.set("disabled", this.permissions[this.type+'??exportCSV'] !== true);
+                if (this.permissions[this.type+'??importCSV'] !== true) {
+                    domClass.add(this.importBtn.domNode, "hidden");
+                }
+                if (this.permissions[this.type+'??exportCSV'] !== true) {
+                    domClass.add(this.exportBtn.domNode, "hidden");
+                }
                 this.onResize();
 
                 // notify listeners
@@ -317,52 +317,23 @@ function(
             // prevent the page from navigating after submit
             e.preventDefault();
 
-            var fileSelect = domConstruct.create("input", {
-                type: "file",
-                style: {
-                    display: "none"
-                }
-            }, this.fileSelect);
-            on.once(fileSelect, "change", lang.hitch(this, function() {
-                new ConfirmDlg({
-                     title: Dict.translate("Confirm Import"),
-                     message: Dict.translate("Do you really want to import <em>%0%</em> ?", [fileSelect.files[0].name]),
-                     okCallback: lang.hitch(this, function() {
-                          this.importBtn.setProcessing();
-                          new ImportCSV({
-                              type: this.type,
-                              file: fileSelect.files[0]
-                          }).execute().then(
-                              lang.hitch(this, function(result) {
-                                  this.importBtn.reset();
-                                  var stats = result.stats;
-                                  new PopupDlg({
-                                      title: Dict.translate("Import result"),
-                                      message: Dict.translate("The import process finished with the following result")+":<br>"+
-                                          "<br><strong>"+Dict.translate("Processed rows")+":</strong> "+stats.processed+
-                                          "<br><strong>"+Dict.translate("Skipped rows")+":</strong> "+stats.skipped+
-                                          "<br>"+
-                                          "<br><strong>"+Dict.translate("Updated objects")+":</strong> "+stats.updated+
-                                          "<br><strong>"+Dict.translate("Inserted objects")+":</strong> "+stats.created,
-                                      okCallback: function() {},
-                                      cancelCallback: null
-                                  }).show();
-                                  this.gridWidget.refresh();
-                              }),
-                              lang.hitch(this, function(error) {
-                                  this.showBackendError(error);
-                                  this.importBtn.reset();
-                              }),
-                              lang.hitch(this, function(status) {
-                                  var progress = status.stepNumber/status.numberOfSteps;
-                                  this.importBtn.setProgress(progress);
-                              })
-                          );
-                          domConstruct.destroy(fileSelect);
-                     })
-                }).show();
-            }));
-            fileSelect.click();
+            new Import({
+                type: this.type
+            }).execute().then(
+                lang.hitch(this, function(result) {
+                    this.gridWidget.refresh();
+                    this.importBtn.reset();
+                }),
+                lang.hitch(this, function(error) {
+                    this.showBackendError(error);
+                    this.importBtn.reset();
+                }),
+                lang.hitch(this, function(status) {
+                    this.importBtn.setProcessing();
+                    var progress = status.stepNumber/status.numberOfSteps;
+                    this.importBtn.setProgress(progress);
+                })
+            );
         },
 
         _export: function(e) {
@@ -373,39 +344,10 @@ function(
             var gridFilter = this.getGridFilter();
             var query = gridFilter ? this.getGridStore()._renderFilterParams(gridFilter)[0] : null;
 
-            var options = new BinaryCheckBox({
-                label: Dict.translate("Translate list values into display values?"),
-                name: 'translateListValues',
-                value: "0"
-            });
-            options.startup();
-
-            new PopupDlg({
-                title: Dict.translate("Export"),
-                message: Dict.translate("Options"),
-                contentWidget: options,
-                okCallback: lang.hitch(this, function() {
-                    var deferred = new Deferred();
-                    this.exportBtn.setProcessing();
-                    new ExportCSV({
-                        type: this.type,
-                        query: query
-                    }).execute().then(
-                        lang.hitch(this, function() {
-                            this.exportBtn.reset();
-                        }),
-                        lang.hitch(this, function(error) {
-                            this.showBackendError(error);
-                            this.exportBtn.reset();
-                        }),
-                        lang.hitch(this, function(status) {
-                            var progress = status.stepNumber/status.numberOfSteps;
-                            this.exportBtn.setProgress(progress);
-                        })
-                    );
-                    return deferred;
-                })
-            }).show();
+            new Export({
+                type: this.type,
+                query: query
+            }).execute();
         },
 
         _create: function(e) {

@@ -553,29 +553,28 @@ function(
                         this.showNotification({
                             type: "ok",
                             message: message,
-                            fadeOut: true,
-                            onHide: lang.hitch(this, function() {
-                                this.setBtnState("save", false);
-                                if (this.isNew) {
-                                    this.isNew = false;
+                            fadeOut: true
+                        }).then(lang.hitch(this, function() {
+                            this.setBtnState("save", false);
+                            if (this.isNew) {
+                                this.isNew = false;
 
-//                                    if (this.isRelatedObject()) {
-//                                        // close own tab
-//                                        topic.publish("tab-closed", {
-//                                            oid: Model.createDummyOid(this.type)
-//                                        });
-//                                        this.destroyRecursive();
-//                                    }
-//                                    else {
-                                        // update current tab
-                                        topic.publish("tab-closed", {
-                                            oid: Model.createDummyOid(this.type),
-                                            nextOid: this.entity.get('oid')
-                                        });
-//                                    }
-                                }
-                            })
-                        });
+//                              if (this.isRelatedObject()) {
+//                                  // close own tab
+//                                  topic.publish("tab-closed", {
+//                                      oid: Model.createDummyOid(this.type)
+//                                  });
+//                                  this.destroyRecursive();
+//                              }
+//                              else {
+                                    // update current tab
+                                    topic.publish("tab-closed", {
+                                        oid: Model.createDummyOid(this.type),
+                                        nextOid: this.entity.get('oid')
+                                    });
+//                              }
+                          }
+                      }));
                     }
                 }), lang.hitch(this, function(error) {
                     // error

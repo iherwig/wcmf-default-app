@@ -54,11 +54,13 @@ define([
         },
 
         setProcessing: function() {
-            this.isProcessing = true;
-            this.initialLabel = this.get("label");
-            this.set("label", this.initialLabel+' <i class="fa fa-spinner fa-spin"></i>');
-            if (!this.isCancelable) {
-                this.set("disabled", true);
+            if (!this.isProcessing) {
+                this.isProcessing = true;
+                this.initialLabel = this.get("label");
+                this.set("label", this.initialLabel+' <i class="fa fa-spinner fa-spin"></i>');
+                if (!this.isCancelable) {
+                    this.set("disabled", true);
+                }
             }
         },
 

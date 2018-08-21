@@ -17,15 +17,17 @@ define([
         query: null,
         id: null,
         relation: null,
+        translateValues: false,
 
         execute: function() {
             var params = {
                 className: this.type,
                 query: this.query,
+                translateValues: this.translateValues
             };
             if (this.id && this.relation) {
-              params.sourceId = this.id;
-              params.relation = this.relation;
+                params.sourceId = this.id;
+                params.relation = this.relation;
             }
             return new Process('exportCSV').run(params);
         }

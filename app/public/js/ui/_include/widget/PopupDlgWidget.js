@@ -55,9 +55,7 @@ define([
 
         // Cancel button (will be displayed, if callback is not null)
         cancelBtnText: Dict.translate('Cancel'),
-        cancelCallback: function() {
-            this.hide();
-        },
+        cancelCallback: null,
 
         okBtn: null,
         cancelBtn: null,
@@ -74,6 +72,11 @@ define([
             }));
             dialogWidget.startup();
             this.content = dialogWidget;
+            if (!this.cancelCallback) {
+              this.cancelCallback = lang.hitch(this, function() {
+                  this.hide();
+              })
+            }
         },
 
         postCreate: function () {

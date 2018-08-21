@@ -2099,6 +2099,16 @@
                   </ownedParameter>
                 </ownedOperation>
               </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_2p2CIKU3Eeiq044YkPmXeA" name="image" memberEnd="_2p-lAKU3Eeiq044YkPmXeA _2p_MEaU3Eeiq044YkPmXeA" navigableOwnedEnd="_2p-lAKU3Eeiq044YkPmXeA">
+                <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_2p4eYKU3Eeiq044YkPmXeA" source="org.eclipse.papyrus">
+                  <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_2p4eYaU3Eeiq044YkPmXeA" key="nature" value="UML_Nature"/>
+                </eAnnotations>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_2p_MEaU3Eeiq044YkPmXeA" name="GET/cache/{location|images/.+}" type="_3TWiULQGEeOIMOFxCilDfw" association="_2p2CIKU3Eeiq044YkPmXeA"/>
+                <ownedEnd xmi:type="uml:Property" xmi:id="_2p-lAKU3Eeiq044YkPmXeA" name="createImage" type="_dbqIAA9xEeildoXk6VHCVw" association="_2p2CIKU3Eeiq044YkPmXeA">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2p-lAaU3Eeiq044YkPmXeA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2p_MEKU3Eeiq044YkPmXeA" value="1"/>
+                </ownedEnd>
+              </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Package" xmi:id="_EcxzoPu5EeOmMdys2glKCA" name="views">
               <packagedElement xmi:type="uml:Class" xmi:id="_MLKboPu5EeOmMdys2glKCA" name="cms"/>
@@ -2332,4 +2342,5 @@
   <Chronos:ChiController xmi:id="_dbuZcA9xEeildoXk6VHCVw" base_Class="_dbqIAA9xEeildoXk6VHCVw"/>
   <Chronos:ChiController xmi:id="_sZmv8HHHEeiMGPqlQEELow" base_Class="_c-lMYHHHEeiMGPqlQEELow"/>
   <Chronos:ChiActionKey xmi:id="_xYP0MHHHEeiMGPqlQEELow" action="clearCaches" base_Association="_t9-FsHHHEeiMGPqlQEELow"/>
+  <Chronos:ChiActionKey xmi:id="_4as7wKU3Eeiq044YkPmXeA" context="image" base_Association="_2p2CIKU3Eeiq044YkPmXeA"/>
 </xmi:XMI>

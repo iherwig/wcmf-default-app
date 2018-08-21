@@ -112,6 +112,8 @@ var appSrc = [
     "app/js/ui/data/widget/EntityListWidget",
     "app/js/ui/data/widget/EntityRelationWidget",
     "app/js/ui/data/widget/EntityTabWidget",
+    "app/js/ui/data/widget/ExportWidget",
+    "app/js/ui/data/widget/ImportWidget",
     "app/js/ui/data/widget/PermissionDlgWidget",
     "app/js/ui/error/ErrorPage",
     "app/js/ui/error/NotFoundPage",

@@ -134,15 +134,14 @@ define([
             this.showNotification({
                 type: "ok",
                 message: message,
-                fadeOut: true,
-                onHide: lang.hitch(this, function () {
-                    var id = "status_"+btn.id;
-                    var processStatusNode = dom.byId(id);
-                    if (processStatusNode) {
-                        domConstruct.destroy(processStatusNode);
-                    }
-                })
-            });
+                fadeOut: true
+            }).then(lang.hitch(this, function () {
+                var id = "status_"+btn.id;
+                var processStatusNode = dom.byId(id);
+                if (processStatusNode) {
+                    domConstruct.destroy(processStatusNode);
+                }
+            }));
         }
     });
 });

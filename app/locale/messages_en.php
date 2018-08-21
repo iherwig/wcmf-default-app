@@ -25,14 +25,14 @@ $messages_en['<em>%0%</em> was successfully updated'] = '';
 $messages_en['A book is divided into chapters. A chapter may contain subchapters.'] = '';
 // file(s): src/model/_base/BookRDBMapper.php
 $messages_en['A book is published by a publisher and consists of chapters.'] = '';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Action'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['action'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Active'] = '';
+$messages_en['Action'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['active'] = '';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_en['Active'] = '';
 // file(s): public/js/ui/admin/template/AdminPage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Administration'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
@@ -89,16 +89,16 @@ $messages_en['code'] = '';
 $messages_en['Collect objects'] = '';
 // file(s): src/model/wcmf/_base/UserRDBMapper.php
 $messages_en['config'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Confirm Import'] = '';
 // file(s): public/js/ui/data/EntityPage.js, public/js/ui/data/input/widget/LinkBrowser.js, public/js/ui/_include/_PageMixin.js
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
-// file(s): src/model/_base/ChapterRDBMapper.php
-$messages_en['content'] = '';
 // file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Content'] = '';
+// file(s): src/model/_base/ChapterRDBMapper.php
+$messages_en['content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -133,12 +133,14 @@ $messages_en['description'] = '';
 $messages_en['Detail view class for type <em>%0%</em> not found.'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Do you really want to delete <em>%0%</em> ?'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Do you really want to import <em>%0%</em> ?'] = '';
 // file(s): public/js/ui/data/input/widget/Media.js
 $messages_en['Embed Code'] = '';
 // file(s): public/js/ui/error/ErrorPage.js
 $messages_en['Error'] = '';
+// file(s): public/js/ui/data/widget/ExportWidget.js
+$messages_en['Export'] = '';
 // file(s): public/js/ui/data/widget/template/EntityListWidget.html
 $messages_en['Export CSV'] = '';
 // file(s): application/controller/CSVExportController.php
@@ -197,13 +199,13 @@ $messages_en['Image [Pl.]'] = 'Images';
 $messages_en['Import CSV'] = '';
 // file(s): application/controller/CSVImportController.php
 $messages_en['Importing %0%'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Import result'] = '';
 // file(s): application/controller/SearchIndexController.php
 $messages_en['Indexing %0% %1% objects, starting from %2%., '] = '';
 // file(s): application/controller/CSVExportController.php, application/controller/CSVImportController.php, application/controller/XMLExportController.php
 $messages_en['Initialization'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Inserted objects'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Instances of this class are used to localize entity attributes. Each instance defines a translation of one attribute of one entity into one language.'] = '';
@@ -333,10 +335,10 @@ $messages_en['Page not found'] = '';
 $messages_en['ParentChapter'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['ParentChapter [Pl.]'] = 'ParentChapters';
-// file(s): src/model/wcmf/_base/UserRDBMapper.php
-$messages_en['password'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/template/LoginDlgWidget.html
 $messages_en['Password'] = '';
+// file(s): src/model/wcmf/_base/UserRDBMapper.php
+$messages_en['password'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['Permission'] = '';
 // file(s): public/js/ui/admin/PermissionListPage.js, public/js/ui/admin/PermissionPage.js
@@ -351,7 +353,7 @@ $messages_en['Permissions for User'] = '';
 $messages_en['Permission [Pl.]'] = 'Permissions';
 // file(s): application/controller/SaveController.php, lib/io/FileUtil.php
 $messages_en['Possible file upload attack: filename %0%.'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Processed rows'] = '';
 // file(s): src/model/_base/BookRDBMapper.php, src/model/_base/NMPublisherAuthorRDBMapper.php, src/model/_base/PublisherRDBMapper.php
 $messages_en['Publisher'] = '';
@@ -381,10 +383,10 @@ $messages_en['resource'] = '';
 $messages_en['Results for \'%0%\''] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role'] = '';
-// file(s): src/model/wcmf/_base/PermissionRDBMapper.php
-$messages_en['roles'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Roles'] = '';
+// file(s): src/model/wcmf/_base/PermissionRDBMapper.php
+$messages_en['roles'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): application/views/plugins/modifier.localize_date.php
@@ -405,7 +407,7 @@ $messages_en['September'] = '';
 $messages_en['Settings'] = '';
 // file(s): public/js/ui/login/template/LoginPage.html, public/js/ui/_include/widget/LoginDlgWidget.js
 $messages_en['Sign in'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Skipped rows'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['SubChapter'] = '';
@@ -447,7 +449,7 @@ $messages_en['The directory \'%0%\' does not exist.'] = '';
 $messages_en['The given passwords don\'t match'] = '';
 // file(s): lib/presentation/impl/DefaultRequest.php
 $messages_en['The HTTP method is not allowed on the requested path.'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['The import process finished with the following result'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['The language of the translation'] = '';
@@ -529,10 +531,12 @@ $messages_en['TitleChapter [Pl.]'] = 'TitleChapters';
 $messages_en['TitleImage'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['TitleImage [Pl.]'] = 'TitleImages';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_en['Translation'] = '';
+// file(s): public/js/ui/data/widget/template/ExportWidget.html
+$messages_en['Translate list values to display values'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['translation'] = '';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_en['Translation'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Translation [Pl.]'] = 'Translations';
 // file(s): application/views/plugins/modifier.localize_date.php
@@ -541,7 +545,7 @@ $messages_en['Tuesday'] = '';
 $messages_en['Unlocking <em>%0%</em>'] = '';
 // file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
 $messages_en['Update'] = '';
-// file(s): public/js/ui/data/widget/EntityListWidget.js
+// file(s): public/js/ui/data/widget/ImportWidget.js
 $messages_en['Updated objects'] = '';
 // file(s): application/controller/SaveController.php
 $messages_en['Upload failed for %0%.'] = '';
