@@ -3,6 +3,7 @@ namespace app\src\lib;
 
 use wcmf\lib\core\EventManager;
 use wcmf\lib\io\Cache;
+use wcmf\lib\io\ImageUtil;
 use wcmf\lib\persistence\PersistenceEvent;
 use wcmf\lib\presentation\view\View;
 
@@ -46,9 +47,22 @@ class EventListener {
    * @param $event PersistenceEvent instance
    */
   public function persisted(PersistenceEvent $event) {
+  	// invalidate all cached views
     $this->invalidateCachedViews();
+
+    // invalidate all other cached responses (e.g. json)
     $this->invalidateDynamicCache();
-    $this->invalidateFrontendCache();
+
+    // invalidate cached images from changed attributes
+    $object = $event->getObject();
+    if ($object) {
+      foreach ($object->getChangedValues() as $value) {
+        if ($object->getValueProperty($value, 'display_type') == 'image') {
+          ImageUtil::invalidateCache($object->getValue($value));
+          ImageUtil::invalidateCache($object->getOriginalValue($value));
+        }
+      }
+    }
   }
 
   /**
