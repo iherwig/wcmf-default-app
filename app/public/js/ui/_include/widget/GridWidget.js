@@ -189,6 +189,13 @@ define([
                         }
                     })),
                     topic.subscribe("/dnd/drop", lang.hitch(this, function(source, nodes, copy, target) {
+                        // detect, if drop is relevant (see sitepen/dgrid/extensions/DnD.js)
+                        var anchor = source._targetAnchor;
+                        var targetRow = anchor ? target.before ? anchor.previousSibling : anchor.nextSibling : null;
+                        var nodeRow = this.grid.row(nodes[0]);
+                        if (!copy && (targetRow === nodes[0])) {
+                            return;
+                        }
                         this.dndInProgress = true;
                         topic.publish('ui/_include/widget/GridWidget/dnd-start', null);
                     })),
@@ -202,7 +209,7 @@ define([
         buildGrid: function (controls) {
             var simpleType = Model.getSimpleTypeName(this.type);
 
-          // select features
+            // select features
             var features = [];
             var featureNames = [];
             for (var idx in this.defaultFeatures) {
@@ -514,24 +521,24 @@ define([
                 domAttr.set(this.grid.domNode, "style", {height: height+"px"});
             }
             else {
-              // set later
-              this.height = height;
+                // set later
+                this.height = height;
             }
         },
-        
+
         getHeight: function(numRows) {
-          var headerHeight = 0;
-          var rowHeight = 0;
-          
-          var header = query(".dgrid-header", this.grid.domNode);
-          if (header.length > 0) {
-            headerHeight = domGeom.getMarginBox(header[0]).h;
-          }
-          var row = query(".dgrid-row", this.grid.domNode);
-          if (row.length > 0) {
-            rowHeight = domGeom.getMarginBox(row[0]).h;
-          }
-          return headerHeight + numRows*rowHeight;
+            var headerHeight = 0;
+            var rowHeight = 0;
+
+            var header = query(".dgrid-header", this.grid.domNode);
+            if (header.length > 0) {
+                headerHeight = domGeom.getMarginBox(header[0]).h;
+            }
+            var row = query(".dgrid-row", this.grid.domNode);
+            if (row.length > 0) {
+                rowHeight = domGeom.getMarginBox(row[0]).h;
+            }
+            return headerHeight + numRows*rowHeight;
         },
 
         resize: function() {
@@ -548,10 +555,10 @@ define([
                     this.setHeight(height);
                 }
                 else {
-                  // display only maxAutoHeightRows
-                  domClass.remove(this.grid.domNode, 'dgrid-autoheight');
-                  var height = this.getHeight(this.maxAutoHeightRows);
-                  this.setHeight(height);
+                    // display only maxAutoHeightRows
+                    domClass.remove(this.grid.domNode, 'dgrid-autoheight');
+                    var height = this.getHeight(this.maxAutoHeightRows);
+                    this.setHeight(height);
                 }
             }
         }
