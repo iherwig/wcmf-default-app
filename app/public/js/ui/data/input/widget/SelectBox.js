@@ -46,6 +46,9 @@ function(
         spinnerNode: null,
 
         searchAttr: "displayText",
+        queryExpr: '*${0}*',
+        autoComplete: false,
+
         listItem: null, // the selected item from the ListStore
 
         // initialize base class attributes to avoid errors

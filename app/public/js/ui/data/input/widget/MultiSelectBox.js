@@ -55,6 +55,9 @@ function(
 
         labelAttr: "displayText",
         searchAttr: "displayText",
+        queryExpr: '*${0}*',
+        autoComplete: false,
+
         selectedOptions: [], // the selected items from the ListStore
         dropDown: true,
         multiple: true,
