@@ -47,7 +47,7 @@ class EventListener {
    * @param $event PersistenceEvent instance
    */
   public function persisted(PersistenceEvent $event) {
-  	// invalidate all cached views
+    // invalidate all cached views
     $this->invalidateCachedViews();
 
     // invalidate all other cached responses (e.g. json)
