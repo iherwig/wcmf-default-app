@@ -164,7 +164,7 @@ function(
 
             var oid = this.entity.get('oid');
 
-            if (this.permissions[this.type+'??copy'] === true && this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
+            if (this.permissions[this.type+'??copy'] === true && this.permissions[this.type+'??create'] === true && this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
                 var copyAction = new Copy({
                     targetoid: this.entity.get('oid'),
                     init: lang.hitch(this, function() {
@@ -211,7 +211,7 @@ function(
                 }
             }
             else {
-                if (this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
+                if (this.permissions[this.type+'??disassociate'] === true && this.permissions[oid+'.'+this.relation.name+'??update'] === true) {
                     var unlinkAction = new Unlink({
                         source: this.entity,
                         relation: this.relation,
@@ -259,7 +259,7 @@ function(
 
             this.setBtnState("create", this.relation.aggregationKind !== "none" && this.permissions[this.type+'??create'] === true &&
                 this.permissions[oid+'.'+this.relation.name+'??update'] === true);
-            this.setBtnState("link", this.relation.aggregationKind !== "composite" &&
+            this.setBtnState("link", this.relation.aggregationKind !== "composite" && this.permissions[this.type+'??associate'] === true &&
                 this.permissions[oid+'.'+this.relation.name+'??update'] === true);
 
             var canImport = this.relation.aggregationKind === "composite" && !type.isManyToManyRelation(this.relation.name) &&

@@ -3,7 +3,6 @@ define( [
     "./_FilterWidgetMixin",
     "../../../../model/meta/Model",
     "../../../../persistence/Entity",
-    "../../input/Factory",
     "../../input/widget/TextBox"
 ],
 function(
@@ -11,7 +10,6 @@ function(
     _FilterWidgetMixin,
     Model,
     Entity,
-    ControlFactory,
     TextBox
 ) {
     return declare([_FilterWidgetMixin], {
@@ -25,7 +23,7 @@ function(
             declare.safeMixin(this, args);
             this.control = new TextBox({
                 name: args.attribute,
-                inputType: ControlFactory.addEmptyItem(args.inputType, ''),
+                inputType: args.inputType,
                 entity: new Entity({oid: Model.createDummyOid(args.type)}),
             });
         },
