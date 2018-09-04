@@ -69,7 +69,7 @@ function(
             // TODO remove store adapter if not required by select any more
             if (!args.store) {
               // get store from input type, if not set yet
-                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, this.getDisplayType(args.entity, args.name)));
             }
             else if (!args.store.query) {
                 args.store = DstoreAdapter(args.store);
@@ -190,6 +190,10 @@ function(
             else {
                 domAttr.remove(this.textbox, 'disabled');
             }
+        },
+
+        getStore: function() {
+            return !this.store.filter ? this.store.store : this.store;
         },
 
         close: function() {

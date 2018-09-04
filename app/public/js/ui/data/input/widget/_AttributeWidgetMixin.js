@@ -13,6 +13,7 @@ define([
      * Attribute widget mixin. Manages the dirty flag.
      */
     return declare([], {
+        required: false,
         _isDirty: false,
 
         postCreate: function() {
@@ -33,12 +34,17 @@ define([
             return this._isDirty;
         },
 
-        getAttributeDefinition: function() {
-            if (this.entity) {
-                var typeClass = Model.getTypeFromOid(this.entity.oid);
-                return typeClass.getAttribute(this.name);
+        getAttributeDefinition: function(entity, name) {
+            if (entity) {
+                var typeClass = Model.getTypeFromOid(entity.oid);
+                return typeClass.getAttribute(name);
             }
             return null;
+        },
+
+        getDisplayType: function(entity, name) {
+            var attribute = this.getAttributeDefinition(entity, name);
+            return attribute ? attribute.displayType : 'text';
         }
     });
 });

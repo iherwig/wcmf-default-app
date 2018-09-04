@@ -294,7 +294,8 @@ define([
                 // add column filter
                 if (columnDef.filter) {
                     var filterArgs = lang.mixin(columnDef.filterArgs, {
-                        field: simpleType+'.'+columnDef.field,
+                        type: simpleType,
+                        attribute: columnDef.field,
                         filterCtr: this.store.Filter
                     });
                     var filter = new (columnDef.filter)(filterArgs);

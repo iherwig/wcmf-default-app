@@ -56,10 +56,10 @@ function(
             this.label = Dict.translate(this.name);
             // get store from input type, if not set yet
             if (!this.store) {
-                this.store = ControlFactory.getListStore(this.inputType);
+                this.store = ControlFactory.getListStore(this.inputType, this.getDisplayType(this.entity, this.name));
             }
             // multivalued controls are only useful for a string attribute
-            var attribute = this.getAttributeDefinition();
+            var attribute = this.getAttributeDefinition(this.entity, this.name);
             if (this.multiValued && attribute && attribute.type && attribute.type.toLowerCase() !== 'string') {
                 throw new Error("Multivalued controls can only be used with a string attribute. "+
                         "Attribute '"+attribute.name+"' is of type "+attribute.type+".");
@@ -120,6 +120,10 @@ function(
 
         hideSpinner: function() {
             query(this.spinnerNode).style("display", "none");
+        },
+
+        getStore: function() {
+            return this.store;
         },
 
         updateValue: function(value, isSelected) {

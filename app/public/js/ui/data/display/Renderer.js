@@ -20,7 +20,7 @@ function(
   /**
      * Render the given value according to the given attribute definition.
      * @param value The value
-     * @param attribute The attribute definition
+     * @param attribute The attribute definition with at least a 'displayType' property
      * @param options Object with attributes 'truncate' (integer)
      * @returns Deferred
      */

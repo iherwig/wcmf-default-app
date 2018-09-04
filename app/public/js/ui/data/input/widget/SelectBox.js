@@ -8,6 +8,7 @@ define( [
     "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/dom-style",
+    "dojo/html",
     "dojo/topic",
     "dijit/form/FilteringSelect",
     "../Factory",
@@ -27,6 +28,7 @@ function(
     domConstruct,
     domGeom,
     domStyle,
+    html,
     topic,
     FilteringSelect,
     ControlFactory,
@@ -48,6 +50,7 @@ function(
         searchAttr: "displayText",
         queryExpr: '*${0}*',
         autoComplete: false,
+        labelType: "html",
 
         listItem: null, // the selected item from the ListStore
 
@@ -60,7 +63,7 @@ function(
             // TODO remove store adapter if not required by FilteringSelect any more
             if (!args.store) {
                 // get store from input type, if not set yet
-                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType));
+                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, this.getDisplayType(args.entity, args.name)));
             }
             else if (!args.store.query) {
                 args.store = DstoreAdapter(args.store);
@@ -115,16 +118,18 @@ function(
                 // parent class' behaviour
                 this.listItem = item;
                 this.inherited(arguments);
+                this.updateDisplay();
                 return;
             }
             // find the item with the value property equal to value
             var args = arguments;
 
             if (this.inputType) {
-                when(ControlFactory.getItem(this.inputType, value), lang.hitch(this, function(object) {
+                when(ControlFactory.getItem(this.inputType, this.getDisplayType(this.entity, this.name), value), lang.hitch(this, function(object) {
                     this.listItem = object;
                     if (this.listItem) {
                         this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
+                        this.updateDisplay();
                     }
                 }));
             }
@@ -147,6 +152,17 @@ function(
 
         hideSpinner: function() {
             query(this.spinnerNode).style("display", "none");
+        },
+
+        getStore: function() {
+            return !this.store.filter ? this.store.store : this.store;
+        },
+
+        updateDisplay: function() {
+            if (this.getDisplayType(this.entity, this.name) != 'text') {
+                domStyle.set(this.textbox, { display: 'none' });
+                html.set(this.displayNode, this.listItem.displayText);
+            }
         }
     });
 });

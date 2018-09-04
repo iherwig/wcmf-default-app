@@ -1,21 +1,27 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/when",
+    "dojo/promise/all",
     "dojo/_base/config",
     "dojo/Deferred",
     "dojo/json",
     "dstore/Rest",
     "dstore/Cache",
-    "dojox/encoding/base64"
+    "dojox/encoding/base64",
+    "../ui/data/display/Renderer"
 ], function (
     declare,
     lang,
+    when,
+    all,
     config,
     Deferred,
     JSON,
     Rest,
     Cache,
-    base64
+    base64,
+    Renderer
 ) {
     /**
      * ListStore is used to get the content for list controls from the server.
@@ -26,6 +32,7 @@ define([
 
         listDef: '',
         language: '',
+        displayType: '',
         target: '',
 
         idProperty: 'oid',
@@ -33,17 +40,7 @@ define([
 
         constructor: function(options) {
             declare.safeMixin(this, options);
-
-            this.listDefStr = JSON.stringify(this.listDef);
-
-            // base64 encode listDef
-            var b = [];
-            for (var i=0, count=this.listDefStr.length; i<count; ++i) {
-                b.push(this.listDefStr.charCodeAt(i));
-            }
-
-            // set target for xhr requests
-            this.target = config.app.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
+            this._setTarget();
         },
 
         get: function(id) {
@@ -58,9 +55,42 @@ define([
         },
 
         parse: function(response) {
+            var deferred = new Deferred();
+            var deferredList = [];
             var data = JSON.parse(response);
             var result = data.list ? data.list : [];
-            return result;
+            for (var i=0, count=result.length; i<count; i++) {
+                deferredList.push(Renderer.render(result[i].displayText, {displayType: this.displayType}, {}));
+            }
+            all(deferredList).then(lang.hitch(this, function(data) {
+                for (var i=0, count=deferredList.length; i<count; i++) {
+                    result[i].displayText = data[i];
+                }
+                deferred.resolve(result);
+            }));
+            return deferred;
+        },
+
+        /**
+         * Set the query in the list definition
+         * @param query
+         */
+        setQuery: function(query) {
+            this.listDef.query = query;
+            this._setTarget();
+        },
+
+        _setTarget: function() {
+            this.listDefStr = JSON.stringify(this.listDef);
+
+            // base64 encode listDef
+            var b = [];
+            for (var i=0, count=this.listDefStr.length; i<count; ++i) {
+                b.push(this.listDefStr.charCodeAt(i));
+            }
+
+            // set target for xhr requests
+            this.target = config.app.pathPrefix+"list/"+this.language+"/"+base64.encode(b)+"/";
         }
     });
 
@@ -73,9 +103,10 @@ define([
      * Get the store for a given list definition and language
      * @param listDef The list definition object as defined in the input type
      * @param language The language
+     * @param displayType The display type for the items
      * @return Store instance
      */
-    ListStore.getStore = function(listDef, language) {
+    ListStore.getStore = function(listDef, language, displayType) {
         var listDefStr = JSON.stringify(listDef);
 
         // register store under the list definition
@@ -83,13 +114,17 @@ define([
             ListStore.storeInstances[listDefStr] = {};
         }
         if (!ListStore.storeInstances[listDefStr][language]) {
+            ListStore.storeInstances[listDefStr][language] = {};
+        }
+        if (!ListStore.storeInstances[listDefStr][language][displayType]) {
             var store = new ListStore({
                 listDef: listDef,
-                language: language
+                language: language,
+                displayType: displayType
             });
-            ListStore.storeInstances[listDefStr][language] = store;
+            ListStore.storeInstances[listDefStr][language][displayType] = store;
         }
-        return ListStore.storeInstances[listDefStr][language];
+        return ListStore.storeInstances[listDefStr][language][displayType];
     };
 
     return ListStore;

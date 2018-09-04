@@ -95,27 +95,29 @@ function(
     /**
      * Called by list controls to retrive the value store
      * @param inputType The input type (contains the list definition in options)
+     * @param displayType The display type for the items
      * @returns Store
      */
-    Factory.getListStore = function(inputType) {
+    Factory.getListStore = function(inputType, displayType) {
         var options = Factory.getOptions(inputType);
         if (!options['list']) {
             throw new Error("Input type '"+inputType+"' does not contain a list definition");
         }
-        return ListStore.getStore(options['list'], config.app.defaultLanguage);
+        return ListStore.getStore(options['list'], config.app.defaultLanguage, displayType);
     };
 
     /**
      * Translate the given value according to the list definition that
      * might be contained in the input type
      * @param inputType The input type (contains the list definition after '#' char)
+     * @param displayType The display type for the items
      * @param value The value
      * @param convertValuesToStrings Boolean whether to convert all item values to strings (optional, default: false)
      * @returns Deferred
      */
-    Factory.translateValue = function(inputType, value, convertValuesToStrings) {
+    Factory.translateValue = function(inputType, displayType, value, convertValuesToStrings) {
         var deferred = new Deferred();
-        when(Factory.getItem(inputType, value, convertValuesToStrings), function(item) {
+        when(Factory.getItem(inputType, displayType, value, convertValuesToStrings), function(item) {
             var value = item && item.hasOwnProperty('displayText') ? item.displayText :
                     item === undefined ? null : item;
             deferred.resolve(value);
@@ -127,11 +129,12 @@ function(
      * Get the list item for the given value according to the list definition that
      * might be contained in the input type
      * @param inputType The input type (contains the list definition after '#' char)
+     * @param displayType The display type for the items
      * @param value The value
      * @param convertValuesToStrings Boolean whether to convert all item values to strings (optional, default: false)
      * @returns Deferred
      */
-    Factory.getItem = function(inputType, value, convertValuesToStrings) {
+    Factory.getItem = function(inputType, displayType, value, convertValuesToStrings) {
         var translateKey = inputType+'.'+value;
         // serve from cache
         if (Factory._resolvedValues.hasOwnProperty(translateKey)) {
@@ -150,7 +153,7 @@ function(
                 // NOTE loading all items once and caching the result
                 // is faster than resolving the value on each request
                 // store promise in cache and resolve later
-                var store = ListStore.getStore(options['list'], config.app.defaultLanguage);
+                var store = ListStore.getStore(options['list'], config.app.defaultLanguage, displayType);
                 Factory._listCache[listKey] = store.fetch();
                 when(Factory._listCache[listKey], lang.partial(function(listKey, result) {
                     // cache result and return requested value
@@ -168,7 +171,7 @@ function(
                         Factory._resolvedValues[translateKey] = object;
                     });
                 }, listKey));
-                return Factory.getItem(inputType, value);
+                return Factory.getItem(inputType, displayType, value);
             }
         }
         else {

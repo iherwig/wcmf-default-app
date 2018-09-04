@@ -1,12 +1,16 @@
 define( [
     "dojo/_base/declare",
     "./_FilterWidgetMixin",
+    "../../../../model/meta/Model",
+    "../../../../persistence/Entity",
     "../../input/Factory",
     "../../input/widget/SelectBox"
 ],
 function(
     declare,
     _FilterWidgetMixin,
+    Model,
+    Entity,
     ControlFactory,
     SelectBox
 ) {
@@ -14,13 +18,17 @@ function(
 
         required: false,
         control: null,
-        field: null, // field to filter
+        type: null, // type to filter
+        attribute: null, // attribute to filter
         filterCtr: null, // filter constructor (see https://github.com/SitePen/dstore/blob/master/docs/Collection.md#filtering)
 
         constructor: function(args) {
-            args.inputType = ControlFactory.addEmptyItem(args.inputType, '');
             declare.safeMixin(this, args);
-            this.control = new SelectBox(args);
+            this.control = new SelectBox({
+                name: args.attribute,
+                inputType: ControlFactory.addEmptyItem(args.inputType, ''),
+                entity: new Entity({oid: Model.createDummyOid(args.type)}),
+            });
         },
 
         reset: function() {
@@ -35,7 +43,7 @@ function(
         getFilter: function() {
             var value = this.control.get('value');
             if (value !== undefined && value !== null && value !== '') {
-                return (new this.filterCtr()).eq(this.field, value);
+                return (new this.filterCtr()).eq(this.type+'.'+this.attribute, value);
             }
             return null;
         }
