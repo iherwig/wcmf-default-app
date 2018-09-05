@@ -122,9 +122,9 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.8.0",
+                "version": "4.10.0",
                 "dist": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.8.0.zip",
+                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.10.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -194,7 +194,7 @@
         "robloach/component-installer": "*",
         "components/bootstrap": "~3.3",
         "components/font-awesome": "~4.3",
-        "ckeditor/ckeditor": "~4.8",
+        "ckeditor/ckeditor": "~4.10",
         "components/jquery": "~1.12",
         "components/jqueryui": "~1.12",
         "studio-42/elfinder-js": "~2.1",
