@@ -21,7 +21,7 @@ define([
         Model: Entity,
 
         parse: function(response) {
-            var data = JSON.parse(response);
+            var data = response ? JSON.parse(response) : {list: []};
             var result = array.filter(data.list, function(item){
                 return Model.isKnownType(item._type);
             });

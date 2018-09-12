@@ -57,7 +57,7 @@ define([
         parse: function(response) {
             var deferred = new Deferred();
             var deferredList = [];
-            var data = JSON.parse(response);
+            var data = response ? JSON.parse(response) : {};
             var result = data.list ? data.list : [];
             for (var i=0, count=result.length; i<count; i++) {
                 deferredList.push(Renderer.render(result[i].displayText, {displayType: this.displayType}, {}));
