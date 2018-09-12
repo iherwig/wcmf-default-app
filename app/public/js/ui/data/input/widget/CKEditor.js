@@ -126,7 +126,12 @@ function(
 
         _setDisabledAttr: function(value) {
             if (this.editorInstance) {
-                this.editorInstance.setReadOnly(value);
+                setTimeout(lang.hitch(this, function() {
+                    try {
+                        this.editorInstance.setReadOnly(value);
+                    }
+                    catch (ex) {}
+                }), 100);
             }
         },
 
