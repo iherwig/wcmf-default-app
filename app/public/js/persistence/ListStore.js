@@ -78,6 +78,9 @@ define([
         setQuery: function(query) {
             this.listDef.query = query;
             this._setTarget();
+            this.cachingStore.setData([]);
+            this.invalidate();
+            this.fetch();
         },
 
         _setTarget: function() {
