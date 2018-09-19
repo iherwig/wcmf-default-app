@@ -91,6 +91,7 @@ function(
             var requiredPermissions = [
                 oid+'.'+this.relation.name+'??update',
                 this.type+'??create',
+                this.type+'??associate',
                 this.type+'??copy',
                 this.type+'??delete',
                 '??setPermissions',
