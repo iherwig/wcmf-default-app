@@ -2,13 +2,16 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
+    "dojo/promise/all",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
     "../_include/widget/NavigationWidget",
     "../_include/FormLayout",
     "../_include/widget/Button",
+    "../../action/CheckPermissions",
     "../../action/Index",
     "../../action/ExportXML",
     "../../action/ClearCaches",
@@ -18,13 +21,16 @@ define([
     require,
     declare,
     lang,
+    all,
     dom,
+    domClass,
     domConstruct,
     _Page,
     _Notification,
     NavigationWidget,
     FormLayout,
     Button,
+    CheckPermissions,
     Index,
     ExportXML,
     ClearCaches,
@@ -38,6 +44,36 @@ define([
         title: Dict.translate('Settings'),
 
         processes: {},
+
+        postCreate: function() {
+            this.inherited(arguments);
+
+            var deferredList = [];
+
+            // check permissions
+            var requiredPermissions = [
+                '??index',
+                '??exportXML',
+                '??clearCache'
+            ];
+            deferredList.push(new CheckPermissions({
+                operations: requiredPermissions
+            }).execute());
+
+            all(deferredList).then(lang.hitch(this, function(results) {
+                this.permissions = results[0].result ? results[0].result : {};
+
+                if (this.permissions['??index'] !== true) {
+                    domClass.add(this.indexBtn.domNode, "hidden");
+                }
+                if (this.permissions['??exportXML'] !== true) {
+                    domClass.add(this.exportBtn.domNode, "hidden");
+                }
+                if (this.permissions['??clearCache'] !== true) {
+                    domClass.add(this.clearCachesBtn.domNode, "hidden");
+                }
+            }));
+        },
 
         _index: function(e) {
             // prevent the page from navigating after submit
