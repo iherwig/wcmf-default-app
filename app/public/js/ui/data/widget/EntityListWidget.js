@@ -211,7 +211,7 @@ function(
             });
             actions.push(editAction);
 
-            if (this.permissions[this.type+'??copy'] === true) {
+            if (this.permissions[this.type+'??copy'] === true && this.permissions[this.type+'??create'] === true) {
                 var copyAction = new Copy({
                     targetOid: null,
                     init: lang.hitch(this, lang.partial(function() {
