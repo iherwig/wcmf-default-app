@@ -95,10 +95,10 @@ $messages_de['Confirm Import'] = 'Import bestätigen';
 $messages_de['Confirm Leave Page'] = 'Seitenwechsel bestätigen';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_de['Confirm Object Deletion'] = 'Löschen bestätigen';
-// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_de['Content'] = 'Inhalt';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_de['content'] = 'Inhalt';
+// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_de['Content'] = 'Inhalt';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_de['context'] = 'Kontext';
 // file(s): application/controller/CopyController.php
@@ -215,10 +215,10 @@ $messages_de['January'] = 'Januar';
 $messages_de['July'] = 'Juli';
 // file(s): application/views/plugins/modifier.localize_date.php
 $messages_de['June'] = 'Juni';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_de['Language'] = 'Sprache';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_de['language'] = 'Sprache';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_de['Language [Pl.]'] = 'Sprachen';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -245,10 +245,10 @@ $messages_de['Locks'] = 'Sperren';
 $messages_de['Lock [Pl.]'] = 'Sperren';
 // file(s): application/views/plugins/function.translate.php
 $messages_de['Logged in as %0% since %1%'] = 'Angemeldet als %0% seit %1%';
-// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
-$messages_de['login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_de['Login'] = 'Anmeldename';
+// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
+$messages_de['login'] = 'Anmeldename';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_de['Logout'] = 'Abmelden';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -383,10 +383,10 @@ $messages_de['resource'] = 'Resource';
 $messages_de['Results for \'%0%\''] = 'Ergebnisse für \'%0%\'';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_de['Role'] = 'Rolle';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_de['roles'] = 'Rollen';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_de['Roles'] = 'Rollen';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_de['Role [Pl.]'] = 'Rollen';
 // file(s): application/views/plugins/modifier.localize_date.php
@@ -510,7 +510,9 @@ $messages_de['The server detected a concurrent update.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_de['The session is invalid.'] = '';
 // file(s): lib/security/principal/impl/AbstractUser.php
-$messages_de['The super user property can\'t be changed after creation'] = 'Die Super User Eigentschaft kann nach Erstellen nicht mehr geändert werden';
+$messages_de['The super user property cannot be withdrawn by self'] = 'Die Super User Eigenschaft kann nicht vom eigenen User entfernt werden';
+// file(s): lib/security/principal/impl/AbstractUser.php
+$messages_de['The super user property can only be changed by super users'] = 'Die Super User Eigenschaft kann nur von Super Usern geändert werden geändert werden';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_de['The translation'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -534,9 +536,9 @@ $messages_de['TitleImage [Pl.]'] = 'Titelbilder';
 // file(s): public/js/ui/data/widget/template/ExportWidget.html
 $messages_de['Translate list values to display values'] = 'Listenwerte in Anzeigewerte umwandeln';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_de['translation'] = 'Übersetzung';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_de['Translation'] = 'Übersetzung';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_de['translation'] = 'Übersetzung';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_de['Translation [Pl.]'] = 'Übersetzungen';
 // file(s): application/views/plugins/modifier.localize_date.php

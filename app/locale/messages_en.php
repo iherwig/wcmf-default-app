@@ -95,10 +95,10 @@ $messages_en['Confirm Import'] = '';
 $messages_en['Confirm Leave Page'] = '';
 // file(s): public/js/action/Delete.js, public/js/ui/_include/widget/ConfirmDlgWidget.js, public/js/ui/_include/widget/PopupDlgWidget.js
 $messages_en['Confirm Object Deletion'] = '';
-// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
-$messages_en['Content'] = '';
 // file(s): src/model/_base/ChapterRDBMapper.php
 $messages_en['content'] = '';
+// file(s): public/js/ui/data/EntityListPage.js, public/js/ui/data/EntityPage.js, public/js/ui/link/BrowsePage.js, public/js/ui/link/template/BrowsePage.html, public/js/ui/media/template/BrowsePage.html, public/js/ui/_include/widget/template/NavigationWidget.html
+$messages_en['Content'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['context'] = '';
 // file(s): application/controller/CopyController.php
@@ -215,10 +215,10 @@ $messages_en['January'] = '';
 $messages_en['July'] = '';
 // file(s): application/views/plugins/modifier.localize_date.php
 $messages_en['June'] = '';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language'] = '';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_en['language'] = '';
 // file(s): src/model/wcmf/_base/LanguageRDBMapper.php
 $messages_en['Language [Pl.]'] = 'Languages';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -245,10 +245,10 @@ $messages_en['Locks'] = '';
 $messages_en['Lock [Pl.]'] = 'Locks';
 // file(s): application/views/plugins/function.translate.php
 $messages_en['Logged in as %0% since %1%'] = '';
-// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
-$messages_en['login'] = '';
 // file(s): public/js/ui/login/LoginPage.js
 $messages_en['Login'] = '';
+// file(s): src/model/wcmf/_base/LockRDBMapper.php, src/model/wcmf/_base/UserRDBMapper.php
+$messages_en['login'] = '';
 // file(s): public/js/ui/login/LogoutPage.js, public/js/ui/_include/widget/template/NavigationWidget.html
 $messages_en['Logout'] = '';
 // file(s): public/js/ui/home/template/HomePage.html
@@ -383,10 +383,10 @@ $messages_en['resource'] = '';
 $messages_en['Results for \'%0%\''] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role'] = '';
-// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
-$messages_en['Roles'] = '';
 // file(s): src/model/wcmf/_base/PermissionRDBMapper.php
 $messages_en['roles'] = '';
+// file(s): public/js/ui/data/widget/template/PermissionDlgWidget.html
+$messages_en['Roles'] = '';
 // file(s): src/model/wcmf/_base/NMUserRoleRDBMapper.php, src/model/wcmf/_base/RoleRDBMapper.php
 $messages_en['Role [Pl.]'] = 'Roles';
 // file(s): application/views/plugins/modifier.localize_date.php
@@ -510,7 +510,9 @@ $messages_en['The server detected a concurrent update.'] = '';
 // file(s): lib/presentation/ApplicationError.php
 $messages_en['The session is invalid.'] = '';
 // file(s): lib/security/principal/impl/AbstractUser.php
-$messages_en['The super user property can\'t be changed after creation'] = '';
+$messages_en['The super user property cannot be withdrawn by self'] = '';
+// file(s): lib/security/principal/impl/AbstractUser.php
+$messages_en['The super user property can only be changed by super users'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['The translation'] = '';
 // file(s): lib/presentation/ApplicationError.php
@@ -534,9 +536,9 @@ $messages_en['TitleImage [Pl.]'] = 'TitleImages';
 // file(s): public/js/ui/data/widget/template/ExportWidget.html
 $messages_en['Translate list values to display values'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
-$messages_en['translation'] = '';
-// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Translation'] = '';
+// file(s): src/model/wcmf/_base/TranslationRDBMapper.php
+$messages_en['translation'] = '';
 // file(s): src/model/wcmf/_base/TranslationRDBMapper.php
 $messages_en['Translation [Pl.]'] = 'Translations';
 // file(s): application/views/plugins/modifier.localize_date.php
