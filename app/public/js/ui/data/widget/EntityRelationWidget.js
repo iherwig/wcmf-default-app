@@ -92,6 +92,7 @@ function(
                 oid+'.'+this.relation.name+'??update',
                 this.type+'??create',
                 this.type+'??associate',
+                this.type+'??disassociate',
                 this.type+'??copy',
                 this.type+'??delete',
                 '??setPermissions',
