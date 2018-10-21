@@ -106,7 +106,7 @@ define([
             name: "super_user",
             type: "Integer",
             description: "",
-            isEditable: false,
+            isEditable: true,
             inputType: "binarycheckbox",
             displayType: "check",
             validateType: "",
