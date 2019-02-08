@@ -46,11 +46,16 @@ define([
                     var route = this.router.getRoute("home");
                     var url = route.assemble();
                     window.location.assign(url);
+                    return;
                 }
 
                 // redirect to login, if another route is requested and no
                 // authentication cookie is found
                 if (AuthToken.get() === undefined && route !== "") {
+                    if (User.isLoggedIn()) {
+                      console.error('User is authenticated, but auth token is empty. AuthTokenSession is required on server side! Deleting cookies...');
+                      User.destroy();
+                    }
                     window.location.assign(baseUrl+'?route='+route);
                 }
                 else {
