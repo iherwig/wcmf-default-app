@@ -95,7 +95,7 @@ define([
                 User.create(data.user, response.roles);
 
                 // run startup code
-                Startup.run().then(lang.hitch(this, function(result) {
+                (new Startup()).run().then(lang.hitch(this, function(result) {
                       var redirectRoute = this.request.getQueryParam("route");
                       if (redirectRoute) {
                           // redirect to initially requested route if given
