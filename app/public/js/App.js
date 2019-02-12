@@ -10,7 +10,7 @@ define([
     "dojomat/Application",
     "dojomat/populateRouter",
     "./routing-map",
-    "./Startup",
+    "./config/Startup",
     "./AuthToken",
     "./User",
     "dojo/domReady!"
@@ -34,7 +34,7 @@ define([
 
         constructor: function () {
             populateRouter(this, routingMap);
-            Startup.run().then(lang.hitch(this, function(result) {
+            (new Startup()).run().then(lang.hitch(this, function(result) {
 
                 // get initially requested route
                 var baseUrl = config.app.backendUrl;

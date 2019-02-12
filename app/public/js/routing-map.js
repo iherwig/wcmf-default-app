@@ -9,6 +9,11 @@ define([
     config,
     customRoutes
 ) {
+    /**
+     * Base routes. Custom routes or base route overrides should be
+     * put in ./config/custom_routes, which will be merged.
+     * @return Deferred
+     */
     var p = config['routing-map'].pathPrefix,
         l = config['routing-map'].layers || {},
         mid = require.toAbsMid
