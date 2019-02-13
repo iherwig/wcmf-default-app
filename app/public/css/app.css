@@ -124,7 +124,7 @@ label {
 }
 
 .entity-page .dijitTextBox, .principal-page .dijitTextBox,
-.entity-page .dijitSliderH {
+.entity-page .dijitSliderH, .entity-page .fileDropTarget {
   width: 350px;
   display: block;
 }

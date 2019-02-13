@@ -96,6 +96,7 @@ var appSrc = [
     "app/js/ui/data/input/widget/Color",
     "app/js/ui/data/input/widget/Date",
     "app/js/ui/data/input/widget/FileBrowser",
+    "app/js/ui/data/input/widget/FileUpload",
     "app/js/ui/data/input/widget/LinkBrowser",
     "app/js/ui/data/input/widget/Media",
     "app/js/ui/data/input/widget/MultiSelectBox",
@@ -128,6 +129,7 @@ var appSrc = [
 
     "app/js/config/custom_routes",
     "app/js/config/types",
+    "app/js/config/Startup",
 
     "dgrid/util/touch"
 ];

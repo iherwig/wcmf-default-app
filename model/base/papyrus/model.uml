@@ -761,6 +761,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SpqprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_862Sp6prEeaGbp23C_zkpg" value="app/js/ui/data/input/widget/FileBrowser"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_FIIbcC_DEem3xL0LmhPPKw" name="fileupload" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FIIbcS_DEem3xL0LmhPPKw" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FIIbci_DEem3xL0LmhPPKw" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_FIIbcy_DEem3xL0LmhPPKw" value="app/js/ui/data/input/widget/FileUpload"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_862SqKprEeaGbp23C_zkpg" name="linkbrowser" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_862SqaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SqqprEeaGbp23C_zkpg" value="1"/>

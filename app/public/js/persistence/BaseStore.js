@@ -28,7 +28,8 @@ define([
         },
 
         headers: {
-            Accept: "application/json"
+            Accept: "application/json",
+            'Content-Type': null
         },
 
         /**
@@ -110,6 +111,30 @@ define([
             return results;
         },
 
+        stringify: function(data) {
+            // check for file uploads
+            if (this.requiresFormData(data)) {
+                var formData = new FormData();
+                var oid = data.oid;
+                Object.keys(data).forEach(lang.hitch(this, function(key) {
+                    var value = data[key];
+                    // transform key for use with html format on server side
+                    key = 'value-'+this.language+'-'+key+'-'+oid;
+                    if (value && value.name) {
+                        // attach file to be uploaded
+                        formData.append(key, value, value.name);
+                    }
+                    else {
+                        formData.append(key, value);
+                    }
+                }));
+                return formData;
+            }
+            else {
+                return this.inherited(arguments);
+            }
+        },
+
         _getTarget: function(id) {
             var result = this.inherited(arguments);
             // extra params
@@ -149,7 +174,23 @@ define([
 
         createBackEndDummyId: function() {
             return 'wcmf'+uuid().replace(/-/g, '');
-        }
+        },
+
+        /**
+         * Check if there are file values in data
+         * NOTE: the decision is made base on the valueType
+         * @param data The data object to send to the server
+         * @return boolean
+         */
+        requiresFormData: function(data) {
+            for (var key in data) {
+                var value = data[key];
+                if (value && typeof value == 'object') {
+                    return true;
+                }
+            }
+            return false;
+        },
 
         // TODO:
         // implement DojoNodeSerializer on server that uses refs
