@@ -28,8 +28,7 @@ define([
         },
 
         headers: {
-            Accept: "application/json",
-            'Content-Type': null
+            Accept: "application/json"
         },
 
         /**
@@ -125,12 +124,15 @@ define([
                         formData.append(key, value, value.name);
                     }
                     else {
+                        value = !value ? '' : value;
                         formData.append(key, value);
                     }
                 }));
+                this.headers['Content-Type'] = null; // browser will guess
                 return formData;
             }
             else {
+              this.headers['Content-Type'] = 'application/json';
                 return this.inherited(arguments);
             }
         },
@@ -185,7 +187,7 @@ define([
         requiresFormData: function(data) {
             for (var key in data) {
                 var value = data[key];
-                if (value && typeof value == 'object') {
+                if (value && typeof value == 'object' && value.name && value.size && value.type) {
                     return true;
                 }
             }

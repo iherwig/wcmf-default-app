@@ -129,7 +129,7 @@ function(
             if (this.entity) {
                 var typeClass = Model.getTypeFromOid(this.entity.oid);
                 if (typeClass.getUploadDirectory instanceof Function) {
-                    return appConfig.mediaBasePath+typeClass.getUploadDirectory(this.entity);
+                    return config.app.mediaBasePath+typeClass.getUploadDirectory(this.entity);
                 }
             }
             return this.getFile().replace(/[^\/]*$/, '');
