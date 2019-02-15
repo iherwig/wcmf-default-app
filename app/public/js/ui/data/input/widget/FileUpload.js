@@ -105,7 +105,7 @@ function(
         },
 
         getFile: function() {
-            return this.uploader.inputNode.files.length > 0 ? this.uploader.inputNode.files[0] : null;
+            return this.uploader._files && this.uploader._files.length > 0 ? this.uploader._files[0] : null;
         },
 
         setDisplayValue: function(value) {
