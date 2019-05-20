@@ -75,8 +75,8 @@ define([
             customHeaders[AuthToken.name] = AuthToken.get();
             lang.mixin(elfinderConfig, {
                 lang: config.app.uiLanguage,
-                url: config.app.backendUrl+'media/files?directory='+directory,
-                rememberLastDir: true,
+                url: config.app.backendUrl+'media/files'+(directory ? '?directory='+directory : ''),
+                rememberLastDir: !directory,
                 resizable: false,
                 width: '100%',
                 height: win.getBox().h - 40,
