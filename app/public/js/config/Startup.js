@@ -1,13 +1,9 @@
 define([
     "dojo/_base/declare",
-    "../Startup",
-    "../model/meta/Model",
-    "../app/LightProfileClass"
+    "../Startup"
 ], function (
     declare,
-    Startup,
-    Model,
-    LightProfileClass
+    Startup
 ) {
     return declare([Startup], {
         /**
@@ -19,11 +15,6 @@ define([
          * @return Deferred
          */
         run: function() {
-            // register light profile type
-            if (!Model.isKnownType("app.src.model.LightProfile")) {
-              Model.registerType(new LightProfileClass());
-            }
-
             return this.inherited(arguments);
         }
     });
