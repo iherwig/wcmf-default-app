@@ -42,7 +42,7 @@ function(
         },
 
         _getValueAttr: function() {
-            return this.get("checked") ? "1" : "0";
+            return this.get("checked") ? 1 : 0;
         }
     });
 });
