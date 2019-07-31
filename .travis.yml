@@ -1,22 +1,26 @@
 sudo: false
+
 addons:
   apt:
     packages:
-      - oracle-java8-installer
+    - openjdk-8-jdk
+    - ant
 
 services:
   - mysql
 
 language: php
 
-php:
-  - 7.1
-
 env:
   global:
-    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - TEST_DIR=$TRAVIS_BUILD_DIR/test WCMF_BASE_DIR=$TRAVIS_BUILD_DIR
 
+matrix:
+  include:
+  - php: 7.2
+  allow_failures:
+  
 before_script:
   - mysql -e 'CREATE DATABASE wcmf_testapp;'
   - composer self-update
