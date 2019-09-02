@@ -137,9 +137,9 @@
             "package": {
                 "name": "studio-42/elfinder-js",
                 "type": "wcmf-asset",
-                "version": "2.1.43",
+                "version": "2.1.50",
                 "dist": {
-                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.43.zip",
+                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.50.zip",
                     "type": "zip"
                 },
                 "require": {
