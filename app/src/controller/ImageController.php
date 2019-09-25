@@ -30,8 +30,16 @@ class ImageController extends ImageControllerBase {
    */
   protected function createImage($location) {
 // PROTECTED REGION ID(app/src/controller/ImageController.php/Methods/createImage) ENABLED START
-    $file = ImageUtil::getCachedImage($location, true);
-    $this->getResponse()->setFile($file, false);
+    try {
+      $file = ImageUtil::getCachedImage($location, true);
+      $this->getResponse()->setFile($file, false);
+    }
+    catch (\Exception $ex) {
+      $this->getLogger()->warn('Could not get cached image for location: '.$location);
+      $response = $this->getResponse();
+      $response->setStatus(404);
+      $response->setAction('error');
+    }
 // PROTECTED REGION END
   }
 

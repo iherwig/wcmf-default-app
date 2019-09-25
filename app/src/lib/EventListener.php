@@ -19,6 +19,9 @@ class EventListener {
   private $_dynamicCache = null;
   private $_frontendCache = null;
 
+  private static $excludedEntityTypes = [
+  ];
+
   /**
    * Constructor
    * @param $eventManager
@@ -47,6 +50,11 @@ class EventListener {
    * @param $event PersistenceEvent instance
    */
   public function persisted(PersistenceEvent $event) {
+    // prevent cache clear for certain entity types
+    if ($event->getObject() && in_array($event->getObject()->getType(), self::$excludedEntityTypes)) {
+      return;
+    }
+
     // invalidate all cached views
     $this->invalidateCachedViews();
 
