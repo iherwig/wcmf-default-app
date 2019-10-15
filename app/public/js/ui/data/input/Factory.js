@@ -28,15 +28,16 @@ function(
     /**
      * Load the control classes for a given entity type.
      * @param type The entity type name
+     * @param entity Entity to get the value for (optional)
      * @returns Deferred which returns a map with attribute names as
      * keys and control classes as values
      */
-    Factory.loadControlClasses = function(type) {
+    Factory.loadControlClasses = function(type, entity) {
         var deferred = new Deferred();
 
         var inputTypeMap = {};
         var typeClass = Model.getType(type);
-        var attributes = typeClass.getAttributes({include: ['DATATYPE_ATTRIBUTE']});
+        var attributes = typeClass.getAttributes({include: ['DATATYPE_ATTRIBUTE']}, entity);
 
         // collect all control classes
         for (var i=0, count=attributes.length; i<count; i++) {

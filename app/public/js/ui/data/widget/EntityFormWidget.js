@@ -134,7 +134,7 @@ function(
 
             var deferredList = [];
             // load input widgets referenced in attributes' input type
-            deferredList.push(ControlFactory.loadControlClasses(this.type));
+            deferredList.push(ControlFactory.loadControlClasses(this.type, this.entity));
             // check instance permissions
             var requiredPermissions = [
                 cleanOid+'??create',
