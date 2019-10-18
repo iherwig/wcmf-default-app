@@ -213,7 +213,7 @@ function(
             }) : [];
             var numTexts = labels.length;
             var text = (numTexts === 0) ? this.emptyText :
-                  ((numTexts <= 3) ? labels.join(", ") : Dict.translate("%0% selected", [numTexts]));
+                  ((numTexts <= 3) ? labels.join("<br>") : Dict.translate("%0% selected", [numTexts]));
             html.set(this.textbox, text+' <b class="caret"></b>');
         },
 

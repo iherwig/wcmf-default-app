@@ -138,11 +138,22 @@ label {
   color: #555 !important;
 }
 
+.dojoxCheckedMultiSelect button {
+  text-align: left;
+}
+
+.dojoxCheckedMultiSelectMenu {
+  overflow: scroll;
+  max-height: 500px;
+  width: 400px;
+}
+
 .dojoxCheckedMultiSelectMenuItemChecked {
   font-weight: bold !important;
 }
+
 .dojoxCheckedMultiSelectCheckBoxInput {
-    opacity: 1.0;
+  opacity: 1.0;
 }
 
 .entity-page .group_default {
