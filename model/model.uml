@@ -791,6 +791,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SuqprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_862Su6prEeaGbp23C_zkpg" value="app/js/ui/data/input/widget/MultiSelectBox"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_66__ECEzEeqwM9K9PmXlxg" name="combo" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_66__ESEzEeqwM9K9PmXlxg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_66__EiEzEeqwM9K9PmXlxg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_66__EyEzEeqwM9K9PmXlxg" value="app/js/ui/data/input/widget/ComboBox"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_862SvKprEeaGbp23C_zkpg" name="text" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_862SvaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_862SvqprEeaGbp23C_zkpg" value="1"/>
