@@ -83,6 +83,7 @@ var appSrc = [
     "app/js/ui/data/display/Renderer",
     "app/js/ui/data/display/renderer/Check",
     "app/js/ui/data/display/renderer/Color",
+    "app/js/ui/data/display/renderer/ComboBox",
     "app/js/ui/data/display/renderer/Date",
     "app/js/ui/data/display/renderer/Image",
     "app/js/ui/data/display/renderer/Text",
