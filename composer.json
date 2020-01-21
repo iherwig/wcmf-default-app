@@ -182,7 +182,7 @@
     ],
     "minimum-stability": "RC",
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.0",
         "wcmf/asset-installer": "~1.0",
         "wcmf/wcmf": "~4.1",
         "dojo/dojo": "~1.11",
