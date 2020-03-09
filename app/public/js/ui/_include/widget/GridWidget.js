@@ -77,7 +77,7 @@ define([
         actions: [],
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
-        initialFilter: {},
+        initialFilter: null,
         rowEnhancer: null,
 
         actionsByName: {},
@@ -337,7 +337,7 @@ define([
                             html += '<a class="btn-mini" href="'+url+'" data-action="'+name+'"><i class="'+action.getIconClass()+'"></i></a>';
                         }
                         html += '</div>';
-                        return html;
+                        return { html: html };
                     })
                 };
 
@@ -363,7 +363,7 @@ define([
             var grid = new (declare([OnDemandGrid, Editor].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
-                collection: this.store.filter(this.initialFilter),
+                collection: this.initialFilter ? this.store.filter(this.initialFilter) : this.store,
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
@@ -512,7 +512,7 @@ define([
 
         filter: function(filter) {
             if (this.grid) {
-                this.grid.set('collection', this.store.filter(filter));
+                this.grid.set('collection', filter ? this.store.filter(filter) : this.store);
             }
         },
 
