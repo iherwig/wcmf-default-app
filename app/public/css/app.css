@@ -357,6 +357,11 @@ td {
   padding: 0;
 }
 
+.dbootstrap .dijitContentPane .flex {
+  width: 350px;
+  display: flex;
+}
+
 img.thumb {
   max-height: 150px;
 }
