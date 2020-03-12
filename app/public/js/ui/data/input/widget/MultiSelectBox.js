@@ -68,7 +68,7 @@ function(
         constructor: function(args) {
             // TODO remove store adapter if not required by select any more
             if (!args.store) {
-              // get store from input type, if not set yet
+                // get store from input type, if not set yet
                 args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, this.getDisplayType(args.entity, args.name)));
             }
             else if (!args.store.query) {

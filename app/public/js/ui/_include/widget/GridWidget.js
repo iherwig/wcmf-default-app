@@ -77,7 +77,7 @@ define([
         actions: [],
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
-        initialFilter: null,
+        initialFilter: {},
         rowEnhancer: null,
 
         actionsByName: {},
@@ -363,7 +363,7 @@ define([
             var grid = new (declare([OnDemandGrid, Editor].concat(features)))({
                 getBeforePut: true,
                 columns: columns,
-                collection: this.initialFilter ? this.store.filter(this.initialFilter) : this.store,
+                collection: this.store.filter(this.initialFilter),
                 selectionMode: "extended",
                 dndParams: {
                     checkAcceptance: lang.hitch(this, function(source, nodes) {
@@ -512,7 +512,7 @@ define([
 
         filter: function(filter) {
             if (this.grid) {
-                this.grid.set('collection', filter ? this.store.filter(filter) : this.store);
+              this.grid.set('collection', this.store.filter(filter));
             }
         },
 
