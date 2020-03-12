@@ -659,8 +659,8 @@ function(
                     this.acquireLock();
                     this.showNotification({
                         type: "ok",
-                        message: this.isLocked ? Dict.translate("<em>%0%</em> was successfully unlocked", [displayValue]) :
-                                Dict.translate("<em>%0%</em> was successfully locked", [displayValue]),
+                        message: this.isLocked ? Dict.translate("<em>%0%</em> was successfully locked", [displayValue]) :
+                                Dict.translate("<em>%0%</em> was successfully unlocked", [displayValue]),
                         fadeOut: true
                     });
                 }),
