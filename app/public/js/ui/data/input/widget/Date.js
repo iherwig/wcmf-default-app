@@ -44,9 +44,9 @@ function(
         timeTextBox: null,
 
         datePatterns: {
-          datetime: 'yyyy-MM-dd HH:mm',
+          datetime: 'yyyy-MM-dd HH:mm:ss',
           date: 'yyyy-MM-dd',
-          time: 'HH:mm'
+          time: 'HH:mm:ss'
         },
 
         dateType: 'date', // default type
@@ -151,6 +151,7 @@ function(
           if (dateValue && timeValue) {
               dateValue.setHours(timeValue.getHours());
               dateValue.setMinutes(timeValue.getMinutes());
+              dateValue.setSeconds(0);
           }
           return dateValue;
         }
