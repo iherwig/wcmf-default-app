@@ -54,6 +54,14 @@ define([
                 );
             }
         },
+        
+        updateLabel: function(text) {
+            this.labelNode.innerHTML = text;
+        },
+
+        updateHelpTooltip: function(text) {
+            this.helpDialog.set('content', text);
+        },
 
         showHelpTooltip: function() {
             popup.open({
