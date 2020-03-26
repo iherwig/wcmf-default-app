@@ -154,6 +154,10 @@ function(
             query(this.spinnerNode).style("display", "none");
         },
 
+        setStore: function(store) {
+            this.set('store', store);
+        },
+
         getStore: function() {
             return !this.store.filter ? this.store.store : this.store;
         },
