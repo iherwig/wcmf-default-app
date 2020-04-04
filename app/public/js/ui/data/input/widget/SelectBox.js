@@ -154,8 +154,15 @@ function(
             query(this.spinnerNode).style("display", "none");
         },
 
-        setStore: function(store) {
+        setStore: function(store, selectedId /*optional*/) {
             this.set('store', store);
+            if (selectedId !== undefined) {
+                var item = store.get(selectedId);
+                if (item) {
+                    this._setValueAttr(item.id, true, item.displayedText, item);
+                    this.textbox.value = item.displayText;
+                }
+            }
         },
 
         getStore: function() {
