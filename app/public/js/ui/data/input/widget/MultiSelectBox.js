@@ -191,6 +191,11 @@ function(
                 domAttr.remove(this.textbox, 'disabled');
             }
         },
+        
+        // called from _FormSelectWidget base class when options are available
+        onSetStore: function() {
+            this.setText();
+        },
 
         getStore: function() {
             return !this.store.filter ? this.store.store : this.store;
@@ -208,6 +213,7 @@ function(
         },
 
         setText: function() {
+        	// this could fail, if options are not available yet, but will called later again (see onSetStore())
             var labels = this.options.length ? this.selectedOptions.map(function(option) {
                 return option.label;
             }) : [];
