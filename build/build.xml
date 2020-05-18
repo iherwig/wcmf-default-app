@@ -198,8 +198,8 @@
         <include name="vendor/studio-42/elfinder-js/css/*.*"/>
         <include name="vendor/studio-42/elfinder-js/img/*.*"/>
         <include name="vendor/jquery/jquery.min.js"/>
-        <include name="vendor/jquery-ui/jquery-ui.min.js"/>
-        <include name="vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
+        <include name="vendor/jqueryui/jquery-ui.min.js"/>
+        <include name="vendor/jqueryui/themes/smoothness/jquery-ui.min.css"/>
         <!-- ckeditor -->
         <include name="vendor/ckeditor/ckeditor/skins/moono-lisa/**/*.*"/>
         <include name="vendor/ckeditor/ckeditor/plugins/**/*.*"/>
