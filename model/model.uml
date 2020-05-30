@@ -929,6 +929,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_864HbqprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_864Hb6prEeaGbp23C_zkpg" value="+*"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_N31DYKLDEeqyK5tJKZpXCg" name="??browseMedia" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_N31DYaLDEeqyK5tJKZpXCg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_N31DYqLDEeqyK5tJKZpXCg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_N31DY6LDEeqyK5tJKZpXCg" value="+*"/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_864HcKprEeaGbp23C_zkpg" name="??exportAll" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_864HcaprEeaGbp23C_zkpg" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_864HcqprEeaGbp23C_zkpg" value="1"/>
