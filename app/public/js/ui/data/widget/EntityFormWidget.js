@@ -171,7 +171,7 @@ function(
                     var groupNode = domConstruct.create('fieldset', {
                         'class': 'attribute_group group_'+group.toLowerCase()
                     }, this.fieldsNode);
-                    var layoutWidget = new FormLayout({}, groupNode);
+                    var layoutWidget = new FormLayout(this.getFormConfig(), groupNode);
                     this.layoutWidgets.push(layoutWidget);
                     // attributes
                     var attributes = attributeGroups[group];
@@ -303,6 +303,14 @@ function(
             for (var i=0, c=this.relationWidgets.length; i<c; i++) {
                 this.relationWidgets[i].startup();
             }
+        },
+        
+        /**
+         * Get the configuration for the FormLayout instance
+         * @returns Object
+         */
+        getFormConfig: function() {
+            return {};
         },
 
         /**
