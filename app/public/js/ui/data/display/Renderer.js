@@ -71,7 +71,7 @@ function(
                 }
             }
             // default
-            deferred.resolve(Renderer.renderers["text"]);
+            deferred.resolve(null);
         });
         return deferred;
     };
