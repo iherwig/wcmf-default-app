@@ -32,6 +32,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.theme = 'default';
     config.toolbarStartupExpanded = false;
     config.toolbarCanCollapse = true;
+    config.disableNativeSpellChecker = false;
     config.uiColor = "#E0E0D6";
     config.extraPlugins = 'image2,find,embed';
     config.removePlugins = 'image';
