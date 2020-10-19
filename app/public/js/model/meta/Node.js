@@ -91,7 +91,7 @@ define([
         isManyToManyRelation: function(roleName) {
             var relation = this.getRelation(roleName);
             var otherRelation = Model.getType(relation.type).getRelation(relation.thisEndName);
-            return this.isMany(relation.maxMultiplicity) &&
+            return relation && otherRelation && this.isMany(relation.maxMultiplicity) &&
                     this.isMany(otherRelation.maxMultiplicity);
         },
 

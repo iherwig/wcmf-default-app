@@ -57,7 +57,7 @@ define([
                         // set display value on first parent attribute's name
                         child.set(displayValues[j], j === 0 ? childType.getDisplayValue(child) : '');
                         // modify id to avoid conflicts with parent rows
-                        child.set('_storeId', childType+'-'+child.get('_storeId'));
+                        child.set('_storeId', childType.typeName+'-'+this._storeId+'-'+child.get('_storeId'));
                     }
                 }
                 return result;

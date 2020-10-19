@@ -52,18 +52,15 @@ define([
             // do nothing, since we don't cache
         },
 
-        getChildren: function(parent) {
-            return new ChildrenStore(parent, this.typeName);
+        getChildren: function(object) {
+            return new ChildrenStore(object, this.typeName);
         },
 
         mayHaveChildren: function(object) {
-            if (this.canHaveChildren === null) {
-                // check if the type has child relations
-                var type = Model.getType(this.typeName);
-                var relations = type.getRelations('child');
-                this.canHaveChildren = relations.length > 0;
-            }
-            var hasChildren = object.hasChildren !== undefined ? object.hasChildren : true;
+            var type = Model.getType(Model.getTypeNameFromOid(object.get('oid')));
+            var relations = type.getRelations('child');
+            this.canHaveChildren = relations.length > 0;
+            var hasChildren = object.hasOwnProperty("hasChildren") ? object.hasChildren : true;
             return this.canHaveChildren && hasChildren;
         }
     });
