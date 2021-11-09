@@ -17,6 +17,7 @@ define( [
     "dijit/form/DropDownButton",
     "dijit/Menu",
     "dijit/MenuItem",
+    "dijit/TitlePane",
     "dijit/Fieldset",
     "../../_include/FormLayout",
     "../../_include/_NotificationMixin",
@@ -55,6 +56,7 @@ function(
     DropDownButton,
     Menu,
     MenuItem,
+    TitlePane,
     Fieldset,
     FormLayout,
     _Notification,
@@ -165,55 +167,74 @@ function(
 
                 // add attribute widgets
                 this.attributeWidgets = [];
-                var attributeGroups = this.getAttributeGroups();
-                for (var group in attributeGroups) {
-                    // group
-                    var groupNode = domConstruct.create('fieldset', {
-                        'class': 'attribute_group group_'+group.toLowerCase()
-                    }, this.fieldsNode);
-                    var layoutWidget = new FormLayout(this.getFormConfig(), groupNode);
-                    this.layoutWidgets.push(layoutWidget);
-                    // attributes
-                    var attributes = attributeGroups[group];
-                    for (var i=0, count=attributes.length; i<count; i++) {
-                        var attribute = attributes[i];
-                        // only show attributes with read permission
-                        if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
-                            // disabled if not editable
-                            var disabled = this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false;
-                            // disabled if not translatable
-                            if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
-                                disabled = true;
+                var attributeSections = this.getAttributeSections();
+                for (var section in attributeSections) {
+                    // section
+                    var contentNode = section == 'default' ? this.fieldsNode : domConstruct.create('section');
+                    if (section != 'default') {
+                        // collapsible section
+                        var sectionPane = new TitlePane({
+                            title: Dict.translate(section),
+                            content: contentNode,
+                            class: 'attribute_section section_'+section.toLowerCase(),
+                            open: false
+                        });
+                        this.fieldsNode.appendChild(sectionPane.domNode);
+                    }
+                    // groups
+                    var attributeGroups = attributeSections[section];
+                    for (var group in attributeGroups) {
+                        // group
+                        var groupNode = domConstruct.create('fieldset', {
+                            'class': 'attribute_group group_'+group.toLowerCase()
+                        }, contentNode);
+                        if (section != 'default' && group != 'default') {
+                            domConstruct.create('legend', { innerHTML: Dict.translate(group) }, groupNode);
+                        }
+                        var layoutWidget = new FormLayout(this.getFormConfig(), groupNode);
+                        this.layoutWidgets.push(layoutWidget);
+                        // attributes
+                        var attributes = attributeGroups[group];
+                        for (var i=0, count=attributes.length; i<count; i++) {
+                            var attribute = attributes[i];
+                            // only show attributes with read permission
+                            if (this.permissions[cleanOid+'.'+attribute.name+'??read'] === true) {
+                                // disabled if not editable
+                                var disabled = this.typeClass ? !this.typeClass.isEditable(attribute, this.entity) : false;
+                                // disabled if not translatable
+                                if (!disabled && this.isTranslation && array.indexOf(attribute.tags, 'TRANSLATABLE') === -1) {
+                                    disabled = true;
+                                }
+                                var controlClass = controls[attribute.inputType] || TextBox;
+                                var attributeWidget = new controlClass({
+                                    name: attribute.name,
+                                    'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() : '',
+                                    value: this.entity[attribute.name],
+                                    defaultLanguageValue: !disabled && this.isTranslation ? this.original[attribute.name] : null,
+                                    disabled: disabled,
+                                    helpText: Dict.translate(attribute.description),
+                                    inputType: attribute.inputType,
+                                    entity: this.entity
+                                });
+                                var canCreate = this.permissions[cleanOid+'??create'] === true;
+                                var canUpdate = this.permissions[cleanOid+'??update'] === true &&
+                                        this.permissions[cleanOid+'.'+attribute.name+'??update'] === true;
+                                if ((this.isNew && canCreate || !this.isNew && canUpdate)) {
+                                    this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
+                                        var widgetValue = widget.get("value");
+                                        var entityValue = this.entity.get(widget.name);
+                                        if (this.normalizeForComparison(widgetValue) !== this.normalizeForComparison(entityValue)) {
+                                            this.setModified(true);
+                                        }
+                                    }, attributeWidget)));
+                                }
+                                else {
+                                    // disable widget, if no update permission
+                                    attributeWidget.set('disabled', true);
+                                }
+                                layoutWidget.addChild(attributeWidget);
+                                this.attributeWidgets.push(attributeWidget);
                             }
-                            var controlClass = controls[attribute.inputType] || TextBox;
-                            var attributeWidget = new controlClass({
-                                name: attribute.name,
-                                'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() : '',
-                                value: this.entity[attribute.name],
-                                defaultLanguageValue: !disabled && this.isTranslation ? this.original[attribute.name] : null,
-                                disabled: disabled,
-                                helpText: Dict.translate(attribute.description),
-                                inputType: attribute.inputType,
-                                entity: this.entity
-                            });
-                            var canCreate = this.permissions[cleanOid+'??create'] === true;
-                            var canUpdate = this.permissions[cleanOid+'??update'] === true &&
-                                    this.permissions[cleanOid+'.'+attribute.name+'??update'] === true;
-                            if ((this.isNew && canCreate || !this.isNew && canUpdate)) {
-                                this.own(attributeWidget.on('change', lang.hitch(this, function(widget) {
-                                    var widgetValue = widget.get("value");
-                                    var entityValue = this.entity.get(widget.name);
-                                    if (this.normalizeForComparison(widgetValue) !== this.normalizeForComparison(entityValue)) {
-                                        this.setModified(true);
-                                    }
-                                }, attributeWidget)));
-                            }
-                            else {
-                                // disable widget, if no update permission
-                                attributeWidget.set('disabled', true);
-                            }
-                            layoutWidget.addChild(attributeWidget);
-                            this.attributeWidgets.push(attributeWidget);
                         }
                     }
                 }
@@ -304,7 +325,7 @@ function(
                 this.relationWidgets[i].startup();
             }
         },
-        
+
         /**
          * Get the configuration for the FormLayout instance
          * @returns Object
@@ -323,31 +344,35 @@ function(
         },
 
         /**
-         * Get the type's attributes grouped together by GROUP_ tags.
-         * Attributes withoout GROUP_ tag are listed in a group named 'default'.
-         * @returns Associative array with the group names as keys and
-         * an array of the group's attributes as value
+         * Get the type's attributes grouped together by SECTION_ tags.
+         * Attributes without SECTION_ tag are listed in a section named 'default'.
+         * @returns Associative array with the section names as keys and
+         * an associative array of group names with an array of the group's attributes as value
          */
-        getAttributeGroups: function() {
+         getAttributeSections: function(attributes) {
             var attributes = this.getAttributes();
-            var groups = {
-                'default': []
-            };
-            for(var i=0, c=attributes.length; i<c; i++) {
+            var sections = {};
+            for (var i=0, c=attributes.length; i<c; i++) {
               var attribute = attributes[i];
+              var sectionTags = array.filter(attribute.tags, function(tag) {
+                  return tag.match(/^SECTION_/);
+              });
               var groupTags = array.filter(attribute.tags, function(tag) {
                   return tag.match(/^GROUP_/);
               });
-              groupName = 'default';
-              if (groupTags.length > 0) {
-                  var groupName = groupTags[0].replace(/^GROUP_/, '');
-                  if (!groups[groupName]) {
-                      groups[groupName] = [];
-                  }
+              // create section
+              sectionName = sectionTags.length == 0 ? 'default' : sectionTags[0].replace(/^SECTION_/, '');
+              if (!sections[sectionName]) {
+                  sections[sectionName] = {};
               }
-              groups[groupName].push(attribute);
+              // create group
+              groupName = groupTags.length == 0 ? 'default' : groupTags[0].replace(/^GROUP_/, '');
+              if (!sections[sectionName][groupName]) {
+                  sections[sectionName][groupName] = [];
+              }
+              sections[sectionName][groupName].push(attribute);
             }
-            return groups;
+            return sections;
         },
 
         /**
