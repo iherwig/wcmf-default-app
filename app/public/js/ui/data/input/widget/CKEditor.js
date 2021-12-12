@@ -43,6 +43,7 @@ function(
         intermediateChanges: true,
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
+        editorConfig: {},
         editorInstance: null,
         mediaBrowser: null,
 
@@ -60,7 +61,7 @@ function(
             var linkBrowserRoute = pathPrefix+'link';
             var mediaBaseHref = config.app.wcmfBaseHref;
 
-            this.editorInstance = CKEDITOR.replace(this.textbox, {
+            this.editorConfig = {
                 customConfig: pathPrefix+'js/config/ckeditor_config.js',
                 filebrowserBrowseUrl: mediaBrowserRoute,
                 filebrowserLinkBrowseUrl: linkBrowserRoute,
@@ -69,7 +70,8 @@ function(
                 filebrowserWindowWidth: '800',
                 filebrowserWindowHeight: '700',
                 readOnly: this.disabled
-            });
+            };
+            this.editorInstance = CKEDITOR.replace(this.textbox, this.editorConfig);
 
             // custom filebrowser dialog instantiation
             // @see https://github.com/simogeo/Filemanager/wiki/How-to-open-the-Filemanager-from-CKEditor-in-a-modal-window
@@ -154,6 +156,17 @@ function(
         getToolbarName: function() {
             var options = ControlFactory.getOptions(this.inputType);
             return (options.toolbarSet) ? options.toolbarSet : "wcmf";
+        },
+
+        replaceToolbar: function(name) {
+            var editor = CKEDITOR.instances[this.get('id')];
+            if (editor) {
+                editor.destroy(true);
+            }
+            this.editorConfig.toolbar = name;
+            this.editorInstance = CKEDITOR.replace(this.textbox, this.editorConfig);
+            // fix readonly flag
+            this._setDisabledAttr(this.editorConfig.readOnly);
         },
 
         destroy: function() {
