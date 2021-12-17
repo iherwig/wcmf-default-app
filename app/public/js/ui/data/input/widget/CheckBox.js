@@ -23,7 +23,13 @@ function(
                 disabled: this.disabled
             });
             widget.startup();
-            this.addChild(widget);
+            
+            // create wrapper for widget and label
+            var wrapper = domConstruct.create("div", {
+              "class": "checkBoxWrapper"
+            });
+            wrapper.appendChild(widget.domNode);
+            this.domNode.appendChild(wrapper);
 
             // create label
             domConstruct.create("span", {

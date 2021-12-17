@@ -20,6 +20,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Page not found'),
+        bodyDomId: 'page-notfound',
 
         postCreate: function () {
             this.inherited(arguments);

@@ -70,7 +70,7 @@ function(
             this.inherited(arguments);
             this.spinnerNode = domConstruct.create("p", {
                 innerHTML: '<i class="fa fa-spinner fa-spin"></i>'
-            }, this.domNode, "first");
+            }, this.domNode, "last");
             this.showSpinner();
 
             when(this.store.fetch(), lang.hitch(this, function(list) {

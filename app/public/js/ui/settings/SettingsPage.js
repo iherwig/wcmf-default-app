@@ -32,6 +32,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Settings'),
+        bodyDomId: 'page-settings',
 
         postCreate: function() {
             this.inherited(arguments);

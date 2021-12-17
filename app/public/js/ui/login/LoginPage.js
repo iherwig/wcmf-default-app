@@ -36,6 +36,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Login'),
+        bodyDomId: 'page-login',
 
         constructor: function (params) {
             // template variables

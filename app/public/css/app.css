@@ -6,6 +6,16 @@
 @import url('../vendor/dojo/dojox/widget/ColorPicker/ColorPicker.css');
 @import url('../vendor/dojo/dojox/form/resources/CheckedMultiSelect.css');
 
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("webfonts/Roboto-Regular.ttf") format("truetype")
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("webfonts/Roboto-Bold.ttf") format("truetype")
+}
+
 .clearfix:before,
 .clearfix:after {
   display: table;
@@ -28,6 +38,10 @@ body {
   background-color: #f5f5f5;
 }
 
+[role="button"] {
+  outline: none !important;
+}
+
 #wrap  {
   padding: 60px 0;
 }
@@ -45,28 +59,63 @@ body {
   padding: 0 10px;
 }
 
+#page-login,
+#page-home,
+#page-entity,
+#page-entitylist,
+#page-searchresult,
+#page-admin {
+  font-family: "Roboto-Regular";
+  background-image: url('https://maxdudler.de/files/md_hagenholz_121_web_2.jpg');
+  background-size: cover;
+  padding-top: 111px;
+  background-position: bottom center;
+}
+
+#page-login #wrap,
+#page-home #wrap,
+#page-entity #wrap,
+#page-entitylist #wrap,
+#page-searchresult #wrap,
+#page-admin #wrap {
+  width: calc(100vw - 120px);
+  max-width: 1460px;
+  height: calc(100vh - 211px);
+  margin: 0 auto;
+  background: #f5f5f5;
+  overflow-y: auto;
+}
+
+#page-entity #wrap,
+#page-entitylist #wrap,
+#page-searchresult #wrap {
+  overflow-y: scroll;
+}
+
+#page-login #wrap {
+  background: none;
+}
+
 #notification {
   position: fixed;
-  top: 60px;
-  width: 100%;
+  top: auto;
+  bottom: 80px;
+  width: calc(100vw - 120px);
+  max-width: 1460px;
+  margin: 0 auto;
   z-index: 999;
 }
 
 #notification .alert {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .login-page .jumbotron {
   color: #FFFFFF;
-  background: #2f2f2f;
-  padding: 80px 20px;
+  background: none !important;
+  padding: 20px;
   text-align: center;
-}
-
-.login-page .jumbotron h1 {
-  font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
 .login-page {
@@ -97,17 +146,37 @@ body {
           box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
+#page-home .jumbotron p {
+  margin: 30px 0;
+}
+
 .media-browse-page, .link-browse-page {
   margin-top: -60px;
 }
 
 label {
+  display: inline-block;
   margin: 0;
   padding-right: 5px;
+  padding-bottom: 4px;
+  font-family: "Roboto-Bold";
   font-weight: normal;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+}
+
+legend {
+  float: left;
+  margin: 0 0 20px;
+  font-size: 18px;
+  border: none;
+}
+
+.navbar {
+  width: calc(100vw - 120px);
+  max-width: 1460px;
+  margin: 60px auto 0;
 }
 
 .navbar-fixed-top {
@@ -116,22 +185,27 @@ label {
 
 /* input */
 .entity-page .attribute_group {
-  padding: 8px;
-  margin: 2px;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
+  margin: 20px 0 40px;
+  padding: 20px 15px;
+  background: #efefef;
 }
 
-.entity-page .dijitTextBox, .principal-page .dijitTextBox,
-.entity-page .dijitSliderH, .entity-page .fileDropTarget {
-  width: 350px;
+.entity-page .attribute_group:last-child {
+  margin-bottom: 20px;
+}
+
+.entity-page .dijitTextBox,
+.principal-page .dijitTextBox,
+.entity-page .dijitSliderH,
+.entity-page .fileDropTarget {
   display: block;
+  width: calc(100% - 50px);
 }
 
-.entity-page .dijitCheckBox, .principal-page .dijitCheckBox {
+.entity-page .dijitCheckBox,
+.principal-page .dijitCheckBox {
   margin-left: 0;
-  margin-right: 335px;
+  margin-right: 10px;
 }
 
 .dijitTextBoxDisabled input {
@@ -240,6 +314,7 @@ th.field-actions-6, td.field-actions-6 {
   text-shadow: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 6px;
 }
 
 .dgrid-cell .btn-mini {
@@ -250,6 +325,10 @@ th.field-actions-6, td.field-actions-6 {
 .dgrid-cell.dgrid-cell-editing div {
   /* disable scrollbars on inline editors */
   overflow: hidden;
+}
+
+.dgrid-cell.field-actions-1 {
+  width: 36px;
 }
 
 .dbootstrap .dijitCheckBox, .dbootstrap .dijitRadio {
@@ -278,7 +357,7 @@ th.field-actions-6, td.field-actions-6 {
   padding: 0 4px;
 }
 
-/* tabs */
+/* tabs and accordeons */
 .nav-tabs > li .close {
   margin: -20px 0 0 10px;
   font-size: 18px;
@@ -291,6 +370,37 @@ th.field-actions-6, td.field-actions-6 {
 
 .dijitTabContent {
   min-height: 40px !important;
+}
+
+.dbootstrap .dijitTitlePane {
+  margin-top: 20px;
+}
+
+.dbootstrap .dijitTitlePaneTitle {
+  padding: 16px 15px;
+  font-size: 20px;
+  color: #333;
+  background: #eee;
+}
+
+.dbootstrap .dijitTabPaneWrapper form {
+  margin-bottom: 30px;
+}
+
+.dbootstrap .dijitTitlePane .dijitArrowNode:before {
+  width: 8px;
+  height: 14px;
+}
+
+.dbootstrap .dijitTitlePane .dijitClosed .dijitArrowNode:before {
+  content: '';
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6.22 10.81'%3E%3Cg data-name='Ebene 2'%3E%3Cpath fill='%23333333' d='M.81 10.81L0 10l4.59-4.59L0 .81.81 0l5.41 5.41-5.41 5.4z' data-name='Ebene 1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.dbootstrap .dijitTitlePane .dijitOpen .dijitArrowNode:before {
+  transform: rotateZ(90deg);
+  content: '';
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6.22 10.81'%3E%3Cg data-name='Ebene 2'%3E%3Cpath fill='%23333333' d='M.81 10.81L0 10l4.59-4.59L0 .81.81 0l5.41 5.41-5.41 5.4z' data-name='Ebene 1'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* containers */
@@ -338,7 +448,71 @@ td {
 }
 
 .tableContainer-labelCell {
-  padding-top: 14px;
+  width: 50% !important;
+  padding-bottom: 24px;
+}
+
+.tableContainer-labelCell > div > .dojoxCheckedMultiSelect,
+.tableContainer-labelCell > div > .dijitCheckBox,
+.tableContainer-labelCell > .dijitCheckBox {
+  display: block;
+}
+
+.tableContainer-labelCell:last-child > .headline {
+  display: block;
+  margin-top: -40px;
+  padding-bottom: 16px;
+}
+
+.tableContainer-labelCell > div > .dojoxCheckedMultiSelect .btn {
+  width: calc(100% - 50px);
+}
+
+.dbootstrap .dijitContentPane .flex,
+.entity-page .groupContainer--beside .dijitTextBox:not(.dijitTextArea),
+.principal-page .groupContainer--beside .dijitTextBox:not(.dijitTextArea),
+.entity-page .groupContainer--beside .dijitSliderH,
+.entity-page .groupContainer--beside .fileDropTarget {
+  display: block;
+  width: 100% !important;
+  margin-right: 0 !important;
+}
+
+.groupContainer--beside {
+  padding-right: 50px;
+}
+
+.groupContainer--beside > div {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.groupContainer--beside.groupContainer--cols-2 > div {
+  width: calc(50% - 12px);
+}
+
+.groupContainer--beside.groupContainer--cols-3 > div {
+  width: calc(33.33% - 16px);
+}
+
+.groupContainer--beside.groupContainer--cols-4 > div {
+  width: calc(25% - 18px);
+}
+
+.groupContainer--under > div:not(:last-child) {
+  padding-bottom: 24px;
+}
+
+td.headline {
+  padding: 24px 0;
+}
+
+.entity-form-table .tableContainer-labelCell div.headline {
+  width: 100%;
+}
+
+label.headline {
+  font-family: "Roboto-Regular";
 }
 
 .pull-right {
@@ -357,11 +531,6 @@ td {
   padding: 0;
 }
 
-.dbootstrap .dijitContentPane .flex {
-  width: 350px;
-  display: flex;
-}
-
 img.thumb {
   max-height: 150px;
 }
@@ -377,6 +546,12 @@ img.thumb {
 
 .tabLabel img.thumb, .dgrid-content img.thumb {
   height: 20px !important;
+}
+
+fieldset i.fa {
+  margin-right: 10px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 /* elfinder */
@@ -462,5 +637,9 @@ img.thumb {
 
   .entity-page .dijitTextBox, .principal-page .dijitTextBox {
     width: 95%;
+  }
+
+  .tableContainer-labelCell {
+    width: 100% !important;
   }
 }

@@ -166,12 +166,16 @@ function(
         },
 
         onResize: function() {
-            var vs = win.getBox();
 
             // calculate height of dynamic elements
-            var navbarHeight = 0;
-            var toolbarHeight = 0;
-            var footerHeight = 0;
+            var containerHeight = 0;
+            var tabNavHeight = 0;
+            var titleHeight = 0;
+            var filterHeight = 0;
+            var numObjHeight = 0;
+            var btnsHeight = 0;
+            var height = this.height;
+            var gridWidget = this.gridWidget;
 
             var navbar = query(".navbar");
             if (navbar.length > 0) {
@@ -185,10 +189,37 @@ function(
             if (footer) {
               footerHeight = domGeom.getMarginBox(footer).h;
             }
-            var h = this.height ? this.height : vs.h-navbarHeight-toolbarHeight-footerHeight-210;
-            if (h >= 0) {
-                this.gridWidget.setHeight(h);
+            var container = query("#wrap");
+            if (container.length > 0) {
+              containerHeight = domGeom.getContentBox(container[0]).h;
             }
+            setTimeout(function() {
+              var tabNav = query(".dijitTabContainerTop-tabs");
+              if (tabNav.length > 0) {
+                tabNavHeight = domGeom.getMarginBox(tabNav[0]).h;
+              }
+              var title = query(".dijitTabContainerTopChildWrapper > div > div > div:first-child");
+              if (title.length > 0) {
+                titleHeight = domGeom.getMarginBox(title[0]).h;
+              }
+              var filter = query(".dijitTabContainerTopChildWrapper > div > div > div:nth-child(2)");
+              if (filter.length > 0) {
+                filterHeight = domGeom.getMarginBox(filter[0]).h;
+              }
+              var numObj = query(".dijitTabContainerTopChildWrapper > div > div > div:nth-child(3) .btn-toolbar");
+              if (numObj.length > 0) {
+                var paddingExtends = domGeom.getPadExtents(numObj[0]);
+                numObjHeight = domGeom.getMarginBox(numObj[0]).h + paddingExtends.t + paddingExtends.b;
+              }
+              var btns = query(".dijitTabContainerTopChildWrapper > div > div > .btn-toolbar");
+              if (btns.length > 0) {
+                btnsHeight = domGeom.getMarginBox(btns[0]).h;
+              }
+              var h = height ? height : containerHeight-tabNavHeight-titleHeight-filterHeight-numObjHeight-btnsHeight;
+              if (h >= 0) {
+                  gridWidget.setHeight(h);
+              }
+            }, 200);
         },
 
         getGridFeatures: function() {

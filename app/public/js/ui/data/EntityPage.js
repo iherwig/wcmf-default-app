@@ -42,6 +42,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Content'),
+        bodyDomId: 'page-entity',
 
         baseRoute: "entity",
         types: config.app.rootTypes,

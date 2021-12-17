@@ -53,6 +53,7 @@ function(
 
         spinnerNode: null,
 
+        numItemsToShow: 5,
         labelAttr: "displayText",
         searchAttr: "displayText",
         queryExpr: '*${0}*',
@@ -219,7 +220,7 @@ function(
             }) : [];
             var numTexts = labels.length;
             var text = (numTexts === 0) ? this.emptyText :
-                  ((numTexts <= 3) ? labels.join("<br>") : Dict.translate("%0% selected", [numTexts]));
+                  ((numTexts <= this.numItemsToShow) ? labels.join("<br>") : Dict.translate("%0% selected", [numTexts]));
             html.set(this.textbox, text+' <b class="caret"></b>');
         },
 

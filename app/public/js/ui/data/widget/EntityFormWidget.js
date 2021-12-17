@@ -9,7 +9,9 @@ define( [
     "dojo/topic",
     "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/dom-attr",
     "dojo/query",
+    "dojo/dom",
     "dijit/registry",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -31,6 +33,7 @@ define( [
     "../../../persistence/RelationStore",
     "../../../action/Delete",
     "../../../locale/Dictionary",
+    "../../../Cookie",
     "../input/Factory",
     "../input/widget/TextBox",
     "./EntityRelationWidget",
@@ -48,7 +51,9 @@ function(
     topic,
     domClass,
     domConstruct,
+    domAttr,
     query,
+    dom,
     registry,
     _WidgetBase,
     _TemplatedMixin,
@@ -70,6 +75,7 @@ function(
     RelationStore,
     Delete,
     Dict,
+    Cookie,
     ControlFactory,
     TextBox,
     EntityRelationWidget,
@@ -107,6 +113,8 @@ function(
         attributeWidgets: [],
         relationWidgets: [],
         layoutWidgets: [],
+
+        closeRelationAfterSave: false,
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -172,13 +180,7 @@ function(
                     // section
                     var contentNode = section == 'default' ? this.fieldsNode : domConstruct.create('section');
                     if (section != 'default') {
-                        // collapsible section
-                        var sectionPane = new TitlePane({
-                            title: Dict.translate(section),
-                            content: contentNode,
-                            class: 'attribute_section section_'+section.toLowerCase(),
-                            open: false
-                        });
+                        var sectionPane = this.createSection(section, contentNode);
                         this.fieldsNode.appendChild(sectionPane.domNode);
                     }
                     // groups
@@ -208,7 +210,7 @@ function(
                                 var controlClass = controls[attribute.inputType] || TextBox;
                                 var attributeWidget = new controlClass({
                                     name: attribute.name,
-                                    'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() : '',
+                                    'class': attribute.tags ? attribute.tags.join(' ').toLowerCase() + ' field-' + attribute.name : '',
                                     value: this.entity[attribute.name],
                                     defaultLanguageValue: !disabled && this.isTranslation ? this.original[attribute.name] : null,
                                     disabled: disabled,
@@ -241,6 +243,7 @@ function(
 
                 // add relation widgets
                 if (!this.isNew) {
+                    this.relationWidgets = [];
                     var relations = this.getRelations();
                     for (var i=0, count=relations.length; i<count; i++) {
                         var relation = relations[i];
@@ -288,6 +291,9 @@ function(
 
                 // notify listeners
                 topic.publish("entity-form-widget-created", this);
+
+                // scroll to last scroll position
+                dom.byId('wrap').scrollTo(0, this.getState('scroll') - 250);
             }), lang.hitch(this, function(error) {
                 // error
                 this.showBackendError(error);
@@ -300,7 +306,7 @@ function(
                 topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
                     this.showBackendError(error, this.isModified);
                 })),
-                on(dojo.body(), "keydown", lang.hitch(this, function (e) {
+                on(dojo.body(), "keydown", lang.hitch(this, function(e) {
                     if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                         e.stopPropagation();
                         if (this.isModified) {
@@ -312,18 +318,76 @@ function(
                         }
                         return false;
                     };
+                })),
+                on(dom.byId('wrap'), 'scroll', lang.hitch(this, function(e) {
+                    // store scroll position
+                    this.setState('scroll', dom.byId('wrap').scrollTop);
                 }))
             );
         },
 
         startup: function() {
             this.inherited(arguments);
+
             for (var i=0, c=this.layoutWidgets.length; i<c; i++) {
                 this.layoutWidgets[i].startup(); // starts up attribute widgets
             }
             for (var i=0, c=this.relationWidgets.length; i<c; i++) {
                 this.relationWidgets[i].startup();
             }
+
+            // apply attribute layout tags
+            var attributes = this.getAttributes();
+            for (var i=0, count=attributes.length; i<count; i++) {
+                var attribute = attributes[i];
+                var prevAttribute = i > 0 ? attributes[i-1] : null;
+                var nextAttribute = i < count-1 ? attributes[i+1] : null;
+
+                // create headline before widget
+                var headlineTag = this.getFirstTag(attribute.tags, 'LAYOUT_HEADLINE_');
+                if (nextAttribute && headlineTag) {
+                  if (headlineTag.indexOf('_FULLWIDTH_') !== -1) {
+                    // headline spanning two main columns
+                    this._createHeadline(attribute.name, true, Dict.translate(headlineTag.replace('LAYOUT_HEADLINE_FULLWIDTH_', '')));
+                  }
+                  else {
+                    // headline spanning one main column for side by side sections
+                    this._createHeadline(attribute.name, false, Dict.translate(headlineTag.replace('LAYOUT_HEADLINE_', '')));
+                  }
+                }
+                // group widget with previous, position next to it
+                if (prevAttribute && this.getFirstTag(attribute.tags, 'LAYOUT_GROUP_WITH_PREVIOUS_BESIDE')) {
+                  this._moveWidget(attribute.name, prevAttribute.name, true, 'beside');
+                }
+                // group widget with previous, position under it
+                if (prevAttribute && this.getFirstTag(attribute.tags, 'LAYOUT_GROUP_WITH_PREVIOUS_UNDER')) {
+                  this._moveWidget(attribute.name, prevAttribute.name, true, 'under');
+                }
+                // create break after widget
+                if (nextAttribute && this.getFirstTag(attribute.tags, 'LAYOUT_BREAK_AFTER')) {
+                  this._createGap(attribute.name);
+                }
+            }
+            this._wrapItems();
+        },
+
+        /**
+         * Create collapsible section
+         * @param string section
+         * @param domNode contentNode
+         */
+        createSection(section, contentNode) {
+            var sectionPane = new TitlePane({
+                title: Dict.translate(section),
+                content: contentNode,
+                class: 'attribute_section section_'+section.toLowerCase(),
+                open: this.getState('section-'+section)
+            });
+            this.own(sectionPane.watch('open', lang.hitch(this, lang.partial(function(sectionPane, name, oldValue, value) {
+                topic.publish('entity-form-section-toggle', sectionPane);
+                this.setState('section-'+section, value);
+            }, sectionPane))));
+            return sectionPane;
         },
 
         /**
@@ -341,6 +405,20 @@ function(
         getAttributes: function() {
             var typeClass = Model.getType(this.type);
             return typeClass.getAttributes({exclude: ['DATATYPE_IGNORE']}, this.entity);
+        },
+
+        getState: function(name) {
+            return !this.isNew ? Cookie.get(this.getCookiePath(name), undefined) : undefined;
+        },
+
+        setState: function(name, value) {
+            if (!this.isNew) {
+                Cookie.set(this.getCookiePath(name), value);
+            }
+        },
+
+        getCookiePath: function(name) {
+            return this.baseRoute+"_"+this.entity.get('oid')+"_"+name;
         },
 
         /**
@@ -375,6 +453,22 @@ function(
             return sections;
         },
 
+        getAttributeWidget: function(name) {
+            var result = this.attributeWidgets.filter(lang.hitch(this, function(widget) {
+                return widget.name == name;
+            }));
+            return result.length > 0 ? result[0] : null;
+        },
+
+        getFirstTag: function(tags, prefix) {
+            if (tags) {
+              var result = tags.filter(function(tag) {
+                  return tag.startsWith(prefix);
+              });
+            }
+            return result && result.length > 0 ? result[0] : null;
+        },
+
         /**
          * Get the type's relations to display in the widget
          * @returns Array
@@ -400,7 +494,7 @@ function(
                     label: config.app.languages[langKey],
                     langKey: langKey,
                     onClick: function() {
-                        var route = form.page.getRoute("entity");
+                        var route = form.page.getRoute(this.baseRoute);
                         var queryParams = this.langKey !== config.app.defaultLanguage ? {lang: this.langKey} : undefined;
                         var url = route.assemble({
                             type: Model.getSimpleTypeName(form.type),
@@ -437,6 +531,74 @@ function(
                 var widget = this.attributeWidgets[i];
                 widget.set("readonly", !isEnabled);
             }
+        },
+
+        _createHeadline: function(source, fullwidth, headlineText) {
+            var sourceWidget = this.getAttributeWidget(source);
+            if (fullwidth) {
+              // create headline cell and adjacent empty cell
+              domConstruct.place(domConstruct.toDom('<td class="headline"><div>' + headlineText + '</div></td>'), sourceWidget.domNode.parentNode, "before");
+              domConstruct.place(domConstruct.toDom('<td class="emptyCell">'), sourceWidget.domNode.parentNode, "before");
+            }
+            else {
+              // create two nodes before widget to be wrapped later into one div
+              domConstruct.place(domConstruct.toDom('<label class="headline">' + headlineText + '</label><div class="headline"></div>'), sourceWidget.domNode.parentNode.childNodes.item(0), "before");
+            }
+            this._cleanUpAfterWidgetLayout(sourceWidget.domNode.parentNode.parentNode.parentNode);
+        },
+
+        _moveWidget: function(source, target, inside, position) {
+            var sourceWidget = this.getAttributeWidget(source);
+            var targetWidget = this.getAttributeWidget(target);
+            if (inside) {
+                // move into another widget container
+                Array.from(sourceWidget.domNode.parentNode.childNodes).forEach(child => targetWidget.domNode.parentNode.appendChild(child));
+                dojo.addClass(targetWidget.domNode.parentNode, 'groupContainer groupContainer--' + position);
+            }
+            else {
+                // move behind another widget container
+                targetWidget.domNode.parentNode.parentNode.appendChild(sourceWidget.domNode.parentNode);
+            }
+            this._cleanUpAfterWidgetLayout(targetWidget.domNode.parentNode.parentNode.parentNode);
+        },
+
+        _createGap: function(target) {
+            var targetWidget = this.getAttributeWidget(target);
+            // create empty cell after target widget container
+            domConstruct.place(domConstruct.toDom('<td class="emptyCell">'), targetWidget.domNode.parentNode, "after");
+            this._cleanUpAfterWidgetLayout(targetWidget.domNode.parentNode.parentNode.parentNode);
+        },
+
+        _cleanUpAfterWidgetLayout: function(node) {
+            // select all tds (except empty remainers of moving operation)
+            var tds = [];
+            Array.from(node.childNodes).forEach(row => Array.from(row.childNodes).filter(child => dojo.hasClass(child, "emptyCell") || child.childNodes.length > 0).forEach(child => tds.push(child)));
+            // empty group node
+            dojo.empty(node);
+            // redistribute tds on table rows
+            var cols = 2;
+            for (var i = 0, j = tds.length; i < j; i += cols) {
+                var items = tds.slice(i, i + cols);
+                var tr = domConstruct.create('tr', null, node);
+                Array.from(items).forEach(item => tr.appendChild(item));
+            }
+        },
+
+        _wrapItems: function() {
+            // sourround label and input with div to allow column layout and individual styling
+            var numItemsToWrap = 2;
+            Array.from(query('.tableContainer-labelCell')).forEach(container => {
+                var children = Array.from(container.childNodes);
+                for (var i = 0, j = children.length; i < j; i += numItemsToWrap) {
+                    var items = children.slice(i, i + numItemsToWrap);
+                    var div = domConstruct.create('div', null, container);
+                    dojo.addClass(div, domAttr.get(items[1], 'class').match(/^headline$|field-[a-zA-Z-_0-9]*/g));
+                    Array.from(items).forEach(item => div.appendChild(item));
+                }
+                if (dojo.hasClass(container, 'groupContainer')) {
+                  dojo.addClass(container, 'groupContainer--cols-' + container.childNodes.length);
+                }
+            });
         },
 
         setLockState: function(isLocked, isLockOwner) {
@@ -592,20 +754,20 @@ function(
                             if (this.isNew) {
                                 this.isNew = false;
 
-//                              if (this.isRelatedObject()) {
-//                                  // close own tab
-//                                  topic.publish("tab-closed", {
-//                                      oid: Model.createDummyOid(this.type)
-//                                  });
-//                                  this.destroyRecursive();
-//                              }
-//                              else {
+                              if (this.isRelatedObject() && this.closeRelationAfterSave) {
+                                  // close own tab
+                                  topic.publish("tab-closed", {
+                                      oid: Model.createDummyOid(this.type)
+                                  });
+                                  this.destroyRecursive();
+                              }
+                              else {
                                     // update current tab
                                     topic.publish("tab-closed", {
                                         oid: Model.createDummyOid(this.type),
                                         nextOid: this.entity.get('oid')
                                     });
-//                              }
+                              }
                           }
                       }));
                     }

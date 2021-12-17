@@ -42,6 +42,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Home'),
+        bodyDomId: 'page-home',
 
         constructor: function(params) {
             // register search result type if not done already

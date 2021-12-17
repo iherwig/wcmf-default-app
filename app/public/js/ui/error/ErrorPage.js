@@ -21,6 +21,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Error'),
+        bodyDomId: 'page-error',
 
         constructor: function (params) {
             this.error = params.error;

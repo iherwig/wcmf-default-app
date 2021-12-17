@@ -43,6 +43,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Media'),
+        bodyDomId: 'page-browsemedia',
 
         elfinderInstance: null,
 

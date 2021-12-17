@@ -42,6 +42,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Settings'),
+        bodyDomId: 'page-admin',
 
         processes: {},
 

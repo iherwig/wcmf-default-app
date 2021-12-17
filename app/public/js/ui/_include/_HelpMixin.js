@@ -43,7 +43,7 @@ define([
                             this.hideHelpTooltip();
                         })
                     });
-                    this.helpIconNode = domConstruct.place('<i class="fa fa-info-circle"></i>', this.labelNode, "after");
+                    this.helpIconNode = domConstruct.place('<i class="fa fa-question-circle"></i>', this.labelNode, "after");
                     this.own(
                         on(this.helpIconNode, 'mouseover', lang.hitch(this, function() {
                             this.showHelpTooltip();

@@ -28,6 +28,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Logout'),
+        bodyDomId: 'page-logout',
 
         startup: function() {
             this.inherited(arguments);

@@ -56,6 +56,7 @@ define([
 
         // attributes to be overridden by subclasses
         title: '',
+        bodyDomId: '',
 
         constructor: function(params) {
             this.request = params.request;
@@ -80,6 +81,7 @@ define([
                     }
                     finally {
                         this.setTitle(this.title);
+                        this.setBodyDomId(this.bodyDomId);
                         this.createNotificationNode();
                         this.setupRoutes();
                         this.removeRestricted();
@@ -124,6 +126,11 @@ define([
             if (title !== config.app.title) {
                 this.inherited(arguments, [config.app.title+' - '+title]);
             }
+        },
+
+        setBodyDomId: function(id) {
+            var body = query("body")[0];
+            domAttr.set(body, "id", id);
         },
 
         createNotificationNode: function() {

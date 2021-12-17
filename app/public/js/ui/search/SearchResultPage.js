@@ -40,6 +40,7 @@ define([
         templateString: lang.replace(template, Dict.tplTranslate),
         contextRequire: require,
         title: Dict.translate('Searchresult'),
+        bodyDomId: 'page-searchresult',
 
         constructor: function(params) {
             this.searchterm = this.request.getQueryParam("q");
