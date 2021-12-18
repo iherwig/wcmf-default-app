@@ -81,7 +81,7 @@ define([
                     }
                     finally {
                         this.setTitle(this.title);
-                        this.setBodyDomId(this.bodyDomId);
+                        this.setBodyAttributes(this.bodyDomId);
                         this.createNotificationNode();
                         this.setupRoutes();
                         this.removeRestricted();
@@ -128,9 +128,11 @@ define([
             }
         },
 
-        setBodyDomId: function(id) {
+        setBodyAttributes: function(id) {
             var body = query("body")[0];
             domAttr.set(body, "id", id);
+            var bgImage = config.app.image ? "url("+config.app.image+");" : config.app.background;
+            domAttr.set(body, "style", "background-image: "+bgImage);
         },
 
         createNotificationNode: function() {

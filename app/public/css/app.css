@@ -66,7 +66,7 @@ body {
 #page-searchresult,
 #page-admin {
   font-family: "Roboto-Regular";
-  background-image: url('https://maxdudler.de/files/md_hagenholz_121_web_2.jpg');
+  background-image: none;
   background-size: cover;
   padding-top: 111px;
   background-position: bottom center;

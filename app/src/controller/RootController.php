@@ -74,6 +74,7 @@ class RootController extends RootControllerBase {
     $configuration = $this->getConfiguration();
     $appTitle = $configuration->getValue('title', 'application');
     $appColor = $configuration->getValue('color', 'application');
+    $appImageAbsPath = $configuration->hasValue('image', 'application') ? $configuration->getFileValue('image', 'application') : '';
     $rootTypes = $configuration->getValue('rootTypes', 'application');
     $uiLanguage = $configuration->getValue('language', 'message');
     $defaultLanguage = $configuration->getValue('defaultLanguage', 'localization');
@@ -119,6 +120,7 @@ class RootController extends RootControllerBase {
     $geopattern->setBaseColor('#2F2F2F');
     $geopattern->setColor($appColor);
     $geopattern->setGenerator($generators[array_rand($generators)]);
+    $appImageRelScript = $appImageAbsPath ? URIUtil::makeRelative($appImageAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/') : '';
 
     // load version info
     $version = 'dev';
@@ -133,6 +135,7 @@ class RootController extends RootControllerBase {
       'title' => $appTitle,
       'color' => $appColor,
       'background' => $geopattern->toDataURL(),
+      'image' => $appImageRelScript ? URIUtil::makeAbsolute($appImageRelScript, $baseHref) : '',
       'wcmfBaseHref' => $wcmfBaseHref,
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
