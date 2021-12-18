@@ -131,8 +131,7 @@ define([
         setBodyAttributes: function(id) {
             var body = query("body")[0];
             domAttr.set(body, "id", id);
-            var bgImage = config.app.image ? "url("+config.app.image+");" : config.app.background;
-            domAttr.set(body, "style", "background-image: "+bgImage);
+            domAttr.set(body, "style", "background-image: "+config.app.background);
         },
 
         createNotificationNode: function() {

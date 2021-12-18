@@ -74,7 +74,8 @@ class RootController extends RootControllerBase {
     $configuration = $this->getConfiguration();
     $appTitle = $configuration->getValue('title', 'application');
     $appColor = $configuration->getValue('color', 'application');
-    $appImageAbsPath = $configuration->hasValue('image', 'application') ? $configuration->getFileValue('image', 'application') : '';
+    $appImageAbsPath = $configuration->hasValue('image', 'application') && !empty($configuration->getValue('image', 'application')) ?
+        $configuration->getFileValue('image', 'application') : '';
     $rootTypes = $configuration->getValue('rootTypes', 'application');
     $uiLanguage = $configuration->getValue('language', 'message');
     $defaultLanguage = $configuration->getValue('defaultLanguage', 'localization');
@@ -114,13 +115,19 @@ class RootController extends RootControllerBase {
     $mediaPathRelBase = URIUtil::makeRelative($mediaAbsPath, WCMF_BASE);
 
     // create background image
-    $geopattern = new \RedeyeVentures\GeoPattern\GeoPattern();
-    $generators = ['hexagons', 'chevrons', 'overlapping_circles'];
-    $geopattern->setString('1234567890123456789012345678901234567890');
-    $geopattern->setBaseColor('#2F2F2F');
-    $geopattern->setColor($appColor);
-    $geopattern->setGenerator($generators[array_rand($generators)]);
-    $appImageRelScript = $appImageAbsPath ? URIUtil::makeRelative($appImageAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/') : '';
+    $backgound = $appImageAbsPath ? 'url('.URIUtil::makeAbsolute(
+        URIUtil::makeRelative($appImageAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/'), $baseHref
+    ).')' : '';
+    if (!$backgound) {
+      // fallback to generated image, if no image is configured
+      $geopattern = new \RedeyeVentures\GeoPattern\GeoPattern();
+      $generators = ['hexagons', 'chevrons', 'overlapping_circles'];
+      $geopattern->setString('1234567890123456789012345678901234567890');
+      $geopattern->setBaseColor('#2F2F2F');
+      $geopattern->setColor($appColor);
+      $geopattern->setGenerator($generators[array_rand($generators)]);
+      $backgound = $geopattern->toDataURL();
+    }
 
     // load version info
     $version = 'dev';
@@ -134,8 +141,7 @@ class RootController extends RootControllerBase {
     $clientConfig = [
       'title' => $appTitle,
       'color' => $appColor,
-      'background' => $geopattern->toDataURL(),
-      'image' => $appImageRelScript ? URIUtil::makeAbsolute($appImageRelScript, $baseHref) : '',
+      'background' => $backgound,
       'wcmfBaseHref' => $wcmfBaseHref,
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,
