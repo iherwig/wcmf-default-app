@@ -317,7 +317,7 @@ function(
                             this._save(e, true);
                         }
                         return false;
-                    };
+                    }
                 })),
                 on(dom.byId('wrap'), 'scroll', lang.hitch(this, function(e) {
                     // store scroll position
@@ -376,11 +376,11 @@ function(
          * @param string section
          * @param domNode contentNode
          */
-        createSection(section, contentNode) {
+        createSection: function(section, contentNode) {
             var sectionPane = new TitlePane({
                 title: Dict.translate(section),
                 content: contentNode,
-                class: 'attribute_section section_'+section.toLowerCase(),
+                'class': 'attribute_section section_'+section.toLowerCase(),
                 open: this.getState('section-'+section)
             });
             this.own(sectionPane.watch('open', lang.hitch(this, lang.partial(function(sectionPane, name, oldValue, value) {
@@ -427,7 +427,7 @@ function(
          * @returns Associative array with the section names as keys and
          * an associative array of group names with an array of the group's attributes as value
          */
-         getAttributeSections: function(attributes) {
+        getAttributeSections: function(attributes) {
             var attributes = this.getAttributes();
             var sections = {};
             for (var i=0, c=attributes.length; i<c; i++) {
@@ -552,8 +552,10 @@ function(
             var targetWidget = this.getAttributeWidget(target);
             if (inside) {
                 // move into another widget container
-                Array.from(sourceWidget.domNode.parentNode.childNodes).forEach(child => targetWidget.domNode.parentNode.appendChild(child));
-                dojo.addClass(targetWidget.domNode.parentNode, 'groupContainer groupContainer--' + position);
+                Array.from(sourceWidget.domNode.parentNode.childNodes).forEach(function(child) {
+                  targetWidget.domNode.parentNode.appendChild(child)
+                });
+                domClass.add(targetWidget.domNode.parentNode, 'groupContainer groupContainer--' + position);
             }
             else {
                 // move behind another widget container
@@ -572,31 +574,42 @@ function(
         _cleanUpAfterWidgetLayout: function(node) {
             // select all tds (except empty remainers of moving operation)
             var tds = [];
-            Array.from(node.childNodes).forEach(row => Array.from(row.childNodes).filter(child => dojo.hasClass(child, "emptyCell") || child.childNodes.length > 0).forEach(child => tds.push(child)));
+            Array.from(node.childNodes).forEach(function(row) {
+                var nonEmpty = Array.from(row.childNodes).filter(function(child) {
+                    return domClass.contains(child, "emptyCell") || child.childNodes.length > 0;
+                });
+                nonEmpty.forEach(function(child) {
+                    tds.push(child);
+                });
+            });
             // empty group node
-            dojo.empty(node);
+            domConstruct.empty(node);
             // redistribute tds on table rows
             var cols = 2;
-            for (var i = 0, j = tds.length; i < j; i += cols) {
-                var items = tds.slice(i, i + cols);
+            for (var i=0, j=tds.length; i<j; i+=cols) {
+                var items = tds.slice(i, i+cols);
                 var tr = domConstruct.create('tr', null, node);
-                Array.from(items).forEach(item => tr.appendChild(item));
+                Array.from(items).forEach(function(item) {
+                    tr.appendChild(item)
+                });
             }
         },
 
         _wrapItems: function() {
             // sourround label and input with div to allow column layout and individual styling
             var numItemsToWrap = 2;
-            Array.from(query('.tableContainer-labelCell')).forEach(container => {
+            Array.from(query('.tableContainer-labelCell')).forEach(function(container) {
                 var children = Array.from(container.childNodes);
-                for (var i = 0, j = children.length; i < j; i += numItemsToWrap) {
+                for (var i=0, j=children.length; i<j; i+=numItemsToWrap) {
                     var items = children.slice(i, i + numItemsToWrap);
                     var div = domConstruct.create('div', null, container);
-                    dojo.addClass(div, domAttr.get(items[1], 'class').match(/^headline$|field-[a-zA-Z-_0-9]*/g));
-                    Array.from(items).forEach(item => div.appendChild(item));
+                    domClass.add(div, domAttr.get(items[1], 'class').match(/^headline$|field-[a-zA-Z-_0-9]/g));
+                    Array.from(items).forEach(function(item) {
+                        div.appendChild(item)
+                    });
                 }
-                if (dojo.hasClass(container, 'groupContainer')) {
-                  dojo.addClass(container, 'groupContainer--cols-' + container.childNodes.length);
+                if (domClass.contains(container, 'groupContainer')) {
+                  domClass.add(container, 'groupContainer--cols-' + container.childNodes.length);
                 }
             });
         },

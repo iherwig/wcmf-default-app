@@ -144,7 +144,8 @@ var profile = {
     layerOptimize: "closure",
     optimize: "closure",
     optimizeOptions: {
-        languageIn: 'ECMASCRIPT5'
+        languageIn: 'ECMASCRIPT_2017',
+        languageOut: 'ECMASCRIPT3'
     },
     cssOptimize: "comments",
     maxOptimizationProcesses: 1,
