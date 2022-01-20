@@ -38,11 +38,24 @@ body {
   background-color: #f5f5f5;
 }
 
+#page-browsemedia {
+  background-image: none !important;
+}
+
 [role="button"] {
   outline: none !important;
 }
 
+.dijitOffScreen {
+  top: 0 !important;
+  left: -100vw !important;
+}
+
 #wrap  {
+  padding: 40px 0;
+}
+
+#page-browsemedia #wrap {
   padding: 60px 0;
 }
 
@@ -83,13 +96,6 @@ body {
   height: calc(100vh - 211px);
   margin: 0 auto;
   background: #f5f5f5;
-  overflow-y: auto;
-}
-
-#page-entity #wrap,
-#page-entitylist #wrap,
-#page-searchresult #wrap {
-  overflow-y: scroll;
 }
 
 #page-login #wrap {
@@ -148,6 +154,10 @@ body {
 
 #page-home .jumbotron p {
   margin: 30px 0;
+}
+
+#page-home .jumbotron .dgrid {
+  max-height: calc(100vh - 676px);
 }
 
 .media-browse-page, .link-browse-page {
@@ -228,9 +238,6 @@ legend {
 
 .dojoxCheckedMultiSelectCheckBoxInput {
   opacity: 1.0;
-}
-
-.entity-page .group_default {
 }
 
 /* dgrid */
@@ -404,8 +411,13 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 /* containers */
+.entity-page {
+  height: 100%;
+}
+
 .container {
   width: calc(100% - 20px);
+  height: 100%;
   margin-right: auto;
   margin-left: auto;
   *zoom: 1;
@@ -420,6 +432,17 @@ th.field-actions-6, td.field-actions-6 {
 
 .container:after {
   clear: both;
+}
+
+.container > .dijitTabContainerNoLayout {
+  height: 100%;
+  overflow: hidden;
+}
+
+.container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper {
+  height: calc(100% - 40px);
+  padding-right: 10px;
+  overflow-y: scroll;
 }
 
 .relation-container {
@@ -557,6 +580,12 @@ fieldset i.fa {
 /* elfinder */
 .elfinder-cwd-view-icons .elfinder-cwd-file .elfinder-cwd-filename.ui-state-hover input {
   color: #000 !important;
+}
+
+@media (max-width: 1024px) {
+  .tableContainer-labelCell:last-child > .headline {
+    margin-top: 0;
+  }
 }
 
 /* collapse navbar */
