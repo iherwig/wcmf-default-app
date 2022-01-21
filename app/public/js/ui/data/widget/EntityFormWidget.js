@@ -550,7 +550,7 @@ function(
           var targetWidget = this.getAttributeWidget(target);
           if (inside) {
               // move into another widget container
-              var childNodes = sourceWidget.domNode.parentNode.childNodes;
+              var childNodes = Array.from(sourceWidget.domNode.parentNode.childNodes);
               for (var i=0, ci=childNodes.length; i<ci; i++) {
                 targetWidget.domNode.parentNode.appendChild(childNodes[i]);
               }
@@ -573,9 +573,9 @@ function(
       _cleanUpAfterWidgetLayout: function(node) {
           // select all tds (except empty remainers of moving operation)
           var tds = [];
-          var childNodes = node.childNodes;
+          var childNodes = Array.from(node.childNodes);
           for (var i=0, ci=childNodes.length; i<ci; i++) {
-              var grandChildNodes = childNodes[i].childNodes;
+              var grandChildNodes = Array.from(childNodes[i].childNodes);
               for (var j=0, cj=grandChildNodes.length; j<cj; j++) {
                   var grandChildNode = grandChildNodes[j];
                   if (domClass.contains(grandChildNode, "emptyCell") || grandChildNode.childNodes.length > 0) {
