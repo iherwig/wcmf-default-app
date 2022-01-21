@@ -20,7 +20,6 @@ define( [
   "dijit/Menu",
   "dijit/MenuItem",
   "dijit/TitlePane",
-  "dijit/Fieldset",
   "../../_include/FormLayout",
   "../../_include/_NotificationMixin",
   "../../_include/widget/Button",
@@ -62,7 +61,6 @@ function(
   Menu,
   MenuItem,
   TitlePane,
-  Fieldset,
   FormLayout,
   _Notification,
   Button,
@@ -552,7 +550,10 @@ function(
           var targetWidget = this.getAttributeWidget(target);
           if (inside) {
               // move into another widget container
-              Array.from(sourceWidget.domNode.parentNode.childNodes).forEach(child => targetWidget.domNode.parentNode.appendChild(child));
+              var childNodes = sourceWidget.domNode.parentNode.childNodes;
+              for (var i=0, ci=childNodes.length; i<ci; i++) {
+                targetWidget.domNode.parentNode.appendChild(childNodes[i]);
+              }
               domClass.add(targetWidget.domNode.parentNode, 'groupContainer groupContainer--' + position);
           }
           else {
@@ -572,36 +573,48 @@ function(
       _cleanUpAfterWidgetLayout: function(node) {
           // select all tds (except empty remainers of moving operation)
           var tds = [];
-          Array.from(node.childNodes)
-              .forEach(row => Array.from(row.childNodes)
-              .filter(child => domClass.contains(child, "emptyCell") || child.childNodes.length > 0)
-              .forEach(child => tds.push(child)));
+          var childNodes = node.childNodes;
+          for (var i=0, ci=childNodes.length; i<ci; i++) {
+              var grandChildNodes = childNodes[i].childNodes;
+              for (var j=0, cj=grandChildNodes.length; j<cj; j++) {
+                  var grandChildNode = grandChildNodes[j];
+                  if (domClass.contains(grandChildNode, "emptyCell") || grandChildNode.childNodes.length > 0) {
+                      tds.push(grandChildNode);
+                  }
+              }
+          }
           // empty group node
           domConstruct.empty(node);
           // redistribute tds on table rows
           var cols = 2;
-          for (var i=0, j=tds.length; i<j; i+=cols) {
+          for (var i=0, ci=tds.length; i<ci; i+=cols) {
               var items = tds.slice(i, i+cols);
               var tr = domConstruct.create('tr', null, node);
-              Array.from(items).forEach(item => tr.appendChild(item));
+              for (var j=0, cj=items.length; j<cj; j++) {
+                  tr.appendChild(items[j]);
+              }
           }
       },
 
       _wrapItems: function() {
           // sourround label and input with div to allow column layout and individual styling
           var numItemsToWrap = 2;
-          Array.from(query('.tableContainer-labelCell')).forEach(container => {
+          var containers = query('.tableContainer-labelCell');
+          for (var i=0, ci=containers.length; i<ci; i++) {
+              var container = containers[i];
               var children = Array.from(container.childNodes);
-              for (var i=0, j=children.length; i<j; i+=numItemsToWrap) {
-                  var items = children.slice(i, i + numItemsToWrap);
+              for (var j=0, jc=children.length; j<jc; j+=numItemsToWrap) {
+                  var items = children.slice(j, j + numItemsToWrap);
                   var div = domConstruct.create('div', null, container);
                   domClass.add(div, domAttr.get(items[1], 'class').match(/^headline$|field-[a-zA-Z-_0-9]*/g));
-                  Array.from(items).forEach(item => div.appendChild(item));
+                  for (var k=0, kc=items.length; k<kc; k++) {
+                    div.appendChild(items[k]);
+                  }
               }
               if (domClass.contains(container, 'groupContainer')) {
                 domClass.add(container, 'groupContainer--cols-' + container.childNodes.length);
               }
-          });
+          }
       },
 
       setLockState: function(isLocked, isLockOwner) {
