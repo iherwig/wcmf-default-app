@@ -106,13 +106,13 @@ function(
             this.setText();
         },
 
-        startup: function(){
+        startup: function() {
             this.inherited(arguments);
             this.own(
                 on(this.dropDownMenu, "open", lang.hitch(this, function() {
                     this.positionDropdown();
                 })),
-                on(window, 'scroll', lang.hitch(this, function(evt) {
+                on(dojo.query('.dijitTabContainerTop-container')[0], 'scroll', lang.hitch(this, function(evt) {
                     this.close();
                 }))
             );
