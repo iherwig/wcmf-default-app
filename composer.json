@@ -217,5 +217,12 @@
       "installer-paths": {
         "app/public/vendor/{$name}/": ["type:component"]
       }
+    },
+    "config": {
+        "allow-plugins": {
+            "wcmf/asset-installer": true,
+            "composer/installers": true,
+            "oomphinc/composer-installers-extender": true
+        }
     }
 }
