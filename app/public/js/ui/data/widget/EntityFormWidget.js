@@ -492,7 +492,7 @@ function(
                   label: config.app.languages[langKey],
                   langKey: langKey,
                   onClick: function() {
-                      var route = form.page.getRoute(this.baseRoute);
+                      var route = form.page.getRoute(form.baseRoute);
                       var queryParams = this.langKey !== config.app.defaultLanguage ? {lang: this.langKey} : undefined;
                       var url = route.assemble({
                           type: Model.getSimpleTypeName(form.type),
