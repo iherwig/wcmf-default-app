@@ -108,6 +108,7 @@ function(
       isTranslation: false,
       original: null, // untranslated entity
 
+      sectionWidgets: [],
       attributeWidgets: [],
       relationWidgets: [],
       layoutWidgets: [],
@@ -172,6 +173,7 @@ function(
               this.permissions = results[1].result ? results[1].result : {};
 
               // add attribute widgets
+              this.sectionWidgets = [];
               this.attributeWidgets = [];
               var attributeSections = this.getAttributeSections();
               for (var section in attributeSections) {
@@ -240,25 +242,7 @@ function(
               }
 
               // add relation widgets
-              if (!this.isNew) {
-                  this.relationWidgets = [];
-                  var relations = this.getRelations();
-                  for (var i=0, count=relations.length; i<count; i++) {
-                      var relation = relations[i];
-                      // only show relations with read permission
-                      if (this.permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true &&
-                          this.permissions[cleanOid+'.'+relation.name+'??read'] === true) {
-                          var relationWidget = new EntityRelationWidget({
-                              route: this.baseRoute,
-                              entity: this.entity,
-                              relation: relation,
-                              page: this.page
-                          });
-                          this.relationWidgets.push(relationWidget);
-                          this.relationsNode.appendChild(relationWidget.domNode);
-                      }
-                  }
-              }
+              this.addRelationWidgets(cleanOid);
 
               // set button states
               this.setBtnState("save", false); // no modifications yet
@@ -376,6 +360,7 @@ function(
        */
       createSection: function(section, contentNode) {
           var sectionPane = new TitlePane({
+              name: section.toLowerCase(),
               title: Dict.translate(section),
               content: contentNode,
               'class': 'attribute_section section_'+section.toLowerCase(),
@@ -385,6 +370,7 @@ function(
               topic.publish('entity-form-section-toggle', sectionPane);
               this.setState('section-'+section, value);
           }, sectionPane))));
+          this.sectionWidgets.push(sectionPane);
           return sectionPane;
       },
 
@@ -529,6 +515,33 @@ function(
               var widget = this.attributeWidgets[i];
               widget.set("readonly", !isEnabled);
           }
+      },
+
+      addRelationWidgets: function(cleanOid) {
+          if (!this.isNew) {
+              this.relationWidgets = [];
+              var relations = this.getRelations();
+              for (var i=0, count=relations.length; i<count; i++) {
+                  var relation = relations[i];
+                  // only show relations with read permission
+                  if (this.permissions[Model.getFullyQualifiedTypeName(relation.type)+'??read'] === true &&
+                      this.permissions[cleanOid+'.'+relation.name+'??read'] === true) {
+                      var relationWidget = this.getRelationWidget(relation);
+                      this.relationWidgets.push(relationWidget);
+                      this.relationsNode.appendChild(relationWidget.domNode);
+                  }
+              }
+          }
+      },
+
+      getRelationWidget: function(relation) {
+          var relationWidget = new EntityRelationWidget({
+              route: this.baseRoute,
+              entity: this.entity,
+              relation: relation,
+              page: this.page
+          });
+          return relationWidget;
       },
 
       _createHeadline: function(source, fullwidth, headlineText) {

@@ -95,7 +95,9 @@ define([
         optionalFeatures: {
             'Selector': Selector,
             'DnD': DnD,
-            'Tree': Tree
+            'Tree': Tree,
+            // not a dgrid feature
+            'NavigateOnRowClick': 'NavigateOnRowClick'
         },
 
         authoHeight: false,
@@ -125,31 +127,56 @@ define([
                 if (this.height !== null) {
                   this.setHeight(this.height);
                 }
+                var rowClickCount = 0;
                 this.own(
                     on(this.grid, "click", lang.hitch(this, function(e) {
                         // close summary tooltip
                         if (this.summaryDialog) {
                             popup.close(this.summaryDialog);
                         }
-                        // process grid clicks
+                        // process action clicks
                         var links = query(e.target).closest("a");
                         if (links.length > 0) {
-                          var actionName = domAttr.get(links[0], "data-action");
-                          var action = this.actionsByName[actionName];
-                          if (action) {
-                              // cell action
-                              e.preventDefault();
-                              // execute the action
-                              var columnNode = e.target.parentNode;
-                              var row = this.grid.row(columnNode);
-                              action.entity = row.data;
-                              action.execute();
-                              // refresh the action cell, if the grid is still present
-                              if (this.grid.collection) {
-                                var cell = this.grid.cell(columnNode);
-                                this.grid.refreshCell(cell);
-                              }
-                          }
+                            var actionName = domAttr.get(links[0], "data-action");
+                            var action = this.actionsByName[actionName];
+                            if (action) {
+                                // cell action
+                                e.preventDefault();
+                                // execute the action
+                                var columnNode = e.target.parentNode;
+                                var row = this.grid.row(columnNode);
+                                action.entity = row.data;
+                                action.execute();
+                                // refresh the action cell, if the grid is still present
+                                if (this.grid.collection) {
+                                  var cell = this.grid.cell(columnNode);
+                                  this.grid.refreshCell(cell);
+                                }
+                            }
+                        }
+                        // process other row clicks
+                        rowClickCount++;
+                        if (rowClickCount == 1) {
+                            setTimeout(lang.hitch(this, function() {
+                                if (rowClickCount == 1) {
+                                    // single click
+                                    var cell = this.grid.cell(e);
+                                    if (this.enabledFeatures.indexOf('NavigateOnRowClick') !== -1) {
+                                        // navigate to object (edit action)
+                                        if (cell && cell.element && cell.element.className.indexOf('field-actions') === -1) {
+                                            // if cell doesn't contain action buttons, go to object's url
+                                            var action = this.actionsByName['edit'];
+                                            if (action) {
+                                                action.execute();
+                                            }
+                                        }
+                                    }
+                                }
+                                else {
+                                    // default action: edit cell
+                                }
+                                rowClickCount = 0;
+                            }), 300);
                         }
                     })),
                     on(this.grid, "mouseover", lang.hitch(this, function(e) {
@@ -210,17 +237,24 @@ define([
             var simpleType = Model.getSimpleTypeName(this.type);
 
             // select features
+            // NOTE features array must only contain dgrid extensions
             var features = [];
             var featureNames = [];
             for (var idx in this.defaultFeatures) {
                 featureNames.push(idx);
-                features.push(this.defaultFeatures[idx]);
+                var feature = this.defaultFeatures[idx];
+                if (typeof feature !== 'string') {
+                    features.push(this.defaultFeatures[idx]);
+                }
             }
             for (var idx in this.enabledFeatures) {
                 var featureName = this.enabledFeatures[idx];
                 if (this.optionalFeatures[featureName]) {
                     featureNames.push(featureName);
-                    features.push(this.optionalFeatures[featureName]);
+                    var feature = this.optionalFeatures[featureName];
+                    if (typeof feature !== 'string') {
+                        features.push(this.optionalFeatures[featureName]);
+                    }
                 }
             }
 

@@ -302,7 +302,7 @@ th.field-actions-2, td.field-actions-2 {
 }
 
 th.field-actions-3, td.field-actions-3 {
-  width: 72px;
+  width: 80px;
 }
 
 th.field-actions-4, td.field-actions-4 {
@@ -339,6 +339,7 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 .dbootstrap .dijitCheckBox, .dbootstrap .dijitRadio {
+  margin-top: -2px;
   color: #999;
   padding: 0;
   font-size: 11px;

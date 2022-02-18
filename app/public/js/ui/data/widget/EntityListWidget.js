@@ -116,15 +116,7 @@ function(
                 this.permissions = results[0].result ? results[0].result : {};
 
                 // setup grid
-                this.gridWidget = new GridWidget({
-                    type: this.type,
-                    store: this.getGridStore(),
-                    columns: this.getGridColumns(),
-                    actions: this.getGridActions(),
-                    initialFilter: this.getGridFilter(),
-                    enabledFeatures: this.getGridFeatures(),
-                    rowEnhancer: this.getRowEnhancer()
-                }, this.gridNode);
+                this.gridWidget = this.getGridWidget();
                 this.gridWidget.startup();
                 domClass.add(this.gridWidget.gridNode, "type-"+Model.getSimpleTypeName(this.type).toLowerCase());
 
@@ -166,7 +158,6 @@ function(
         },
 
         onResize: function() {
-
             // calculate height of dynamic elements
             var containerHeight = 0;
             var tabNavHeight = 0;
@@ -220,6 +211,19 @@ function(
                   gridWidget.setHeight(h);
               }
             }, 200);
+        },
+
+        getGridWidget: function() {
+            var gridWidget = new GridWidget({
+                type: this.type,
+                store: this.getGridStore(),
+                columns: this.getGridColumns(),
+                actions: this.getGridActions(),
+                initialFilter: this.getGridFilter(),
+                enabledFeatures: this.getGridFeatures(),
+                rowEnhancer: this.getRowEnhancer()
+            }, this.gridNode);
+            return gridWidget;
         },
 
         getGridFeatures: function() {

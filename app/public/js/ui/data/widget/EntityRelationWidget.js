@@ -106,21 +106,8 @@ function(
             all(deferredList).then(lang.hitch(this, function(results) {
                 this.permissions = results[0].result ? results[0].result : {};
 
-                var enabledFeatures = [];
-                if (this.relation.isSortable) {
-                    enabledFeatures.push('DnD');
-                }
-
-                this.gridWidget = new GridWidget({
-                    type: this.relation.type,
-                    store: this.getGridStore(),
-                    columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
-                        return attribute.name;
-                    }),
-                    actions: this.getGridActions(),
-                    enabledFeatures: enabledFeatures,
-                    autoHeight: true
-                }, this.gridNode);
+                // setup grid
+                this.gridWidget = this.getGridWidget();
                 this.gridWidget.startup();
                 domClass.add(this.gridWidget.gridNode, "multiplicity-"+this.relation.maxMultiplicity);
                 domClass.add(this.gridWidget.gridNode, "relation-"+this.relation.thisEndName+"-"+this.relation.name);
@@ -153,6 +140,28 @@ function(
                     }
                 }))
             );
+        },
+
+        getGridWidget: function() {
+            var gridWidget = new GridWidget({
+                type: this.relation.type,
+                store: this.getGridStore(),
+                columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
+                    return attribute.name;
+                }),
+                actions: this.getGridActions(),
+                enabledFeatures: this.getGridFeatures(),
+                autoHeight: true
+            }, this.gridNode);
+            return gridWidget;
+        },
+
+        getGridFeatures: function() {
+            var enabledFeatures = [];
+            if (this.relation.isSortable) {
+                enabledFeatures.push('DnD');
+            }
+            return enabledFeatures;
         },
 
         getGridActions: function() {
