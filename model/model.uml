@@ -452,7 +452,7 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_861ECaprEeaGbp23C_zkpg" value="app.src.model.wcmf.Lock"/>
                 </ownedAttribute>
               </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_861ECqprEeaGbp23C_zkpg" name="Validators">
+              <packagedElement xmi:type="uml:Class" xmi:id="_861ECqprEeaGbp23C_zkpg" name="list">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_M2HhkLykEeaJqdbh3BIxsQ" name="date" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_M2HhkbykEeaJqdbh3BIxsQ" value="$dateValidator"/>
                 </ownedAttribute>
@@ -474,6 +474,9 @@
                 </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_HDrXgNzSEea-U5dAR-tZ-g" name="unique" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_HDrXgdzSEea-U5dAR-tZ-g" value="$uniqueValidator"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_pd-R8KJiEeyNLf5rK5lMTA" name="list" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_pd-R8aJiEeyNLf5rK5lMTA" value="$listValidator"/>
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_KwbK8LylEeaJqdbh3BIxsQ" name="DateValidator">
@@ -516,6 +519,13 @@
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_B6poMtzSEea-U5dAR-tZ-g" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_B6poM9zSEea-U5dAR-tZ-g" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_B6poNNzSEea-U5dAR-tZ-g" value="wcmf\lib\validation\impl\Unique"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Class" xmi:id="_3dJikKJiEeyNLf5rK5lMTA" name="ListValidator">
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_3dJikaJiEeyNLf5rK5lMTA" name="__class" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3dJikqJiEeyNLf5rK5lMTA" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3dJik6JiEeyNLf5rK5lMTA" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_3dJilKJiEeyNLf5rK5lMTA" value="wcmf\lib\validation\impl\ValueList"/>
                 </ownedAttribute>
               </packagedElement>
             </packagedElement>
@@ -2554,4 +2564,5 @@
   <Chronos:ChiSystem xmi:id="_X_hCcLylEeaJqdbh3BIxsQ" plattform="wcmf" config="persistence.ini" base_Class="_X_gbYLylEeaJqdbh3BIxsQ"/>
   <Chronos:ChiSystem xmi:id="_87r_gKprEeaGbp23C_zkpg" plattform="wcmf" base_Class="_86xZzqprEeaGbp23C_zkpg"/>
   <Chronos:ChiController xmi:id="_DFA68AvLEeaBb42pasDyug" base_Class="_DE_s0AvLEeaBb42pasDyug"/>
+  <Chronos:ChiSystem xmi:id="_3dKJoKJiEeyNLf5rK5lMTA" plattform="wcmf" config="persistence.ini" base_Class="_3dJikKJiEeyNLf5rK5lMTA"/>
 </xmi:XMI>
