@@ -452,7 +452,7 @@
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_861ECaprEeaGbp23C_zkpg" value="app.src.model.wcmf.Lock"/>
                 </ownedAttribute>
               </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_861ECqprEeaGbp23C_zkpg" name="list">
+              <packagedElement xmi:type="uml:Class" xmi:id="_861ECqprEeaGbp23C_zkpg" name="Validators">
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_M2HhkLykEeaJqdbh3BIxsQ" name="date" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_M2HhkbykEeaJqdbh3BIxsQ" value="$dateValidator"/>
                 </ownedAttribute>
