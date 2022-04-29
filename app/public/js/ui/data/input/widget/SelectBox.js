@@ -8,6 +8,7 @@ define( [
     "dojo/dom-construct",
     "dojo/dom-geometry",
     "dojo/dom-style",
+    "dojo/dom-attr",
     "dojo/html",
     "dojo/topic",
     "dijit/form/FilteringSelect",
@@ -28,6 +29,7 @@ function(
     domConstruct,
     domGeom,
     domStyle,
+    domAttr,
     html,
     topic,
     FilteringSelect,
@@ -51,6 +53,9 @@ function(
         queryExpr: '*${0}*',
         autoComplete: false,
         labelType: "html",
+
+        selectEntityType: null,
+        entityLink: null,
 
         listItem: null, // the selected item from the ListStore
 
@@ -86,6 +91,11 @@ function(
                 }
                 this.showSpinner();
             });
+
+            // get entity type, if this listbox is used to select entities
+            var options = ControlFactory.getOptions(this.inputType);
+            var isSelectingEntities = options && options.list && options.list.type == 'node';
+            this.selectEntityType = isSelectingEntities && options.list.types && options.list.types.length == 1 ? options.list.types[0] : null;
         },
 
         postCreate: function() {
@@ -102,6 +112,14 @@ function(
                     this.hideSpinner();
                 }))
             );
+        },
+
+        startup: function() {
+            this.inherited(arguments);
+
+            setTimeout(lang.hitch(this, function() {
+                this.setEntityLink();
+            }), 100);
         },
 
         _getValueAttr: function() {
@@ -170,9 +188,34 @@ function(
         },
 
         updateDisplay: function() {
+            this.setEntityLink();
             if (this.getDisplayType(this.entity, this.name) != 'text') {
                 domStyle.set(this.textbox, { display: 'none' });
                 html.set(this.displayNode, this.listItem.displayText);
+            }
+        },
+
+        setEntityLink: function() {
+            // set entity link
+            if (this.displayedValue) {
+                if (this.selectEntityType) {
+                    var labelNodes = query("label[for="+this.get("id")+"]");
+                    if (labelNodes.length > 0 && !this.entityLink) {
+                        var html = '<a href="#"><i class="fa fa-external-link"></i></a>';
+                        this.entityLink = domConstruct.place(html, labelNodes[0], 'last');
+                    }
+                    if (this.entityLink) {
+                        // calculate entity url
+                        var route = this.page.router.getRoute('entity');
+                        var pathParams = { type:this.selectEntityType, id:this.item.value };
+                        var url = route.assemble(pathParams);
+                        domAttr.set(this.entityLink, 'href', url);
+                        domStyle.set(this.entityLink, { paddingLeft: '5px', display: 'inline-block' });
+                    }
+                }
+            }
+            else if (this.entityLink) {
+                domStyle.set(this.entityLink, { display: 'none' });
             }
         }
     });

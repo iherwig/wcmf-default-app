@@ -216,7 +216,8 @@ function(
                                   disabled: disabled,
                                   helpText: Dict.translate(attribute.description),
                                   inputType: attribute.inputType,
-                                  entity: this.entity
+                                  entity: this.entity,
+                                  page: this.page
                               });
                               var canCreate = this.permissions[cleanOid+'??create'] === true;
                               var canUpdate = this.permissions[cleanOid+'??update'] === true &&
