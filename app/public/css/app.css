@@ -59,6 +59,19 @@ body {
   padding: 60px 0;
 }
 
+#logo {
+  width: 320px;
+  height: 160px;
+  margin-top: -10px;
+  background-size: contain;
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+#page-login #logo {
+  margin: 50px 0 0 50px;
+}
+
 #footer {
   position: fixed;
   bottom: 0px;
@@ -85,7 +98,10 @@ body {
   background-position: bottom center;
 }
 
-#page-login #wrap,
+#page-login {
+  padding-top: 0;
+}
+
 #page-home #wrap,
 #page-entity #wrap,
 #page-entitylist #wrap,
@@ -99,7 +115,12 @@ body {
 }
 
 #page-login #wrap {
+  width: 100%;
+  height: 100%;
   background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #notification {
@@ -117,17 +138,6 @@ body {
   width: 100%;
 }
 
-.login-page .jumbotron {
-  color: #FFFFFF;
-  background: none !important;
-  padding: 20px;
-  text-align: center;
-}
-
-.login-page {
-  margin-top: -60px;
-}
-
 .login-page #notification {
   position: relative;
   top: 0;
@@ -139,17 +149,36 @@ body {
 }
 
 .form-login {
-  max-width: 480px;
-  padding: 9px 29px 29px;
-  margin: 20px auto 20px;
+  max-width: 495px;
+  padding: 24px 30px;
   background-color: #fff;
-  border: 1px solid #d5d5d5;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.form-login h3 {
+  margin: 0 0 20px;
+  text-transform: uppercase;
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+
+.dbootstrap .dijitInputContainer {
+  padding: 8px 10px;
+}
+
+.form-login .dijitTextBox {
+  margin-top: 12px;
+}
+
+.form-login .btn-primary,
+.form-login .primary .dijitButtonNode,
+.form-login .btn-primary .dijitButtonNode {
+  margin: 3px 0 0;
+  font-size: 16px;
+  height: 32px;
+  color: #000;
+  background: none !important;
+  border: none;
+  box-shadow: none;
 }
 
 #page-home .jumbotron p {
@@ -190,7 +219,47 @@ legend {
 }
 
 .navbar-fixed-top {
-  z-index: 890;
+  z-index: 1001;
+}
+
+.navbar-default .navbar-collapse .form-group {
+  position: relative;
+}
+
+.navbar-default .navbar-collapse .form-group .btn {
+  position: absolute;
+  right: 0;
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: none !important;
+  outline: none !important;
+}
+
+.navbar-default .navbar-collapse .form-group .btn .search-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #777;
+  border-radius: 100%;
+  margin-left: -4px;
+  margin-top: -4px
+}
+
+.navbar-default .navbar-collapse .form-group .btn .search-icon:after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 7px;
+  background: #777;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px
 }
 
 /* input */
@@ -205,6 +274,7 @@ legend {
 }
 
 .entity-page .dijitTextBox,
+.entity-page .vscomp-ele,
 .principal-page .dijitTextBox,
 .entity-page .dijitSliderH,
 .entity-page .fileDropTarget {
@@ -245,11 +315,29 @@ legend {
   background-color: #08c;
 }
 
+.dgrid-resize-header-container > div:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dgrid-header,
+.dgrid-header-row,
+.dbootstrap .dijitContentPane,
+.dbootstrap .dgrid .dgrid-header .dgrid-cell {
+  overflow: visible;
+}
+
 .dgrid .header-filter .dijitContentPane {
-  height: 35px;
+  display: flex;
+  align-items: center;
   font-weight: normal;
 }
 
+.dgrid .header-filter .dijitContentPane .dijitInputContainer {
+  padding: 5px 10px;
+}
+
+.dgrid .header-filter .dijitContentPane > div,
 .dgrid .dijitTextBox {
   width: calc(100% - 22px);
   display: inline-block;
@@ -349,6 +437,13 @@ th.field-actions-6, td.field-actions-6 {
 .dijitCheckBox, .dijitRadio, .dijitCheckBoxInput {
   width: 15px;
   height: 15px;
+}
+
+.vscomp-toggle-button {
+  border: 1px solid #ccc;
+  padding: 5px 30px 5px 10px !important;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
 }
 
 /* dnd */
@@ -455,12 +550,24 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 /* entity form */
+.dijitLayoutContainer,
+.dijitContainer {
+  overflow: visible;
+}
+
 .entity-form-valueCell {
   padding: 10px 0;
 }
 
 .entity-form-valueCell div {
   overflow: hidden;
+}
+
+h3[data-dojo-attach-point=headlineNode] {
+  width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .checkBoxLabel {
@@ -578,6 +685,27 @@ fieldset i.fa {
   line-height: 20px;
 }
 
+.entity-link {
+  display: inline-block;
+  padding-left: 5px;
+}
+
+/* style regular selects like virtual selects */
+.dbootstrap .dijitArrowButtonInner::before {
+  transform: rotate(45deg);
+  border: 1px solid transparent;
+  border-bottom-color: #111;
+  border-right-color: #111;
+  content: "";
+  height: 8px;
+  margin-top: -6px;
+  width: 8px;
+}
+
+.dbootstrap .dijitComboBox .dijitButtonNode {
+  border: none;
+}
+
 /* elfinder */
 .elfinder-cwd-view-icons .elfinder-cwd-file .elfinder-cwd-filename.ui-state-hover input {
   color: #000 !important;
@@ -640,6 +768,44 @@ fieldset i.fa {
   }
 }
 
+/* remove background image on smaller screens */
+@media (max-width: 900px) or (max-height: 900px) {
+  #page-home,
+  #page-entity,
+  #page-entitylist,
+  #page-searchresult,
+  #page-admin {
+    padding-top: 50px;
+  }
+
+  .navbar {
+    width: 100vw;
+    max-width: none;
+    margin: 0;
+  }
+
+  #page-home #wrap,
+  #page-entity #wrap,
+  #page-entitylist #wrap,
+  #page-searchresult #wrap,
+  #page-admin #wrap {
+    width: 100vw;
+    height: calc(100vh - 90px);
+    max-width: none;
+  }
+
+  #wrap {
+    padding: 0;
+  }
+
+  #notification {
+    top: auto;
+    bottom: 0;
+    width: 100vw;
+    max-width: none;
+  }
+}
+
 /*
   Responsive table layout for form
   http://css-tricks.com/responsive-data-tables/
@@ -665,7 +831,9 @@ fieldset i.fa {
     position: relative;
   }
 
-  .entity-page .dijitTextBox, .principal-page .dijitTextBox {
+  .entity-page .dijitTextBox,
+  .entity-page .vscomp-ele,
+  .principal-page .dijitTextBox {
     width: 95%;
   }
 

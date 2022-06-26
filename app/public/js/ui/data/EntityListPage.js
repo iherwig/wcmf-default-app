@@ -7,7 +7,7 @@ define([
     "dojo/topic",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
-    "../_include/widget/NavigationWidget",
+    "../../AppLoader!../_include/widget/NavigationWidget",
     "./widget/EntityTabWidget",
     "../../model/meta/Model",
     "../../locale/Dictionary",

@@ -289,6 +289,9 @@ function(
               topic.subscribe("ui/_include/widget/GridWidget/error", lang.hitch(this, function(error) {
                   this.showBackendError(error, this.isModified);
               })),
+              topic.subscribe("entity-form-request-save", lang.hitch(this, function(e) {
+                this._save(e, true);
+              })),
               on(dojo.body(), "keydown", lang.hitch(this, function(e) {
                   if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
                       e.stopPropagation();
@@ -464,7 +467,7 @@ function(
       },
 
       getHeadline: function() {
-        return Dict.translate(Model.getSimpleTypeName(this.type))+" <em>"+this.typeClass.getDisplayValue(this.entity)+"</em>";
+        return this.typeClass.getDisplayValue(this.entity);
       },
 
       buildLanguageMenu: function() {

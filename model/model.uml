@@ -30,6 +30,11 @@
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_86xZjaprEeaGbp23C_zkpg" value="1"/>
                   <defaultValue xmi:type="uml:LiteralString" xmi:id="_86xZjqprEeaGbp23C_zkpg" value="#333333"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:type="uml:Property" xmi:id="_A8tqAPTFEey0xcSy-vxcSg" name="logo" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_A8tqAfTFEey0xcSy-vxcSg" value="1"/>
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_A8tqAvTFEey0xcSy-vxcSg" value="1"/>
+                  <defaultValue xmi:type="uml:LiteralString" xmi:id="_A8tqA_TFEey0xcSy-vxcSg" value=""/>
+                </ownedAttribute>
                 <ownedAttribute xmi:type="uml:Property" xmi:id="_6uNFcGA8EeyP-uiGObJgrQ" name="image" visibility="public" type="_agg3ALQwEeOLlbB2YLI0iw">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6uNFcWA8EeyP-uiGObJgrQ" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6uNFcmA8EeyP-uiGObJgrQ" value="1"/>

@@ -76,6 +76,8 @@ class RootController extends RootControllerBase {
     $appColor = $configuration->getValue('color', 'application');
     $appImageAbsPath = $configuration->hasValue('image', 'application') && !empty($configuration->getValue('image', 'application')) ?
         $configuration->getFileValue('image', 'application') : '';
+    $appLogoAbsPath = $configuration->hasValue('logo', 'application') && !empty($configuration->getValue('logo', 'application')) ?
+        $configuration->getFileValue('logo', 'application') : '';
     $rootTypes = $configuration->getValue('rootTypes', 'application');
     $uiLanguage = $configuration->getValue('language', 'message');
     $defaultLanguage = $configuration->getValue('defaultLanguage', 'localization');
@@ -129,6 +131,11 @@ class RootController extends RootControllerBase {
       $backgound = $geopattern->toDataURL();
     }
 
+    // logo
+    $logo = $appLogoAbsPath ? 'url('.URIUtil::makeAbsolute(
+      URIUtil::makeRelative($appLogoAbsPath, dirname(FileUtil::realpath($_SERVER['SCRIPT_FILENAME'])).'/'), $baseHref
+      ).')' : '';
+
     // load version info
     $version = 'dev';
     $buildInfoFile = WCMF_BASE.'build.info';
@@ -142,6 +149,7 @@ class RootController extends RootControllerBase {
       'title' => $appTitle,
       'color' => $appColor,
       'background' => $backgound,
+      'logo' => $logo,
       'wcmfBaseHref' => $wcmfBaseHref,
       'backendUrl' => $basePath,
       'rootTypes' => $rootTypes,

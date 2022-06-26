@@ -2,7 +2,7 @@ define([
     "require",
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "../_include/widget/NavigationWidget",
+    "../../AppLoader!../_include/widget/NavigationWidget",
     "../_include/_PageMixin",
     "../../locale/Dictionary",
     "dojo/text!./template/NotFoundPage.html"

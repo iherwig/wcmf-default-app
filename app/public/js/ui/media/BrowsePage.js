@@ -49,16 +49,11 @@ define([
 
         constructor: function(params) {
             declare.safeMixin(this, params);
-            // get package locations
-            var packageLocations = {};
-            for(var i=0, count=config.packages.length; i<count; i++) {
-                var curPackage = config.packages[i];
-                packageLocations[curPackage.name] = curPackage.location;
-            }
+
             // add elfinder css
-            this.setCss(packageLocations['jquery-ui']+'/themes/smoothness/jquery-ui.min.css', 'all');
-            this.setCss(packageLocations['elfinder']+'/css/elfinder.min.css', 'all');
-            this.setCss(packageLocations['elfinder']+'/css/theme.css', 'all');
+            this.setCss('jquery-ui', 'themes/smoothness/jquery-ui.min.css', 'all');
+            this.setCss('elfinder', '/css/elfinder.min.css', 'all');
+            this.setCss('elfinder', '/css/theme.css', 'all');
         },
 
         postCreate: function() {

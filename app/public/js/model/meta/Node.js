@@ -179,7 +179,7 @@ define([
                     }
                     else {
                         var values = [];
-                        var renderOptions = { truncate: 20 };
+                        var renderOptions = {};
                         for (var i=0; i<type.displayValues.length; i++) {
                             var curValue = type.displayValues[i];
                             var curAttribute = type.getAttribute(curValue);
@@ -190,7 +190,7 @@ define([
                                 }
                             });
                         }
-                        result = values.join(" - ");
+                        result = values.join(" ");
                     }
                 }
                 else {

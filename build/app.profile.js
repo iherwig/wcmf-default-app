@@ -135,11 +135,12 @@ var appSrc = [
     "dgrid/util/touch"
 ];
 
+// https://dojotoolkit.org/reference-guide/1.10/build/buildScript.html
 var profile = {
     basePath: "../app/public",
     releaseDir: "../release",
     releaseName: "",
-    action: "release",
+    action: "clean,release",
 
     layerOptimize: "closure",
     optimize: "closure",
@@ -153,6 +154,8 @@ var profile = {
     stripConsole: "none",
     selectorEngine: "lite",
     localeList: "en,de",
+    log: 0,
+    copyTests: false,
 
     defaultConfig: {
         hasCache:{
@@ -213,6 +216,7 @@ var profile = {
       { name: 'jquery', location: 'vendor/jquery', destLocation: 'vendor/jquery', main: 'jquery.min' },
       { name: 'jquery-ui', location: 'vendor/jqueryui', destLocation: 'vendor/jqueryui', main: 'jquery-ui.min' },
       { name: 'elfinder', location: 'vendor/studio-42/elfinder-js', destLocation: 'vendor/studio-42/elfinder-js', main: 'js/elfinder.full' },
+      { name: 'virtual-select', location: 'vendor/sa-si-dev/virtual-select', destLocation: 'vendor/sa-si-dev/virtual-select', main: 'dist/virtual-select.min' },
 
       { name: 'app', location: '.', destLocation: '.',
           trees: [

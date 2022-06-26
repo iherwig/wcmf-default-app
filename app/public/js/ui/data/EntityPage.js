@@ -9,7 +9,7 @@ define([
     "dojo/Deferred",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
-    "../_include/widget/NavigationWidget",
+    "../../AppLoader!../_include/widget/NavigationWidget",
     "../_include/widget/ConfirmDlgWidget",
     "./widget/EntityTabWidget",
     "../../persistence/Store",

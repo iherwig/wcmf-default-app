@@ -5,7 +5,7 @@ define([
     "dojo/_base/config",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
-    "../_include/widget/NavigationWidget",
+    "../../AppLoader!../_include/widget/NavigationWidget",
     "../../User",
     "../../locale/Dictionary",
     "../../action/Logout",

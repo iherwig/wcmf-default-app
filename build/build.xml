@@ -206,6 +206,9 @@
         <include name="vendor/ckeditor/ckeditor/lang/de.js"/>
         <include name="vendor/ckeditor/ckeditor/lang/en.js"/>
         <include name="vendor/ckeditor-plugins/**/*.*"/>
+        <!-- virtual-select -->
+        <include name="vendor/sa-si-dev/virtual-select/dist/virtual-select.min.js"/>
+        <include name="vendor/sa-si-dev/virtual-select/dist/virtual-select.min.css"/>
         <!-- config -->
         <include name="js/config/*.*"/>
       </fileset>

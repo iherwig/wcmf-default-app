@@ -124,15 +124,24 @@ define([
             this.inherited(arguments);
         },
 
-        setCss: function (css, media) {
-            var css = css || '', media = media || 'all';
-
-            domConstruct.create(
-                'link',
-                { media: media, href: css, rel: 'stylesheet' },
-                query('head')[0],
-                'last'
-            );
+        setCss: function (packageName, relCssPath, media) {
+            // get package locations
+            var packageLocations = {};
+            for(var i=0, count=config.packages.length; i<count; i++) {
+                var curPackage = config.packages[i];
+                packageLocations[curPackage.name] = curPackage.location;
+            }
+            var absCssPath = packageLocations[packageName]+'/'+relCssPath || '';
+            var media = media || 'all';
+            var existingCss = query('link[href="'+absCssPath+'"]');
+            if (existingCss.length == 0) {
+                domConstruct.create(
+                    'link',
+                    { media: media, href: absCssPath, rel: 'stylesheet' },
+                    query('head')[0],
+                    'last'
+                );
+            }
         }
     });
 });

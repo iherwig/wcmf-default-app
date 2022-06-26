@@ -127,7 +127,6 @@ define([
                 if (this.height !== null) {
                   this.setHeight(this.height);
                 }
-                var rowClickCount = 0;
                 this.own(
                     on(this.grid, "click", lang.hitch(this, function(e) {
                         // close summary tooltip
@@ -155,29 +154,21 @@ define([
                             }
                         }
                         // process other row clicks
-                        rowClickCount++;
-                        if (rowClickCount == 1) {
-                            setTimeout(lang.hitch(this, function() {
-                                if (rowClickCount == 1) {
-                                    // single click
-                                    var cell = this.grid.cell(e);
-                                    if (this.enabledFeatures.indexOf('NavigateOnRowClick') !== -1) {
-                                        // navigate to object (edit action)
-                                        if (cell && cell.element && cell.element.className.indexOf('field-actions') === -1) {
-                                            // if cell doesn't contain action buttons, go to object's url
-                                            var action = this.actionsByName['edit'];
-                                            if (action) {
-                                                action.execute();
-                                            }
-                                        }
+                        setTimeout(lang.hitch(this, function() {
+                            var cell = this.grid.cell(e);
+                            if (this.enabledFeatures.indexOf('NavigateOnRowClick') !== -1) {
+                                // navigate to object (edit action)
+                                if (cell && cell.element && cell.element.className.indexOf('field-actions') === -1) {
+                                    // if cell doesn't contain action buttons, go to object's url
+                                    var action = this.actionsByName['edit'];
+                                    var row = this.grid.row(e.target.parentNode);
+                                    action.entity = row.data;
+                                    if (action) {
+                                        action.execute();
                                     }
                                 }
-                                else {
-                                    // default action: edit cell
-                                }
-                                rowClickCount = 0;
-                            }), 300);
-                        }
+                            }
+                        }), 300);
                     })),
                     on(this.grid, "mouseover", lang.hitch(this, function(e) {
                         var row = this.grid.row(e.target.parentNode);
@@ -492,6 +483,7 @@ define([
                 switch(baseType) {
                     case 'radio':
                     case 'select':
+                    case 'multiselect':
                         return FilterSelectBox;
                     case 'date':
                         return FilterTextBox;
@@ -510,7 +502,7 @@ define([
                 var filterCtrl = this.filters[i];
                 var filter = filterCtrl.getFilter();
                 if (filter) {
-                    if (mainFilter) {
+                  if (mainFilter) {
                         mainFilter = this.store.Filter().and(mainFilter, filter);
                     }
                     else {

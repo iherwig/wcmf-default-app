@@ -43,7 +43,9 @@ function(
         getFilter: function() {
             var value = this.control.get('value');
             if (value !== undefined && value !== null && value !== '') {
-                return (new this.filterCtr()).eq(this.type+'.'+this.attribute, value);
+                // match with word boundary, because value could be inside comma separated list
+                var filterValue = '"[[:<:]]'+value+'[[:>:]]"';
+                return (new this.filterCtr()).match(this.type+'.'+this.attribute, filterValue);
             }
             return null;
         }

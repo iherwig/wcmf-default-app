@@ -1,19 +1,18 @@
 define( [
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/aspect",
-    "dojo/on",
+    "dojo/topic",
     "dojo/when",
+    "dojo/on",
     "dojo/query",
     "dojo/dom-construct",
-    "dojo/dom-geometry",
     "dojo/dom-style",
     "dojo/dom-attr",
-    "dojo/html",
-    "dojo/topic",
-    "dijit/form/FilteringSelect",
+    "dijit/_WidgetBase",
+    "dijit/_TemplatedMixin",
+    "dojomat/_AppAware",
+    "virtual-select/dist/virtual-select.min",
     "../Factory",
-    "dstore/legacy/DstoreAdapter",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary",
@@ -22,84 +21,82 @@ define( [
 function(
     declare,
     lang,
-    aspect,
-    on,
+    topic,
     when,
+    on,
     query,
     domConstruct,
-    domGeom,
     domStyle,
     domAttr,
-    html,
-    topic,
-    FilteringSelect,
+    _WidgetBase,
+    _TemplatedMixin,
+    _AppAware,
+    Select,
     ControlFactory,
-    DstoreAdapter,
     _HelpMixin,
     _AttributeWidgetMixin,
     Dict,
     template
 ) {
-    return declare([FilteringSelect, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([_WidgetBase, _TemplatedMixin, _HelpMixin, _AttributeWidgetMixin, _AppAware], {
 
         templateString: template,
         intermediateChanges: true,
+
         inputType: null, // control description as string as used in Factory.getControlClass()
         entity: null,
 
-        spinnerNode: null,
+        supportsEntityLink: true,
+        supportsMultiSelect: false,
 
-        searchAttr: "displayText",
-        queryExpr: '*${0}*',
-        autoComplete: false,
-        labelType: "html",
+        selectWidget: null,
+        spinnerNode: null,
 
         selectEntityType: null,
         entityLink: null,
 
-        listItem: null, // the selected item from the ListStore
-
-        // initialize base class attributes to avoid errors
-        params: {},
-        valueNode: {},
-        textbox: {},
-
         constructor: function(args) {
-            // TODO remove store adapter if not required by FilteringSelect any more
-            if (!args.store) {
-                // get store from input type, if not set yet
-                args.store = new DstoreAdapter(ControlFactory.getListStore(args.inputType, this.getDisplayType(args.entity, args.name)));
+            // convert store from DstoreAdapter
+            if (args.store && args.store.store) {
+                args.store = args.store.store;
             }
-            else if (!args.store.query) {
-                args.store = DstoreAdapter(args.store);
-            }
-
             declare.safeMixin(this, args);
+
             this.label = Dict.translate(this.name);
-            aspect.before(this, "_startSearch", function(text) {
-                // create spinner
-                if (!this.spinnerNode) {
-                    this.spinnerNode = domConstruct.create("p", {
-                        style: 'position:absolute',
-                        innerHTML: '<i class="fa fa-spinner fa-spin"></i>'
-                    }, dojo.body());
-                    var pos = domGeom.position(this.domNode);
-                    domStyle.set(this.spinnerNode, {
-                        left: pos.x + pos.w+15 + "px",
-                        top: pos.y+6 + "px"
-                    });
-                }
-                this.showSpinner();
-            });
+
+            // get store from input type, if not set yet
+            if (!this.store) {
+                this.store = ControlFactory.getListStore(this.inputType, this.getDisplayType(this.entity, this.name));
+            }
 
             // get entity type, if this listbox is used to select entities
-            var options = ControlFactory.getOptions(this.inputType);
-            var isSelectingEntities = options && options.list && options.list.type == 'node';
-            this.selectEntityType = isSelectingEntities && options.list.types && options.list.types.length == 1 ? options.list.types[0] : null;
+            if (this.supportsEntityLink) {
+                var options = ControlFactory.getOptions(this.inputType);
+                var isSelectingEntities = options && options.list && options.list.type == 'node';
+                this.selectEntityType = isSelectingEntities && options.list.types && options.list.types.length == 1 ? options.list.types[0] : null;
+            }
+
+            // add css
+            this.setCss('virtual-select', '/dist/virtual-select.min.css', 'all');
         },
 
         postCreate: function() {
             this.inherited(arguments);
+            this.spinnerNode = domConstruct.create("p", {
+                innerHTML: '<i class="fa fa-spinner fa-spin"></i>'
+            }, this.domNode, "last");
+            this.showSpinner();
+
+            when(this.store.fetch(), lang.hitch(this, function(list) {
+                this.hideSpinner();
+                this.selectWidget = this.buildSelectWidget(list);
+                this.own(
+                    on(this.selectWidget, "change", lang.hitch(this, function() {
+                        this.value = this.selectWidget.value ? (this.supportsMultiSelect ? this.selectWidget.value.join(',') : this.selectWidget.value) : null;
+                    })
+                ));
+                this.updateDisplay(this.value);
+            }));
 
             this.own(
                 topic.subscribe("entity-datachange", lang.hitch(this, function(data) {
@@ -108,8 +105,9 @@ function(
                         this.set("value", data.newValue);
                     }
                 })),
-                on(this, 'search', lang.hitch(this, function() {
-                    this.hideSpinner();
+                on(this, "attrmodified-value", lang.hitch(this, function(e) {
+                    var value = e.detail.newValue;
+                    this.updateDisplay(value);
                 }))
             );
         },
@@ -117,50 +115,50 @@ function(
         startup: function() {
             this.inherited(arguments);
 
-            setTimeout(lang.hitch(this, function() {
-                this.setEntityLink();
-            }), 100);
+            if (this.supportsEntityLink) {
+                setTimeout(lang.hitch(this, function() {
+                    this.setEntityLink();
+                }), 100);
+            }
         },
 
-        _getValueAttr: function() {
-            return this.listItem ? this.listItem.value : null;
+        buildSelectWidget: function(values) {
+            var wrapper = domConstruct.create("div");
+            this.domNode.appendChild(wrapper);
+
+            VirtualSelect.init({
+                ele: wrapper,
+                multiple: this.supportsMultiSelect,
+                options: values.map(function(value) {
+                    return { label: value.displayText, value: value.value };
+                }),
+                hideClearButton: true,
+                disableSelectAll: true,
+                maxWidth: 'none',
+                placeholder: '',
+                noSearchResultsText: Dict.translate('No data'),
+                searchPlaceholderText: Dict.translate('Search')
+            });
+            return wrapper;
         },
 
-        _setValueAttr: function(value, priorityChange, displayedValue, item) {
-            // since the value of the items in the ListStore is stored in
-            // their value property and not in the id property, we need to
-            // change the behaviour of the parent class, which uses the id
-            // property as value
-            if (item) {
-                // if an item is given, we can fall back to the
-                // parent class' behaviour
-                this.listItem = item;
-                this.inherited(arguments);
-                this.updateDisplay();
+        updateDisplay: function(value) {
+            if (this.supportsMultiSelect && typeof value == 'string') {
+                value = value.split(',');
+            }
+            this.selectWidget.setValue(value);
+        },
+
+        _setDisabledAttr: function(value) {
+            this.inherited(arguments);
+            if (!this.selectWidget) {
                 return;
             }
-            // find the item with the value property equal to value
-            var args = arguments;
-
-            if (this.inputType) {
-                when(ControlFactory.getItem(this.inputType, this.getDisplayType(this.entity, this.name), value), lang.hitch(this, function(object) {
-                    this.listItem = object;
-                    if (this.listItem) {
-                        this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
-                        this.updateDisplay();
-                    }
-                }));
+            if (value) {
+                this.selectWidget.disable();
             }
             else {
-                // TODO use this.store, if FilteringSelect uses store api
-                var store = !this.store.filter ? this.store.store : this.store;
-                store.filter({value: 'eq='+value}).forEach(lang.hitch(this, function (object) {
-                    // we expect only one object
-                    this.listItem = object;
-                    if (this.listItem) {
-                        this.inherited(args, [this.listItem.oid, priorityChange, this.listItem.displayText, this.listItem]);
-                    }
-                }));
+                this.selectWidget.enable();
             }
         },
 
@@ -172,27 +170,8 @@ function(
             query(this.spinnerNode).style("display", "none");
         },
 
-        setStore: function(store, selectedId /*optional*/) {
-            this.set('store', store);
-            if (selectedId !== undefined) {
-                var item = store.get(selectedId);
-                if (item) {
-                    this._setValueAttr(item.id, true, item.displayedText, item);
-                    this.textbox.value = item.displayText;
-                }
-            }
-        },
-
         getStore: function() {
             return !this.store.filter ? this.store.store : this.store;
-        },
-
-        updateDisplay: function() {
-            this.setEntityLink();
-            if (this.getDisplayType(this.entity, this.name) != 'text') {
-                domStyle.set(this.textbox, { display: 'none' });
-                html.set(this.displayNode, this.listItem.displayText);
-            }
         },
 
         setEntityLink: function() {
@@ -201,7 +180,7 @@ function(
                 if (this.selectEntityType) {
                     var labelNodes = query("label[for="+this.get("id")+"]");
                     if (labelNodes.length > 0 && !this.entityLink) {
-                        var html = '<a href="#"><i class="fa fa-external-link"></i></a>';
+                        var html = '<a class="entity-link" href="#"><i class="fa fa-external-link"></i></a>';
                         this.entityLink = domConstruct.place(html, labelNodes[0], 'last');
                     }
                     if (this.entityLink) {
@@ -210,7 +189,6 @@ function(
                         var pathParams = { type:this.selectEntityType, id:this.item.value };
                         var url = route.assemble(pathParams);
                         domAttr.set(this.entityLink, 'href', url);
-                        domStyle.set(this.entityLink, { paddingLeft: '5px', display: 'inline-block' });
                     }
                 }
             }

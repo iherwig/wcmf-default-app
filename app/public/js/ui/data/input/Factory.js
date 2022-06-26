@@ -5,6 +5,7 @@ define( [
     "dojo/_base/config",
     "dojo/_base/array",
     "dojo/json",
+    "dojo/promise/all",
     "dojo/Deferred",
     "dojo/when",
     "../../../model/meta/Model",
@@ -17,6 +18,7 @@ function(
     config,
     array,
     JSON,
+    all,
     Deferred,
     when,
     Model,
@@ -172,7 +174,22 @@ function(
                         Factory._resolvedValues[translateKey] = object;
                     });
                 }, listKey));
-                return Factory.getItem(inputType, displayType, value);
+                // split multi values
+                if (typeof value === 'string') {
+                    var values = value.split(',').map(function(s) { return s.trim(); });
+                    var deferredList = [];
+                    for (var i=0, count=values.length; i<count; i++) {
+                        deferredList.push(Factory.getItem(inputType, displayType, values[i]));
+                    }
+                    all(deferredList).then(function(results) {
+                        deferred.resolve(results.map(function(r) { return r.displayText; }).join(', '));
+                    }, function(error) {
+                        deferred.reject(error);
+                    });
+                }
+                else {
+                    return Factory.getItem(inputType, displayType, value);
+                }
             }
         }
         else {

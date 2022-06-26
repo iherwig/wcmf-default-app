@@ -135,6 +135,21 @@
         {
             "type": "package",
             "package": {
+                "name": "sa-si-dev/virtual-select",
+                "type": "wcmf-asset",
+                "version": "1.0.30",
+                "dist": {
+                    "url": "https://github.com/sa-si-dev/virtual-select/archive/refs/tags/v1.0.30.zip",
+                    "type": "zip"
+                },
+                "require": {
+                    "wcmf/asset-installer": "*"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "studio-42/elfinder-js",
                 "type": "wcmf-asset",
                 "version": "2.1.59",
@@ -195,6 +210,7 @@
         "components/bootstrap": "~3.4",
         "components/font-awesome": "~4.7",
         "ckeditor/ckeditor": "~4.17",
+        "sa-si-dev/virtual-select": "~1.0",
         "components/jquery": "~3.6.0",
         "components/jqueryui": "~1.12",
         "studio-42/elfinder-js": "~2.1",

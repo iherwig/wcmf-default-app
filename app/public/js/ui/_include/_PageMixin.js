@@ -81,7 +81,7 @@ define([
                     }
                     finally {
                         this.setTitle(this.title);
-                        this.setBodyAttributes(this.bodyDomId);
+                        this.setPageAttributes(this.bodyDomId);
                         this.createNotificationNode();
                         this.setupRoutes();
                         this.removeRestricted();
@@ -128,10 +128,14 @@ define([
             }
         },
 
-        setBodyAttributes: function(id) {
+        setPageAttributes: function(id) {
             var body = query("body")[0];
             domAttr.set(body, "id", id);
             domAttr.set(body, "style", "background-image: "+config.app.background);
+            var logo = query("#logo")[0];
+            if (logo) {
+              domAttr.set(logo, "style", "background-image: "+config.app.logo);
+            }
         },
 
         createNotificationNode: function() {

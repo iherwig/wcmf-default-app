@@ -8,7 +8,7 @@ define([
     "dojo/dom-style",
     "../_include/_PageMixin",
     "../_include/_NotificationMixin",
-    "../_include/widget/NavigationWidget",
+    "../../AppLoader!../_include/widget/NavigationWidget",
     "../_include/widget/GridWidget",
     "../../ui/data/display/Renderer",
     "../../model/meta/Model",
