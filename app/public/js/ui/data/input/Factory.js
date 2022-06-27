@@ -138,64 +138,63 @@ function(
      * @returns Deferred
      */
     Factory.getItem = function(inputType, displayType, value, convertValuesToStrings) {
-        var translateKey = inputType+'.'+value;
         // serve from cache
-        if (Factory._resolvedValues.hasOwnProperty(translateKey)) {
-            return Factory._resolvedValues[translateKey];
+        if (Factory._resolvedValues.hasOwnProperty(inputType) && Factory._resolvedValues[inputType].hasOwnProperty(value)) {
+            return Factory._resolvedValues[inputType][value];
         }
-        // create promise
-        if (!Factory._translatePromises.hasOwnProperty(translateKey)) {
-            Factory._translatePromises[translateKey] = new Deferred();
-        }
-        var deferred = Factory._translatePromises[translateKey];
+        // create cache for input type
         var options = Factory.getOptions(inputType);
-        if (options['list'] && value !== null) {
-            // check list cache
-            var listKey = inputType;
-            if (!Factory._listCache.hasOwnProperty(listKey)) {
-                // NOTE loading all items once and caching the result
-                // is faster than resolving the value on each request
-                // store promise in cache and resolve later
-                var store = ListStore.getStore(options['list'], config.app.defaultLanguage, displayType);
-                Factory._listCache[listKey] = store.fetch();
-                when(Factory._listCache[listKey], lang.partial(function(listKey, result) {
-                    // cache result and return requested value
-                    Factory._listCache[listKey] = result;
-                    result.forEach(function(object) {
-                        if (convertValuesToStrings) {
-                            object.oid = ""+object.oid;
-                            object.value = ""+object.value;
-                        }
-                        var translateKey = listKey+'.'+object.value;
-                        if (Factory._translatePromises.hasOwnProperty(translateKey)) {
-                            Factory._translatePromises[translateKey].resolve(object);
-                            delete Factory._translatePromises[translateKey];
-                        }
-                        Factory._resolvedValues[translateKey] = object;
-                    });
-                }, listKey));
-                // split multi values
-                if (typeof value === 'string') {
-                    var values = value.split(',').map(function(s) { return s.trim(); });
-                    var deferredList = [];
-                    for (var i=0, count=values.length; i<count; i++) {
-                        deferredList.push(Factory.getItem(inputType, displayType, values[i]));
-                    }
-                    all(deferredList).then(function(results) {
-                        deferred.resolve(results.map(function(r) { return r.displayText; }).join(', '));
-                    }, function(error) {
-                        deferred.reject(error);
-                    });
-                }
-                else {
-                    return Factory.getItem(inputType, displayType, value);
-                }
+        if (!Factory._translateValuePromises.hasOwnProperty(inputType)) {
+            Factory._translateValuePromises[inputType] = {};
+            // load list values once
+            // NOTE loading all items once and caching the result
+            // is faster than resolving the value on each request
+            if (options['list']) {
+                if (!Factory._translateListPromises.hasOwnProperty(inputType)) {
+                    Factory._translateListPromises[inputType] = new Deferred();
+                    // store promise in cache and resolve later
+                    var store = ListStore.getStore(options['list'], config.app.defaultLanguage, displayType);
+                    Factory._listCache[inputType] = store.fetch();
+                    when(Factory._listCache[inputType], lang.partial(function(inputType, result) {
+                        // cache resolved list values
+                        Factory._listCache[inputType] = result;
+                        var results = {};
+                        for (var i=0, count=result.length; i<count; i++) {
+                            var object = result[i];
+                            if (convertValuesToStrings) {
+                                object.oid = ""+object.oid;
+                                object.value = ""+object.value;
+                            }
+                            results[object.value] = object;
+                        };
+                        Factory._translateListPromises[inputType].resolve(results);
+                    }, inputType));
+                 }
             }
         }
-        else {
-            deferred.resolve(value, null);
+        // create promise for translating value
+        if (!Factory._translateValuePromises[inputType].hasOwnProperty(value)) {
+            Factory._translateValuePromises[inputType][value] = new Deferred();
+            if (options['list'] && value) {
+                // resolve list values, when list is loaded
+                Factory._translateListPromises[inputType].then(lang.partial(function(value, results) {
+                    // split multi values
+                    if (typeof value === 'string' && value.match(',')) {
+                        var values = value.split(',').map(function(v) { return results[v.trim()]?.displayText; }).filter(function(v) { return v !== undefined; });
+                        Factory._translateValuePromises[inputType][value].resolve(values.join(', '));
+                    }
+                    else {
+                        Factory._translateValuePromises[inputType][value].resolve(results[value]?.displayText);
+                    }
+               }, value));
+            }
+            else {
+                // all other values
+                Factory._translateValuePromises[inputType][value].resolve(value);
+            }
         }
-        return deferred;
+        // return the promise
+        return Factory._translateValuePromises[inputType][value];
     };
 
     /**
@@ -234,7 +233,8 @@ function(
      * Registry for translated values
      */
     Factory._listCache = {};
-    Factory._translatePromises = {};
+    Factory._translateValuePromises = {};
+    Factory._translateListPromises = {};
     Factory._resolvedValues = {};
 
     return Factory;
