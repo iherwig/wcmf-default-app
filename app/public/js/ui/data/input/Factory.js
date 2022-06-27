@@ -126,7 +126,7 @@ function(
             deferred.resolve(value);
         });
         return deferred;
-    },
+    };
 
     /**
      * Get the list item for the given value according to the list definition that
@@ -180,11 +180,11 @@ function(
                 Factory._translateListPromises[inputType].then(lang.partial(function(value, results) {
                     // split multi values
                     if (typeof value === 'string' && value.match(',')) {
-                        var values = value.split(',').map(function(v) { return results[v.trim()]?.displayText; }).filter(function(v) { return v !== undefined; });
+                        var values = value.split(',').map(function(v) { var v = v.trim(); return results[v] ? results[v].displayText : undefined; }).filter(function(v) { return v !== undefined; });
                         Factory._translateValuePromises[inputType][value].resolve(values.join(', '));
                     }
                     else {
-                        Factory._translateValuePromises[inputType][value].resolve(results[value]?.displayText);
+                        Factory._translateValuePromises[inputType][value].resolve(results[value] ? results[value].displayText : undefined);
                     }
                }, value));
             }
