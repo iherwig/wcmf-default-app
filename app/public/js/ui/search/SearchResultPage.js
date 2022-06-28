@@ -79,7 +79,7 @@ define([
                     label: Dict.translate("_displayValue"),
                     field: "_displayValue",
                     canEdit: false,
-                    sortable: true,
+                    sortable: false,
                     renderCell: function(object, data, td, options) {
                         var typeClass = Model.getType(object["_type"]);
                         var displayValues = typeClass.displayValues;
@@ -95,7 +95,11 @@ define([
                     }
                 }, {
                     label: Dict.translate("_type"),
-                    field: "_type"
+                    field: "_type",
+                    sortable: false,
+                    renderCell: function(object, data, td, options) {
+                        td.innerHTML += Dict.translate(object["_type"]);
+                    }
                 }],
                 actions: this.getGridActions(),
                 enabledFeatures: []
