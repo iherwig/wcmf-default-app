@@ -20,8 +20,9 @@ define([], function() {
       else {
         // check if module is overridden
         var overrideId = id.replace(appPattern, overrideIdPrefix);
+        console.debug('Check if component is overriden: '+overrideId);
         require([overrideId], function(result) {
-          if (result == 'not-a-module') {
+          if (!(typeof result == 'function')) {
             loadImpl(id, require, callback);
           }
           else {
