@@ -69,6 +69,9 @@ body {
 }
 
 #page-login #logo {
+  position: absolute;
+  top: 0;
+  left: 0;
   margin: 50px 0 0 50px;
 }
 
