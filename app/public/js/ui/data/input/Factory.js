@@ -175,7 +175,7 @@ function(
         // create promise for translating value
         if (!Factory._translateValuePromises[inputType].hasOwnProperty(value)) {
             Factory._translateValuePromises[inputType][value] = new Deferred();
-            if (options['list'] && value) {
+            if (options['list'] && value !== undefined && value !== null) {
                 // resolve list values, when list is loaded
                 Factory._translateListPromises[inputType].then(lang.partial(function(value, results) {
                     // split multi values
