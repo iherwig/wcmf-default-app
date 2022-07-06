@@ -30,17 +30,16 @@ define([
             this.own(
                 on(resetBtn, "click", lang.hitch(this, function(e) {
                     this.reset();
-                    topic.publish('entity-filterchange');
+                    topic.publish('entity-filterchange', this.getFilter());
                     e.stopPropagation();
                 })),
                 on(control, "change", lang.hitch(this, function (e) {
-                    topic.publish('entity-filterchange');
+                    topic.publish('entity-filterchange', this.getFilter());
                 }))
             );
         },
 
         reset: function() {
-            this.getControl().reset();
         },
 
         /**

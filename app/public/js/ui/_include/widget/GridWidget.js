@@ -78,6 +78,7 @@ define([
         enabledFeatures: [], // array of strings matching items in optionalFeatures
         canEdit: true,
         initialFilter: {},
+        currentFilter: null,
         rowEnhancer: null,
 
         actionsByName: {},
@@ -121,7 +122,7 @@ define([
             this.inherited(arguments);
 
             ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
-
+                this.currentFilter = this.initialFilter;
                 this.grid = this.buildGrid(controls);
                 this.grid.startup();
                 if (this.height !== null) {
@@ -425,7 +426,9 @@ define([
             });
 
             grid.on("dgrid-refresh-complete", lang.hitch(this, function(evt) {
-                this.gridStatus.innerHTML = Dict.translate("%0% item(s)", [grid.get('total')]);
+                if (this.gridStatus) {
+                    this.gridStatus.innerHTML = Dict.translate("%0% item(s)", [grid.get('total')]);
+                }
                 grid.resize();
                 this.resize();
                 topic.publish('ui/_include/widget/GridWidget/refresh-complete', evt.grid);
@@ -497,12 +500,12 @@ define([
          * @returns Filter
          */
         getFilter: function() {
-            var mainFilter;
+            var mainFilter = this.initialFilter && Object.keys(this.initialFilter).length > 0 ? this.initialFilter : undefined;
             for (var i=0, count=this.filters.length; i<count; i++) {
                 var filterCtrl = this.filters[i];
                 var filter = filterCtrl.getFilter();
                 if (filter) {
-                  if (mainFilter) {
+                    if (mainFilter) {
                         mainFilter = this.store.Filter().and(mainFilter, filter);
                     }
                     else {
@@ -537,8 +540,9 @@ define([
         },
 
         filter: function(filter) {
-            if (this.grid) {
-              this.grid.set('collection', this.store.filter(filter));
+            if (this.grid && (JSON.stringify(filter) != JSON.stringify(this.currentFilter))) {
+              this.currentFilter = filter;
+              this.grid.set('collection', this.store.filter(this.currentFilter));
             }
         },
 
