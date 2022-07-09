@@ -35,7 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.disableNativeSpellChecker = false;
     config.uiColor = "#E0E0D6";
     config.extraPlugins = 'image2,find,embed';
-    config.removePlugins = 'image';
+    config.removePlugins = 'image,exportpdf';
     // Setup content provider. See https://docs.ckeditor.com/ckeditor4/docs/#!/guide/dev_media_embed
     config.embed_provider = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
     config.format_tags = 'p;h1;h2;h3;h4;h5;h6;pre;address;div';

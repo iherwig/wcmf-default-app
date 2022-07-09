@@ -32,9 +32,9 @@
             "package": {
                 "name": "dojo/dojo",
                 "type": "wcmf-asset",
-                "version": "1.16.4",
+                "version": "1.17.2",
                 "dist": {
-                    "url": "https://github.com/dojo/dojo/archive/1.16.4.zip",
+                    "url": "https://github.com/dojo/dojo/archive/1.17.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -47,9 +47,9 @@
             "package": {
                 "name": "dojo/dijit",
                 "type": "wcmf-asset",
-                "version": "1.16.4",
+                "version": "1.17.2",
                 "dist": {
-                    "url": "https://github.com/dojo/dijit/archive/1.16.4.zip",
+                    "url": "https://github.com/dojo/dijit/archive/1.17.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -62,9 +62,9 @@
             "package": {
                 "name": "dojo/dojox",
                 "type": "wcmf-asset",
-                "version": "1.16.4",
+                "version": "1.17.2",
                 "dist": {
-                    "url": "https://github.com/dojo/dojox/archive/1.16.4.zip",
+                    "url": "https://github.com/dojo/dojox/archive/1.17.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -77,9 +77,9 @@
             "package": {
                 "name": "dojo/util",
                 "type": "wcmf-asset",
-                "version": "1.16.4",
+                "version": "1.17.2",
                 "dist": {
-                    "url": "https://github.com/dojo/util/archive/1.16.4.zip",
+                    "url": "https://github.com/dojo/util/archive/1.17.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -122,9 +122,9 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.17.1",
+                "version": "4.19.0",
                 "dist": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.17.1.zip",
+                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.19.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -152,9 +152,9 @@
             "package": {
                 "name": "studio-42/elfinder-js",
                 "type": "wcmf-asset",
-                "version": "2.1.59",
+                "version": "2.1.61",
                 "dist": {
-                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.59.zip",
+                    "url": "https://github.com/Studio-42/elFinder/archive/2.1.61.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -209,7 +209,7 @@
         "oomphinc/composer-installers-extender": "*",
         "components/bootstrap": "~3.4",
         "components/font-awesome": "~4.7",
-        "ckeditor/ckeditor": "~4.17",
+        "ckeditor/ckeditor": "~4.19",
         "sa-si-dev/virtual-select": "~1.0",
         "components/jquery": "~3.6.0",
         "components/jqueryui": "~1.12",
