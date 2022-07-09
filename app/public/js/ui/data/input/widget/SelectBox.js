@@ -48,6 +48,7 @@ function(
 
         supportsEntityLink: true,
         supportsMultiSelect: false,
+        valueIsInteger: false,
 
         selectWidget: null,
         spinnerNode: null,
@@ -76,6 +77,16 @@ function(
                 this.selectEntityType = isSelectingEntities && options.list.types && options.list.types.length == 1 ? options.list.types[0] : null;
             }
 
+            // multivalued controls are only useful for a string attribute
+            var attribute = this.getAttributeDefinition(this.entity, this.name);
+            if (attribute) {
+                this.valueIsInteger = attribute.type && attribute.type.toLowerCase() === 'integer';
+                if (this.supportsMultiSelect && attribute.type && attribute.type.toLowerCase() !== 'string') {
+                  throw new Error("Multivalued controls can only be used with a string attribute. "+
+                          "Attribute '"+attribute.name+"' is of type "+attribute.type+".");
+                }
+            }
+
             // add css
             this.setCss('virtual-select', '/dist/virtual-select.min.css', 'all');
         },
@@ -92,7 +103,11 @@ function(
                 this.selectWidget = this.buildSelectWidget(list);
                 this.own(
                     on(this.selectWidget, "change", lang.hitch(this, function() {
-                        this.value = this.selectWidget.value ? (this.supportsMultiSelect ? this.selectWidget.value.join(',') : this.selectWidget.value) : null;
+                        var controlValue = this.selectWidget.value;
+                        this.value = controlValue ? (
+                          this.supportsMultiSelect ? controlValue.join(',') : (
+                            this.valueIsInteger ? parseInt(controlValue) : controlValue)
+                        ) : null;
                     })
                 ));
                 this.updateDisplay(this.value);
@@ -132,6 +147,7 @@ function(
                 options: values.map(function(value) {
                     return { label: value.displayText, value: value.value };
                 }),
+                disabled: this.disabled,
                 hideClearButton: true,
                 disableSelectAll: true,
                 maxWidth: 'none',

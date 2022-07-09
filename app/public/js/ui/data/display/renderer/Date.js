@@ -20,7 +20,7 @@ function(
                 locale: config.app.uiLanguage
             };
             if (typeof value === "string") {
-                value = locale.parse(value.substring(1, 10), parseDateFormat);
+                value = locale.parse(value.substring(0, 10), parseDateFormat);
             }
             value = locale.format(value, formatDateFormat);
         }

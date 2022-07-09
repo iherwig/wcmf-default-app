@@ -60,8 +60,8 @@ body {
 }
 
 #logo {
-  width: 320px;
-  height: 160px;
+  width: 240px;
+  height: 100px;
   margin-top: -10px;
   background-size: contain;
   background-position: top left;
@@ -88,6 +88,7 @@ body {
   padding: 0 10px;
 }
 
+#page-settings,
 #page-login,
 #page-home,
 #page-entity,
@@ -105,6 +106,7 @@ body {
   padding-top: 0;
 }
 
+#page-settings #wrap,
 #page-home #wrap,
 #page-entity #wrap,
 #page-entitylist #wrap,
@@ -231,6 +233,7 @@ legend {
 
 .navbar-default .navbar-collapse .form-group .btn {
   position: absolute;
+  top: 0;
   right: 0;
   width: 34px;
   height: 34px;
@@ -285,6 +288,15 @@ legend {
   width: calc(100% - 50px);
 }
 
+.settings-page .dijitTextBox {
+  display: block;
+  width: 33.33%;
+}
+
+.settings-page .dijitTextBox .dijitPlaceHolder {
+  display: none;
+}
+
 .entity-page .dijitCheckBox,
 .principal-page .dijitCheckBox {
   margin-left: 0;
@@ -314,6 +326,10 @@ legend {
 }
 
 /* dgrid */
+.dgrid-hider-toggle {
+  z-index: 1000;
+}
+
 .dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
   background-color: #08c;
 }
@@ -541,8 +557,8 @@ th.field-actions-6, td.field-actions-6 {
   overflow: hidden;
 }
 
-.container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper {
-  height: calc(100% - 40px);
+.container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
+  height: calc(100vh - 384px);
   padding-right: 10px;
   overflow-y: scroll;
 }
@@ -556,6 +572,14 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 /* entity form */
+.form-header .pull-right {
+  margin-top: 8px;
+}
+
+.form-header > .clearfix {
+  border-bottom: 1px solid #ddd;
+}
+
 .dijitLayoutContainer,
 .dijitContainer {
   overflow: visible;
@@ -606,7 +630,8 @@ td {
 }
 
 .dbootstrap .dijitContentPane .flex,
-.entity-page .groupContainer--beside .dijitTextBox:not(.dijitTextArea),
+.entity-page .groupContainer--beside .dijitTextBox,
+.entity-page .groupContainer--beside .vscomp-ele,
 .principal-page .groupContainer--beside .dijitTextBox:not(.dijitTextArea),
 .entity-page .groupContainer--beside .dijitSliderH,
 .entity-page .groupContainer--beside .fileDropTarget {
@@ -839,7 +864,8 @@ fieldset i.fa {
 
   .entity-page .dijitTextBox,
   .entity-page .vscomp-ele,
-  .principal-page .dijitTextBox {
+  .principal-page .dijitTextBox,
+  .settings-page .dijitTextBox {
     width: 95%;
   }
 

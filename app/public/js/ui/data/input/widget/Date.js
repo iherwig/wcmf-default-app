@@ -50,6 +50,7 @@ function(
         },
 
         dateType: 'date', // default type
+        hasDropDown: true,
 
         dateFormat: {selector: 'date', datePattern: 'yyyy-MM-dd', locale: config.app.uiLanguage},
 
@@ -63,6 +64,9 @@ function(
               this.dateFormat.selector = this.dateType === 'time' ? 'time' : 'date';
               this.dateFormat.datePattern = this.datePatterns[this.dateType];
             }
+            if (options.dropDown !== undefined && options.dropDown == false) {
+              this.hasDropDown = false;
+            }
 
             this.label = Dict.translate(this.name);
             this.value = this.convertToDate(this.value);
@@ -74,11 +78,16 @@ function(
             var date =  this.convertToDate(this.value);
             var insertIndex = 0;
 
+            // NOTE the template does not provide a down arrow, but the base class
+            // opens the dropdown when the field is clicked and the configuration option
+            // hasDownArrow is false. We use this fact to deactivate the dropdown by setting
+            // hasDownArrow to true.
+
             this.dateTextBox = new DateTextBox({
                 value: date,
                 disabled: this.disabled,
                 intermediateChanges: true,
-                hasDownArrow: false,
+                hasDownArrow: !this.hasDropDown,
                 style: { width: '150px', marginRight: '10px' }
             });
             if (this.dateType === 'date' || this.dateType === 'datetime') {
@@ -89,7 +98,7 @@ function(
                 value: date,
                 disabled: this.disabled,
                 intermediateChanges: true,
-                hasDownArrow: false,
+                hasDownArrow: !this.hasDropDown,
                 style: { width: '70px' }
             });
             if (this.dateType === 'time' || this.dateType === 'datetime') {

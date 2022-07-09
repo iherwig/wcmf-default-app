@@ -246,7 +246,8 @@ function(
               this.addRelationWidgets(cleanOid);
 
               // set button states
-              this.setBtnState("save", false); // no modifications yet
+              this.setBtnState("save1", false); // no modifications yet
+              this.setBtnState("save2", false); // no modifications yet
               this.setBtnState("delete", this.canDelete());
               if (this.permissions['??setPermissions'] !== true && this.permissionsBtn) {
                   domClass.add(this.permissionsBtn.domNode, "hidden");
@@ -648,7 +649,8 @@ function(
           // set controls, if locked by another user
           if (isLocked && !isLockOwner) {
               this.setCtrlState(false);
-              this.setBtnState("save", false);
+              this.setBtnState("save1", false);
+              this.setBtnState("save2", false);
               this.setBtnState("delete", false);
           }
           else {
@@ -664,7 +666,8 @@ function(
 
           var state = modified === true ? "dirty" : "clean";
           this.entity.setState(state);
-          this.setBtnState("save", modified);
+          this.setBtnState("save1", modified);
+          this.setBtnState("save2", modified);
       },
 
       isRelatedObject: function() {
@@ -745,7 +748,7 @@ function(
               }
               data = lang.mixin(lang.clone(this.entity), data);
 
-              this.saveBtn.setProcessing();
+              [this.save1Btn, this.save2Btn].forEach(function(b) { b.setProcessing(); });
               if (!keepNotification) {
                   this.hideNotification();
               }
@@ -761,7 +764,7 @@ function(
               var storeMethod = this.isNew ? "add" : "put";
               store[storeMethod](data, {overwrite: !this.isNew}).then(lang.hitch(this, function(result) {
                   // callback completes
-                  this.saveBtn.reset();
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { b.reset(); });
                   if (result.errorMessage) {
                       // error
                       this.showBackendError(result, true);
@@ -783,7 +786,8 @@ function(
                           message: message,
                           fadeOut: true
                       }).then(lang.hitch(this, function() {
-                          this.setBtnState("save", false);
+                          this.setBtnState("save1", false);
+                          this.setBtnState("save2", false);
                           if (this.isNew) {
                               this.isNew = false;
 
@@ -806,7 +810,7 @@ function(
                   }
               }), lang.hitch(this, function(error) {
                   // error
-                  this.saveBtn.reset();
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { b.reset(); });
 
                   // check for concurrent update
                   var error = BackendError.parseResponse(error);
