@@ -152,6 +152,7 @@ function(
                 disableSelectAll: true,
                 maxWidth: 'none',
                 placeholder: '',
+                search: true,
                 noSearchResultsText: Dict.translate('No data'),
                 searchPlaceholderText: Dict.translate('Search')
             });

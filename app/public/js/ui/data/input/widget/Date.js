@@ -88,6 +88,7 @@ function(
                 disabled: this.disabled,
                 intermediateChanges: true,
                 hasDownArrow: !this.hasDropDown,
+                invalidMessage: Dict.translate('The value is invalid. Please enter full date with format dd.mm.yyyy'),
                 style: { width: '150px', marginRight: '10px' }
             });
             if (this.dateType === 'date' || this.dateType === 'datetime') {

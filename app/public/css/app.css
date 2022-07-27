@@ -135,7 +135,7 @@ body {
   width: calc(100vw - 120px);
   max-width: 1460px;
   margin: 0 auto;
-  z-index: 999;
+  z-index: 946;
 }
 
 #notification .alert {
@@ -224,7 +224,7 @@ legend {
 }
 
 .navbar-fixed-top {
-  z-index: 1001;
+  z-index: 948;
 }
 
 .navbar-default .navbar-collapse .form-group {
@@ -327,7 +327,7 @@ legend {
 
 /* dgrid */
 .dgrid-hider-toggle {
-  z-index: 1000;
+  z-index: 947;
 }
 
 .dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
