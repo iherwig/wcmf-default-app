@@ -28,6 +28,11 @@ function(
             });
         },
 
+        reset: function() {
+            this.control.set('value', null);
+            this.inherited(arguments);
+        },
+
         getControl: function() {
             return this.control;
         },
@@ -35,7 +40,7 @@ function(
         getFilter: function() {
             var value = this.control.get('value');
             if (value !== undefined && value !== null && value !== '') {
-                return (new this.filterCtr()).match(this.type+'.'+this.attribute, new RegExp('.*'+value+'.*', 'i'));
+                return (new this.filterCtr()).match(this.type+'.'+this.attribute, (new RegExp('.*'+value+'.*', 'i')).toString());
             }
             return null;
         }

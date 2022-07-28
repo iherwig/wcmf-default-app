@@ -189,9 +189,10 @@ function(
         },
 
         getValueArray: function(value) {
-            value = this.multiValued ? ""+value : value;
+            var hasValue = value !== undefined && value !== null;
+            value = this.multiValued && hasValue ? ""+value : value;
             return (typeof value === "string" || value instanceof String) ?
-                value.split(",") : (value instanceof Array ? value : [value]);
+                value.split(",") : (value instanceof Array ? value : (hasValue ? [value] : []));
         }
     });
 });
