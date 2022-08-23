@@ -4,7 +4,7 @@ define([
 function(
     ControlFactory
 ) {
-    return function(value, attribute) {
+    return function(value, attribute, context) {
         if (typeof value == 'string') {
             // remove tags
             value = value.replace(/<[^>]*>/g, '');

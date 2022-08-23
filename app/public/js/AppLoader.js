@@ -20,14 +20,18 @@ define([], function() {
       else {
         // check if module is overridden
         var overrideId = id.replace(appPattern, overrideIdPrefix);
-        console.debug('Check if component is overriden: '+overrideId);
+        console.groupCollapsed('AppLoader');
+        console.debug('Check if component is overridden: '+overrideId);
         require([overrideId], function(result) {
           if (!(typeof result == 'function')) {
+            console.debug('-> NOT overridden');
             loadImpl(id, require, callback);
           }
           else {
+            console.debug('-> Overridden');
             callback(require(overrideId));
           }
+          console.groupEnd();
         });
       }
     }

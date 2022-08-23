@@ -84,7 +84,7 @@ define([
                         for (var i=0, count=displayValues.length; i<count; i++) {
                             var displayValue = displayValues[i];
                             when(Renderer.render(object[displayValue],
-                                typeClass.getAttribute(displayValue), renderOptions), function(value) {
+                                typeClass.getAttribute(displayValue), renderOptions, 'list'), function(value) {
                                 if (value) {
                                     td.innerHTML += value+" ";
                                 }

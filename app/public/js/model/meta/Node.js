@@ -183,7 +183,7 @@ define([
                         for (var i=0; i<type.displayValues.length; i++) {
                             var curValue = type.displayValues[i];
                             var curAttribute = type.getAttribute(curValue);
-                            when(Renderer.render(entity[curValue], curAttribute, renderOptions), function(value) {
+                            when(Renderer.render(entity[curValue], curAttribute, renderOptions, 'form'), function(value) {
                                 var length = value ? value.toString().length : 0;
                                 if (value && length > 0) {
                                     values.push(value);

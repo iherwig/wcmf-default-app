@@ -6,7 +6,7 @@ function(
     config,
     locale
 ) {
-    return function(value, attribute) {
+    return function(value, attribute, context) {
         if (value) {
             var parseDateFormat = {
                 selector: 'date',

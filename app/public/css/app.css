@@ -283,9 +283,10 @@ legend {
 .entity-page .vscomp-ele,
 .principal-page .dijitTextBox,
 .entity-page .dijitSliderH,
-.entity-page .fileDropTarget {
+.entity-page .fileDropTarget,
+.entity-page .dijitComboBox {
   display: block;
-  width: calc(100% - 50px);
+  width: calc(100% - 50px) !important;
 }
 
 .settings-page .dijitTextBox {
@@ -595,6 +596,7 @@ th.field-actions-6, td.field-actions-6 {
 
 h3[data-dojo-attach-point=headlineNode] {
   width: 350px;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

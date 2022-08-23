@@ -10,7 +10,7 @@ function(
     when,
     ControlFactory
 ) {
-    return function(value, attribute) {
+    return function(value, attribute, context) {
         var deferred = new Deferred();
         when(ControlFactory.translateValue(attribute.inputType, attribute.displayType, value), function(value) {
             if (value && value.toLowerCase().match(/\.gif$|\.jpg$|\.png$/)) {

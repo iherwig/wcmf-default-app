@@ -304,7 +304,7 @@ define([
                             sortable: true,
                             hidden: displayColumns.indexOf(curValue) === -1,
                             renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
-                                when(Renderer.render(data, this, renderOptions), function(value) {
+                                when(Renderer.render(data, this, renderOptions, 'list'), function(value) {
                                     td.innerHTML = value;
                                 });
                             }),
@@ -485,6 +485,7 @@ define([
                 var baseType = inputType.match(/^[^:]+/)[0];
                 switch(baseType) {
                     case 'radio':
+                    case 'checkbox':
                     case 'select':
                     case 'multiselect':
                         return FilterSelectBox;
