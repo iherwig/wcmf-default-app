@@ -748,7 +748,7 @@ function(
               }
               data = lang.mixin(lang.clone(this.entity), data);
 
-              [this.save1Btn, this.save2Btn].forEach(function(b) { b.setProcessing(); });
+              [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.setProcessing();} });
               if (!keepNotification) {
                   this.hideNotification();
               }
@@ -764,7 +764,7 @@ function(
               var storeMethod = this.isNew ? "add" : "put";
               store[storeMethod](data, {overwrite: !this.isNew}).then(lang.hitch(this, function(result) {
                   // callback completes
-                  [this.save1Btn, this.save2Btn].forEach(function(b) { b.reset(); });
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.reset();} });
                   if (result.errorMessage) {
                       // error
                       this.showBackendError(result, true);
@@ -810,7 +810,7 @@ function(
                   }
               }), lang.hitch(this, function(error) {
                   // error
-                  [this.save1Btn, this.save2Btn].forEach(function(b) { b.reset(); });
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.reset();} });
 
                   // check for concurrent update
                   var error = BackendError.parseResponse(error);

@@ -135,7 +135,7 @@ body {
   width: calc(100vw - 120px);
   max-width: 1460px;
   margin: 0 auto;
-  z-index: 946;
+  z-index: 850;
 }
 
 #notification .alert {
@@ -224,7 +224,7 @@ legend {
 }
 
 .navbar-fixed-top {
-  z-index: 948;
+  z-index: 852;
 }
 
 .navbar-default .navbar-collapse .form-group {
@@ -328,7 +328,7 @@ legend {
 
 /* dgrid */
 .dgrid-hider-toggle {
-  z-index: 947;
+  z-index: 851;
 }
 
 .dgrid-row:hover, .dgrid-row:hover .dgrid-cell {
@@ -737,6 +737,10 @@ fieldset i.fa {
 
 .dbootstrap .dijitComboBox .dijitButtonNode {
   border: none;
+}
+
+.cke_maximized {
+  z-index: 853;
 }
 
 /* elfinder */
