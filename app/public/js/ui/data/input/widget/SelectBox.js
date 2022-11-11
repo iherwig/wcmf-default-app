@@ -108,6 +108,7 @@ function(
                           this.supportsMultiSelect ? controlValue.join(',') : (
                             this.valueIsInteger ? parseInt(controlValue) : controlValue)
                         ) : null;
+                        this.displayedValue = this.selectWidget.getDisplayValue();
                     })
                 ));
                 this.updateDisplay(this.value);
@@ -189,6 +190,16 @@ function(
 
         getStore: function() {
             return !this.store.filter ? this.store.store : this.store;
+        },
+
+        setStore: function(store) {
+            this.store = store;
+            when(this.store.fetch(), lang.hitch(this, function(list) {
+                var options = list.map(function(value) {
+                    return { label: value.displayText, value: value.value };
+                })
+                this.selectWidget.setOptions(options);
+            }));
         },
 
         setEntityLink: function() {
