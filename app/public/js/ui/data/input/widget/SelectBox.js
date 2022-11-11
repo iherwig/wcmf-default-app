@@ -214,7 +214,7 @@ function(
                     if (this.entityLink) {
                         // calculate entity url
                         var route = this.page.router.getRoute('entity');
-                        var pathParams = { type:this.selectEntityType, id:this.item.value };
+                        var pathParams = { type:this.selectEntityType, id:this.value };
                         var url = route.assemble(pathParams);
                         domAttr.set(this.entityLink, 'href', url);
                     }
