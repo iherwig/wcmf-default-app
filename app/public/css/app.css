@@ -191,7 +191,7 @@ body {
 }
 
 #page-home .jumbotron .dgrid {
-  max-height: calc(100vh - 676px);
+  max-height: calc(100vh - 470px);
 }
 
 .media-browse-page, .link-browse-page {
@@ -559,7 +559,7 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 .container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
-  height: calc(100vh - 384px);
+  height: calc(100vh - 210px);
   padding-right: 10px;
   overflow-y: scroll;
 }
