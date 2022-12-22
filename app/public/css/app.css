@@ -131,7 +131,7 @@ body {
 #notification {
   position: fixed;
   top: auto;
-  bottom: 80px;
+  bottom: 100px;
   width: calc(100vw - 120px);
   max-width: 1460px;
   margin: 0 auto;
