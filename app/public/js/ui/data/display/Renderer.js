@@ -22,7 +22,7 @@ function(
    * @param value The value
    * @param attribute The attribute definition with at least a 'displayType' property
    * @param options Object with attributes 'truncate' (integer)
-   * @param context Either 'list' or 'form'
+   * @param context Object with attributes 'data' (additional data e.g. entity), 'place' (either 'list' or 'form')
    * @returns Deferred
    */
   Renderer.render = function(value, attribute, options, context) {

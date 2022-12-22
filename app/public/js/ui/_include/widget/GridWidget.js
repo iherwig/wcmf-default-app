@@ -304,7 +304,8 @@ define([
                             sortable: true,
                             hidden: displayColumns.indexOf(curValue) === -1,
                             renderCell: lang.hitch(curAttributeDef, function(object, data, td, options) {
-                                when(Renderer.render(data, this, renderOptions, 'list'), function(value) {
+                                var context = { 'data': object, 'place': 'list' };
+                                when(Renderer.render(data, this, renderOptions, context), function(value) {
                                     td.innerHTML = value;
                                 });
                             }),

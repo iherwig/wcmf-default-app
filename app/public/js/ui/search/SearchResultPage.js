@@ -85,8 +85,9 @@ define([
                         var displayValues = typeClass.displayValues;
                         for (var i=0, count=displayValues.length; i<count; i++) {
                             var displayValue = displayValues[i];
+                            var context = { 'data': object, 'place': 'list' };
                             when(Renderer.render(object[displayValue],
-                                typeClass.getAttribute(displayValue), renderOptions, 'list'), function(value) {
+                                typeClass.getAttribute(displayValue), renderOptions, context), function(value) {
                                 if (value) {
                                     td.innerHTML += value+" ";
                                 }

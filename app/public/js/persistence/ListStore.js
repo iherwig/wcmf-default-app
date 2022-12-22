@@ -60,7 +60,8 @@ define([
             var data = response ? JSON.parse(response) : {};
             var result = data.list ? data.list : [];
             for (var i=0, count=result.length; i<count; i++) {
-                deferredList.push(Renderer.render(result[i].displayText, {displayType: this.displayType}, {}, 'form'));
+              var context = { 'data': result[i], 'place': 'form' };
+              deferredList.push(Renderer.render(result[i].displayText, {displayType: this.displayType}, {}, context));
             }
             all(deferredList).then(lang.hitch(this, function(data) {
                 for (var i=0, count=deferredList.length; i<count; i++) {
