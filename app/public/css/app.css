@@ -560,7 +560,6 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 .container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
-  /* height: calc(100vh - 210px); */
   height: calc(100vh - 384px);
   padding-right: 10px;
   overflow-y: scroll;
@@ -849,6 +848,10 @@ fieldset i.fa {
 
   #wrap {
     padding: 0;
+  }
+
+  .container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
+    height: calc(100vh - 220px);
   }
 
   #notification {
