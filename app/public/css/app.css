@@ -560,7 +560,8 @@ th.field-actions-6, td.field-actions-6 {
 }
 
 .container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
-  height: calc(100vh - 210px);
+  /* height: calc(100vh - 210px); */
+  height: calc(100vh - 384px);
   padding-right: 10px;
   overflow-y: scroll;
 }
@@ -575,7 +576,7 @@ th.field-actions-6, td.field-actions-6 {
 
 /* entity form */
 .form-header .pull-right {
-  margin-top: 8px;
+  margin-top: 9px;
 }
 
 .form-header > .clearfix {
