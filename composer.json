@@ -197,7 +197,7 @@
     ],
     "minimum-stability": "RC",
     "require": {
-        "php": ">=7.0",
+        "php": ">=8.0",
         "wcmf/asset-installer": "~2.0",
         "wcmf/wcmf": "~4.1",
         "dojo/dojo": "~1.16",
@@ -224,9 +224,6 @@
         "toopay/assetic-minifier": "~1.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.7",
-        "phpunit/dbunit": "~1.4",
-        "php-webdriver/webdriver": "~1.6"
     },
     "extra": {
       "installer-types": ["component"],

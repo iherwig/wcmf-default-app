@@ -44,6 +44,8 @@ define([
         title: Dict.translate('Home'),
         bodyDomId: 'page-home',
 
+        gridWidget: null,
+
         constructor: function(params) {
             // register search result type if not done already
             if (!Model.isKnownType("HistoryEntry")) {
@@ -55,7 +57,7 @@ define([
             this.inherited(arguments);
 
             // create widget
-            this.buildForm();
+            this.gridWidget = this.buildForm();
 
             this.own(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
@@ -68,8 +70,12 @@ define([
         },
 
         buildForm: function() {
+            if (config.app.rootTypes.length == 0) {
+                domStyle.set(this.contentNode, "display", "none");
+                return null;
+            }
             var renderOptions = { truncate: 50 };
-            new GridWidget({
+            return new GridWidget({
                 type: "HistoryEntry",
                 store: HistoryStore.getStore(),
                 height: 400,
@@ -111,10 +117,6 @@ define([
                 actions: this.getGridActions(),
                 enabledFeatures: []
             }, this.gridNode);
-
-            if (config.app.rootTypes.length == 0) {
-                domStyle.set(this.contentNode, "display", "none");
-            }
         },
 
         getGridActions: function() {

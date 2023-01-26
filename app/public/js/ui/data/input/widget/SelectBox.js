@@ -48,6 +48,8 @@ function(
 
         supportsEntityLink: true,
         supportsMultiSelect: false,
+        allowsNewOption: false,
+        allowsClear: false,
         valueIsInteger: false,
 
         selectWidget: null,
@@ -65,14 +67,17 @@ function(
 
             this.label = Dict.translate(this.name);
 
+            // get input type (could be overriden by subclass)
+            var inputType = this.getInputType();
+
             // get store from input type, if not set yet
             if (!this.store) {
-                this.store = ControlFactory.getListStore(this.inputType, this.getDisplayType(this.entity, this.name));
+                this.store = ControlFactory.getListStore(inputType, this.getDisplayType(this.entity, this.name));
             }
 
             // get entity type, if this listbox is used to select entities
             if (this.supportsEntityLink) {
-                var options = ControlFactory.getOptions(this.inputType);
+                var options = ControlFactory.getOptions(inputType);
                 var isSelectingEntities = options && options.list && options.list.type == 'node';
                 this.selectEntityType = isSelectingEntities && options.list.types && options.list.types.length == 1 ? options.list.types[0] : null;
             }
@@ -138,6 +143,10 @@ function(
             }
         },
 
+        getInputType: function() {
+            return this.inputType;
+        },
+
         buildSelectWidget: function(values) {
             var wrapper = domConstruct.create("div");
             this.domNode.appendChild(wrapper);
@@ -145,15 +154,17 @@ function(
             VirtualSelect.init({
                 ele: wrapper,
                 multiple: this.supportsMultiSelect,
+                allowNewOption: this.allowsNewOption,
                 options: values.map(function(value) {
                     return { label: value.displayText, value: value.value };
                 }),
                 disabled: this.disabled,
-                hideClearButton: true,
+                hideClearButton: !this.allowsClear,
                 disableSelectAll: true,
                 maxWidth: 'none',
                 placeholder: '',
                 search: true,
+                noOptionsText: Dict.translate('No data'),
                 noSearchResultsText: Dict.translate('No data'),
                 searchPlaceholderText: Dict.translate('Search')
             });

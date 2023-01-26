@@ -42,6 +42,8 @@ define([
         title: Dict.translate('Searchresult'),
         bodyDomId: 'page-searchresult',
 
+        gridWidget: null,
+
         constructor: function(params) {
             this.searchterm = this.request.getQueryParam("q");
 
@@ -58,7 +60,7 @@ define([
             this.setTitle(this.title+" - "+this.searchterm);
 
             // create widget
-            this.buildForm();
+            this.gridWidget = this.buildForm();
 
             this.own(
                 topic.subscribe("store-error", lang.hitch(this, function(error) {
@@ -72,7 +74,7 @@ define([
 
         buildForm: function() {
             var renderOptions = { truncate: 50 };
-            new GridWidget({
+            return new GridWidget({
                 type: "SearchResult",
                 store: SearchStore.getStore(this.searchterm),
                 columns: [{
