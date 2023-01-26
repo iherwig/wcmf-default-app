@@ -469,6 +469,28 @@ th.field-actions-6, td.field-actions-6 {
   padding: 5px 30px 5px 10px !important;
 }
 
+.vscomp-dropbox {
+  min-width: 300px;
+  overflow: auto;
+}
+
+.vscomp-search-wrapper,
+.vscomp-options-container {
+  min-width: 300px;
+}
+
+.vscomp-arrow {
+  display: none !important;
+}
+
+.vscomp-clear-button {
+  right: 5px !important;
+}
+
+.vscomp-wrapper.has-clear-button .vscomp-toggle-button {
+  padding-right: 0 !important;
+}
+
 /* dnd */
 .dojoDndAvatarHeader {
   background-position:3px 3px !important;
