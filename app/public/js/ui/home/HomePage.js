@@ -78,7 +78,7 @@ define([
             return new GridWidget({
                 type: "HistoryEntry",
                 store: HistoryStore.getStore(),
-                height: 400,
+                height: 300,
                 columns: [{
                     label: Dict.translate("_displayValue"),
                     field: "_displayValue",

@@ -186,12 +186,16 @@ body {
   box-shadow: none;
 }
 
+#page-home .jumbotron {
+  height: calc(100vh - 274px);
+}
+
 #page-home .jumbotron p {
   margin: 30px 0;
 }
 
 #page-home .jumbotron .dgrid {
-  max-height: calc(100vh - 470px);
+  max-height: calc(100vh - 370px);
 }
 
 .media-browse-page, .link-browse-page {
@@ -870,6 +874,10 @@ fieldset i.fa {
 
   #wrap {
     padding: 0;
+  }
+
+  #page-home .jumbotron {
+    height: calc(100vh - 114px);
   }
 
   .container > .dijitTabContainerNoLayout > .dijitTabPaneWrapper .scroll-container {
