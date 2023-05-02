@@ -21,6 +21,7 @@ function(
         type: null, // type to filter
         attribute: null, // attribute to filter
         filterCtr: null, // filter constructor (see https://github.com/SitePen/dstore/blob/master/docs/Collection.md#filtering)
+        valueIsInteger: false,
 
         constructor: function(args) {
             declare.safeMixin(this, args);
@@ -29,6 +30,9 @@ function(
                 inputType: ControlFactory.addEmptyItem(args.inputType, ''),
                 entity: new Entity({oid: Model.createDummyOid(args.type)}),
             });
+            var typeClass = Model.getType(args.type);
+            var attribute = typeClass.getAttribute(args.attribute);
+            this.valueIsInteger = attribute.type && attribute.type.toLowerCase() === 'integer';
         },
 
         reset: function() {
@@ -43,8 +47,8 @@ function(
         getFilter: function() {
             var value = this.control.get('value');
             if (value !== undefined && value !== null && value !== '') {
-                // match with word boundary, because value could be inside comma separated list
-                var filterValue = '[[:<:]]'+value+'[[:>:]]';
+                // match with word boundary for string values, because value could be inside comma separated list
+                var filterValue = this.valueIsInteger ? value : '[[:<:]]'+value+'[[:>:]]';
                 return (new this.filterCtr()).match(this.type+'.'+this.attribute, filterValue);
             }
             return null;
