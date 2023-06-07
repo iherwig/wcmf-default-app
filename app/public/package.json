@@ -1,5 +1,0 @@
-{
-    "name": "wcmf-default-app",
-    "description": "Default application for the wCMF framework",
-    "dojoBuild": "package.js"
-}
