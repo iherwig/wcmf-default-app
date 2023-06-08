@@ -21,12 +21,14 @@
 import { reactive, ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import { onKeyStroke } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router';
-import { useConfig, useApi, useCookies } from '~/composables';
 
-const config = useConfig() as any
+import { useApi, useUser } from '~/composables';
+
+const { locale } = useI18n()
 const router = useRouter()
-const cookies = useCookies()
+const { create: createUser } = useUser()
 
 interface LoginData {
   username: string
@@ -61,8 +63,9 @@ const login = () => {
         })
         isLoading.value = false
         if (statusCode.value == 200) {
-          console.log(cookies.get(config.authTokenCookieName))
-          router.push('/')
+          // start session
+          createUser(loginData.username, (data as any).roles);
+          router.push({ name: 'Home', params: { locale: locale.value } })
         }
         else {
           loginError.value = true

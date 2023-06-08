@@ -16,17 +16,16 @@ const routes: Array<RouteRecordRaw> = [
             menu: !isLoginPage,
             cssId: route.name ? `page-${route.name.toString().toLowerCase()}` : ''
           }
-          console.log(props)
           return props
         },
         children: [
           {
-            path: 'login',
+            path: '',
             name: 'Login',
             component: () => import('~/views/Login.vue'),
           },
           {
-            path: '',
+            path: 'home',
             name: 'Home',
             component: () => import('~/views/Home.vue'),
           }

@@ -32,19 +32,19 @@ export async function routeMiddleware(to: RouteLocationNormalized, from: RouteLo
 type ResourceSchema = { [key: Path]: string }
 
 function getBrowserLocale(options = {}) {
-  const defaultOptions = { countryCodeOnly: false };
-  const opt = { ...defaultOptions, ...options };
+  const defaultOptions = { countryCodeOnly: false }
+  const opt = { ...defaultOptions, ...options }
   const navigatorLocale =
     navigator.languages !== undefined
       ? navigator.languages[0]
-      : (navigator.language);
+      : (navigator.language)
   if (!navigatorLocale) {
-    return undefined;
+    return undefined
   }
   const trimmedLocale = opt.countryCodeOnly
     ? navigatorLocale.trim().split(/-|_/)[0]
-    : navigatorLocale.trim();
-  return trimmedLocale;
+    : navigatorLocale.trim()
+  return trimmedLocale
 }
 
 function getUserDefaultLocale() {
@@ -78,6 +78,6 @@ async function loadTranslations(locale: Locale) {
     return nonBlankTranslations
   }
   else {
-    throw new Error(error.value);
+    throw new Error(error.value)
   }
 }
