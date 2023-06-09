@@ -11,9 +11,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         component: () => import('~/views/BasePage.vue'),
         props: (route: RouteLocation) => {
-          const isLoginPage = route.path == '/login'
+          const isLoginPage = route.name == 'Login'
           const props = {
             menu: !isLoginPage,
+            background: isLoginPage,
+            logo: isLoginPage,
             cssId: route.name ? `page-${route.name.toString().toLowerCase()}` : ''
           }
           return props

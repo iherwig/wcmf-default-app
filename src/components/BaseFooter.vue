@@ -1,12 +1,12 @@
 <template>
-  <el-row align="middle">
+  <el-row class="flex-items-center">
     <el-col :span="12">
       <div>
         created with <a href="https://wcmf.wemove.com" target="_blank">wCMF</a>
       </div>
     </el-col>
     <el-col :span="12">
-      <div w="full" class="flex gap-2 content-right">
+      <div class="flex gap-2 flex-justify-end">
         <LocaleChanger />
         <el-button circle @click="toggleDark()">
           <el-icon v-if="isDark" class="el-icon"><Moon /></el-icon>
@@ -24,9 +24,6 @@ import { Moon, Sunny } from '@element-plus/icons-vue'
 
 <style scoped>
 .ep-row {
-  height: var(--ep-footer-height);
-}
-.content-right {
-  justify-content: end;
+  height: 100%;
 }
 </style>

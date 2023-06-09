@@ -3,7 +3,8 @@
     <el-header>
       <BaseHeader :menu="menu" />
     </el-header>
-    <el-main class="important-flex flex-justify-center flex-items-center">
+    <el-main class="important-flex flex-justify-center flex-items-center" :class="{ 'bg-image': background }">
+      <div v-if="logo" id="logo"></div>
       <router-view />
     </el-main>
     <el-footer>
@@ -15,24 +16,26 @@
 <script lang="ts" setup>
 import { useConfig } from '~/composables';
 
-defineProps<{ menu: boolean, cssId: string }>();
+defineProps<{ menu: boolean, background: boolean, logo: boolean, cssId: string }>();
 
 const config = useConfig() as any
-const background = config.background
-const logo = config.logo
+const backgroundUrl = config.background
+const logoUrl = config.logo
 </script>
 
 <style>
-.ep-main {
-  height: calc(100vh - var(--ep-header-height) - var(--ep-footer-height));
+.ep-container {
+  height: 100vh;
+}
+.bg-image {
   background-size: cover;
   background-position: bottom center;
-  background-image: v-bind(background)
+  background-image: v-bind(backgroundUrl);
 }
 #logo {
   background-size: contain;
   background-position: top left;
   background-repeat: no-repeat;
-  background-image: v-bind(logo);
+  background-image: v-bind(logoUrl);
 }
 </style>

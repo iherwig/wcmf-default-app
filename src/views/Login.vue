@@ -1,18 +1,21 @@
 <template>
-  <div id="logo"></div>
   <div class="form-container">
-    <h1 class="text-center">{{ $t('Sign in') }}</h1>
+    <h3>{{ config.title }}</h3>
     <el-alert v-if="loginError" :title="$t('Authentication failed')" type="error" :description="$t('Please check your credentials and try again.')" />
-    <el-form ref="loginForm" :model="loginData" :rules="loginRules" class="py-2">
-      <el-form-item prop="username">
-        <el-input v-model="loginData.username" autocomplete="off" :prefix-icon="User" :placeholder="$t('Login')"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="loginData.password" type="password" autocomplete="off" show-password :prefix-icon="Lock" :placeholder="$t('Password')"></el-input>
-      </el-form-item>
-      <el-form-item>
+    <el-form ref="loginForm" :model="loginData" :rules="loginRules">
+      <el-row :gutter="10">
+        <el-col :span="16">
+          <el-form-item prop="username"><el-input v-model="loginData.username" autocomplete="off" :prefix-icon="User" :placeholder="$t('Login')"></el-input></el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="16">
+          <el-form-item prop="password"><el-input v-model="loginData.password" type="password" autocomplete="off" show-password :prefix-icon="Lock" :placeholder="$t('Password')"></el-input></el-form-item>
+        </el-col>
+        <el-col :span="8">
         <el-button type="primary" @click="login" :loading="isLoading">{{ $t('Sign in') }}</el-button>
-      </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
   </div>
 </template>
@@ -23,11 +26,11 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { onKeyStroke } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router';
-
-import { useApi, useUser } from '~/composables';
+import { useConfig, useApi, useUser } from '~/composables';
 
 const { locale } = useI18n()
 const router = useRouter()
+const config = useConfig() as any
 const { create: createUser } = useUser()
 
 interface LoginData {
@@ -90,8 +93,18 @@ const login = () => {
 </style>
 
 <style scoped>
+h3 {
+  margin: 18px 0;
+  text-transform: uppercase;
+  font-size: 40px;
+  letter-spacing: 2px;
+}
+.ep-alert {
+  margin-bottom: 18px;
+}
 .form-container {
-  padding: 0 50px;
+  min-width: 380px;
+  padding: 24px 30px;
   background: #ffffff;
   border-radius: var(--ep-border-radius-base);
 }

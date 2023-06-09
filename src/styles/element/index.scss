@@ -1,3 +1,4 @@
+/*
 $--colors: (
   "primary": (
     "base": green,
@@ -18,6 +19,7 @@ $--colors: (
     "base": #42b8dd,
   ),
 );
+*/
 
 // we can add this to custom namespace, default is 'el'
 @forward "element-plus/theme-chalk/src/mixins/config.scss" with (
@@ -26,11 +28,13 @@ $--colors: (
 
 // You should use them in scss, because we calculate it by sass.
 // comment next lines to use default color
+/*
 @forward "element-plus/theme-chalk/src/common/var.scss" with (
   // do not use same name, it will override.
   $colors: $--colors,
   $button-padding-horizontal: ("default": 50px)
 );
+*/
 
 // if you want to import all
 // @use "element-plus/theme-chalk/src/index.scss" as *;
