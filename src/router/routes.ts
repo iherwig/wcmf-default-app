@@ -4,6 +4,7 @@ import { routeMiddleware } from '~/i18n';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:locale([a-zA-Z]{2})?',
+    name: 'Root',
     component: RouterView,
     beforeEnter: routeMiddleware,
     children: [

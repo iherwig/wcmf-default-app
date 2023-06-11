@@ -18,7 +18,7 @@ watch(locale, () => {
   }
   catch(e) {
     console.error(e)
-    router.push("/")
+    router.push({ name: 'Root' })
   }
 })
 </script>

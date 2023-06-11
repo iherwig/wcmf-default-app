@@ -19,7 +19,7 @@ router.beforeEach(async(to: RouteLocationNormalized, from: RouteLocationNormaliz
       console.error('User is authenticated, but auth token is empty. AuthTokenSession is required on server side! Deleting cookies...')
       destroy()
     }
-    return { name: 'Login', query: { route: to.path } }
+    return { name: 'Login', query: to.name != 'Root' ? { route: to.path } : undefined }
   }
 
   // redirect to home page, if user is logged in already
