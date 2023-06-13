@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
-import { useConfig, useApi, useCookies } from "~/composables"
+import { useCookies } from '@vueuse/integrations/useCookies'
+import { useConfig, useApi } from '~/composables'
 
 export function useUser() {
   const cookies = useCookies()

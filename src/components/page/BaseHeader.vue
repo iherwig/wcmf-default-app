@@ -9,7 +9,7 @@
     <el-sub-menu index="3">
       <template #title>{{ $t('Content') }}</template>
       <template v-for="(type, index) in config.rootTypes" :key="type">
-        <el-menu-item :index="'3-'+(index+1)"><el-icon><collection /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
+        <el-menu-item :index="'3-'+(index+1)"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
       </template>
     </el-sub-menu>
     <el-sub-menu index="4">
@@ -24,7 +24,7 @@
     </el-form>
     <div class="flex-grow" />
     <el-sub-menu index="5">
-      <template #title>{{ getLogin() }}</template>
+      <template #title><el-icon><user-filled /></el-icon><span>{{ getLogin() }}</span></template>
       <el-menu-item index="5-1"><el-icon><setting /></el-icon><span>{{ $t('Settings') }}</span></el-menu-item>
       <el-menu-item index="5-2" @click="handleLogout"><el-icon><close /></el-icon><span>{{ $t('Logout') }}</span></el-menu-item>
     </el-sub-menu>
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Collection, User, Key, Lock, Search, Setting, Close } from '@element-plus/icons-vue'
+import { Files, User, Key, Lock, Search, Setting, UserFilled, Close } from '@element-plus/icons-vue'
 import { MenuItemRegistered } from 'element-plus';
 import { useConfig, useUser } from '~/composables'
 import router from '~/router';

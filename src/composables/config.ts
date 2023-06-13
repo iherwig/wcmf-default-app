@@ -14,3 +14,8 @@ const clientConfig = JSON.parse(allConfig.value.clientConfig)
 export function useConfig() {
   return clientConfig
 }
+
+export function useAppProperties() {
+  const { clientConfig: _, ...appProps } = allConfig.value
+  return appProps
+}

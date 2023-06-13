@@ -2,12 +2,12 @@
   <el-row class="flex-items-center">
     <el-col :span="12">
       <div>
-        created with <a href="https://wcmf.wemove.com" target="_blank">wCMF</a>
+        <small>{{ appProperties.appTitle }} <em>{{ appProperties.version }}</em> created with <a href="https://wcmf.wemove.com" target="_blank">wCMF</a></small>
       </div>
     </el-col>
     <el-col :span="12">
       <div class="flex gap-2 flex-justify-end">
-        <LocaleChanger />
+        <LocaleChanger :onlyIfMultiple="true" />
         <el-button circle @click="toggleDark()">
           <el-icon v-if="isDark" class="el-icon"><Moon /></el-icon>
           <el-icon v-else class="el-icon"><Sunny /></el-icon>
@@ -18,8 +18,10 @@
 </template>
 
 <script lang="ts" setup>
-import { isDark, toggleDark } from "~/composables"
+import { isDark, toggleDark, useAppProperties } from '~/composables'
 import { Moon, Sunny } from '@element-plus/icons-vue'
+
+const appProperties = useAppProperties()
 </script>
 
 <style scoped>

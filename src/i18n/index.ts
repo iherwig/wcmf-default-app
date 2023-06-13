@@ -1,6 +1,7 @@
 import { createI18n, Locale, LocaleMessages, Path } from 'vue-i18n'
-import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import { useConfig, useApi } from '~/composables';
+import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { useConfig, useApi } from '~/composables'
+import { WcmfFormatter } from './formatter'
 
 // load resources
 const config = useConfig() as any
@@ -13,9 +14,13 @@ const i18n = createI18n({
   fallbackWarn: false,
   globalInjection: true,
   legacy: false,
+  formatter: new WcmfFormatter({messages}),
   messages
 })
 export default i18n
+
+const t = i18n.global.t
+export { t }
 
 export async function routeMiddleware(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise<any> {
   const paramLocale = to.params.locale

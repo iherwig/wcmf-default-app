@@ -1,4 +1,5 @@
-import { createFetch } from '@vueuse/core'
+import { createFetch, CreateFetchOptions, BeforeFetchContext, AfterFetchContext } from '@vueuse/core'
+import { useAuthToken } from '~/composables'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
@@ -7,28 +8,57 @@ const contentHeaders = {
   "Content-Type": "application/json",
 }
 
-const useApiFetch = createFetch({
+const baseOptions: Partial<CreateFetchOptions> = {
   baseUrl: apiBaseUrl,
   combination: 'overwrite',
+}
+
+const beforeFetchImpl = async(ctx: BeforeFetchContext, withAuth: boolean) => {
+  ctx.options.headers = {
+    ...ctx.options.headers,
+    ...contentHeaders,
+  }
+  // add authorization header if requested
+  if (withAuth) {
+    const { name, token } = useAuthToken()
+    if (token) {
+      ctx.options.headers = Object.assign({}, ctx.options.headers, {
+        [name]: token
+      })
+    }
+  }
+  return ctx
+}
+
+const afterFetch = (ctx: AfterFetchContext) => {
+  try {
+    ctx.data = JSON.parse(ctx.data)
+  }
+  catch {
+    throw('Invalid JSON')
+  }
+  return ctx
+}
+
+const useApiFetch = createFetch({
+  ...baseOptions,
   options: {
-    async beforeFetch({ options }) {
-      const token = ''
-      options.headers = {
-        ...options.headers,
-        ...contentHeaders,
-        Authorization: `Bearer ${token}`,
-      }
-      return { options }
+    async beforeFetch(ctx: BeforeFetchContext) {
+      return beforeFetchImpl(ctx, false)
     },
-    afterFetch(ctx) {
-      try {
-        ctx.data = JSON.parse(ctx.data)
-      }
-      catch {
-        throw('Invalid JSON')
-      }
-      return ctx
-    },
+    afterFetch
   },
 })
 export const useApi = useApiFetch
+
+const useApiFetchWithAuth = createFetch({
+  ...baseOptions,
+  options: {
+    async beforeFetch(ctx: BeforeFetchContext) {
+      console.log('with AUTH')
+      return beforeFetchImpl(ctx, true)
+    },
+    afterFetch
+  },
+})
+export const useApiWithAuth = useApiFetchWithAuth
