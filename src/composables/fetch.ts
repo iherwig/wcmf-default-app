@@ -55,7 +55,6 @@ const useApiFetchWithAuth = createFetch({
   ...baseOptions,
   options: {
     async beforeFetch(ctx: BeforeFetchContext) {
-      console.log('with AUTH')
       return beforeFetchImpl(ctx, true)
     },
     afterFetch

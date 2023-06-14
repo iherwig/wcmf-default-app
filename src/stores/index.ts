@@ -5,5 +5,5 @@ export * from './history'
 
 export interface Store {
   entities: Ref<Entity[]>
-  fetch: () => {}
+  fetch: () => Promise<void>
 }

@@ -37,7 +37,7 @@ import { MenuItemRegistered } from 'element-plus';
 import { useConfig, useUser } from '~/composables'
 import router from '~/router';
 
-defineProps<{ menu: boolean }>();
+defineProps<{ menu: boolean }>()
 
 const config = useConfig() as any
 const { getLogin, destroy } = useUser()

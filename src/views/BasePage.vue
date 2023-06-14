@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { useConfig } from '~/composables';
 
-defineProps<{ menu: boolean, background: boolean, logo: boolean, cssId: string }>();
+defineProps<{ menu: boolean, background: boolean, logo: boolean, cssId: string }>()
 
 const config = useConfig() as any
 const backgroundUrl = config.background

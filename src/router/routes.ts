@@ -10,6 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
+        name: '_Base',
         component: () => import('~/views/BasePage.vue'),
         props: (route: RouteLocation) => {
           const isLoginPage = route.name == 'Login'

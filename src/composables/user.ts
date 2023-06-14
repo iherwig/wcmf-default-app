@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
 import { useCookies } from '@vueuse/integrations/useCookies'
-import { useConfig, useApi } from '~/composables'
+import { useConfig, useApiWithAuth } from '~/composables'
 
 export function useUser() {
   const cookies = useCookies()
@@ -11,7 +11,7 @@ export function useUser() {
   let stopSessionCheck: Function|undefined = undefined
 
   const fetchConfigValue = async(key: string) => {
-    const { statusCode, error, data } = await useApi(`/user/config/${key}`).get()
+    const { statusCode, error, data } = await useApiWithAuth(`/user/config/${key}`).get()
     if (statusCode.value != 200) {
       throw new Error(`Failed to load user configuration value '${key}'`)
     }
@@ -20,7 +20,7 @@ export function useUser() {
   }
 
   const storeConfigValue = async(key: string, value: string) => {
-    const { statusCode, error, data } = await useApi(`/user/config/${key}`).post({
+    const { statusCode, error, data } = await useApiWithAuth(`/user/config/${key}`).post({
       value: value
     })
     if (statusCode.value != 200) {
@@ -61,7 +61,8 @@ export function useUser() {
    * Destroy the user instance. Called, when the session is ended
    */
   const destroy = () => {
-    cookies.keys().forEach((k: string) => {
+    Object.keys(cookies.getAll()).forEach((k: string) => {
+      console.log(`Removing cookie ${k}`)
       cookies.remove(k)
     })
     if (stopSessionCheck) {
@@ -93,7 +94,7 @@ export function useUser() {
    */
   const isLoggedIn = (): boolean => {
     var user = cookies.get('user')
-    return user !== null
+    return user !== null && user !== undefined
   }
 
   /**
