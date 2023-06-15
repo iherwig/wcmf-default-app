@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import { useIntervalFn } from '@vueuse/core'
-import { useCookies } from '@vueuse/integrations/useCookies'
-import { useConfig, useApiWithAuth } from '~/composables'
+import { useConfig, useCookies, useApiWithAuth, CookieFormat } from '~/composables'
 
 export function useUser() {
   const cookies = useCookies()
@@ -37,7 +36,7 @@ export function useUser() {
     cookies.set('user', {
       login: login,
       roles: roles
-    })
+    }, CookieFormat.JSON)
     initialize()
   }
 
@@ -61,10 +60,7 @@ export function useUser() {
    * Destroy the user instance. Called, when the session is ended
    */
   const destroy = () => {
-    Object.keys(cookies.getAll()).forEach((k: string) => {
-      console.log(`Removing cookie ${k}`)
-      cookies.remove(k)
-    })
+    cookies.removeAll()
     if (stopSessionCheck) {
       stopSessionCheck()
     }
@@ -74,7 +70,7 @@ export function useUser() {
    * Get the user's login
    */
   const getLogin = (): string => {
-    var user = cookies.get('user')
+    var user = cookies.get('user', CookieFormat.JSON)
     return user ? user.login : ''
   }
 
@@ -82,7 +78,7 @@ export function useUser() {
    * Check if the user has the given role
    */
   const hasRole = (name: string): boolean => {
-    var user = cookies.get('user')
+    var user = cookies.get('user', CookieFormat.JSON)
     if (user && user.roles) {
       return user.roles.indexOf(name) !== -1
     }
@@ -93,7 +89,7 @@ export function useUser() {
    * Get the user's login
    */
   const isLoggedIn = (): boolean => {
-    var user = cookies.get('user')
+    var user = cookies.get('user', CookieFormat.JSON)
     return user !== null && user !== undefined
   }
 

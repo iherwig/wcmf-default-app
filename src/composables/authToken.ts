@@ -1,5 +1,4 @@
-import { useCookies } from '@vueuse/integrations/useCookies'
-import { useConfig } from '~/composables'
+import { useConfig, useCookies } from '~/composables'
 
 export function useAuthToken() {
   const cookies = useCookies()
