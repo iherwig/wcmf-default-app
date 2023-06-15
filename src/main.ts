@@ -1,18 +1,23 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'
-import App from './App.vue'
-import Router from './router'
-import I18n from './i18n'
+import { fetchConfig } from '~/composables'
 
 import './styles/index.scss'
 import 'uno.css'
 
 import 'element-plus/theme-chalk/src/message.scss'
 
-const pinia = createPinia()
-const app = createApp(App)
+fetchConfig().then(async() => {
+  const i18nModule = await import('./i18n')
+  const routerModule = await import('./router')
+  const appModule = await import('./App.vue')
 
-app.use(pinia)
-  .use(Router)
-  .use(I18n)
-  .mount("#app")
+  const pinia = createPinia()
+  const app = createApp(appModule.default)
+
+  app.use(pinia)
+    .use(routerModule.default)
+    .use(i18nModule.default)
+    .mount("#app")
+})
+

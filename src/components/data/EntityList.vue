@@ -21,18 +21,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, onMounted, toValue } from 'vue'
-import { Column } from 'element-plus'
+import { ref, reactive, watch, onMounted, h } from 'vue'
+import { Column, ElLink } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { useElementSize } from '@vueuse/core'
 import { EntityClass, EntityAttribute, Entity } from '~/stores/model/meta/entity'
 import { Store } from '~/stores'
+import { Action } from '~/actions'
+import { VNode } from 'vue'
 
 const props = defineProps<{
   type: EntityClass
   store: Store
   columns?: Column<Entity>[]
-  actions: CallableFunction[]
+  actions: Action<unknown>[]
   enabledFeatures: any[]
 }>()
 
@@ -40,34 +42,87 @@ const { t } = useI18n()
 
 const root = ref<HTMLElement|null>(null)
 const isLoading = ref<boolean>(false)
-const initialWidth = ref<number>(0)
 
-const { width } = useElementSize(root)
-watch(width, () => {
-  if (initialWidth.value == 0 && width.value != 0) {
-    initialWidth.value = width.value
-  }
-  // resize columns propotionally
-  let usedWidth = 0
-  for (let i=0, count=cols.value.length; i<count; i++) {
-    const remainingCols = count-i
-    const w = cols.value[i].initialWidth !== 0 ? cols.value[i].initialWidth/initialWidth.value*width.value : (width.value-usedWidth)/remainingCols
-    cols.value[i].width = w
-    usedWidth += w
-  }
-})
-
+// function for generating columns
 const generateColumns = (type: EntityClass, width: number): Column<Entity>[] =>
   Array.from(type.attributes).map((a: EntityAttribute) => ({
+    key: a.name,
     dataKey: a.name,
     title: t(a.name),
     width: width,
     sortable: true,
   })
 )
-const cols = reactive({
-  value: (props.columns?.map((c) => { return {...c, initialWidth: c.width} }) || generateColumns(props.type, 0))
+
+// function for detecting fixed columns
+const isFixed = ((c: Column<Entity>) => c.minWidth != undefined && c.minWidth > 0)
+
+let initialWidth = 0
+let reservedWidth = 0
+
+const { width } = useElementSize(root)
+watch(width, () => {
+  // calculate initial relative widths for non-fixed columns
+  if (initialWidth == 0 && width.value != 0) {
+    initialWidth = width.value
+    let numZeroWidthCols = 0
+    let usedWidth = 0
+    cols.value.forEach((c) => {
+      if (isFixed(c)) {
+        reservedWidth += c.minWidth!
+        usedWidth += c.minWidth!
+      }
+      else if (c.width > 0) {
+        c.relWidth = c.width/initialWidth
+        usedWidth += c.width
+      }
+      else {
+        numZeroWidthCols++
+      }
+    })
+    const numZeroWidthColRelWidth = (initialWidth-usedWidth)/numZeroWidthCols/initialWidth
+    cols.value.filter((c) => !isFixed(c) && c.width == 0).forEach((c) => {
+      c.relWidth = numZeroWidthColRelWidth
+    })
+  }
+  // resize columns proportionally
+  for (let i=0, count=cols.value.length; i<count; i++) {
+    const c = cols.value[i]
+    const w = isFixed(c) ? c.minWidth! : c.relWidth*width.value
+    cols.value[i].width = w
+  }
 })
+
+const columns: Column<Entity>[] = (props.columns || generateColumns(props.type, 0))
+
+// add action column
+if (props.actions.length > 0) {
+  columns.push({
+    key: 'actions',
+    dataKey: 'actions',
+    title: '',
+    width: props.actions.length*70,
+    minWidth: props.actions.length*70,
+    sortable: false,
+    cellRenderer: ({rowData}) => {
+      const buttons: VNode[] = []
+      for (let i=0, count=props.actions.length; i<count; i++) {
+        const action: Action<unknown> = props.actions[i]
+        action.entity = Entity.fromObject(rowData)
+        buttons.push(h(ElLink, {
+          icon: action.icon,
+          href: action.url,
+          onClick: () => { action.execute() }
+        }))
+      }
+      return h('div',
+        { class: 'flex flex-justify-center flex-items-center' },
+        buttons
+      )
+    }
+  })
+}
+const cols = reactive({ value: columns })
 
 onMounted(async() => {
   isLoading.value = true

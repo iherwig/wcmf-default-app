@@ -6,7 +6,7 @@
       :type="historyEntity"
       :columns="columns"
       :store="store"
-      :actions="[]"
+      :actions="actions"
       :enabledFeatures="[]"
     />
   </el-space>
@@ -15,8 +15,11 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { Column } from 'element-plus'
+import { Entity } from '~/stores/model/meta/entity'
 import { Store, useHistoryStore } from '~/stores'
 import { HistoryItem } from '~/stores/model/history'
+import { Action, Edit } from '~/actions'
 
 const { t } = useI18n()
 
@@ -26,7 +29,7 @@ const { entities } = storeToRefs(historyStore)
 const { fetch } = historyStore
 const store: Store = { entities, fetch }
 
-const columns = historyEntity.attributes.filter((a) => !a.tags.includes('DATATYPE_IGNORE')).map((a) => {
+const columns: Column<Entity>[] = historyEntity.attributes.filter((a) => !a.tags.includes('DATATYPE_IGNORE')).map((a) => {
   return {
     key: a.name,
     dataKey: a.name,
@@ -35,6 +38,9 @@ const columns = historyEntity.attributes.filter((a) => !a.tags.includes('DATATYP
     sortable: true,
   }
 })
+const actions: Action<unknown>[] = [
+  new Edit()
+]
 </script>
 
 <style scoped>

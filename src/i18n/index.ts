@@ -5,7 +5,7 @@ import { WcmfFormatter } from './formatter'
 
 // load resources
 const config = useConfig() as any
-const messages = await loadAll(Object.keys(config.languages))
+const messages = {} //await loadAll(Object.keys(config.languages))
 
 const i18n = createI18n({
   locale: config.uiLanguage,

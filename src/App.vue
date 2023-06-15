@@ -12,7 +12,6 @@ import { useConfig } from '~/composables'
 let locale = ref(undefined)
 
 onMounted(async() => {
-  // load client config initially
   try {
     const config = useConfig() as any
     console.log('Configuration:', config)

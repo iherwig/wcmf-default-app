@@ -1,21 +1,24 @@
-import { Ref } from 'vue'
 import { useApi } from './fetch'
 
-async function fetchConfig(): Promise<Ref<any>> {
+let allConfig: any = {}
+let clientConfig: any = {}
+
+export async function fetchConfig(): Promise<void> {
   const { statusCode, error, data } = await useApi('')
   if (statusCode.value == 200) {
-    return data
+    allConfig = data.value
+    clientConfig = JSON.parse(allConfig.clientConfig)
   }
-  throw new Error('Failed to load configuration', { cause: error.value })
+  else {
+    throw new Error('Failed to load configuration', { cause: error.value })
+  }
 }
-const allConfig = await fetchConfig()
-const clientConfig = JSON.parse(allConfig.value.clientConfig)
 
 export function useConfig() {
   return clientConfig
 }
 
 export function useAppProperties() {
-  const { clientConfig: _, ...appProps } = allConfig.value
+  const { clientConfig: _, ...appProps } = allConfig
   return appProps
 }

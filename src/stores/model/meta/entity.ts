@@ -72,7 +72,11 @@ export interface EntityRelation {
   relationType: RelationType,
 }
 
-export class Entity extends Map {}
+export class Entity extends Map {
+  public static fromObject(obj: object) {
+    return new Map(Object.entries(obj));
+  }
+}
 
 export class EntityClass implements EntityType {
 
