@@ -1,6 +1,7 @@
 <template>
   <el-space :fill="true" wrap>
     <h1>{{ $t('Welcome') }}</h1>
+    <h3>{{ $t('Last Updates') }}</h3>
     <EntityList
       style="height:70vh; width:90vw"
       :type="historyEntity"
@@ -34,7 +35,7 @@ const columns: Column<Entity>[] = historyEntity.attributes.filter((a) => !a.tags
     key: a.name,
     dataKey: a.name,
     title: t(a.name),
-    width: a.name == '_displayValue' ? 700 : 0,
+    width: 0,
     sortable: true,
   }
 })

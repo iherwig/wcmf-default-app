@@ -1,20 +1,32 @@
-import { createI18n, Locale, LocaleMessages, Path } from 'vue-i18n'
+import { createI18n } from 'vue-i18n'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { useConfig, useApi } from '~/composables'
-import { WcmfFormatter } from './formatter'
+import { useConfig, useLocaleMessages } from '~/composables'
 
 // load resources
 const config = useConfig() as any
-const messages = {} //await loadAll(Object.keys(config.languages))
+const messages = useLocaleMessages()
 
+// NOTE since wcmf messages use %...% as interpolation placeholders,
+// we need to transform them to {...} be used with vue-i18n-next
+const regex = /(%([^%]+)%)/gm
+const subst = '{$2}'
+Object.keys(messages).forEach((locale) => {
+  Object.keys(messages[locale]).forEach((k) => {
+    if (k.match(regex)) {
+      const kNew = k.replace(regex, subst)
+      const vNew = messages[locale][k].replace(regex, subst)
+      messages[locale][kNew] = vNew
+    }
+  })
+})
+
+// https://vue-i18n.intlify.dev/guide/advanced/composition.html
 const i18n = createI18n({
+  legacy: false,
   locale: config.uiLanguage,
   fallbackLocale: config.uiLanguage,
   missingWarn: false,
   fallbackWarn: false,
-  globalInjection: true,
-  legacy: false,
-  formatter: new WcmfFormatter({messages}),
   messages
 })
 export default i18n
@@ -33,8 +45,6 @@ export async function routeMiddleware(to: RouteLocationNormalized, from: RouteLo
   i18n.global.locale.value = paramLocale
   return next()
 }
-
-type ResourceSchema = { [key: Path]: string }
 
 function getBrowserLocale(options = {}) {
   const defaultOptions = { countryCodeOnly: false }
@@ -58,31 +68,4 @@ function getUserDefaultLocale() {
     return browserLocale
   }
   return config.uiLanguage
-}
-
-async function loadAll<Locales>(locales: readonly Locale[]) {
-  const messages: Record<string, any> = {}
-  for (const locale of locales) {
-    try {
-      messages[locale] = await loadTranslations(locale)
-    }
-    catch {
-      console.error(`Unable to load locale '${locale}'`)
-    }
-  }
-  return messages as LocaleMessages<ResourceSchema, Locales>
-}
-
-async function loadTranslations(locale: Locale) {
-  const { statusCode, error, data } = await useApi(`/messages/${locale}`)
-  if (statusCode.value == 200) {
-    const translations = data.value as Record<string, string>
-
-    // NOTE: we remove blank translations, to let vue-i18n return the translation keys for undefined translations
-    var nonBlankTranslations = Object.fromEntries(Object.entries(translations).filter(([k, v]) => v != ''))
-    return nonBlankTranslations
-  }
-  else {
-    throw new Error(error.value)
-  }
 }

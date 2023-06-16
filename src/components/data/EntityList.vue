@@ -9,14 +9,17 @@
           :height="height"
           :fixed="true"
         >
-        <template #empty>
-          <div class="flex items-center justify-center h-100%">
-            <p>{{ $t('No data') }}</p>
-          </div>
-        </template>
+          <template #empty>
+            <div class="flex items-center justify-center h-100%">
+              <p>{{ $t('No data') }}</p>
+            </div>
+          </template>
         </el-table-v2>
       </template>
     </el-auto-resizer>
+    <div class="flex items-center justify-end p-1">
+      <small>{{ $t('{0} item(s)', [store.entities.value.length]) }}</small>
+    </div>
   </div>
 </template>
 
