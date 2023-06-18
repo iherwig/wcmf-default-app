@@ -5,10 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 import { useConfig } from '~/composables'
+import { useOverrides } from './app/composables/overrides'
 
 let locale = ref(undefined)
+
+const overrides = useOverrides()
 
 onMounted(async() => {
   const config = useConfig() as any

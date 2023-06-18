@@ -2,14 +2,15 @@
   <el-menu v-if="menu" class="flex-items-center"
     mode="horizontal"
     :ellipsis="false"
+    :router="true"
   >
     <div class="px">{{ config.title }}</div>
-    <el-menu-item index="1">{{ $t('Home') }}</el-menu-item>
+    <el-menu-item index="1" :route="{ name: 'Home', params: { locale: locale }}">{{ $t('Home') }}</el-menu-item>
     <el-menu-item index="2">{{ $t('Media Pool') }}</el-menu-item>
     <el-sub-menu index="3">
       <template #title>{{ $t('Content') }}</template>
       <template v-for="(type, index) in config.rootTypes" :key="type">
-        <el-menu-item :index="'3-'+(index+1)"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
+        <el-menu-item :index="'3-'+(index+1)" :route="{ name: 'EntityList', params: { locale: locale, type: type }}"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
       </template>
     </el-sub-menu>
     <el-sub-menu index="4">
@@ -34,6 +35,7 @@
 <script lang="ts" setup>
 import { Files, User, Key, Lock, Search, Setting, UserFilled, Close } from '@element-plus/icons-vue'
 import { MenuItemRegistered } from 'element-plus';
+import { useI18n } from 'vue-i18n';
 import { useConfig, useUser } from '~/composables'
 import router from '~/router';
 
@@ -41,6 +43,8 @@ defineProps<{ menu: boolean }>()
 
 const config = useConfig() as any
 const { getLogin, destroy } = useUser()
+
+const { locale } = useI18n()
 
 const handleLogout = (item: MenuItemRegistered) => {
   router.push({ name: 'Root' })

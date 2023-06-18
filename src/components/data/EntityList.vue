@@ -44,7 +44,7 @@ const props = defineProps<{
 const { t } = useI18n()
 
 const root = ref<HTMLElement|null>(null)
-const isLoading = ref<boolean>(false)
+const isLoading = ref<boolean>(true)
 
 // function for generating columns
 const generateColumns = (type: EntityClass, width: number): Column<Entity>[] =>
@@ -128,7 +128,6 @@ if (props.actions.length > 0) {
 const cols = reactive({ value: columns })
 
 onMounted(async() => {
-  isLoading.value = true
   await props.store.fetch()
   isLoading.value = false
 })
