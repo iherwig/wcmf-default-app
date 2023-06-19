@@ -9,9 +9,10 @@
 
 <script lang="ts" setup>
 import { inject } from 'vue'
+import { EntityTabsInjectionKey } from '~/app/composables/overrides';
 import EntityTabs from '~/components/data/EntityTabs.vue'
 
 defineProps<{ type: string }>()
 
-const entityTabs = inject('entityTabs', EntityTabs)
+const entityTabs = inject(EntityTabsInjectionKey, EntityTabs)
 </script>
