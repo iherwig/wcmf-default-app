@@ -11,7 +11,8 @@ import { useOverrides } from './app/composables/overrides'
 
 let locale = ref(undefined)
 
-const overrides = useOverrides()
+// inject custom dependencies
+useOverrides()
 
 onMounted(async() => {
   const config = useConfig() as any

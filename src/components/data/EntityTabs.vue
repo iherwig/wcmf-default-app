@@ -1,77 +1,103 @@
 <template>
   <el-tabs
-    v-model="editableTabsValue"
-    type="card"
-    editable
-    class="demo-tabs"
-    @edit="handleTabsEdit"
+    v-model="activeTab"
+    type="border-card"
+    closable
+    @tab-remove="removeTab"
   >
     <el-tab-pane
-      v-for="item in editableTabs"
+      v-for="item in tabs"
       :key="item.name"
       :label="item.title"
       :name="item.name"
     >
+      <template #label>
+        <span class="tabs-label">
+          <el-icon><files /></el-icon>
+          <span>{{ item.title }}</span>
+        </span>
+      </template>
       {{ item.content }}
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import type { TabPaneName } from 'element-plus'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Files } from '@element-plus/icons-vue'
+import { TabPaneName } from 'element-plus'
+import { useConfig } from '~/composables'
+import router from '~/router'
 
-let tabIndex = 2
-const editableTabsValue = ref('2')
-const editableTabs = ref([
-  {
-    title: 'Tab 1',
-    name: '1',
-    content: 'Tab 1 content',
-  },
-  {
-    title: 'Tab 2',
-    name: '2',
-    content: 'Tab 2 content',
-  },
-])
+const props = defineProps<{
+  selectedTab: string
+}>()
 
-const handleTabsEdit = (
-  targetName: TabPaneName | undefined,
-  action: 'remove' | 'add'
-) => {
-  if (action === 'add') {
-    const newTabName = `${++tabIndex}`
-    editableTabs.value.push({
-      title: 'New Tab',
-      name: newTabName,
-      content: 'New Tab content',
-    })
-    editableTabsValue.value = newTabName
-  } else if (action === 'remove') {
-    const tabs = editableTabs.value
-    let activeName = editableTabsValue.value
-    if (activeName === targetName) {
-      tabs.forEach((tab, index) => {
-        if (tab.name === targetName) {
-          const nextTab = tabs[index + 1] || tabs[index - 1]
-          if (nextTab) {
-            activeName = nextTab.name
-          }
+const { t, locale } = useI18n()
+
+const config = useConfig() as any
+
+const tabs = ref<any[]>([])
+config.rootTypes.forEach((type: string) => {
+  tabs.value.push({
+    title: t(type),
+    name: type,
+    content: t(type),
+    route: { name: 'EntityList', params: { locale: locale, type: type }}
+  })
+})
+const activeTab = ref(props.selectedTab)
+
+const removeTab = (targetName: TabPaneName) => {
+  const currentTabs = tabs.value
+  let activeName = activeTab.value
+  if (activeName === targetName) {
+    currentTabs.forEach((tab, index) => {
+      if (tab.name === targetName) {
+        const nextTab = currentTabs[index+1] || currentTabs[index-1]
+        if (nextTab) {
+          activeName = nextTab.name
         }
-      })
-    }
-
-    editableTabsValue.value = activeName
-    editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
+      }
+    })
   }
+  activeTab.value = activeName
+  tabs.value = currentTabs.filter((tab) => tab.name !== targetName)
 }
+
+const getTab = (targetName: TabPaneName) => {
+  const matchingTabs = tabs.value.filter((tab) => tab.name == targetName)
+  return matchingTabs.length > 0 ? matchingTabs[0] : null
+}
+
+watch(props, () => {
+  const type = props.selectedTab
+  const tabExists = getTab(type) != null
+  if (!tabExists) {
+    tabs.value.push({
+      title: t(type),
+      name: type,
+      content: t(type),
+      route: { name: 'EntityList', params: { locale: locale, type: type }}
+    })
+  }
+  activeTab.value = type
+})
+watch(activeTab, () => {
+  const tab = getTab(activeTab.value)
+  if (tab) {
+    router.push(tab.route)
+  }
+})
 </script>
+
 <style>
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
+.tabs-label .el-icon {
+  vertical-align: middle;
+}
+.tabs-label span {
+  vertical-align: middle;
+  margin-left: 4px;
 }
 </style>
