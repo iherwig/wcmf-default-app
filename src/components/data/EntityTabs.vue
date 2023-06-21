@@ -17,7 +17,7 @@
           <span>{{ item.title }}</span>
         </span>
       </template>
-      {{ item.content }}
+      <slot></slot>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -41,9 +41,9 @@ const config = useConfig() as any
 const tabs = ref<any[]>([])
 config.rootTypes.forEach((type: string) => {
   tabs.value.push({
-    title: t(type),
+    title: t(`${type} [Pl.]`),
     name: type,
-    content: t(type),
+    content: t(`${type} [Pl.]`),
     route: { name: 'EntityList', params: { locale: locale, type: type }}
   })
 })

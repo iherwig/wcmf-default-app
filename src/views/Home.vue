@@ -18,7 +18,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { Column } from 'element-plus'
 import { Entity } from '~/stores/model/meta/entity'
-import { Store, useHistoryStore } from '~/stores'
+import { EntityStore, useHistoryStore } from '~/stores'
 import { HistoryItem } from '~/stores/model/history'
 import { Action, Edit } from '~/actions'
 
@@ -28,7 +28,7 @@ const historyEntity = new HistoryItem()
 const historyStore = useHistoryStore()
 const { entities } = storeToRefs(historyStore)
 const { fetch } = historyStore
-const store: Store = { entities, fetch }
+const store: EntityStore = { entities, fetch }
 
 const columns: Column<Entity>[] = historyEntity.attributes.filter((a) => !a.tags.includes('DATATYPE_IGNORE')).map((a) => {
   return {

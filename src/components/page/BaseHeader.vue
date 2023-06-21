@@ -11,7 +11,7 @@
     <el-sub-menu index="3">
       <template #title>{{ $t('Content') }}</template>
       <template v-for="(type, index) in config.rootTypes" :key="type">
-        <el-menu-item :index="router.resolve(localizedRoute({ name: 'EntityList', params: { type: type }})).href" :route="localizedRoute({ name: 'EntityList', params: { type: type }})"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
+        <el-menu-item :index="router.resolve(localizedRoute({ name: 'EntityList', params: { type: type }})).href" :route="localizedRoute({ name: 'EntityList', params: { type: type }})"><el-icon><files /></el-icon><span>{{ $t(`${type} [Pl.]`) }}</span></el-menu-item>
       </template>
     </el-sub-menu>
     <el-sub-menu index="4">
@@ -40,7 +40,7 @@ import { useI18n } from 'vue-i18n';
 import { useConfig, useUser } from '~/composables'
 import router from '~/router';
 
-defineProps<{ menu: boolean }>()
+const props = defineProps<{ menu: boolean }>()
 
 const config = useConfig() as any
 const { getLogin, destroy } = useUser()

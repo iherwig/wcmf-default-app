@@ -29,13 +29,13 @@ import { Column, ElLink } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { useElementSize } from '@vueuse/core'
 import { EntityClass, EntityAttribute, Entity } from '~/stores/model/meta/entity'
-import { Store } from '~/stores'
+import { EntityStore } from '~/stores'
 import { Action } from '~/actions'
 import { VNode } from 'vue'
 
 const props = defineProps<{
   type: EntityClass
-  store: Store
+  store: EntityStore
   columns?: Column<Entity>[]
   actions: Action<unknown>[]
   enabledFeatures: any[]

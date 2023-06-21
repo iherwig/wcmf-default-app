@@ -20,7 +20,7 @@ import { useConfig } from '~/composables'
 import BaseHeader from '~/components/page/BaseHeader.vue'
 import BaseFooter from '~/components/page/BaseFooter.vue'
 
-defineProps<{ menu: boolean, background: boolean, logo: boolean, cssId: string }>()
+const props = defineProps<{ menu: boolean, background: boolean, logo: boolean, cssId: string }>()
 
 const header = inject(HeaderInjectionKey, BaseHeader)
 const footer = inject(FooterInjectionKey, BaseFooter)

@@ -1,11 +1,11 @@
-import { EntityType } from './entity'
+import { EntityClass } from './entity'
 
-const types: Record<string, EntityType> = {}
+const types: Record<string, EntityClass> = {}
 const typeNameMap: Record<string, string> = {}
 
 export class Model {
 
-  public static registerType(type: EntityType) {
+  public static registerType(type: EntityClass) {
     // register fully qualified type name
     const fqTypeName = type.typeName
     types[fqTypeName] = type
@@ -88,16 +88,16 @@ export class Model {
     return oid.replace(/:~$/, '')
   }
 
-  public static getType(typeName: string) {
+  public static getType(typeName: string): EntityClass {
     return types[typeName]
   }
 
-  public static getTypeFromOid(oid: string): EntityType {
+  public static getTypeFromOid(oid: string): EntityClass {
     const typeName = Model.getTypeNameFromOid(oid)
     return types[typeName]
   }
 
-  public static getAllTypes(): EntityType[] {
+  public static getAllTypes(): EntityClass[] {
     return Object.values(types)
   }
 }
