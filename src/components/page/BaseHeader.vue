@@ -2,15 +2,16 @@
   <el-menu v-if="menu" class="flex-items-center"
     mode="horizontal"
     :ellipsis="false"
+    :default-active="$route.path"
     :router="true"
   >
     <div class="px">{{ config.title }}</div>
-    <el-menu-item index="1" :route="{ name: 'Home', params: { locale: locale }}">{{ $t('Home') }}</el-menu-item>
+    <el-menu-item :index="router.resolve(localizedRoute({ name: 'Home'})).href" :route="localizedRoute({ name: 'Home'})">{{ $t('Home') }}</el-menu-item>
     <el-menu-item index="2">{{ $t('Media Pool') }}</el-menu-item>
     <el-sub-menu index="3">
       <template #title>{{ $t('Content') }}</template>
       <template v-for="(type, index) in config.rootTypes" :key="type">
-        <el-menu-item :index="'3-'+(index+1)" :route="{ name: 'EntityList', params: { locale: locale, type: type }}"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
+        <el-menu-item :index="router.resolve(localizedRoute({ name: 'EntityList', params: { type: type }})).href" :route="localizedRoute({ name: 'EntityList', params: { type: type }})"><el-icon><files /></el-icon><span>{{ $t(type) }}</span></el-menu-item>
       </template>
     </el-sub-menu>
     <el-sub-menu index="4">
@@ -45,6 +46,10 @@ const config = useConfig() as any
 const { getLogin, destroy } = useUser()
 
 const { locale } = useI18n()
+
+const localizedRoute = (route: any) => {
+  return { ...route, params: { ...route.params, locale: locale.value } }
+}
 
 const handleLogout = (item: MenuItemRegistered) => {
   router.push({ name: 'Root' })
