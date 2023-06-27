@@ -33,6 +33,7 @@ declare module 'vue' {
     EntityList: typeof import('./components/data/EntityList.vue')['default']
     EntityTabs: typeof import('./components/data/EntityTabs.vue')['default']
     LocaleChanger: typeof import('./components/LocaleChanger.vue')['default']
+    Notification: typeof import('./components/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

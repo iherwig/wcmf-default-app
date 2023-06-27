@@ -1,5 +1,5 @@
 <template>
-  <div ref="root">
+  <div ref="root" v-if="type && store && columns">
     <el-auto-resizer>
       <template #default="{ height, width }">
         <el-table-v2 v-loading="isLoading"
@@ -34,11 +34,11 @@ import { Action } from '~/actions'
 import { VNode } from 'vue'
 
 const props = defineProps<{
-  type: EntityClass
-  store: EntityStore
+  type?: EntityClass
   columns?: Column<Entity>[]
-  actions: Action<unknown>[]
-  enabledFeatures: any[]
+  actions?: Action<unknown>[]
+  store?: EntityStore
+  enabledFeatures?: any[]
 }>()
 
 const { t } = useI18n()
@@ -96,10 +96,10 @@ watch(width, () => {
   }
 })
 
-const columns: Column<Entity>[] = (props.columns || generateColumns(props.type, 0))
+const columns: Column<Entity>[] = (props.columns || (props.type ? generateColumns(props.type, 0) : []))
 
 // add action column
-if (props.actions.length > 0) {
+if (props.actions && props.actions.length > 0) {
   columns.push({
     key: 'actions',
     dataKey: 'actions',
@@ -109,14 +109,16 @@ if (props.actions.length > 0) {
     sortable: false,
     cellRenderer: ({rowData}) => {
       const buttons: VNode[] = []
-      for (let i=0, count=props.actions.length; i<count; i++) {
-        const action: Action<unknown> = props.actions[i]
-        action.entity = Entity.fromObject(rowData)
-        buttons.push(h(ElLink, {
-          icon: action.icon,
-          href: action.url,
-          onClick: () => { action.execute() }
-        }))
+      if (props.actions) {
+        for (let i=0, count=props.actions.length; i<count; i++) {
+          const action: Action<unknown> = props.actions[i]
+          action.entity = Entity.fromObject(rowData)
+          buttons.push(h(ElLink, {
+            icon: action.icon,
+            href: action.url,
+            onClick: () => { action.execute() }
+          }))
+        }
       }
       return h('div',
         { class: 'flex flex-justify-center flex-items-center' },
@@ -128,7 +130,9 @@ if (props.actions.length > 0) {
 const cols = reactive({ value: columns })
 
 onMounted(async() => {
-  await props.store.fetch()
+  if (props.store) {
+    await props.store.fetch()
+  }
   isLoading.value = false
 })
 </script>

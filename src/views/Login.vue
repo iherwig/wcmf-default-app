@@ -1,23 +1,25 @@
 <template>
-  <div class="form-container">
-    <h3>{{ config.title }}</h3>
-    <el-alert v-if="loginError" :title="$t('Authentication failed')" type="error" :description="$t('Please check your credentials and try again.')" />
-    <el-form ref="loginForm" :model="loginData" :rules="loginRules">
-      <el-row :gutter="10">
-        <el-col :span="16">
-          <el-form-item prop="username"><el-input v-model="loginData.username" autocomplete="off" :prefix-icon="User" :placeholder="$t('Login')"></el-input></el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="10">
-        <el-col :span="16">
-          <el-form-item prop="password"><el-input v-model="loginData.password" type="password" autocomplete="off" show-password :prefix-icon="Lock" :placeholder="$t('Password')"></el-input></el-form-item>
-        </el-col>
-        <el-col :span="8">
-        <el-button type="primary" @click="login" :loading="isLoading">{{ $t('Sign in') }}</el-button>
-        </el-col>
-      </el-row>
-    </el-form>
-  </div>
+  <el-space class="flex-justify-center flex-content-center" style="width: 100%; height: 100%">
+    <div class="form-container">
+      <h3>{{ config.title }}</h3>
+      <el-alert v-if="loginError" :title="$t('Authentication failed')" type="error" :description="$t('Please check your credentials and try again.')" />
+      <el-form ref="loginForm" :model="loginData" :rules="loginRules">
+        <el-row :gutter="10">
+          <el-col :span="16">
+            <el-form-item prop="username"><el-input v-model="loginData.username" autocomplete="off" :prefix-icon="User" :placeholder="$t('Login')"></el-input></el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :span="16">
+            <el-form-item prop="password"><el-input v-model="loginData.password" type="password" autocomplete="off" show-password :prefix-icon="Lock" :placeholder="$t('Password')"></el-input></el-form-item>
+          </el-col>
+          <el-col :span="8">
+          <el-button type="primary" @click="login" :loading="isLoading">{{ $t('Sign in') }}</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+  </el-space>
 </template>
 
 <script lang="ts" setup>

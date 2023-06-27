@@ -1,16 +1,14 @@
 <template>
-  <el-space :fill="true" wrap>
-    <h1>{{ $t('Welcome') }}</h1>
-    <h3>{{ $t('Last Updates') }}</h3>
-    <EntityList
-      style="height:70vh; width:90vw"
-      :type="historyEntity"
-      :columns="columns"
-      :store="store"
-      :actions="actions"
-      :enabledFeatures="[]"
-    />
-  </el-space>
+  <h1>{{ $t('Welcome') }}</h1>
+  <h3>{{ $t('Last Updates') }}</h3>
+  <EntityList
+    style="height:550px; width:calc(100vw - 2*var(--ep-main-padding))"
+    :type="historyEntity"
+    :columns="columns"
+    :store="store"
+    :actions="actions"
+    :enabledFeatures="[]"
+  />
 </template>
 
 <script lang="ts" setup>

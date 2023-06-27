@@ -9,7 +9,9 @@ import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-const props = defineProps<{ onlyIfMultiple?: boolean }>()
+const props = defineProps<{
+  onlyIfMultiple?: boolean
+}>()
 
 const { locale } = useI18n()
 const router = useRouter()

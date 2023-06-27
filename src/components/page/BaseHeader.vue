@@ -40,7 +40,9 @@ import { useI18n } from 'vue-i18n';
 import { useConfig, useUser } from '~/composables'
 import router from '~/router';
 
-const props = defineProps<{ menu: boolean }>()
+const props = defineProps<{
+  menu: boolean
+}>()
 
 const config = useConfig() as any
 const { getLogin, destroy } = useUser()
