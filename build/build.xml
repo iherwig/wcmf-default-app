@@ -4,6 +4,12 @@
   <property file="build.properties"/>
   <property file="${generator.base}/build_wcmf.info" prefix="generator"/>
 
+  <path id="javax.classpath">
+    <pathelement location="./lib/nashorn-core-15.4.jar" />
+    <pathelement location="./lib/asm-9.5.jar" />
+    <pathelement location="./lib/asm-util-9.5.jar" />
+  </path>
+
   <target name="init">
     <tstamp/>
   </target>
@@ -135,7 +141,7 @@
     <!-- replace rewriteBase in .htaccess -->
     <property name="path.app" location="${build.base}/${app.name}"/>
     <property name="path.dist" location="${dist.dir}/${app.name}"/>
-    <script language="javascript"><![CDATA[
+    <script language="javascript" manager="javax" classpathref="javax.classpath"><![CDATA[
       var path1 = new String(project.getProperty("path.app"));
       var path2 = new String(project.getProperty("path.dist"));
       var sep = new String("/");
