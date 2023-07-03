@@ -1,0 +1,16 @@
+{
+  "name": "wcmf-build",
+  "version": "1.0.0",
+  "description": "Build tools for wCMF applications",
+  "main": "index.js",
+  "scripts": {
+    "build": "jake generate"
+  },
+  "author": "ingo@wemove.com",
+  "license": "MIT",
+  "devDependencies": {
+    "jake": "^10.8.7",
+    "replace-in-file": "^7.0.1",
+    "wcmf-generator": "file:../../wcmf-generator/dist"
+  }
+}

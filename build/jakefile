@@ -1,0 +1,37 @@
+const { task, desc } = require('jake');
+const replace = require('replace-in-file');
+const { generate } = require('wcmf-generator');
+
+// TODO pass to build script
+const generatorOptions = {
+  version: '1.0',
+  build: '10',
+  // working directory of the generator
+  workdir: '../model',
+  // generator directory relative to workdir
+  base: '../build/node_modules/wcmf-generator/dist',
+  // target directory relative to workdir
+  target: '../gen'
+}
+
+desc('transform the input model from papyrus to cwm format');
+task('m2m-papyrus', function () {
+  const results = replace.sync({
+    files: `${generatorOptions.workdir}/model.uml`,
+    from: [
+      /xmi:version="20131001"/g,
+      /xmlns:xmi="http:\/\/www.omg.org\/spec\/XMI\/20131001"/g,
+      /xmlns:uml="http:\/\/www.eclipse.org\/uml2\/5.0.0\/UML"/g
+    ],
+    to: [
+      'xmi:version="2.1"',
+      'xmlns:xmi="http://www.omg.org/spec/XMI/2.1"',
+      'xmlns:uml="http://www.eclipse.org/uml2/2.1.0/UML"'
+    ],
+  });
+});
+
+desc('generate the code from the model');
+task('generate', ['m2m-papyrus'], () => {
+  generate(generatorOptions)
+});
