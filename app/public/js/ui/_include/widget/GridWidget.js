@@ -107,6 +107,8 @@ define([
         dndInProgress: false,
         height: null,
 
+        lastEditorShowEvt: null,
+
         constructor: function (params) {
             if (params && params.actions) {
                 params.actionsByName = {};
@@ -121,7 +123,7 @@ define([
         postCreate: function () {
             this.inherited(arguments);
 
-            ControlFactory.loadControlClasses(this.type).then(lang.hitch(this, function(controls) {
+            ControlFactory.loadControlClasses(this.type, null, this.getEditorControl).then(lang.hitch(this, function(controls) {
                 this.currentFilter = this.initialFilter;
                 this.grid = this.buildGrid(controls);
                 this.grid.startup();
@@ -420,6 +422,23 @@ define([
             grid.on("dgrid-editor-show", function(evt) {
                 // set the entity property on the input control
                 evt.editor.entity = evt.cell.row.data;
+
+                // fix empty cell, when editor was closed
+                if (this.lastEditorShowEvt) {
+                    var lastEvt = this.lastEditorShowEvt;
+                    var object = lastEvt.cell.row.data;
+                    var data = lastEvt.cell.row.data[lastEvt.column.field];
+                    var attribute = lastEvt.column.editorArgs;
+                    var element = lastEvt.cell.element;
+                    var context = { 'data': object, 'place': 'list' };
+                    when(Renderer.render(data, attribute, {}, context), function(value) {
+                        element.innerHTML = value;
+                    });
+                }
+                this.lastEditorShowEvt = evt;
+            });
+            grid.on("dgrid-editor-hide", function(evt) {
+                this.lastEditorShowEvt = null;
             });
 
             grid.on("dgrid-error", function(evt) {

@@ -9,12 +9,13 @@ define( [
     "dojo/on",
     "dijit/registry",
     "dijit/layout/ContentPane",
+    "dijit/_FocusMixin",
     "dijit/form/_FormValueWidget",
     "../Factory",
     "../../../_include/_HelpMixin",
     "./_AttributeWidgetMixin",
     "../../../../locale/Dictionary",
-  	"dojo/text!./template/_BinaryItemsControl.html"
+    "dojo/text!./template/_BinaryItemsControl.html"
 ],
 function(
     declare,
@@ -27,6 +28,7 @@ function(
     on,
     registry,
     ContentPane,
+    _FocusMixin,
     _FormValueWidget,
     ControlFactory,
     _HelpMixin,
@@ -34,7 +36,7 @@ function(
     Dict,
     template
 ) {
-    return declare([ContentPane, _FormValueWidget, _HelpMixin, _AttributeWidgetMixin], {
+    return declare([ContentPane, _FocusMixin, _FormValueWidget, _HelpMixin, _AttributeWidgetMixin], {
 
         templateString: template,
         intermediateChanges: true,
@@ -175,7 +177,7 @@ function(
             }
         },
 
-        focus: function() {
+        _onFocus: function(e) {
             // focus first widget, because otherwise focus loss
             // is not reported to grid editor
             var itemWidgets = registry.findWidgets(this.domNode);
@@ -186,6 +188,12 @@ function(
                     break;
                 }
             }
+            this.inherited(arguments);
+        },
+
+        _onBlur: function(e) {
+            this.focusNode.dispatchEvent(new Event('blur'));
+            this.inherited(arguments);
         },
 
         getValueArray: function(value) {
