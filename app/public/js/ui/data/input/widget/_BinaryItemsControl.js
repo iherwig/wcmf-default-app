@@ -75,7 +75,8 @@ function(
             }, this.domNode, "last");
             this.showSpinner();
 
-            when(this.store.fetch(), lang.hitch(this, function(list) {
+            var data = this.store.data || this.store.fetch();
+            when(data, lang.hitch(this, function(list) {
                 this.hideSpinner();
                 for (var i=0, c=list.length; i<c; i++) {
                     var item = list[i];

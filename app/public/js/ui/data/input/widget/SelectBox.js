@@ -103,7 +103,8 @@ function(
             }, this.domNode, "last");
             this.showSpinner();
 
-            when(this.store.fetch(), lang.hitch(this, function(list) {
+            var data = this.store.data || this.store.fetch();
+            when(data, lang.hitch(this, function(list) {
                 this.hideSpinner();
                 this.selectWidget = this.buildSelectWidget(list);
                 this.own(
@@ -206,7 +207,8 @@ function(
 
         setStore: function(store) {
             this.store = store;
-            when(this.store.fetch(), lang.hitch(this, function(list) {
+            var data = this.store.data || this.store.fetch();
+            when(data, lang.hitch(this, function(list) {
                 var options = list.map(function(value) {
                     return { label: value.displayText, value: value.value };
                 })
