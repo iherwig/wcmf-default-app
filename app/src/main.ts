@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'
-import { fetchConfig } from '~/composables'
+import { fetchConfig } from '~/composables/config'
 
 import './styles/index.scss'
 import 'uno.css'

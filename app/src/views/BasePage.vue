@@ -18,7 +18,8 @@
 import { inject, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { HeaderInjectionKey, FooterInjectionKey } from '~/keys'
-import { useConfig, useNotification } from '~/composables'
+import { useConfig } from '~/composables/config'
+import { useNotification } from '~/composables/notification'
 import BaseHeader from '~/components/page/BaseHeader.vue'
 import BaseFooter from '~/components/page/BaseFooter.vue'
 

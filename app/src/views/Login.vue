@@ -28,7 +28,9 @@ import { User, Lock } from '@element-plus/icons-vue'
 import { onKeyStroke } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router';
-import { useConfig, useApi, useUser } from '~/composables';
+import { useConfig } from '~/composables/config';
+import { useApi } from '~/composables/fetch';
+import { useUser } from '~/composables/user';
 
 const { locale } = useI18n()
 const router = useRouter()

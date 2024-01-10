@@ -27,7 +27,7 @@ import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Files } from '@element-plus/icons-vue'
 import { TabPaneName } from 'element-plus'
-import { useConfig } from '~/composables'
+import { useConfig } from '~/composables/config'
 import router from '~/router'
 
 const props = defineProps<{

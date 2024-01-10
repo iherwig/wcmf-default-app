@@ -15,15 +15,16 @@
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { Column } from 'element-plus'
-import { Entity } from '~/stores/model/meta/entity'
+import { Entity } from '~/stores/model/meta/types'
 import { EntityStore, useHistoryStore } from '~/stores'
-import { HistoryItem } from '~/stores/model/history'
 import { Action, Edit } from '~/actions'
+import { useModel } from '~/composables/model'
 
 const { t } = useI18n()
+const model = useModel()
 
-const historyEntity = new HistoryItem()
 const historyStore = useHistoryStore()
+const historyEntity = model.getType('HistoryItem')
 const { entities } = storeToRefs(historyStore)
 const { fetch } = historyStore
 const store: EntityStore = { entities, fetch }

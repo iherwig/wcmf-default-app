@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { useConfig } from '~/composables'
+import { useConfig } from '~/composables/config'
 import { useOverrides } from './app/composables/overrides'
 
 let locale = ref(undefined)
@@ -19,7 +19,7 @@ onMounted(async() => {
 
   // NOTE: we need a relative path here due to Rollup dynamic import limitations
   // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
-  locale = await import(`../node_modules/element-plus/dist/locale/${config.uiLanguage}.js`);
+  locale = await import(`../node_modules/element-plus/dist/locale/${config.uiLanguage}.js`)
 })
 </script>
 

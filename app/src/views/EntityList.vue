@@ -21,9 +21,11 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { Column } from 'element-plus'
 import { EntityTabsInjectionKey } from '~/keys'
-import { useNotification } from '~/composables'
+import { useModel } from '~/composables/model'
+import { useNotification } from '~/composables/notification'
 import EntityTabs from '~/components/data/EntityTabs.vue'
-import { Model, Entity, EntityClass } from '~/stores/model/meta'
+import EntityList from '~/components/data/EntityList.vue'
+import { Entity, EntityType } from '~/stores/model/meta/types'
 import { EntityStore, useEntityStore } from '~/stores'
 import { Action, Edit } from '~/actions'
 
@@ -35,14 +37,15 @@ const entityTabs = inject(EntityTabsInjectionKey, EntityTabs)
 
 const { locale, t } = useI18n()
 const { showNotification } = useNotification()
+const model = useModel()
 
-const typeClass = ref<EntityClass>()
+const typeClass = ref<EntityType>()
 const columns = ref<Column<Entity>[]>()
 const actions = ref<Action<unknown>[]>()
 const store = ref<EntityStore>()
 
 const handleTypeChange = () => {
-  typeClass.value = Model.getType(props.type)
+  typeClass.value = model.getType(props.type)
   if (!typeClass.value) {
     showNotification({ type: 'error', title: 'Error', text: `Unknown type "${props.type}"` })
   }

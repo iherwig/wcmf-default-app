@@ -1,10 +1,14 @@
-import { EntityType, EntityAttribute, EntityRelation, EntityClass, Entity } from '~/stores/model/meta/entity'
-import { Model } from './meta/model'
+import { useModel } from '~/composables/model'
+import { EntityType, EntityAttribute, EntityRelation, Entity } from '~/stores/model/meta/types'
+import { EntityClass } from '~/stores/model/meta/EntityClass'
 
 // Names to be included by l10n tools
 // Dict.translate('_displayValue')
 // Dict.translate('_summary')
 // Dict.translate('_type')
+
+const model = useModel()
+
 export class HistoryItem extends EntityClass implements EntityType {
   typeName: string = 'HistoryItem'
   description: string = ''
@@ -111,7 +115,7 @@ export class HistoryItem extends EntityClass implements EntityType {
   listView: string = '../data/widget/EntityListWidget'
   detailView: string = '../data/widget/EntityFormWidget'
   public getSummary(entity?: Entity) {
-    var typeClass = Model.getType(entity?.get('_type'));
+    var typeClass = model.getType(entity?.get('_type'));
     return typeClass.getSummary(entity);
   }
 }

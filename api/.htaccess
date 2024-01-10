@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# capture RewriteBase into env variable
+RewriteCond %{REQUEST_URI}::$1 ^(.*?/)(.*)::\2$
+RewriteRule ^(.*)$ - [E=BASE:%1]
+
+# forbid non public resources
+# NOTE: deactivate this rule for development only
+RewriteRule !(^/?) - [NC,F]
+
+# remove index.php
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index\.php($|\ |\?)
+RewriteRule ^ %{ENV:BASE}/%1 [R,L]
+
+# map all requests to not existing files to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ %{ENV:BASE}/index.php [QSA,L]

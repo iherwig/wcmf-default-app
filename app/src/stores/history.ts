@@ -1,7 +1,10 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useApiWithAuth, useConfig } from '~/composables'
-import { Entity } from './model/meta/entity'
+import { useConfig } from '~/composables/config'
+import { useApiWithAuth } from '~/composables/fetch'
+import { useModel } from '~/composables/model'
+import { Entity } from './model/meta/types'
+import { HistoryItem } from './model/HistoryItem'
 import { EntityStore } from '.'
 
 interface ResponseData {
@@ -11,7 +14,11 @@ interface ResponseData {
 
 export const useHistoryStore = () => defineStore<string, EntityStore>('history', () => {
   const config = useConfig()
+  const model = useModel()
   const entities = ref<Entity[]>([])
+
+  // register HistoryItem type
+  model.registerType(new HistoryItem())
 
   async function fetch(limit: number=30) {
     const { statusCode, error, data } = await useApiWithAuth<ResponseData>(config.backendUrl+`?action=history&limit=${limit}`)

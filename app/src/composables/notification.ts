@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { ref } from 'vue'
 
 export type Notification = {
   type: 'success'|'info'|'warning'|'error'

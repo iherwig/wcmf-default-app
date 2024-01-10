@@ -1,4 +1,5 @@
-import { useConfig, useCookies } from '~/composables'
+import { useConfig } from '~/composables/config'
+import { useCookies } from '~/composables/cookies'
 
 export function useAuthToken() {
   const cookies = useCookies()

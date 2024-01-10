@@ -1,5 +1,6 @@
 import { RouteLocationNormalized, createRouter, createWebHistory } from 'vue-router'
-import { useAuthToken, useUser } from '~/composables'
+import { useAuthToken } from '~/composables/authToken'
+import { useUser } from '~/composables/user'
 import routes from './routes'
 
 const router = createRouter({
@@ -27,5 +28,4 @@ router.beforeEach(async(to: RouteLocationNormalized, from: RouteLocationNormaliz
     return { name: 'Home' }
   }
 })
-
 export default router

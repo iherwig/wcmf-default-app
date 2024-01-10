@@ -11,7 +11,7 @@ const generatorOptions = {
   // generator directory relative to workdir
   base: '../build/node_modules/wcmf-generator/dist',
   // target directory relative to workdir
-  target: '../gen'
+  target: '..'
 }
 
 desc('transform the input model from papyrus to cwm format');

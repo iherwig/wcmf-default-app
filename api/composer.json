@@ -1,0 +1,36 @@
+{
+    "name": "wcmf/wcmf-default-app-api",
+    "type": "project",
+    "description": "API for the wCMF default application",
+    "keywords": ["application", "app", "api", "cms", "template", "wcmf"],
+    "homepage": "https://wcmf.wemove.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ingo Herwig",
+            "email": "ingo@wemove.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "olympos/chronos-generator",
+                "version": "1.0.25",
+                "dist": {
+                    "url": "https://downloads.sourceforge.net/project/olympos/ChronosGenerator-wCMF/ChronosGenerator-wCMF-1.0.25.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
+    "minimum-stability": "RC",
+    "require": {
+        "php": ">=7.0",
+        "wcmf/wcmf": "~4.1",
+        "olympos/chronos-generator": "1.0.*",
+        "smarty/smarty": "~3.1",
+        "kriswallsmith/assetic": "~1.4",
+        "toopay/assetic-minifier": "~1.3"
+    }
+}

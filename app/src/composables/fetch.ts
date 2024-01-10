@@ -1,11 +1,11 @@
 import { createFetch, CreateFetchOptions, BeforeFetchContext, AfterFetchContext } from '@vueuse/core'
-import { useAuthToken } from '~/composables'
+import { useAuthToken } from '~/composables/authToken'
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
 
 const contentHeaders = {
-  "Accept": "application/json",
-  "Content-Type": "application/json",
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
 }
 
 const baseOptions: Partial<CreateFetchOptions> = {

@@ -18,7 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-import { isDark, toggleDark, useAppProperties } from '~/composables'
+import { isDark, toggleDark } from '~/composables/dark'
+import { useAppProperties } from '~/composables/config'
 import { Moon, Sunny } from '@element-plus/icons-vue'
 
 const appProperties = useAppProperties()

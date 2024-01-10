@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useApiWithAuth, useConfig } from '~/composables'
-import { Entity, EntityType } from './model/meta/entity'
+import { useConfig } from '~/composables/config'
+import { useApiWithAuth } from '~/composables/fetch'
+import { Entity, EntityType } from './model/meta/types'
 import { EntityStore } from '.'
 
 interface ResponseData {

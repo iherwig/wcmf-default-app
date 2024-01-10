@@ -1,85 +1,8 @@
 import { t } from '~/i18n'
-import { Model } from './model'
-
-type Values<T> = T[keyof T]
-
-const RelationTypeName = {
-  All: 'all',
-  Parent: 'parent',
-  Child: 'child',
-} as const;
-export type RelationType = Values<typeof RelationTypeName>
-
-const MultiplicityConstName = {
-  Unbounded: 'unbounded'
-} as const;
-type MultiplicityConst = Values<typeof MultiplicityConstName>
-
-const AggregationTypeName = {
-  None: 'none',
-  Shared: 'shared',
-  Composite: 'composite',
-} as const
-export type AggregationType = Values<typeof AggregationTypeName>
-
-export type AttributeFilter = {
-  include: string[],
-  exclude: string[],
-}
-
-export type Multiplicity = number|MultiplicityConst
-
-export interface EntityType {
-  typeName: string,
-  description: string,
-  isSortable: boolean,
-  displayValues: string[],
-  pkNames: string[],
-  relationOrder: string[],
-  attributes: EntityAttribute[],
-  relations: EntityRelation[],
-  listView: string,
-  detailView: string,
-
-  getRelation(typeName: string): EntityRelation|null
-  getAttribute(name: string): EntityAttribute|null
-  getSummary(entity?: Entity): string
-}
-
-export interface EntityAttribute {
-  name: string,
-  type: string,
-  description: string,
-  isEditable: boolean,
-  inputType: string,
-  displayType: string,
-  validateType: string,
-  validateDesc: string,
-  tags: string[],
-  defaultValue: any,
-  isReference: boolean,
-  isTransient: boolean,
-}
-
-export interface EntityRelation {
-  name: string,
-  type: string,
-  fkName: string,
-  aggregationKind: AggregationType,
-  maxMultiplicity: Multiplicity,
-  thisEndName: string,
-  isSortable: boolean,
-  relationType: RelationType,
-}
-
-export class Entity extends Map {
-  public static fromObject(obj: object) {
-    return new Map(Object.entries(obj));
-  }
-}
+import { useModel } from '~/composables/model';
+import { AttributeFilter, EntityAttribute, EntityRelation, EntityType, Multiplicity, MultiplicityConst, RelationType, Entity } from './types';
 
 export class EntityClass implements EntityType {
-
   public typeName: string = ''
   public description: string = ''
   public isSortable: boolean = false
@@ -92,9 +15,9 @@ export class EntityClass implements EntityType {
   public detailView: string = ''
 
   private relationsByType: Record<RelationType, EntityRelation[]|null> = {
-    [RelationTypeName.All]: null,
-    [RelationTypeName.Parent]: null,
-    [RelationTypeName.Child]: null,
+    [RelationType.All]: null,
+    [RelationType.Parent]: null,
+    [RelationType.Child]: null,
   }
 
   /**
@@ -115,7 +38,7 @@ export class EntityClass implements EntityType {
   public getRelations(relationType: RelationType, entity?: Entity): EntityRelation[] {
     if (!this.relationsByType[relationType] || entity) {
       const relations = this.getEntityRelations(entity);
-      const rel = relations.filter((r: EntityRelation) => relationType == RelationTypeName.All || r.relationType === relationType)
+      const rel = relations.filter((r: EntityRelation) => relationType == RelationType.All || r.relationType === relationType)
        const sortingArr = this.relationOrder
       rel.sort((a, b) => {
         return sortingArr.indexOf(a.name) - sortingArr.indexOf(b.name)
@@ -132,17 +55,17 @@ export class EntityClass implements EntityType {
 
   public isManyToManyRelation(roleName: string): boolean {
     const relation = this.getRelation(roleName)
-    const otherRelation = relation ? Model.getType(relation.type).getRelation(relation.thisEndName) : null
+    const otherRelation = relation ? useModel().getType(relation.type).getRelation(relation.thisEndName) : null
     return relation !== null && otherRelation !== null && this.isMany(relation.maxMultiplicity) && this.isMany(otherRelation.maxMultiplicity)
   }
 
   public isMany(multiplicity: Multiplicity): boolean {
-    return multiplicity === MultiplicityConstName.Unbounded || multiplicity > 1
+    return multiplicity === MultiplicityConst.Unbounded || multiplicity > 1
   }
 
   public getTypeForRole(roleName: string): EntityType|null {
     const relation = this.getRelation(roleName)
-    return relation !== null ? Model.getType(relation.type) : null
+    return relation !== null ? useModel().getType(relation.type) : null
   }
 
   public getAttributes(filter?: AttributeFilter, entity?: Entity): EntityAttribute[] {
@@ -175,10 +98,11 @@ export class EntityClass implements EntityType {
     let result = ''
     if (entity) {
       const oid = entity.get('oid')
-      const type = Model.getTypeFromOid(oid)
+      const model = useModel()
+      const type = model.getTypeFromOid(oid)
       if (type) {
-        if (Model.isDummyOid(oid)) {
-          result = t("New <em>%0%</em>", [t(Model.getSimpleTypeName(type.typeName))])
+        if (model.isDummyOid(oid)) {
+          result = t("New <em>%0%</em>", [t(model.getSimpleTypeName(type.typeName))])
         }
         else {
           const values: string[] = []

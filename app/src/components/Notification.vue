@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Notification } from '~/composables'
+import { Notification } from '~/composables/notification'
 
 const props = defineProps<{
   value?: Notification

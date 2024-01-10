@@ -28,13 +28,14 @@ import { ref, reactive, watch, onMounted, h } from 'vue'
 import { Column, ElLink } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { useElementSize } from '@vueuse/core'
-import { EntityClass, EntityAttribute, Entity } from '~/stores/model/meta/entity'
+import { EntityType, EntityAttribute, Entity } from '~/stores/model/meta/types'
+import { Entity as DefaultEntity } from '~/stores/model/Entity'
 import { EntityStore } from '~/stores'
 import { Action } from '~/actions'
 import { VNode } from 'vue'
 
 const props = defineProps<{
-  type?: EntityClass
+  type?: EntityType
   columns?: Column<Entity>[]
   actions?: Action<unknown>[]
   store?: EntityStore
@@ -47,7 +48,7 @@ const root = ref<HTMLElement|null>(null)
 const isLoading = ref<boolean>(true)
 
 // function for generating columns
-const generateColumns = (type: EntityClass, width: number): Column<Entity>[] =>
+const generateColumns = (type: EntityType, width: number): Column<Entity>[] =>
   Array.from(type.attributes).map((a: EntityAttribute) => ({
     key: a.name,
     dataKey: a.name,
@@ -112,7 +113,7 @@ if (props.actions && props.actions.length > 0) {
       if (props.actions) {
         for (let i=0, count=props.actions.length; i<count; i++) {
           const action: Action<unknown> = props.actions[i]
-          action.entity = Entity.fromObject(rowData)
+          action.entity = DefaultEntity.fromObject(rowData)
           buttons.push(h(ElLink, {
             icon: action.icon,
             href: action.url,

@@ -37,7 +37,8 @@
 import { Files, User, Key, Lock, Search, Setting, UserFilled, Close } from '@element-plus/icons-vue'
 import { MenuItemRegistered } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { useConfig, useUser } from '~/composables'
+import { useConfig } from '~/composables/config'
+import { useUser } from '~/composables/user'
 import router from '~/router';
 
 const props = defineProps<{

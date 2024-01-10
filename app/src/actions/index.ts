@@ -1,5 +1,5 @@
 import { Component } from 'vue'
-import { Entity } from '~/stores/model/meta/entity'
+import { Entity } from '~/stores/model/meta/types'
 
 export * from './edit'
 

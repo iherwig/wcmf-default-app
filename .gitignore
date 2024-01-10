@@ -1,3 +1,10 @@
 node_modules
 package-lock.json
+.vscode
 dist
+api/cache
+api/config
+api/log
+api/src
+api/vendor
+app/src/app
