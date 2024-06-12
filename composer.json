@@ -217,7 +217,7 @@
         "sirprize/dojomat": "dev-master",
         "sirprize/routed": "dev-master",
         "redeyeventures/geopattern": "~1.1",
-        "gumlet/php-image-resize": "~2.0",
+        "intervention/image": "~3.6",
         "studio-42/elfinder": "~2.1",
         "smarty/smarty": "~4.3",
         "kriswallsmith/assetic": "~1.4",
