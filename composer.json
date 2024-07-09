@@ -122,9 +122,9 @@
             "package": {
                 "name": "ckeditor/ckeditor",
                 "type": "wcmf-asset",
-                "version": "4.20.1",
+                "version": "4.22.1",
                 "dist": {
-                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.20.1.zip",
+                    "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.22.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -209,7 +209,7 @@
         "oomphinc/composer-installers-extender": "*",
         "components/bootstrap": "~3.4",
         "components/font-awesome": "~4.7",
-        "ckeditor/ckeditor": "~4.20",
+        "ckeditor/ckeditor": "~4.22",
         "sa-si-dev/virtual-select": "~1.0",
         "components/jquery": "~3.6.0",
         "components/jqueryui": "~1.12",
