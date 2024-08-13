@@ -24,6 +24,7 @@ basePath = basePath.substr(0, basePath.indexOf("ckeditor/"));
 
 // @see https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
 CKEDITOR.editorConfig = function( config ) {
+    config.versionCheck = false;
     config.language = dojoConfig.app.uiLanguage;
     config.baseFloatZIndex = 900;
     config.disallowedContent = '*{*}';
