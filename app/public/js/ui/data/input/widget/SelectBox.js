@@ -58,6 +58,8 @@ function(
         selectEntityType: null,
         entityLink: null,
 
+        emptyValue: '',
+
         constructor: function(args) {
             // convert store from DstoreAdapter
             if (args.store && args.store.store) {
@@ -109,8 +111,8 @@ function(
                 this.selectWidget = this.buildSelectWidget(list);
                 this.own(
                     on(this.selectWidget, "change", lang.hitch(this, function() {
-                        var controlValue = this.selectWidget.value;
-                        this.value = controlValue ? (
+                        var controlValue = this.selectWidget.value === this.emptyValue ? null : this.selectWidget.value;
+                        this.value = controlValue !== null ? (
                           this.supportsMultiSelect ? controlValue.join(',') : (
                             this.valueIsInteger ? parseInt(controlValue) : controlValue)
                         ) : null;
@@ -168,7 +170,9 @@ function(
                 search: true,
                 noOptionsText: Dict.translate('No data'),
                 noSearchResultsText: Dict.translate('No data'),
-                searchPlaceholderText: Dict.translate('Search')
+                searchPlaceholderText: Dict.translate('Search'),
+                selectedValue: this.valueIsInteger ? ''+this.value : this.value,
+                emptyValue: this.emptyValue
             });
             return wrapper;
         },
@@ -176,6 +180,9 @@ function(
         updateDisplay: function(value) {
             if (this.supportsMultiSelect && typeof value == 'string') {
                 value = value.split(',');
+            }
+            else if (this.valueIsInteger) {
+                value = ''+value;
             }
             this.selectWidget.setValue(value);
         },
