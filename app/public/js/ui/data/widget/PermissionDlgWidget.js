@@ -104,7 +104,9 @@ define([
         hide: function() {
             // close any multiselect popup menus
             for (var i=0, count=this.actions.length; i<count; i++) {
-                this[this.actions[i]+'PermCtrl'].close();
+                if (this[this.actions[i]+'PermCtrl'] && this[this.actions[i]+'PermCtrl'].close) {
+                    this[this.actions[i]+'PermCtrl'].close();
+                }
             }
             this.inherited(arguments);
         },
@@ -172,8 +174,8 @@ define([
             var data = [];
             for (var i=0, count=roles.length; i<count; i++) {
                 var roleName = roles[i].name;
-                data.push({ id: '-'+roleName, label: '-'+roleName });
-                data.push({ id: '+'+roleName, label: '+'+roleName });
+                data.push({ id: '-'+roleName, value: '-'+roleName, displayText: '-'+roleName });
+                data.push({ id: '+'+roleName, value: '+'+roleName, displayText: '+'+roleName });
             }
             var roleStore = new Memory({
                 data: data

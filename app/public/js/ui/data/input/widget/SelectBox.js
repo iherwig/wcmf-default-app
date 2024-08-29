@@ -157,6 +157,7 @@ function(
             VirtualSelect.init({
                 ele: wrapper,
                 dropboxWrapper: 'body',
+                zIndex: 999,
                 multiple: this.supportsMultiSelect,
                 allowNewOption: this.allowsNewOption,
                 options: values.map(function(value) {
