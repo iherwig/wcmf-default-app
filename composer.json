@@ -220,7 +220,7 @@
         "intervention/image": "~3.6",
         "studio-42/elfinder": "~2.1",
         "smarty/smarty": "~5",
-        "kriswallsmith/assetic": "~1.4",
+        "assetic/framework": "~3.1",
         "toopay/assetic-minifier": "~1.3"
     },
     "require-dev": {
