@@ -1,0 +1,33 @@
+<template>
+  <n-config-provider :locale="locale" :theme="isDark ? darkTheme : lightTheme">
+    <router-view />
+  </n-config-provider>
+</template>
+
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue'
+import { isDark } from '~/composables/theme'
+import { NConfigProvider, darkTheme, lightTheme, enUS } from 'naive-ui'
+import { useConfig } from '~/composables/config'
+import { useOverrides } from './app/composables/overrides'
+
+let locale = ref(undefined)
+
+// inject custom dependencies
+useOverrides()
+
+onMounted(async() => {
+  const config = useConfig() as any
+
+  // NOTE: we need a relative path here due to Rollup dynamic import limitations
+  // https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
+  ///locale = await import(`../node_modules/element-plus/dist/locale/${config.uiLanguage}.js`)
+  locale.value = enUS
+})
+</script>
+
+<style>
+#app {
+  color: var(--ep-text-color-primary);
+}
+</style>

@@ -1,0 +1,14 @@
+{
+  "generator": {
+    "base": "../build/node_modules/wcmf-generator/dist",
+    "workdir": "../model",
+    "target": "../"
+  },
+  "src": {
+    "frontend": "../frontend",
+    "backend": "../backend"
+  },
+  "dist": {
+    "dir": "../dist"
+  }
+}

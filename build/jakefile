@@ -1,23 +1,86 @@
-const { task, desc } = require('jake');
-const replace = require('replace-in-file');
-const { generate } = require('wcmf-generator');
+/// <reference types='jake' />
+import fs from 'fs';
+import path from 'path';
+import child_process from 'child_process';
+import { replaceInFileSync } from 'replace-in-file';
+import { minimatch } from 'minimatch';
+import { generate } from 'wcmf-generator';
+import { fileURLToPath } from 'url';
 
-// TODO pass to build script
-const generatorOptions = {
-  version: '1.0',
-  build: '10',
-  // working directory of the generator
-  workdir: '../model',
-  // generator directory relative to workdir
-  base: '../build/node_modules/wcmf-generator/dist',
-  // target directory relative to workdir
-  target: '..'
-}
+// polyfill __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ----------------------------------------
+// helper functions
+// ----------------------------------------
+
+const exec = (cmd, opts = {}) => child_process.execSync(cmd, { stdio: 'inherit', ...opts });
+const mkdir = (p) => fs.mkdirSync(p, { recursive: true });
+const rm = (p) => {
+  try { fs.rmSync(p, { recursive: true, force: true }); } catch (e) { try { fs.unlinkSync(p); } catch (e2) {} }
+};
+
+const readProperties = (file) => {
+  if (!fs.existsSync(file)) {
+    return {};
+  }
+  const text = fs.readFileSync(file, 'utf8');
+  const res = {};
+  for (const line of text.split(/\r?\n/)) {
+    const m = line.match(/^\s*([^#=\s]+)\s*=\s*(.*)$/);
+    if (m) {
+      res[m[1].trim()] = m[2].trim();
+    }
+  }
+  return res;
+};
+
+const copyRecursive = (src, dest, options = {}) => {
+  const excludes = options.excludes || [];
+  const copyDir = (s, d) => {
+    mkdir(d);
+    for (const name of fs.readdirSync(s)) {
+      const sp = path.join(s, name);
+      const dp = path.join(d, name);
+      const rel = path.relative(src, sp);
+      if (excludes.some(pattern => minimatch(rel, pattern))) {
+        continue;
+      }
+      const stat = fs.statSync(sp);
+      if (stat.isDirectory()) {
+        copyDir(sp, dp);
+      }
+      else {
+        fs.copyFileSync(sp, dp);
+      }
+    }
+  };
+  copyDir(src, dest);
+};
+
+// ----------------------------------------
+// configuration
+// ----------------------------------------
+
+// read main configuration
+const configFile = path.join(__dirname, 'config.json');
+const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+
+// ----------------------------------------
+// tasks
+// ----------------------------------------
 
 desc('transform the input model from papyrus to cwm format');
-task('m2m-papyrus', function () {
-  const results = replace.sync({
-    files: `${generatorOptions.workdir}/model.uml`,
+task('m2m-papyrus', [], () => {
+  const workflowFile = path.join(config.generator.workdir, 'workflow.properties');
+  let workflowInfo = {};
+  if (fs.existsSync(workflowFile)) {
+    workflowInfo = readProperties(workflowFile);
+  }
+  const modelFile = path.resolve(path.join(config.generator.workdir, workflowInfo.modelUmlFile));
+  replaceInFileSync({
+    files: modelFile,
     from: [
       /xmi:version="20131001"/g,
       /xmlns:xmi="http:\/\/www.omg.org\/spec\/XMI\/20131001"/g,
@@ -33,5 +96,78 @@ task('m2m-papyrus', function () {
 
 desc('generate the code from the model');
 task('generate', ['m2m-papyrus'], () => {
-  generate(generatorOptions)
+  generate({
+    base: path.resolve(config.generator.base),
+    workdir: path.resolve(config.generator.workdir),
+    target: path.resolve(config.generator.target)
+  })
+});
+
+desc('generate the build version file');
+task('buildinfo', [], () => {
+  const infoFile = path.join(__dirname, 'build.info');
+  let info = {};
+  if (fs.existsSync(infoFile)) {
+    info = readProperties(infoFile);
+  }
+  const version = config.version || '1.0.0';
+  const buildNum = parseInt(info.build || config.build || '0', 10) + 1;
+  const out = [
+    '#Build Information File - DO NOT MODIFY',
+    `#${(new Date()).toString()}`,
+    `version=${version}`,
+    `build=${String(buildNum).padStart(4,'0')}\n`,
+  ];
+  fs.writeFileSync(infoFile, out.join('\n'));
+  console.log('build info: created', infoFile);
+});
+
+desc('clean up');
+task('clean', [], () => {
+  const distDir = path.resolve(config.dist.dir);
+  if (fs.existsSync(distDir)) {
+    rm(distDir);
+  }
+  console.log('clean: removed dist');
+});
+
+desc('build the frontend');
+task('build', [], () => {
+  const frontendDir = path.resolve(config.src.frontend);
+  exec('npm run build', { cwd: frontendDir });
+  console.log('build: created');
+});
+
+desc('build the distribution without clean and compile targets');
+task('dist', ['buildinfo','clean','generate','build'], () => {
+  const distDir = path.resolve(config.dist.dir);
+  mkdir(distDir);
+
+  const backendDir = path.resolve(config.src.backend);
+  copyRecursive(backendDir, distDir, {
+    excludes: [
+      '**/cache/**',
+      '**/log/**',
+      '**/demo*/**',
+      '**/sample*/**',
+      '**/example*/**',
+      '**/test*/**',
+      '**/doc*/**',
+      '**/develop*/**',
+      '**/.git*',
+      '**/.svn*'
+    ]
+  });
+
+  const frontendDir = path.resolve(config.src.frontend);
+  const frontendDistDir = path.join(frontendDir, 'dist');
+  copyRecursive(frontendDistDir, distDir);
+  rm(frontendDistDir);
+
+  // copy build.info
+  const infoFile = path.join(__dirname, 'build.info');
+  if (fs.existsSync(infoFile)) {
+    fs.copyFileSync(infoFile, path.join(distDir, path.basename(infoFile)));
+  }
+  console.log('dist: done');
 });
