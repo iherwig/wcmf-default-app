@@ -1,4 +1,5 @@
 import path from 'path'
+import http from 'http'
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
@@ -23,14 +24,14 @@ export default defineConfig(({ command, mode }) => {
           changeOrigin: false,
           secure: false,
           ws: true,
-          configure: (proxy, _options) => {
-            proxy.on('error', (err, _req, _res) => {
+          configure: (proxy: any, _options: unknown) => {
+            proxy.on('error', (err: Error, _req: http.IncomingMessage, _res: http.ServerResponse) => {
               console.log('Proxy error', err);
             });
-            proxy.on('proxyReq', (proxyReq, req, _res) => {
+            proxy.on('proxyReq', (proxyReq: http.ClientRequest, req: http.IncomingMessage, _res: http.ServerResponse) => {
               console.log('Sending request:', req.url, `${proxyReq.method} ${proxyReq.protocol}//${proxyReq.host}${proxyReq.path}`);
             });
-            proxy.on('proxyRes', (proxyRes, req, _res) => {
+            proxy.on('proxyRes', (proxyRes: http.IncomingMessage, req: http.IncomingMessage, _res: http.ServerResponse) => {
               console.log('Received response:', proxyRes.statusCode, req.url);
             });
           },
