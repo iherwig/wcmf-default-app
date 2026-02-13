@@ -44,11 +44,14 @@ export default defineConfig(({ command, mode }) => {
     },
     plugins: [
       vue(),
-      VueI18nPlugin({ compositionOnly: true, fullInstall: false }),
+      VueI18nPlugin({ fullInstall: false }),
     ],
     build: {
       target: ['esnext'],
     },
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+    }
   }
   return config
 })
