@@ -16,11 +16,11 @@ async function loadLocaleMessages(): Promise<Record<string, Record<string, strin
     if (statusCode.value == 200) {
       const translations = data.value as Record<string, string>
 
-      // NOTE: we remove blank translations, to let vue-i18n return the translation keys for undefined translations
-      const nonBlankTranslations = Object.fromEntries(Object.entries(translations).filter(([k, v]) => v != ''))
-      messages[locale] = nonBlankTranslations
+      // NOTE: set blank translation values to translation keys to avoid vue-i18n ignoring them
+      Object.keys(translations).forEach(k => translations[k] = translations[k] != '' ? translations[k] : k);
+      messages[locale] = translations
       // NOTE since wcmf messages use %...% as interpolation placeholders,
-      // we need to transform them to {...} be used with vue-i18n-next
+      // we need to transform them to {...} be used with vue-i18n
       Object.keys(messages[locale]).forEach((k) => {
         if (k.match(regex)) {
           const kNew = k.replace(regex, subst)
