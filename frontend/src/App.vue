@@ -11,7 +11,7 @@ import { NConfigProvider, darkTheme, lightTheme, enUS } from 'naive-ui'
 import { useConfig } from '~/composables/config'
 import { useOverrides } from './app/composables/overrides'
 
-let locale = ref(undefined)
+let locale = ref<typeof enUS>()
 
 // inject custom dependencies
 useOverrides()

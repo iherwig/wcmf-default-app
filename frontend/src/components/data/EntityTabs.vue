@@ -11,10 +11,10 @@
       :name="item.name"
     >
       <template #tab>
-        <span>
+        <n-space justify="space-between">
           <n-icon><list-icon /></n-icon>
           <span>{{ item.title }}</span>
-        </span>
+        </n-space>
       </template>
       <slot></slot>
     </n-tab-pane>
@@ -24,12 +24,16 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { NTabs, NTabPane, NIcon, NSpace } from 'naive-ui'
 import { TextBulletListLtr16Regular as ListIcon } from '@vicons/fluent'
 import { useConfig } from '~/composables/config'
 import router from '~/router'
 
 const props = defineProps<{
   selectedTab: string
+}>()
+const emit = defineEmits<{
+  tabChange: [type: string]
 }>()
 
 const { t, locale } = useI18n()
@@ -70,7 +74,7 @@ const getTab = (tabName: string) => {
 }
 
 const changeTab = (tabName: string) => {
-  console.log(tabName)
+  activeTab.value = tabName
 }
 
 watch(props, () => {
@@ -88,6 +92,7 @@ watch(props, () => {
 })
 watch(activeTab, () => {
   const tab = getTab(activeTab.value)
+  emit('tabChange', tab.name)
   if (tab) {
     router.push(tab.route)
   }

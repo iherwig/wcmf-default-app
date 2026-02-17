@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useConfig } from '~/composables/config'
 import { useApiWithAuth } from '~/composables/fetch'
 import { useModel } from '~/composables/model'
 import { Entity } from './model/meta/types'
@@ -13,7 +12,6 @@ interface ResponseData {
 }
 
 export const useHistoryStore = () => defineStore<string, EntityStore>('history', () => {
-  const config = useConfig()
   const model = useModel()
   const entities = ref<Entity[]>([])
 
@@ -21,7 +19,7 @@ export const useHistoryStore = () => defineStore<string, EntityStore>('history',
   model.registerType(new HistoryItem())
 
   async function fetch(limit: number=30) {
-    const { statusCode, error, data } = await useApiWithAuth<ResponseData>(config.backendUrl+`?action=history&limit=${limit}`)
+    const { statusCode, error, data } = await useApiWithAuth<ResponseData>(`?action=history&limit=${limit}`)
     if (statusCode.value == 200 && data.value) {
       entities.value = data.value.list
     }

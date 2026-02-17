@@ -1,8 +1,9 @@
 <template>
-  <div ref="root" v-if="type && store && columns">
+  <div ref="root" v-if="type && columns">
     <n-data-table
-      :columns="cols.value"
-      :data="store.entities.value"
+      :columns="columns"
+      :data="data"
+      :loading="data?.length == 0"
     >
       <template #empty>
         <div class="flex items-center justify-center h-100%">
@@ -11,120 +12,74 @@
       </template>
     </n-data-table>
     <div class="flex items-center justify-end p-1">
-      <small>{{ $t('{0} item(s)', [store.entities.value.length]) }}</small>
+      <small>{{ $t('{0} item(s)', [(data ?? []).length]) }}</small>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, onMounted, h } from 'vue'
+import { ref, computed, h } from 'vue'
 import { NDataTable, NButton, DataTableColumn } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { useElementSize } from '@vueuse/core'
 import { EntityType, EntityAttribute, Entity } from '~/stores/model/meta/types'
 import { Entity as DefaultEntity } from '~/stores/model/Entity'
-import { EntityStore } from '~/stores'
 import { Action } from '~/actions'
-import { VNode } from 'vue'
 
 const props = defineProps<{
   type?: EntityType
   columns?: DataTableColumn<Entity>[]
   actions?: Action<unknown>[]
-  store?: EntityStore
   enabledFeatures?: any[]
+  data?: Entity[]
+  size?: number
 }>()
 
 const { t } = useI18n()
 
-const root = ref<HTMLElement|null>(null)
-const isLoading = ref<boolean>(true)
-
-// function for generating columns
-const generateColumns = (type: EntityType, width: number): DataTableColumn<Entity>[] =>
-  Array.from(type.attributes).map((a: EntityAttribute) => ({
-    key: a.name,
-    title: t(a.name),
-    width: width,
-    sortable: true,
-  })
-)
-
-// function for detecting fixed columns
-const isFixed = ((c: DataTableColumn<Entity>) => c.minWidth != undefined && c.minWidth > 0)
-
-let initialWidth = 0
-let reservedWidth = 0
-
-const { width } = useElementSize(root)
-watch(width, () => {
-  // calculate initial relative widths for non-fixed columns
-  if (initialWidth == 0 && width.value != 0) {
-    initialWidth = width.value
-    let numZeroWidthCols = 0
-    let usedWidth = 0
-    cols.value.forEach((c) => {
-      if (isFixed(c)) {
-        reservedWidth += c.minWidth!
-        usedWidth += c.minWidth!
-      }
-      else if (c.width > 0) {
-        c.relWidth = c.width/initialWidth
-        usedWidth += c.width
-      }
-      else {
-        numZeroWidthCols++
-      }
-    })
-    const numZeroWidthColRelWidth = (initialWidth-usedWidth)/numZeroWidthCols/initialWidth
-    cols.value.filter((c) => !isFixed(c) && c.width == 0).forEach((c) => {
-      c.relWidth = numZeroWidthColRelWidth
-    })
+const columns = computed<DataTableColumn<Entity>[]>(() => {
+  let result: DataTableColumn<Entity>[] = []
+  if (props.columns) {
+    result = props.columns
   }
-  // resize columns proportionally
-  for (let i=0, count=cols.value.length; i<count; i++) {
-    const c = cols.value[i]
-    const w = isFixed(c) ? c.minWidth! : c.relWidth*width.value
-    cols.value[i].width = w
-  }
-})
-
-const columns: DataTableColumn<Entity> = (props.columns || (props.type ? generateColumns(props.type, 0) : []))
-
-// add action column
-if (props.actions && props.actions.length > 0) {
-  columns.push({
-    key: 'actions',
-    title: '',
-    width: props.actions.length*70,
-    minWidth: props.actions.length*70,
-    sortable: false,
-    cellRenderer: ({rowData}) => {
-      const buttons: VNode[] = []
-      if (props.actions) {
-        for (let i=0, count=props.actions.length; i<count; i++) {
-          const action: Action<unknown> = props.actions[i]
-          action.entity = DefaultEntity.fromObject(rowData)
-          buttons.push(h(NButton, {
-            icon: action.icon,
-            href: action.url,
-            onClick: () => { action.execute() }
-          }))
-        }
+  else if (props.type) {
+    result = Array.from(props?.type?.attributes).filter((a) => !a.tags.includes('DATATYPE_IGNORE')).map((a: EntityAttribute) => ({
+      key: a.name,
+      title: t(a.name),
+      sorter: 'default',
+      resizable: true,
+      ellipsis: {
+        tooltip: true
       }
-      return h('div',
-        { class: 'flex flex-justify-center flex-items-center' },
-        buttons
-      )
-    }
-  })
-}
-const cols = reactive({ value: columns })
-
-onMounted(async() => {
-  if (props.store) {
-    await props.store.fetch()
+    }) as DataTableColumn<Entity>)
   }
-  isLoading.value = false
+  // add action column
+  if (props.actions && props.actions.length > 0) {
+    result.push({
+      key: 'actions',
+      title: '',
+      width: props.actions.length*70,
+      fixed: 'right',
+      render(row) {
+        return props.actions?.map((action) => {
+          action.entity = DefaultEntity.fromObject(row)
+          return h(
+            NButton,
+            {
+              //href: action.url,
+              size: 'small',
+              circle: true,
+              style: 'font-size: 24px',
+              onClick: () => { action.execute() }
+            },
+            {
+              //default: () => t(action.name),
+              icon: () => h(action.icon)
+            }
+          )
+        })
+      }
+    } as DataTableColumn<Entity>)
+  }
+  return result
 })
 </script>

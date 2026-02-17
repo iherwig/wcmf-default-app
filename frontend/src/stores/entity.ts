@@ -1,23 +1,21 @@
-import { ref } from 'vue'
+import { Ref, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useConfig } from '~/composables/config'
 import { useApiWithAuth } from '~/composables/fetch'
 import { Entity, EntityType } from './model/meta/types'
 import { EntityStore } from '.'
 
-interface ResponseData {
-  list: Entity[],
-  totalCount: number
-}
+interface ResponseData extends Array<Entity>{}
 
-export const useEntityStore = <T extends EntityType>(lang: string, type: T) => defineStore<string, EntityStore>('entity', () => {
-  const config = useConfig()
+export const useEntityStore = <T extends EntityType>(lang: Ref<string>, type: Ref<T|undefined>) => defineStore<string, EntityStore>('entity', () => {
   const entities = ref<Entity[]>([])
 
   async function fetch(limit: number=30) {
-    const { statusCode, error, data } = await useApiWithAuth<ResponseData>(config.backendUrl+`rest/${lang}/${type.typeName}`)
+    if (!lang.value || !type.value) {
+      return
+    }
+    const { statusCode, error, data } = await useApiWithAuth<ResponseData>(`/rest/${lang.value}/${type.value.typeName}?completeObjects=true`)
     if (statusCode.value == 200 && data.value) {
-      entities.value = data.value.list
+      entities.value = data.value
     }
     else {
       throw new Error('Failed to load entities', { cause: error.value })

@@ -12,7 +12,7 @@ export interface Action<T> {
   /**
    * Icon representing the action
    */
-  icon?: Component
+  icon: Component
 
   /**
    * Entity associated with the action (set dynamically when action is used in tables)
