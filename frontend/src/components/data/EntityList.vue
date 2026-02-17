@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, h } from 'vue'
+import { computed, h } from 'vue'
 import { NDataTable, NButton, DataTableColumn } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { EntityType, EntityAttribute, Entity } from '~/stores/model/meta/types'

@@ -1,6 +1,6 @@
 <template>
   <h1>{{ $t(`${type} [Pl.]`) }}</h1>
-  <component :is="entityTabs" :selectedTab="type">
+  <component :is="entityTabs" :selectedTab="type" @tab-change="handleTypeChange">
     <component :is="entityList" v-if="typeClass"
       :type="typeClass"
       :actions="actions"
@@ -42,9 +42,10 @@ const actions = computed<Action<unknown>[]>(() => [
 ])
 
 const handleTypeChange = async(type: string) => {
-  typeClass.value = model.getType(type)
-  if (typeClass.value) {
+  const newType = model.getType(type)
+  if (newType && typeClass.value?.typeName != newType.typeName) {
     entities.value = []
+    typeClass.value = newType
     await entityStore.fetch()
   }
 }
