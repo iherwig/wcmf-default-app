@@ -1,5 +1,5 @@
 import types from '~/app/types'
-import { Model } from '~/stores/model/meta/Model'
+import { Model } from '~/model/meta/Model'
 
 const model = new Model()
 

@@ -1,32 +1,34 @@
 <template>
   <h1>{{ $t('Welcome') }}</h1>
   <h3>{{ $t('Last Updates') }}</h3>
-  <EntityList
-    :type="historyEntity"
+  <component :is="entityList" v-if="historyClass"
+    :type="historyClass"
     :actions="actions"
     :enabledFeatures="[]"
-    :data="entities"
+    :data="status === 'success' ? state.data?.items : []"
   />
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
+import { inject, ref } from 'vue'
+import { useQuery } from '@pinia/colada'
+import { getItemsQuery } from '~/queries/history'
 import EntityList from '~/components/data/EntityList.vue'
-import { useHistoryStore } from '~/stores'
-import { Action, Edit } from '~/actions'
+import { Edit } from '~/actions'
 import { useModel } from '~/composables/model'
+import { EntityType } from '~/model/meta/types'
+import { EntityListInjectionKey } from '~/keys'
+
+const entityList = inject(EntityListInjectionKey, EntityList)
 
 const model = useModel()
 
-const historyStore = useHistoryStore()
-const historyEntity = model.getType('HistoryItem')
-const entities = storeToRefs(historyStore).entities
-historyStore.fetch()
+const historyClass = ref<EntityType>(model.getType('HistoryItem'))
+const { state, status } = useQuery(getItemsQuery)
 
-const actions = computed<Action<unknown>[]>(() => [
+const actions = [
   new Edit()
-])
+]
 </script>
 
 <style scoped>

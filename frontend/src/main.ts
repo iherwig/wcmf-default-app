@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'
+import { PiniaColada } from '@pinia/colada'
 import { fetchConfig } from '~/composables/config'
 
 import 'vfonts/Lato.css'
@@ -17,6 +18,11 @@ fetchConfig().then(async(config) => {
   const app = createApp(appModule.default)
 
   app.use(pinia)
+    .use(PiniaColada, {
+      queryOptions: {
+        staleTime: 30000 // 30 sec
+      }
+    })
     .use(routerModule.default)
     .use(i18nModule.default)
     .mount("#app")

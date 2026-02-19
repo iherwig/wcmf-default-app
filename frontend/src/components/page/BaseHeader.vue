@@ -1,9 +1,21 @@
 <template>
   <n-flex v-if="menu" align="center" class="header">
     <n-flex>
+      <n-button
+        v-if="isMobile"
+        quaternary
+        circle
+        @click="drawerActive=true"
+      >
+        <template #icon>
+          <menu-icon />
+        </template>
+      </n-button>
+    </n-flex>
+    <n-flex>
       <div>{{ config.title }}</div>
     </n-flex>
-    <n-flex style="flex-grow: 1">
+    <n-flex v-if="!isMobile" style="flex-grow: 1">
       <n-flex>
         <div>
           <n-menu
@@ -16,7 +28,7 @@
         <n-input class="search-field" :placeholder="t('Search')" />
       </n-flex>
     </n-flex>
-    <n-flex style="width: 120px">
+    <n-flex v-if="!isMobile" style="width: 120px">
       <n-menu
         v-model:value="$route.path"
         mode="horizontal"
@@ -25,13 +37,33 @@
       />
     </n-flex>
   </n-flex>
+
+  <n-drawer v-model:show="drawerActive" placement="right">
+    <n-drawer-content>
+      <n-input class="search-field" :placeholder="t('Search')" />
+      <n-menu
+        mode="vertical"
+        :indent=0
+        :options="mainMenuOptions"
+        @update:value="drawerActive=false"
+        accordion
+      />
+      <n-menu
+        mode="vertical"
+        :indent=0
+        :options="secondaryMenuOptions"
+        @update:value="drawerActive=false"
+        accordion
+      />
+    </n-drawer-content>
+  </n-drawer>
 </template>
 
 <script lang="ts" setup>
-import { Component, h } from 'vue';
+import { Component, h, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { RouterLink } from 'vue-router'
-import { NMenu, MenuOption, NIcon, NInput, NFlex } from 'naive-ui'
+import { NMenu, MenuOption, NIcon, NInput, NFlex, NButton, NDrawer, NDrawerContent } from 'naive-ui'
 import {
   TextBulletListLtr16Regular as ListIcon,
   Settings16Regular as SettingsIcon,
@@ -39,8 +71,10 @@ import {
   Shield16Regular as PermissionsIcon,
   LockClosed16Regular as LocksIcon,
   Person16Filled as UserIcon,
-  DoorArrowRight16Regular as LogoutIcon
+  DoorArrowRight16Regular as LogoutIcon,
+  LineHorizontal320Filled as MenuIcon
 } from '@vicons/fluent'
+import { useBreakpoints } from '@vueuse/core'
 import { useConfig } from '~/composables/config'
 import { useUser } from '~/composables/user'
 import router from '~/router';
@@ -53,6 +87,14 @@ const config = useConfig() as any
 const { getLogin, destroy: destroySession } = useUser()
 
 const { locale, t } = useI18n()
+
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768,
+  desktop: 1024
+})
+const isMobile = breakpoints.smaller('tablet')
+const drawerActive = ref(false)
 
 const localizedRoute = (route: any) => {
   return { ...route, params: { ...route.params, locale: locale.value } }

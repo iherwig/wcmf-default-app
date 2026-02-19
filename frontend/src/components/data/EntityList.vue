@@ -3,7 +3,8 @@
     <n-data-table
       :columns="columns"
       :data="data"
-      :loading="data?.length == 0"
+      :loading="loading"
+      :max-height="552"
     >
       <template #empty>
         <div class="flex items-center justify-center h-100%">
@@ -11,30 +12,30 @@
         </div>
       </template>
     </n-data-table>
-    <div class="flex items-center justify-end p-1">
-      <small>{{ $t('{0} item(s)', [(data ?? []).length]) }}</small>
-    </div>
+    <n-flex v-if="!loading" justify="end"><span>{{ $t('{0} item(s)', [(props.data ?? []).length]) }}</span></n-flex>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, h } from 'vue'
-import { NDataTable, NButton, DataTableColumn } from 'naive-ui'
+import { NDataTable, NButton, DataTableColumn, NFlex } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { EntityType, EntityAttribute, Entity } from '~/stores/model/meta/types'
-import { Entity as DefaultEntity } from '~/stores/model/Entity'
+import { EntityType, EntityAttribute, Entity } from '~/model/meta/types'
+import { Entity as DefaultEntity } from '~/model/Entity'
 import { Action } from '~/actions'
 
 const props = defineProps<{
-  type?: EntityType
+  type: EntityType
   columns?: DataTableColumn<Entity>[]
   actions?: Action<unknown>[]
   enabledFeatures?: any[]
-  data?: Entity[]
+  data: Entity[]
   size?: number
 }>()
 
 const { t } = useI18n()
+
+const loading = computed<boolean>(() => props.data.length == 0)
 
 const columns = computed<DataTableColumn<Entity>[]>(() => {
   let result: DataTableColumn<Entity>[] = []

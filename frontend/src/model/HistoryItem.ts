@@ -1,6 +1,6 @@
 import { useModel } from '~/composables/model'
-import { EntityType, EntityAttribute, EntityRelation, Entity } from '~/stores/model/meta/types'
-import { EntityClass } from '~/stores/model/meta/EntityClass'
+import { EntityType, EntityAttribute, EntityRelation, Entity } from '~/model/meta/types'
+import { EntityClass } from '~/model/meta/EntityClass'
 
 // Names to be included by l10n tools
 // Dict.translate('_displayValue')

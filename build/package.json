@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "jake": "^10.9.4",
-    "minimatch": "^10.1.2",
+    "minimatch": "^10.2.1",
     "replace-in-file": "^8.4.0",
     "wcmf-generator": "github:iherwig/wcmf-generator"
   },

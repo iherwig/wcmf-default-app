@@ -1,5 +1,5 @@
 import { Action } from '.'
-import { Entity } from '~/stores/model/meta/types'
+import { Entity } from '~/model/meta/types'
 import { NavigationFailure } from 'vue-router'
 import { Edit16Regular as EditIcon } from '@vicons/fluent'
 import { useModel } from '~/composables/model'

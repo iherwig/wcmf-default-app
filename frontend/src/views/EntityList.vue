@@ -5,21 +5,21 @@
       :type="typeClass"
       :actions="actions"
       :enabledFeatures="[]"
-      :data="entities"
+      :data="status === 'success' ? state?.data?.items : []"
     />
   </component>
 </template>
 
 <script lang="ts" setup>
 import { inject, ref, watch, onMounted, computed } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
+import { useQuery } from '@pinia/colada'
+import { getItemsQuery } from '~/queries/entity'
 import { EntityListInjectionKey, EntityTabsInjectionKey } from '~/keys'
 import { useModel } from '~/composables/model'
 import EntityTabs from '~/components/data/EntityTabs.vue'
 import EntityList from '~/components/data/EntityList.vue'
-import { EntityType } from '~/stores/model/meta/types'
-import { useEntityStore } from '~/stores'
+import { EntityType } from '~/model/meta/types'
 import { Action, Edit } from '~/actions'
 
 const props = defineProps<{
@@ -32,10 +32,8 @@ const entityList = inject(EntityListInjectionKey, EntityList)
 const { locale } = useI18n()
 const model = useModel()
 
-const typeClass = ref<EntityType>()
-
-const entityStore = useEntityStore(locale, typeClass)
-const entities = storeToRefs(entityStore).entities
+const typeClass = ref<EntityType>(model.getType(props.type))
+const { state, status } = useQuery(getItemsQuery(locale, typeClass))
 
 const actions = computed<Action<unknown>[]>(() => [
   new Edit()
@@ -44,9 +42,7 @@ const actions = computed<Action<unknown>[]>(() => [
 const handleTypeChange = async(type: string) => {
   const newType = model.getType(type)
   if (newType && typeClass.value?.typeName != newType.typeName) {
-    entities.value = []
     typeClass.value = newType
-    await entityStore.fetch()
   }
 }
 
