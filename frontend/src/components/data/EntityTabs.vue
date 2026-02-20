@@ -27,6 +27,7 @@ import { useI18n } from 'vue-i18n'
 import { NTabs, NTabPane, NIcon, NSpace } from 'naive-ui'
 import { TextBulletListLtr16Regular as ListIcon } from '@vicons/fluent'
 import { useConfig } from '~/composables/config'
+import { RouteLocationRaw } from 'vue-router'
 import router from '~/router'
 
 const props = defineProps<{
@@ -36,17 +37,21 @@ const emit = defineEmits<{
   tabChange: [type: string]
 }>()
 
+interface Tab {
+  title: string
+  name: string
+  route: RouteLocationRaw
+}
+
 const { t, locale } = useI18n()
 
 const config = useConfig() as any
-
-const tabs = ref<any[]>([])
+const tabs = ref<Tab[]>([])
 config.rootTypes.forEach((type: string) => {
   tabs.value.push({
     title: t(`${type} [Pl.]`),
     name: type,
-    content: t(`${type} [Pl.]`),
-    route: { name: 'EntityList', params: { locale: locale, type: type }}
+    route: { name: 'EntityList', params: { locale: locale.value, type: type }}
   })
 })
 const activeTab = ref(props.selectedTab)
@@ -68,7 +73,7 @@ const closeTab = (tabName: string) => {
   tabs.value = currentTabs.filter((tab) => tab.name !== tabName)
 }
 
-const getTab = (tabName: string) => {
+const getTab = (tabName: string): Tab|null => {
   const matchingTabs = tabs.value.filter((tab) => tab.name == tabName)
   return matchingTabs.length > 0 ? matchingTabs[0] : null
 }
@@ -84,16 +89,15 @@ watch(props, () => {
     tabs.value.push({
       title: t(type),
       name: type,
-      content: t(type),
-      route: { name: 'EntityList', params: { locale: locale, type: type }}
+      route: { name: 'EntityList', params: { locale: locale.value, type: type }}
     })
   }
   activeTab.value = type
 })
 watch(activeTab, () => {
   const tab = getTab(activeTab.value)
-  emit('tabChange', tab.name)
   if (tab) {
+    emit('tabChange', tab.name)
     router.push(tab.route)
   }
 })

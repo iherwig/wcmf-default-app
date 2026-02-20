@@ -1,26 +1,30 @@
 <template>
   <h1>{{ $t(`${type} [Pl.]`) }}</h1>
-  <component :is="entityTabs" :selectedTab="type" @tab-change="handleTypeChange">
+  <component :is="entityTabs"
+    :selectedTab="type">
     <component :is="entityList" v-if="typeClass"
       :type="typeClass"
       :actions="actions"
       :enabledFeatures="[]"
-      :data="status === 'success' ? state?.data?.items : []"
+      :data="dataPages.flatMap(page => page.items)"
+      :totalCount="dataPages.at(-1)?.totalCount ?? 0"
+      @load-next="loadNext"
     />
   </component>
 </template>
 
 <script lang="ts" setup>
-import { inject, ref, watch, onMounted, computed } from 'vue'
+import { inject, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useQuery } from '@pinia/colada'
-import { getItemsQuery } from '~/queries/entity'
+import { useInfiniteQuery } from '@pinia/colada'
 import { EntityListInjectionKey, EntityTabsInjectionKey } from '~/keys'
 import { useModel } from '~/composables/model'
 import EntityTabs from '~/components/data/EntityTabs.vue'
 import EntityList from '~/components/data/EntityList.vue'
 import { EntityType } from '~/model/meta/types'
 import { Action, Edit } from '~/actions'
+import { GetItemsResponse } from '~/api'
+import { getItemsQuery } from '~/queries/entity'
 
 const props = defineProps<{
   type: string
@@ -32,24 +36,16 @@ const entityList = inject(EntityListInjectionKey, EntityList)
 const { locale } = useI18n()
 const model = useModel()
 
-const typeClass = ref<EntityType>(model.getType(props.type))
-const { state, status } = useQuery(getItemsQuery(locale, typeClass))
+const typeClass = computed<EntityType>(() => model.getType(props.type))
+const { state, status, loadNextPage } = useInfiniteQuery(getItemsQuery(locale, typeClass))
+const dataPages = computed<GetItemsResponse[]>(() => state?.value.data?.pages ?? [])
 
 const actions = computed<Action<unknown>[]>(() => [
   new Edit()
 ])
 
-const handleTypeChange = async(type: string) => {
-  const newType = model.getType(type)
-  if (newType && typeClass.value?.typeName != newType.typeName) {
-    typeClass.value = newType
-  }
+const loadNext = () => {
+  console.log('load next')
+  loadNextPage()
 }
-
-onMounted(() => {
-  handleTypeChange(props.type)
-})
-watch(props, () => {
-  handleTypeChange(props.type)
-})
 </script>

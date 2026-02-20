@@ -8,17 +8,18 @@ import { GetItemsResponse } from '.'
 const model = useModel()
 model.registerType(new HistoryItem())
 
-interface ResponseData {
+interface ApiResponse {
   list: Entity[],
   totalCount: number
 }
 
-export async function getItems(limit: number=30): Promise<GetItemsResponse> {
-  const { statusCode, error, data } = await useApiWithAuth<ResponseData>(`?action=history&limit=${limit}`)
+export async function getItems(limit: number): Promise<GetItemsResponse> {
+  const { statusCode, error, data } = await useApiWithAuth<ApiResponse>(`?action=history&limit=${limit}`)
   if (statusCode.value == 200 && data.value) {
     return {
       items: data.value.list,
-      totalCount: data.value.totalCount
+      totalCount: data.value.totalCount,
+      nextPage: null
     }
   }
   else {

@@ -6,4 +6,5 @@ export * from './entity'
 export interface GetItemsResponse {
   items: Entity[]
   totalCount: number
+  nextPage: number|null
 }

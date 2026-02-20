@@ -1,7 +1,9 @@
 import { getItemsOfType } from '~/api/entity'
-import { defineQueryOptions } from '@pinia/colada'
 import { EntityType } from '~/model/meta/types'
-import { Ref } from 'vue'
+import { reactive, Ref } from 'vue'
+import { GetItemsResponse } from '~/api'
+
+const PAGE_SIZE = 30
 
 const ENTITY_QUERY_KEY = (type: string) => {
   return {
@@ -10,8 +12,10 @@ const ENTITY_QUERY_KEY = (type: string) => {
 }
 
 export const getItemsQuery = <T extends EntityType>(lang: Ref<string>, type: Ref<T>) => {
-  return defineQueryOptions(() => ({
-    key: ENTITY_QUERY_KEY(type.value.typeName).root,
-    query: () => getItemsOfType<T>(lang.value, type.value).getItems()
-  }))
+  return reactive({
+    key: () => ENTITY_QUERY_KEY(type.value.typeName).root,
+    query: (context: { pageParam: number}) => getItemsOfType<T>(lang.value, type.value, PAGE_SIZE).getItems(context.pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: GetItemsResponse) =>  lastPage?.nextPage ?? null
+  })
 }

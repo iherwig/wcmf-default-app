@@ -4,20 +4,17 @@
       :columns="columns"
       :data="data"
       :loading="loading"
-      :max-height="552"
+      :max-height="rowHeight*10"
+      :on-scroll="handleScroll"
     >
-      <template #empty>
-        <div class="flex items-center justify-center h-100%">
-          <p>{{ $t('No data') }}</p>
-        </div>
-      </template>
+      <template #empty>{{ $t('No data') }}</template>
     </n-data-table>
-    <n-flex v-if="!loading" justify="end"><span>{{ $t('{0} item(s)', [(props.data ?? []).length]) }}</span></n-flex>
+    <n-flex v-if="!loading" justify="end"><span>{{ $t('{0} item(s)', [totalCount]) }}</span></n-flex>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, h } from 'vue'
+import { computed, h, ref } from 'vue'
 import { NDataTable, NButton, DataTableColumn, NFlex } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { EntityType, EntityAttribute, Entity } from '~/model/meta/types'
@@ -30,12 +27,33 @@ const props = defineProps<{
   actions?: Action<unknown>[]
   enabledFeatures?: any[]
   data: Entity[]
+  totalCount: number
   size?: number
+}>()
+const emit = defineEmits<{
+  loadNext: []
 }>()
 
 const { t } = useI18n()
 
+const rowHeight = ref<number>(55.2)
 const loading = computed<boolean>(() => props.data.length == 0)
+
+let debounceTimeout: number|null = null
+const handleScroll = (e: Event) => {
+  if (debounceTimeout) {
+    return
+  }
+  debounceTimeout = window.setTimeout(() => {
+    const target = e.target as HTMLElement
+    if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - 3*rowHeight.value) {
+      if (!loading.value && props.data.length < props.totalCount) {
+        emit('loadNext')
+      }
+    }
+    debounceTimeout = null
+  }, 200)
+}
 
 const columns = computed<DataTableColumn<Entity>[]>(() => {
   let result: DataTableColumn<Entity>[] = []
