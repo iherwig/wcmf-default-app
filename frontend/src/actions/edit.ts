@@ -33,7 +33,7 @@ export class Edit implements Action<EditReturnType> {
     if (!this.entity) {
       throw(new Error('Property entity is not initialized'))
     }
-    const oid = this.entity.get('oid')
+    const oid = this.entity.oid
     const type = model.getSimpleTypeName(model.getTypeNameFromOid(oid))
     const id = model.getIdFromOid(oid);
     return { name: 'Entity', params: { type: type, id: id } }

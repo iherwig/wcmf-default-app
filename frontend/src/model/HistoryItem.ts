@@ -115,7 +115,7 @@ export class HistoryItem extends EntityClass implements EntityType {
   listView: string = '../data/widget/EntityListWidget'
   detailView: string = '../data/widget/EntityFormWidget'
   public getSummary(entity?: Entity) {
-    var typeClass = model.getType(entity?.get('_type'));
+    var typeClass = model.getType(entity?.['_type']);
     return typeClass.getSummary(entity);
   }
 }

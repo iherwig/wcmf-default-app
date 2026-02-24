@@ -97,7 +97,7 @@ export class EntityClass implements EntityType {
   public getDisplayValue(entity: Entity): string {
     let result = ''
     if (entity) {
-      const oid = entity.get('oid')
+      const oid = entity.oid
       const model = useModel()
       const type = model.getTypeFromOid(oid)
       if (type) {

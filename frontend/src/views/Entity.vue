@@ -1,7 +1,5 @@
 <template>
-  <el-space :fill="true" wrap>
-    <h1>{{ $t('Entity') }}</h1>
-  </el-space>
+  <h1>{{ $t('Entity') }}</h1>
 </template>
 
 <script lang="ts" setup>

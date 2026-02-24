@@ -122,21 +122,19 @@ const columns = computed<DataTableColumn<Entity>[]>(() => {
     result.push({
       key: 'actions',
       title: '',
-      width: props.actions.length*70,
+      width: props.actions.length * 70,
       fixed: 'right',
       render(row) {
         return props.actions?.map((action) => {
           action.entity = row
-          return h(NButton, {
-            //href: action.url,
+          const btn = h(NButton, {
             size: 'small',
             circle: true,
-            style: 'font-size: 24px',
-            onClick: () => { action.execute() }
+            onClick: (e: MouseEvent) => { console.log(e); action.execute() }
           }, {
-            //default: () => t(action.name),
             icon: () => h(action.icon)
           })
+          return action.url ? h('a', { href: action.url }, [btn]) : btn
         })
       }
     } as DataTableColumn<Entity>)

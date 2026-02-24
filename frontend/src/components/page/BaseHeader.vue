@@ -90,7 +90,7 @@ const { locale, t } = useI18n()
 
 const breakpoints = useBreakpoints({
   mobile: 0,
-  tablet: 768,
+  tablet: 980,
   desktop: 1024
 })
 const isMobile = breakpoints.smaller('tablet')

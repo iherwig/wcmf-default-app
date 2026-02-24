@@ -23,7 +23,7 @@ export type Multiplicity = number|MultiplicityConst
 
 export interface Entity {
   oid: string
-  get(name: string): any
+  [name: string]: any
 }
 
 export interface EntityType {
