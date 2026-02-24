@@ -13,7 +13,7 @@ interface ApiResponse {
   totalCount: number
 }
 
-export async function getItems(limit: number): Promise<GetItemsResponse> {
+export const getItems = async (limit: number): Promise<GetItemsResponse> => {
   const { statusCode, error, data } = await useApiWithAuth<ApiResponse>(`?action=history&limit=${limit}`)
   if (statusCode.value == 200 && data.value) {
     return {

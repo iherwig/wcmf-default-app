@@ -45,7 +45,6 @@ const actions = computed<Action<unknown>[]>(() => [
 ])
 
 const loadNext = () => {
-  console.log('load next')
   loadNextPage()
 }
 </script>

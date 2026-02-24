@@ -22,6 +22,7 @@ export type AttributeFilter = {
 export type Multiplicity = number|MultiplicityConst
 
 export interface Entity {
+  oid: string
   get(name: string): any
 }
 

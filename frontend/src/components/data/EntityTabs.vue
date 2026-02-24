@@ -97,8 +97,8 @@ watch(props, () => {
 watch(activeTab, () => {
   const tab = getTab(activeTab.value)
   if (tab) {
-    emit('tabChange', tab.name)
     router.push(tab.route)
+    emit('tabChange', tab.name)
   }
 })
 </script>

@@ -17,7 +17,7 @@ import { getItemsQuery } from '~/queries/history'
 import EntityList from '~/components/data/EntityList.vue'
 import { Edit } from '~/actions'
 import { useModel } from '~/composables/model'
-import { Entity, EntityType } from '~/model/meta/types'
+import { EntityType } from '~/model/meta/types'
 import { EntityListInjectionKey } from '~/keys'
 import { GetItemsResponse } from '~/api'
 

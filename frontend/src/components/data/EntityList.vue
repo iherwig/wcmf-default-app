@@ -1,11 +1,15 @@
 <template>
-  <div ref="root" v-if="type && columns">
+  <div ref="table" v-if="type && columns">
     <n-data-table
+      :bordered="false"
       :columns="columns"
       :data="data"
       :loading="loading"
-      :max-height="rowHeight*10"
+      :max-height="rowHeight * 10"
+      :row-key="rowKey"
+      :row-props="rowProps"
       :on-scroll="handleScroll"
+      :on-update:sorter="handleSort"
     >
       <template #empty>{{ $t('No data') }}</template>
     </n-data-table>
@@ -14,12 +18,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, h, ref } from 'vue'
-import { NDataTable, NButton, DataTableColumn, NFlex } from 'naive-ui'
+import { computed, h, onMounted, ref, watch } from 'vue'
+import { NDataTable, NButton, DataTableColumn, NFlex, DataTableSortState, NInput, NIcon, DataTableInst } from 'naive-ui'
+import { Filter16Regular as FilterIcon } from '@vicons/fluent'
 import { useI18n } from 'vue-i18n'
 import { EntityType, EntityAttribute, Entity } from '~/model/meta/types'
-import { Entity as DefaultEntity } from '~/model/Entity'
 import { Action } from '~/actions'
+import { useTableStateStore } from '~/stores/tableState'
+import { useDebounceFn } from '@vueuse/core'
+
+const ROW_HEIGHT = 55.2
 
 const props = defineProps<{
   type: EntityType
@@ -34,25 +42,42 @@ const emit = defineEmits<{
   loadNext: []
 }>()
 
+const dataTable = ref<DataTableInst|null>(null)
+
 const { t } = useI18n()
+const { setSort, getSort, getSortValue, setFilterValue, getFilterValue } = useTableStateStore()
 
-const rowHeight = ref<number>(55.2)
-const loading = computed<boolean>(() => props.data.length == 0)
+const rowHeight = ref<number>(ROW_HEIGHT)
+const loadingNext = ref<boolean>(false)
+const loading = computed<boolean>(() => props.data.length == 0 || loadingNext.value)
 
-let debounceTimeout: number|null = null
-const handleScroll = (e: Event) => {
-  if (debounceTimeout) {
-    return
-  }
-  debounceTimeout = window.setTimeout(() => {
-    const target = e.target as HTMLElement
-    if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - 3*rowHeight.value) {
-      if (!loading.value && props.data.length < props.totalCount) {
-        emit('loadNext')
-      }
+const rowKey = (row: Entity) => {
+  return row.oid
+}
+
+const rowProps = (row: Entity) => {
+  return {
+    style: 'cursor: pointer;',
+    onClick: () => {
+      console.log('clicked', row.oid)
     }
-    debounceTimeout = null
-  }, 200)
+  }
+}
+
+const handleScroll = useDebounceFn((e: Event) => {
+  const target = e.target as HTMLElement
+  if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - 10 * rowHeight.value) {
+    if (!loading.value && props.data.length < props.totalCount) {
+      loadingNext.value = true
+      emit('loadNext')
+    }
+  }
+}, 200)
+
+const handleSort = (options: DataTableSortState|null) => {
+  if (options) {
+    setSort(props.type.typeName, { attribute: options.columnKey as string, order: options.order })
+  }
 }
 
 const columns = computed<DataTableColumn<Entity>[]>(() => {
@@ -64,13 +89,34 @@ const columns = computed<DataTableColumn<Entity>[]>(() => {
     result = Array.from(props?.type?.attributes).filter((a) => !a.tags.includes('DATATYPE_IGNORE')).map((a: EntityAttribute) => ({
       key: a.name,
       title: t(a.name),
-      sorter: 'default',
       resizable: true,
+      sorter: true,
+      sortOrder: getSortValue(props.type.typeName, a.name),
+      filter: true,
+      renderFilterIcon: () => h(NIcon,  {
+        class: 'n-base-icon',
+        color: `var(--n-th-icon-color${getFilterValue(props.type.typeName, a.name)?.length > 0 ? '-active' : ''})`
+      }, {
+        default: () => h(FilterIcon)
+      }),
+      renderFilterMenu: ({ hide }) => h(NInput, {
+        value: getFilterValue(props.type.typeName, a.name),
+        onUpdateValue: (v: string) => {
+          setFilterValue(props.type.typeName, a.name, v)
+        },
+        placeholder: t('Filter {0}', [t(a.name)]),
+        onBlur: hide,
+        clearable: true
+      }),
       ellipsis: {
         tooltip: true
       }
     }) as DataTableColumn<Entity>)
   }
+  // add selection column
+  result.unshift({
+    type: 'selection'
+  })
   // add action column
   if (props.actions && props.actions.length > 0) {
     result.push({
@@ -80,25 +126,34 @@ const columns = computed<DataTableColumn<Entity>[]>(() => {
       fixed: 'right',
       render(row) {
         return props.actions?.map((action) => {
-          action.entity = DefaultEntity.fromObject(row)
-          return h(
-            NButton,
-            {
-              //href: action.url,
-              size: 'small',
-              circle: true,
-              style: 'font-size: 24px',
-              onClick: () => { action.execute() }
-            },
-            {
-              //default: () => t(action.name),
-              icon: () => h(action.icon)
-            }
-          )
+          action.entity = row
+          return h(NButton, {
+            //href: action.url,
+            size: 'small',
+            circle: true,
+            style: 'font-size: 24px',
+            onClick: () => { action.execute() }
+          }, {
+            //default: () => t(action.name),
+            icon: () => h(action.icon)
+          })
         })
       }
     } as DataTableColumn<Entity>)
   }
   return result
+})
+
+watch(() => props.data, (oldData, newData) => {
+  if (loadingNext.value) {
+    loadingNext.value = false
+  }
+})
+
+onMounted(() => {
+  const sortState = getSort(props.type.typeName)
+  if (sortState) {
+    dataTable.value?.sort(sortState.attribute, sortState.order)
+  }
 })
 </script>
