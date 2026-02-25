@@ -15,17 +15,12 @@ export interface Action<T> {
   icon: Component
 
   /**
-   * Entity associated with the action (set dynamically when action is used in tables)
-   */
-  entity?: Entity
-
-  /**
    * Url that executes the action if applicaple (e.g. edit action)
    */
-  url?: string
+  getUrl(entity: Entity): string|null
 
   /**
    * Execute the action.
    */
-  execute(): Promise<T>
+  execute(entity: Entity): Promise<T>
 }

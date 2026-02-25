@@ -24,7 +24,7 @@ export class EntityClass implements EntityType {
    * Get a summary of the entity for display
    */
   public getSummary(entity?: Entity): string {
-    return ''
+    return entity ? this.getDisplayValue(entity) : ''
   }
 
   public getEntityAttributes(entity?: Entity): EntityAttribute[] {
@@ -109,6 +109,7 @@ export class EntityClass implements EntityType {
           const renderOptions = {}
           for (let i=0; i<type.displayValues.length; i++) {
             const curValue = type.displayValues[i]
+            /* TODO render values
             const curAttribute = type.getAttribute(curValue)
             const context = { 'data': entity, 'place': 'form' }
             when(Renderer.render(entity[curValue], curAttribute, renderOptions, context), function(value) {
@@ -117,6 +118,8 @@ export class EntityClass implements EntityType {
                 values.push(value)
               }
             });
+            */
+           values.push(entity[curValue])
           }
           result = values.join(' ')
         }

@@ -20,20 +20,17 @@ export class Edit implements Action<EditReturnType> {
     }
   }
 
-  public get url() {
-    const url = router.resolve(this.getRouteParams())
+  public getUrl(entity: Entity) {
+    const url = router.resolve(this.getRouteParams(entity))
     return url.href
   }
 
-  async execute(): Promise<EditReturnType> {
-    router.push(this.getRouteParams())
+  async execute(entity: Entity): Promise<EditReturnType> {
+    router.push(this.getRouteParams(entity))
   }
 
-  private getRouteParams() {
-    if (!this.entity) {
-      throw(new Error('Property entity is not initialized'))
-    }
-    const oid = this.entity.oid
+  private getRouteParams(entity: Entity) {
+    const oid = entity.oid
     const type = model.getSimpleTypeName(model.getTypeNameFromOid(oid))
     const id = model.getIdFromOid(oid);
     return { name: 'Entity', params: { type: type, id: id } }

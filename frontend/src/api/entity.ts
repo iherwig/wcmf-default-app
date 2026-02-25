@@ -3,8 +3,9 @@ import { Entity, EntityType } from '~/model/meta/types'
 import { GetItemsResponse } from '.'
 import { FilterState, SortState } from '~/stores/tableState'
 import { useModel } from '~/composables/model'
+import { Ref } from 'vue'
 
-interface ApiResponse extends Array<Entity>{}
+interface ApiListResponse extends Array<Entity>{}
 
 const model = useModel()
 
@@ -17,39 +18,52 @@ const renderFilter = (type: string, filter: FilterState): string => {
   return parts.join(encodeURIComponent('&'))
 }
 
-export const getItemsOfType = <T extends EntityType>(lang: string, type: T, limit: number) => {
+export const getItems = async (lang: Ref<string>, type: Ref<EntityType>, limit: number, page: number, sort: SortState, filter: FilterState): Promise<GetItemsResponse> => {
+  const typeName = model.getSimpleTypeName(type.value.typeName)
 
-  const getItems = async (page: number, sort: SortState, filter: FilterState): Promise<GetItemsResponse> => {
-    const offset = (page-1)*limit
-    const pageParam = `&limit(${limit}${offset != 0 ? `,${offset}` : ''})=`
-    const sortParam = sort ? `&sort(${sort.order == 'descend' ? '-' : '+'}${sort.attribute})` : ''
-    const filterParam = filter ? `&query=${renderFilter(model.getSimpleTypeName(type.typeName), filter)}` : ''
-    const { statusCode, error, data, response } = await useApiWithAuth<ApiResponse>(`/rest/${lang}/${type.typeName}?completeObjects=true${pageParam}${sortParam}${filterParam}`)
-    if (statusCode.value == 200 && data.value) {
-      const items = data.value
-      let totalCount = items.length
-      let hasMore = true
+  const offset = (page-1) * limit
+  const pageParam = `&limit(${limit}${offset != 0 ? `,${offset}` : ''})=`
 
-      // parse content-range header
-      const headers = response.value?.headers
-      const matches = headers?.get('content-range')?.match(/^items ([0-9]+)-([0-9]+)\/([0-9]+)$/)
-      if (matches) {
-        const [, first, last, total] = matches
-        totalCount = parseInt(total)
-        hasMore = parseInt(last) < totalCount
-      }
-      const nextPage = hasMore ? page+1 : null
+  const sortParam = sort ? `&sort(${sort.order == 'descend' ? '-' : '+'}${sort.attribute})` : ''
+  const filterParam = filter ? `&query=${renderFilter(typeName, filter)}` : ''
+  const { statusCode, error, data, response } = await useApiWithAuth<ApiListResponse>(`/rest/${lang.value}/${typeName}?completeObjects=true${pageParam}${sortParam}${filterParam}`)
+  if (statusCode.value == 200 && data.value) {
+    const items = data.value
+    let totalCount = items.length
+    let hasMore = true
 
-      return {
-        items,
-        totalCount,
-        nextPage
-      }
+    // parse content-range header
+    const headers = response.value?.headers
+    const matches = headers?.get('content-range')?.match(/^items ([0-9]+)-([0-9]+)\/([0-9]+)$/)
+    if (matches) {
+      const [, first, last, total] = matches
+      totalCount = parseInt(total)
+      hasMore = parseInt(last) < totalCount
     }
-    else {
-      throw new Error('Failed to load entities', { cause: error.value })
+    const nextPage = hasMore ? page+1 : null
+
+    return {
+      items,
+      totalCount,
+      nextPage
     }
   }
+  else {
+    throw new Error('Failed to load entities', { cause: error.value })
+  }
+}
 
-  return { getItems }
+export const getItem = async (lang: Ref<string>, type: Ref<EntityType>, id: Ref<string|number>): Promise<Entity|null> => {
+  if (id.value == '~') {
+    return null
+  }
+  const typeName = model.getSimpleTypeName(type.value.typeName)
+  const { statusCode, error, data, response } = await useApiWithAuth<Entity>(`/rest/${lang.value}/${typeName}/${id.value}?useDefaults=false`)
+    if (statusCode.value == 200 && data.value) {
+      const item = data.value
+      return item
+    }
+    else {
+      throw new Error('Failed to load entity', { cause: error.value })
+    }
 }

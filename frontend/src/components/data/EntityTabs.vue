@@ -9,6 +9,7 @@
       v-for="item in tabs"
       :tab="item.title"
       :name="item.name"
+      display-directive="if"
     >
       <template #tab>
         <n-space justify="space-between">
@@ -29,6 +30,15 @@ import { TextBulletListLtr16Regular as ListIcon } from '@vicons/fluent'
 import { useConfig } from '~/composables/config'
 import { RouteLocationRaw } from 'vue-router'
 import router from '~/router'
+import { useModel } from '~/composables/model'
+import { getItemQuery } from '~/queries/entity'
+import { useQuery } from '@pinia/colada'
+
+interface Tab {
+  title: string
+  name: string
+  route: RouteLocationRaw
+}
 
 const props = defineProps<{
   selectedTab: string
@@ -37,13 +47,8 @@ const emit = defineEmits<{
   tabChange: [type: string]
 }>()
 
-interface Tab {
-  title: string
-  name: string
-  route: RouteLocationRaw
-}
-
 const { t, locale } = useI18n()
+const model = useModel()
 
 const config = useConfig() as any
 const tabs = ref<Tab[]>([])
@@ -79,27 +84,44 @@ const getTab = (tabName: string): Tab|null => {
 }
 
 const changeTab = (tabName: string) => {
-  activeTab.value = tabName
-}
-
-watch(props, () => {
-  const type = props.selectedTab
-  const tabExists = getTab(type) != null
-  if (!tabExists) {
-    tabs.value.push({
-      title: t(type),
-      name: type,
-      route: { name: 'EntityList', params: { locale: locale.value, type: type }}
-    })
-  }
-  activeTab.value = type
-})
-watch(activeTab, () => {
-  const tab = getTab(activeTab.value)
-  if (tab) {
+  const tab = getTab(tabName)
+  if (tab != null) {
+    activeTab.value = tabName
     router.push(tab.route)
     emit('tabChange', tab.name)
   }
+}
+
+watch(props, () => {
+  const tabName = props.selectedTab
+  const tabExists = getTab(tabName) != null
+  if (!tabExists) {
+    if (model.isKnownType(tabName)) {
+      tabs.value.push({
+        title: t(tabName),
+        name: tabName,
+        route: { name: 'EntityList', params: { locale: locale.value, type: tabName }}
+      })
+    }
+    else {
+      /*
+      const typeClass = model.getTypeFromOid(tabName)
+      const id = model.getIdFromOid(tabName)
+      const { state, status } = useQuery(getItemQuery(locale, ref(typeClass), ref(id)))
+      watch(status, () => {
+        console.log(status.value)
+        if (status.value == 'success') {
+          tabs.value.push({
+            title: typeClass.getSummary(state.value.data ?? undefined),
+            name: tabName,
+            route: { name: 'Entity', params: { locale: locale.value, type: model.getSimpleTypeName(typeClass.typeName), id: id }}
+          })
+        }
+      })
+        */
+    }
+  }
+  activeTab.value = tabName
 })
 </script>
 

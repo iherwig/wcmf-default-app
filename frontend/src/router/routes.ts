@@ -48,6 +48,13 @@ const routes: Array<RouteRecordRaw> = [
             path: 'data/:type/:id',
             name: 'Entity',
             component: () => import('~/views/Entity.vue'),
+            props: (route: RouteLocation) => {
+              const props = {
+                type: route.params.type,
+                id: route.params.id
+              }
+              return props
+            }
           },
           {
             path: 'search',

@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
-import { ref } from "vue"
+import { computed, ref } from "vue"
+import { useModel } from "~/composables/model"
 
 type SortOrder = 'ascend'|'descend'|false
 
@@ -12,6 +13,8 @@ export interface FilterState {
   [attribute: string]: string
 }
 
+const model = useModel()
+
 export const useTableStateStore = defineStore('table-state', () => {
   const sort = ref<Record<string, SortState>>({})
   const filter = ref<Record<string, FilterState>>({})
@@ -20,21 +23,13 @@ export const useTableStateStore = defineStore('table-state', () => {
     sort.value[type] = sortState
   }
 
-  const getSort = (type: string) => {
-    return sort.value[type]
-  }
+  const getSort = computed(() => {
+    return (type: string) => sort.value[type]
+  })
 
-  const getSortValue = (type: string, attribute: string): SortOrder => {
-    return sort.value[type]?.attribute == attribute ? sort.value[type].order : false
-  }
-
-  const getFilter = (type: string): FilterState => {
-    return filter.value[type]
-  }
-
-  const getFilterValue = (type: string, attribute: string): string => {
-    return filter.value[type] ? (filter.value[type][attribute] ?? '') : ''
-  }
+  const getSortValue = computed(() => {
+    return (type: string, attribute: string): SortOrder => sort.value[type]?.attribute == attribute ? sort.value[type].order : false
+  })
 
   const setFilterValue = (type: string, attribute: string, value: string) => {
     if (!filter.value[type]) {
@@ -48,5 +43,13 @@ export const useTableStateStore = defineStore('table-state', () => {
     }
   }
 
-  return { setSort, getSort, getSortValue, getFilter, getFilterValue, setFilterValue }
+  const getFilter = (type: string): FilterState => {
+    return filter.value[type]
+  }
+
+  const getFilterValue = computed(() => {
+    return (type: string, attribute: string): string => filter.value[type]?.[attribute] ?? ''
+  })
+
+  return { setSort, getSort, getSortValue, setFilterValue, getFilter, getFilterValue }
 })

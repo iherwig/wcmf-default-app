@@ -3,7 +3,7 @@
     <n-layout-header v-if="menu" position="absolute" style="height: var(--header-height)" bordered>
       <component :is="header" :menu="menu" />
     </n-layout-header>
-    <n-layout-content position="absolute" content-style="padding: 24px;" :style="`bottom: var(--footer-height); `+ (menu ? `top: var(--header-height)`:'')" :class="background ? 'bg-image' : ''">
+    <n-layout-content position="absolute" content-style="padding: 0 16px;" :style="`bottom: var(--footer-height); `+ (menu ? `top: var(--header-height)`:'')" :class="background ? 'bg-image' : ''">
       <div v-if="logo" id="logo"></div>
       <router-view />
     </n-layout-content>
