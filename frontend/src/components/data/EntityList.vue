@@ -1,25 +1,27 @@
 <template>
-  <div ref="table" v-if="type && columns">
-    <n-data-table
-      :bordered="false"
-      :columns="columns"
-      :data="data"
-      :loading="loading"
-      :max-height="rowHeight * 10"
-      :row-key="rowKey"
-      :row-props="rowProps"
-      :on-scroll="handleScroll"
-      :on-update:sorter="handleSort"
-    >
-      <template #empty>{{ $t('No data') }}</template>
-    </n-data-table>
-    <n-flex v-if="!loading" justify="end"><span>{{ $t('{0} item(s)', [totalCount]) }}</span></n-flex>
-  </div>
+  <n-data-table ref="table" v-if="type && columns"
+    :bordered="false"
+    :columns="columns"
+    :data="data"
+    :loading="loading"
+    virtual-scroll
+    :min-height="rowHeight * 10"
+    :max-height="rowHeight * 10"
+    :min-row-height="rowHeight"
+    :row-key="rowKey"
+    :row-props="rowProps"
+    :on-scroll="handleScroll"
+    :on-update:sorter="handleSort"
+  >
+    <template #empty>{{ $t('No data') }}</template>
+    <template #loading><n-spin size="medium" /></template>
+  </n-data-table>
+  <n-flex v-if="!loading" justify="end"><span>{{ $t('{0} item(s)', [totalCount]) }}</span></n-flex>
 </template>
 
 <script lang="ts" setup>
-import { computed, h, onMounted, ref, watch } from 'vue'
-import { NDataTable, NButton, DataTableColumn, NFlex, DataTableSortState, NInput, NIcon, DataTableInst } from 'naive-ui'
+import { computed, h, onMounted, ref } from 'vue'
+import { NDataTable, NButton, DataTableColumn, NFlex, DataTableSortState, NInput, NIcon, NSpin, DataTableInst } from 'naive-ui'
 import { Filter16Regular as FilterIcon } from '@vicons/fluent'
 import { useI18n } from 'vue-i18n'
 import { EntityType, EntityAttribute, Entity } from '~/model/meta/types'
@@ -36,6 +38,7 @@ const props = defineProps<{
   enabledFeatures?: any[]
   data: Entity[]
   totalCount: number
+  loading: boolean
   size?: number
 }>()
 const emit = defineEmits<{
@@ -48,8 +51,6 @@ const { t } = useI18n()
 const { setSort, getSort, getSortValue, setFilterValue, getFilterValue } = useTableStateStore()
 
 const rowHeight = ref<number>(ROW_HEIGHT)
-const loadingNext = ref<boolean>(false)
-const loading = computed<boolean>(() => props.data.length == 0 || loadingNext.value)
 
 const rowKey = (row: Entity) => {
   return row.oid
@@ -67,8 +68,7 @@ const rowProps = (row: Entity) => {
 const handleScroll = useDebounceFn((e: Event) => {
   const target = e.target as HTMLElement
   if (target && target.scrollTop + target.clientHeight >= target.scrollHeight - 10 * rowHeight.value) {
-    if (!loading.value && props.data.length < props.totalCount) {
-      loadingNext.value = true
+    if (props.data.length < props.totalCount) {
       emit('loadNext')
     }
   }
@@ -144,12 +144,6 @@ const columns = computed<DataTableColumn<Entity>[]>(() => {
     } as DataTableColumn<Entity>)
   }
   return result
-})
-
-watch(() => props.data, (oldData, newData) => {
-  if (loadingNext.value) {
-    loadingNext.value = false
-  }
 })
 
 onMounted(() => {

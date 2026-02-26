@@ -9,21 +9,25 @@
   </n-flex>
   <component :is="entityTabs"
     :selectedTab="type"
+    @tab-changed="tabChanged"
   >
-    <component :is="entityList" v-if="typeClass"
-      :type="typeClass"
-      :actions="actions"
-      :enabledFeatures="[]"
-      :data="items"
-      :totalCount="totalCount"
-      @load-next="loadNext"
-    />
+    <n-spin size="medium" :show="!typeClass || tabSwitching">
+      <component :is="entityList" ref="list" v-if="typeClass"
+        :type="typeClass"
+        :actions="actions"
+        :enabledFeatures="[]"
+        :data="items"
+        :totalCount="totalCount"
+        :loading="tabSwitching || isLoading"
+        @load-next="loadNext"
+      />
+    </n-spin>
   </component>
 </template>
 
 <script lang="ts" setup>
-import { inject, computed } from 'vue'
-import { NFlex, NButton } from 'naive-ui'
+import { inject, computed, ref, nextTick } from 'vue'
+import { NFlex, NButton, NSpin } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { useInfiniteQuery } from '@pinia/colada'
 import { EntityListInjectionKey, EntityTabsInjectionKey } from '~/keys'
@@ -45,9 +49,10 @@ const { locale } = useI18n()
 const model = useModel()
 
 const typeClass = computed<EntityType>(() => model.getType(props.type))
-const { state, status, loadNextPage } = useInfiniteQuery(getItemsQuery(locale, typeClass))
+const { state, status, loadNextPage, isLoading } = useInfiniteQuery(getItemsQuery(locale, typeClass))
 const items = computed<Entity[]>(() => state?.value.data?.pages.flatMap(page => page.items) ?? [])
 const totalCount = computed<number>(() => state?.value.data?.pages.at(-1)?.totalCount ?? 0)
+const tabSwitching = ref<boolean>(false)
 
 const actions = computed<Action<unknown>[]>(() => [
   new Edit()
@@ -55,5 +60,14 @@ const actions = computed<Action<unknown>[]>(() => [
 
 const loadNext = () => {
   loadNextPage()
+}
+
+const tabChanged = async () => {
+  tabSwitching.value = true
+
+  await nextTick()
+  await new Promise(r => setTimeout(r, 20))
+
+  tabSwitching.value = false
 }
 </script>
