@@ -2,7 +2,10 @@
   <n-flex justify="space-between">
     <h1>{{ title }}</h1>
     <n-flex vertical justify="center">
-      <n-button strong secondary type="primary">{{ $t('Save') }}</n-button>
+      <n-flex justify="center">
+        <n-button strong secondary type="primary">{{ $t('Save') }}</n-button>
+        <n-button strong secondary type="error">{{ $t('Delete') }}</n-button>
+      </n-flex>
     </n-flex>
   </n-flex>
   <component :is="entityTabs" v-if="entity"
@@ -18,10 +21,10 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, computed, ref, nextTick, watch, onMounted } from 'vue'
+import { inject, computed, ref, nextTick, watch, onMounted, defineAsyncComponent } from 'vue'
 import { NFlex, NButton, NSpin } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { EntityTabsInjectionKey } from '~/keys'
+import { EntityTabsInjectionKey, EntityFormInjectionKey } from '~/keys'
 import { useModel } from '~/composables/model'
 import { Entity, EntityType } from '~/model/meta/types'
 import { getItemQuery } from '~/queries/entity'
@@ -35,14 +38,21 @@ const props = defineProps<{
 }>()
 
 const entityTabs = inject(EntityTabsInjectionKey, EntityTabs)
-const entityForm = inject(EntityTabsInjectionKey, EntityForm)
+const defaultEntityForm = inject(EntityFormInjectionKey, EntityForm)
 
 const { locale } = useI18n()
 const model = useModel()
 
 const typeClass = computed<EntityType>(() => model.getType(props.type))
-const oid = computed<string>(() => model.getOid(props.type, props.id))
 
+// load entity's detail view
+const entityForm = defineAsyncComponent({
+  loader: () => import(typeClass.value.detailView),
+  errorComponent: defaultEntityForm,
+  timeout: 3000
+})
+
+const oid = computed<string>(() => model.getOid(props.type, props.id))
 const entity = ref<Entity>()
 const title = computed<string>(() => typeClass.value.getSummary(entity.value))
 const loading = ref<boolean>(false)

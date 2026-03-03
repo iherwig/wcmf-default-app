@@ -1,18 +1,21 @@
-export const enum RelationType {
-  All = 'all',
-  Parent = 'parent',
-  Child = 'child',
-}
+export const RelationType = {
+  All: 'all',
+  Parent: 'parent',
+  Child: 'child',
+} as const
+export type RelationType = typeof RelationType[keyof typeof RelationType]
 
-export const enum MultiplicityConst {
-  Unbounded = 'unbounded'
-}
+export const MultiplicityConst = {
+  Unbounded: 'unbounded'
+} as const
+export type MultiplicityConst = typeof MultiplicityConst[keyof typeof MultiplicityConst]
 
-export const enum AggregationType {
-  None = 'none',
-  Shared = 'shared',
-  Composite = 'composite',
-}
+export const AggregationType = {
+  None: 'none',
+  Shared: 'shared',
+  Composite: 'composite',
+} as const
+export type AggregationType = typeof AggregationType[keyof typeof AggregationType]
 
 export type AttributeFilter = {
   include: string[],

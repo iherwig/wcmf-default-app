@@ -1,13 +1,14 @@
-import Cookies, { CookieAttributes } from 'js-cookie'
+import Cookies from 'js-cookie'
 
-export enum CookieFormat {
-  JSON,
-  PLAIN
-}
+export const CookieFormat = {
+  JSON: 'json',
+  PLAIN: 'plain'
+} as const
+export type CookieFormat = typeof CookieFormat[keyof typeof CookieFormat]
 
 export function useCookies() {
 
-  const set = (name: string, value: any, format?: CookieFormat, options?: CookieAttributes): void => {
+  const set = (name: string, value: any, format?: CookieFormat, options?: Cookies.CookieAttributes): void => {
     value = format == CookieFormat.JSON ? JSON.stringify(value) : value
     Cookies.set(name, value, options)
   }
@@ -17,11 +18,11 @@ export function useCookies() {
     return value && format == CookieFormat.JSON ? JSON.parse(value) : value
   }
 
-  const remove = (name: string, options?: CookieAttributes): any => {
+  const remove = (name: string, options?: Cookies.CookieAttributes): any => {
     return Cookies.remove(name, options)
   }
 
-  const removeAll = (options?: CookieAttributes): any => {
+  const removeAll = (options?: Cookies.CookieAttributes): any => {
     Object.keys(Cookies.get()).forEach((c) => {
       Cookies.remove(c, options)
     })

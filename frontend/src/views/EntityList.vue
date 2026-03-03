@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, computed, ref, nextTick } from 'vue'
+import { inject, computed, ref, nextTick, defineAsyncComponent } from 'vue'
 import { NFlex, NButton, NSpin } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
 import { useInfiniteQuery } from '@pinia/colada'
@@ -43,12 +43,20 @@ const props = defineProps<{
 }>()
 
 const entityTabs = inject(EntityTabsInjectionKey, EntityTabs)
-const entityList = inject(EntityListInjectionKey, EntityList)
+const defaultEntityList = inject(EntityListInjectionKey, EntityList)
 
 const { locale } = useI18n()
 const model = useModel()
 
 const typeClass = computed<EntityType>(() => model.getType(props.type))
+
+// load entity's list view
+const entityList = defineAsyncComponent({
+  loader: () => import(typeClass.value.listView),
+  errorComponent: defaultEntityList,
+  timeout: 3000
+})
+
 const { state, status, loadNextPage, isLoading } = useInfiniteQuery(getItemsQuery(locale, typeClass))
 const items = computed<Entity[]>(() => state?.value.data?.pages.flatMap(page => page.items) ?? [])
 const totalCount = computed<number>(() => state?.value.data?.pages.at(-1)?.totalCount ?? 0)
