@@ -128,7 +128,8 @@ const columns = computed<DataTableColumn<Entity>[]>(() => {
         return props.actions?.map((action) => {
           const btn = h(NButton, {
             size: 'small',
-            circle: true,
+            type: 'primary',
+            secondary: true,
             tag: 'a',
             href: action.getUrl(row),
             onClick: (e) => {
