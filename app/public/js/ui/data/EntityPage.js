@@ -135,7 +135,15 @@ define([
                     message: Dict.translate("<em>%0%</em> has unsaved changes. Leaving the page will discard these. Do you want to proceed?",
                         [this.typeClass.getDisplayValue(this.entity)]),
                     okCallback: lang.hitch(this, function(dlg) {
-                        this.entity.setState('clean');
+                        if (this.isNew) {
+                            // do not keep tabs for unsaved new entities
+                            topic.publish("tab-closed", {
+                                oid: this.entity.get('oid')
+                            });
+                        }
+                        else {
+                            this.entity.setState('clean');
+                        }
                         deferred.resolve(true);
                     }),
                     cancelCallback: lang.hitch(this, function(dlg) {
@@ -143,6 +151,12 @@ define([
                     })
                 }).show();
                 return deferred.promise;
+            }
+            else if (this.entity && this.isNew) {
+                // do not keep tabs for saved new entities
+                topic.publish("tab-closed", {
+                    oid: this.entity.get('oid')
+                });
             }
             return this.inherited(arguments);
         },

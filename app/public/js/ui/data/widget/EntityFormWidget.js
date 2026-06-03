@@ -23,6 +23,7 @@ define( [
   "../../_include/FormLayout",
   "../../_include/_NotificationMixin",
   "../../_include/widget/Button",
+  "../../_include/widget/GridWidget",
   "../../../action/CheckPermissions",
   "../../../action/Lock",
   "../../../action/Unlock",
@@ -64,6 +65,7 @@ function(
   FormLayout,
   _Notification,
   Button,
+  GridWidget,
   CheckPermissions,
   Lock,
   Unlock,
@@ -114,6 +116,8 @@ function(
       layoutWidgets: [],
 
       closeRelationAfterSave: false,
+
+      siblingsGridWidget: null,
 
       constructor: function(args) {
           declare.safeMixin(this, args);
@@ -246,11 +250,15 @@ function(
               this.addRelationWidgets(cleanOid);
 
               // set button states
-              this.setBtnState("save1", false); // no modifications yet
-              this.setBtnState("save2", false); // no modifications yet
               this.setBtnState("delete", this.canDelete());
+              ["save1", "save2", "saveAndNext1", "saveAndNext2"].forEach(lang.hitch(this, function(b) { if (b) {this.setBtnState(b, false);} })); // no modifications yet
               if (this.permissions['??setPermissions'] !== true && this.permissionsBtn) {
                   domClass.add(this.permissionsBtn.domNode, "hidden");
+              }
+              var saveAndNext = this.isNew && this.isRelatedObject();
+              if (!saveAndNext) {
+                  query(this.saveAndNext1Btn.domNode).style("display", "none");
+                  query(this.saveAndNext2Btn.domNode).style("display", "none");
               }
 
               // handle locking
@@ -278,6 +286,35 @@ function(
 
               // scroll to last scroll position
               dom.byId('wrap').scrollTo(0, this.getState('scroll') - 250);
+
+              // load related items
+              if (this.isRelatedObject()) {
+                  this.siblingsGridWidget = new GridWidget({
+                      type: this.type,
+                      store: RelationStore.getStore(this.sourceOid, this.relation),
+                      columns: Model.getType(this.type).getAttributes({exclude: ['DATATYPE_IGNORE']}).map(function(attribute) {
+                          return attribute.name;
+                      }),
+                      actions: [],
+                      enabledFeatures: [],
+                      autoHeight: false,
+                      height: 166
+                  });
+                  this.siblingsGridWidget.startup();
+                  var siblingsPane = new TitlePane({
+                      title: Dict.translate("More %0%", [Dict.translate(Model.getSimpleTypeName(this.type)+" [Pl.]")]),
+                      content: this.siblingsGridWidget.domNode,
+                      'class': 'related_items',
+                      open: this.getState('siblings')
+                  }, this.siblingsNode);
+                  this.own(siblingsPane.watch('open', lang.hitch(this, lang.partial(function(siblingsPane, name, oldValue, value) {
+                      topic.publish('entity-form-siblings-toggle', siblingsPane);
+                      this.setState('siblings', value);
+                  }, siblingsPane))));
+              }
+              else {
+                  query(this.siblingsNode.domNode).style("display", "none");
+              }
           }), lang.hitch(this, function(error) {
               // error
               this.showBackendError(error);
@@ -291,7 +328,7 @@ function(
                   this.showBackendError(error, this.isModified);
               })),
               topic.subscribe("entity-form-request-save", lang.hitch(this, function(e) {
-                this._save(e, true);
+                this._save(e, true, false);
               })),
               on(dojo.body(), "keydown", lang.hitch(this, function(e) {
                   if (e.keyCode === 83 && (e.ctrlKey || e.metaKey)) {
@@ -301,7 +338,7 @@ function(
                               type: "process",
                               message: Dict.translate("Saving data")
                           });
-                          this._save(e, true);
+                          this._save(e, true, false);
                       }
                       return false;
                   }
@@ -356,6 +393,8 @@ function(
               }
           }
           this._wrapItems();
+
+          this._refreshSiblings();
       },
 
       /**
@@ -549,6 +588,12 @@ function(
           return relationWidget;
       },
 
+      _refreshSiblings: function() {
+          if (this.siblingsGridWidget) {
+              this.siblingsGridWidget.refresh();
+          }
+      },
+
       _createHeadline: function(source, fullwidth, headlineText) {
           var sourceWidget = this.getAttributeWidget(source);
           if (fullwidth) {
@@ -649,9 +694,8 @@ function(
           // set controls, if locked by another user
           if (isLocked && !isLockOwner) {
               this.setCtrlState(false);
-              this.setBtnState("save1", false);
-              this.setBtnState("save2", false);
               this.setBtnState("delete", false);
+              ["save1", "save2", "saveAndNext1", "saveAndNext2"].forEach(lang.hitch(this, function(b) { if (b) {this.setBtnState(b, false);} }));
           }
           else {
               this.setCtrlState(true);
@@ -666,8 +710,7 @@ function(
 
           var state = modified === true ? "dirty" : "clean";
           this.entity.setState(state);
-          this.setBtnState("save1", modified);
-          this.setBtnState("save2", modified);
+          ["save1", "save2", "saveAndNext1", "saveAndNext2"].forEach(lang.hitch(this, function(b) { if (b) {this.setBtnState(b, modified);} }));
       },
 
       isRelatedObject: function() {
@@ -735,7 +778,7 @@ function(
           }
       },
 
-      _save: function(e, keepNotification) {
+      _save: function(e, keepNotification, showNext) {
           // prevent the page from navigating after submit
           e.preventDefault();
 
@@ -748,7 +791,16 @@ function(
               }
               data = lang.mixin(lang.clone(this.entity), data);
 
-              [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.setProcessing();} });
+              if (showNext) {
+                  // save and next
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.set("disabled", true);} });
+                  [this.saveAndNext1Btn, this.saveAndNext2Btn].forEach(function(b) { if (b) {b.setProcessing();} });
+              }
+              else {
+                  // regular save
+                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.setProcessing();} });
+                  [this.saveAndNext1Btn, this.saveAndNext2Btn].forEach(function(b) { if (b) {b.set("disabled", true);} });
+              }
               if (!keepNotification) {
                   this.hideNotification();
               }
@@ -764,7 +816,7 @@ function(
               var storeMethod = this.isNew ? "add" : "put";
               store[storeMethod](data, {overwrite: !this.isNew}).then(lang.hitch(this, function(result) {
                   // callback completes
-                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.reset();} });
+                  [this.save1Btn, this.save2Btn, this.saveAndNext1Btn, this.saveAndNext2Btn].forEach(function(b) { if (b) {b.reset();} });
                   if (result.errorMessage) {
                       // error
                       this.showBackendError(result, true);
@@ -786,31 +838,37 @@ function(
                           message: message,
                           fadeOut: true
                       }).then(lang.hitch(this, function() {
-                          this.setBtnState("save1", false);
-                          this.setBtnState("save2", false);
+                          ["save1", "save2", "saveAndNext1", "saveAndNext2"].forEach(lang.hitch(this, function(b) { if (b) {this.setBtnState(b, false);} }));
                           if (this.isNew) {
                               this.isNew = false;
 
-                            if (this.isRelatedObject() && this.closeRelationAfterSave) {
-                                // close own tab
-                                topic.publish("tab-closed", {
-                                    oid: Model.createDummyOid(this.type)
-                                });
-                                this.destroyRecursive();
-                            }
-                            else {
+                              if (this.isRelatedObject() && this.closeRelationAfterSave) {
+                                  // close own tab
+                                  topic.publish("tab-closed", {
+                                      oid: Model.createDummyOid(this.type)
+                                  });
+                                  this.destroyRecursive();
+                              }
+                              else if (showNext) {
+                                  // reset entity oid, but keep data
+                                  this.entity.set('oid', Model.createDummyOid(this.type));
+                                  this.isNew = true;
+                                  this.set("headline", this.getHeadline());
+                                  this._refreshSiblings();
+                              }
+                              else {
                                   // update current tab
                                   topic.publish("tab-closed", {
                                       oid: Model.createDummyOid(this.type),
                                       nextOid: this.entity.get('oid')
                                   });
-                            }
-                        }
-                    }));
+                              }
+                          }
+                      }));
                   }
               }), lang.hitch(this, function(error) {
                   // error
-                  [this.save1Btn, this.save2Btn].forEach(function(b) { if (b) {b.reset();} });
+                  [this.save1Btn, this.save2Btn, this.saveAndNext1Btn, this.saveAndNext2Btn].forEach(function(b) { if (b) {b.reset();} });
 
                   // check for concurrent update
                   var error = BackendError.parseResponse(error);
@@ -837,6 +895,10 @@ function(
                   }
               }));
           }
+      },
+
+      _saveAndNext: function(e) {
+          this._save(e, false, true);
       },
 
       _delete: function(e) {

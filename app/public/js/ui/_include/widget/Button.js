@@ -65,12 +65,14 @@ define([
         },
 
         reset: function() {
-            this.set("label", this.initialLabel);
+            if (this.isProcessing) {
+                this.set("label", this.initialLabel);
+                this.setProgress(0);
+                this.isProcessing = false;
+            }
             if (!this.isCancelable) {
                 this.set("disabled", false);
             }
-            this.setProgress(0);
-            this.isProcessing = false;
         }
     });
 });
