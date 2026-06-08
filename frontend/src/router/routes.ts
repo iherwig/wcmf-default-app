@@ -1,5 +1,5 @@
 import { RouteRecordRaw, RouteLocation, RouterView } from 'vue-router'
-import { routeMiddleware } from '~/i18n';
+import { routeMiddleware } from '~/i18n'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -119,8 +119,15 @@ const routes: Array<RouteRecordRaw> = [
     // path: "*",
     path: "/:catchAll(.*)",
     name: "NotFound",
-    component: () => import('~/views/NotFound.vue'),
+    component: () => import('~/views/Error.vue'),
+    props: (route: RouteLocation) => {
+      const props = {
+        title: '404',
+        message: 'Not found'
+      }
+      return props
+    }
   }
-];
+]
 
 export default routes

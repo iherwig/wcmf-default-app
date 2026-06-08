@@ -1,10 +1,8 @@
 <template>
   <n-flex justify="center" style="height: 100%">
-    <n-flex vertical justify="center" align="center">
+    <n-flex vertical justify="center" align="center" style="margin-top: -300px">
+      <h3>{{ config.title }}</h3>
       <n-card class="login-form">
-        <template #header>
-          <h3>{{ config.title }}</h3>
-        </template>
         <n-flex vertical justify="center">
           <n-form ref="loginForm" :model="loginData" :rules="loginRules" @submit.prevent="login">
             <n-form-item-row :label="t('Login')" path="username">

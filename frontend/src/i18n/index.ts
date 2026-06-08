@@ -74,14 +74,13 @@ export default i18n
 const t = i18n.global.t
 export { t }
 
-export async function routeMiddleware(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): Promise<any> {
+export async function routeMiddleware(to: RouteLocationNormalized, from: RouteLocationNormalized): Promise<any> {
   const paramLocale = to.params.locale
   if (!paramLocale) {
-    return next(getUserDefaultLocale()+to.path)
+    return getUserDefaultLocale()+to.path
   }
   else if (!i18n.global.availableLocales.includes(paramLocale)) {
-    return next('/404')
+    return '/404'
   }
   i18n.global.locale.value = paramLocale
-  return next()
 }

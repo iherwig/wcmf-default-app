@@ -12,6 +12,7 @@
     "@intlify/unplugin-vue-i18n": "^11.0.0",
     "@pinia/colada": "^0.21.7",
     "@vueuse/core": "^14.2.1",
+    "javascript-color-gradient": "^2.5.0",
     "js-cookie": "^3.0.5",
     "pinia": "^3.0.4",
     "vue": "^3.5.29",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.2.4",
+    "@types/javascript-color-gradient": "^2.4.2",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^25.3.3",
     "@vicons/fluent": "^0.13.0",

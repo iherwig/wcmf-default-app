@@ -26,7 +26,11 @@ fetchConfig().then(async(config) => {
     .use(routerModule.default)
     .use(i18nModule.default)
     .mount("#app")
-}).catch((error) => {
-  console.error(`Error fetching configuration: ${error}`)
+}).catch(async (error) => {
+  const { default: ErrorView } = await import('./views/Error.vue')
+  const errorApp = createApp(ErrorView, {
+    title: 'Configuration Error',
+    message: error?.message
+  })
+  errorApp.mount('#app')
 })
-
